@@ -1,0 +1,3174 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-13 16:07+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: businesses/admins/business_admin.py:39 kiini/admins/institution_admin.py:27
+#: payments/admin/payment_method_admin.py:48
+msgid "Basic Info"
+msgstr ""
+
+#: businesses/admins/business_admin.py:49
+msgid "Contact & Online Presence"
+msgstr ""
+
+#: businesses/admins/business_admin.py:56
+msgid "Location & Status"
+msgstr ""
+
+#: businesses/admins/business_admin.py:64 kiini/admins/institution_admin.py:39
+#: payments/admin/payment_failure_admin.py:19
+#: payments/admin/payment_method_admin.py:55
+msgid "Timestamps"
+msgstr ""
+
+#: businesses/models/booking.py:10 businesses/models/booking.py:17
+#: businesses/models/order.py:14 jamiiwallet/models/transaction.py:24
+#: logistics/choices.py:20 logistics/models/shipment.py:12
+#: logistics/models/transport_provider_verification.py:11
+#: logistics/models/vehicle.py:13 payments/models/invoice.py:13
+msgid "Pending"
+msgstr ""
+
+#: businesses/models/booking.py:11 jamiiwallet/models/topup.py:18
+msgid "Confirmed"
+msgstr ""
+
+#: businesses/models/booking.py:12 businesses/models/order.py:17
+#: logistics/choices.py:22 logistics/models/shipment.py:15
+#: logistics/models/transport_leg.py:26 payments/models/invoice.py:15
+msgid "Cancelled"
+msgstr ""
+
+#: businesses/models/booking.py:13 businesses/models/order.py:16
+#: jamiiwallet/models/transaction.py:25 logistics/models/transport_leg.py:25
+msgid "Completed"
+msgstr ""
+
+#: businesses/models/booking.py:18 businesses/models/order.py:23
+#: payments/models/invoice.py:14
+msgid "Paid"
+msgstr ""
+
+#: businesses/models/booking.py:19 businesses/models/order.py:24
+#: jamiiwallet/models/topup.py:19 jamiiwallet/models/transaction.py:26
+#: logistics/models/shipment.py:16 logistics/models/transport_leg.py:27
+#: logistics/models/transport_provider_verification.py:13
+#: logistics/models/vehicle.py:14
+msgid "Failed"
+msgstr ""
+
+#: businesses/models/booking.py:31 businesses/models/booking.py:114
+#: businesses/models/order.py:33
+msgid "Client"
+msgstr ""
+
+#: businesses/models/booking.py:37 businesses/models/order.py:107
+#: businesses/models/product.py:14 businesses/models/review.py:52
+#: businesses/models/service.py:98
+msgid "Service"
+msgstr ""
+
+#: businesses/models/booking.py:40 businesses/models/order.py:65
+msgid "Scheduled Date & Time"
+msgstr ""
+
+#: businesses/models/booking.py:41
+msgid "The date and time the service is booked for."
+msgstr ""
+
+#: businesses/models/booking.py:45
+msgid "Client Notes"
+msgstr ""
+
+#: businesses/models/booking.py:46
+msgid "Additional instructions or information from the client."
+msgstr ""
+
+#: businesses/models/booking.py:52
+msgid "Booking Status"
+msgstr ""
+
+#: businesses/models/booking.py:58 businesses/models/order.py:53
+msgid "Payment Status"
+msgstr ""
+
+#: businesses/models/booking.py:63
+msgid "Actual Start Time"
+msgstr ""
+
+#: businesses/models/booking.py:68
+msgid "Actual End Time"
+msgstr ""
+
+#: businesses/models/booking.py:73
+msgid "Cancellation Reason"
+msgstr ""
+
+#: businesses/models/booking.py:79
+msgid "Payment Reference"
+msgstr ""
+
+#: businesses/models/booking.py:83 businesses/models/booking.py:129
+msgid "Booking"
+msgstr ""
+
+#: businesses/models/booking.py:84
+msgid "Bookings"
+msgstr ""
+
+#: businesses/models/booking.py:101
+msgid "Muda wa mwisho lazima uwe baada ya muda wa kuanza"
+msgstr ""
+
+#: businesses/models/booking.py:115
+msgid "Business Owner"
+msgstr ""
+
+#: businesses/models/booking.py:116
+msgid "Business Staff"
+msgstr ""
+
+#: businesses/models/booking.py:117 payments/models/audit_log.py:137
+#: payments/serializers/audit_log_serializer.py:47
+#: payments/tests/test_models/test_audit_log.py:36
+#: payments/tests/test_models/test_audit_log.py:75
+msgid "System"
+msgstr ""
+
+#: businesses/models/booking.py:137 businesses/models/review.py:22
+#: kiini/models/staff.py:14 payments/models/audit_log.py:37
+#: payments/models/invoice.py:30 payments/models/payment_failure.py:13
+msgid "User"
+msgstr ""
+
+#: businesses/models/booking.py:143
+msgid "Actor Type"
+msgstr ""
+
+#: businesses/models/booking.py:144
+msgid "What role performed this action (Client, Owner, Staff, System)?"
+msgstr ""
+
+#: businesses/models/booking.py:148 payments/models/audit_log.py:44
+msgid "Action"
+msgstr ""
+
+#: businesses/models/booking.py:149
+msgid "Action performed on the booking (e.g., CREATED, CONFIRMED, CANCELLED)."
+msgstr ""
+
+#: businesses/models/booking.py:154 payments/models/audit_log.py:84
+msgid "IP Address"
+msgstr ""
+
+#: businesses/models/booking.py:159
+msgid "User Agent"
+msgstr ""
+
+#: businesses/models/booking.py:164
+msgid "Additional Context or Data"
+msgstr ""
+
+#: businesses/models/booking.py:165
+msgid "Additional context or data related to the action."
+msgstr ""
+
+#: businesses/models/booking.py:169
+msgid "Booking Log"
+msgstr ""
+
+#: businesses/models/booking.py:170
+msgid "Booking Logs"
+msgstr ""
+
+#: businesses/models/branch.py:15 businesses/models/business.py:57
+#: businesses/models/order.py:40 businesses/models/product.py:22
+#: businesses/models/review.py:32 businesses/models/service.py:30
+#: logistics/models/transport_request.py:19
+#: logistics/models/transport_request.py:28
+msgid "Business"
+msgstr ""
+
+#: businesses/models/branch.py:16
+msgid "Biashara inayomiliki tawi hili."
+msgstr ""
+
+#: businesses/models/branch.py:23
+msgid "Services at Branch"
+msgstr ""
+
+#: businesses/models/branch.py:24
+msgid "Huduma zinazotolewa katika tawi hili."
+msgstr ""
+
+#: businesses/models/branch.py:29
+msgid "Branch Name"
+msgstr ""
+
+#: businesses/models/branch.py:30
+msgid "Jina la tawi la biashara."
+msgstr ""
+
+#: businesses/models/branch.py:35 businesses/models/business.py:23
+#: businesses/models/category.py:22 businesses/models/product.py:40
+#: businesses/models/service.py:51 kiini/models/department.py:16
+#: kiini/models/institution_tier.py:22 kiini/models/institution_type.py:36
+#: logistics/models/location.py:16 payments/admin/audit_log_admin.py:59
+#: payments/admin/invoice_admin.py:14
+msgid "Description"
+msgstr ""
+
+#: businesses/models/branch.py:36
+msgid "Maelezo mafupi kuhusu tawi hili."
+msgstr ""
+
+#: businesses/models/branch.py:43 kiini/admins/institution_admin.py:33
+#: kiini/models/base_entity.py:41 logistics/models/location.py:22
+msgid "Location"
+msgstr ""
+
+#: businesses/models/branch.py:44
+msgid "Mahali ambapo tawi hili linapatikana (latitude/longitude)."
+msgstr ""
+
+#: businesses/models/branch.py:50 kiini/models/base_entity.py:30
+msgid "Phone"
+msgstr ""
+
+#: businesses/models/branch.py:51
+msgid "Nambari ya simu ya mawasiliano ya tawi."
+msgstr ""
+
+#: businesses/models/branch.py:56 kiini/models/base_entity.py:25
+msgid "Email"
+msgstr ""
+
+#: businesses/models/branch.py:57
+msgid "Barua pepe ya tawi (si lazima)."
+msgstr ""
+
+#: businesses/models/branch.py:62 kiini/models/base_entity.py:43
+#: kiini/models/department.py:17 kiini/models/staff.py:33
+#: logistics/models/vehicle.py:63
+msgid "Is Active"
+msgstr ""
+
+#: businesses/models/branch.py:63
+msgid "Je, tawi hili linafanya kazi kwa sasa?"
+msgstr ""
+
+#: businesses/models/branch.py:67
+msgid "Branch"
+msgstr ""
+
+#: businesses/models/branch.py:68
+msgid "Branches"
+msgstr ""
+
+#: businesses/models/business.py:17 kiini/models/department.py:13
+#: kiini/models/institution.py:43 kiini/models/staff.py:20
+#: logistics/models/transport_request.py:20
+#: logistics/models/transport_request.py:32
+msgid "Institution"
+msgstr ""
+
+#: businesses/models/business.py:18
+msgid "Taasisi inayosimamia biashara hii."
+msgstr ""
+
+#: businesses/models/business.py:24
+msgid "Maelezo mafupi kuhusu biashara."
+msgstr ""
+
+#: businesses/models/business.py:33 businesses/models/category.py:29
+msgid "Business Category"
+msgstr ""
+
+#: businesses/models/business.py:34
+msgid "Aina au sekta ya biashara."
+msgstr ""
+
+#: businesses/models/business.py:39
+msgid "Website"
+msgstr ""
+
+#: businesses/models/business.py:40
+msgid "Tovuti rasmi ya biashara (kama ipo)."
+msgstr ""
+
+#: businesses/models/business.py:45
+msgid "Is Verified"
+msgstr ""
+
+#: businesses/models/business.py:46
+msgid "Je biashara hii imethibitishwa rasmi?"
+msgstr ""
+
+#: businesses/models/business.py:52 businesses/models/category.py:16
+#: businesses/models/product.py:34
+msgid "Slug"
+msgstr ""
+
+#: businesses/models/business.py:53
+msgid "URL-friendly version of the business name."
+msgstr ""
+
+#: businesses/models/business.py:58
+msgid "Businesses"
+msgstr ""
+
+#: businesses/models/category.py:11
+msgid "Category Name"
+msgstr ""
+
+#: businesses/models/category.py:12
+msgid "Jina la aina ya biashara, mfano: Mgahawa, Duka, Kliniki."
+msgstr ""
+
+#: businesses/models/category.py:17
+msgid "URL-friendly identifier, mfano: mgahawa, duka-la-kiatu."
+msgstr ""
+
+#: businesses/models/category.py:23
+msgid "Maelezo ya ziada kuhusu aina hii ya biashara."
+msgstr ""
+
+#: businesses/models/category.py:30
+msgid "Business Categories"
+msgstr ""
+
+#: businesses/models/order.py:15 jamiiwallet/models/topup.py:17
+msgid "Processing"
+msgstr ""
+
+#: businesses/models/order.py:18 businesses/models/order.py:25
+msgid "Refunded"
+msgstr ""
+
+#: businesses/models/order.py:22
+msgid "Unpaid"
+msgstr ""
+
+#: businesses/models/order.py:34
+msgid "User who placed the order"
+msgstr ""
+
+#: businesses/models/order.py:41
+msgid "Business that received the order"
+msgstr ""
+
+#: businesses/models/order.py:47
+msgid "Order Status"
+msgstr ""
+
+#: businesses/models/order.py:58 payments/models/invoice.py:50
+msgid "Total Amount"
+msgstr ""
+
+#: businesses/models/order.py:59
+msgid "Sum of all order items."
+msgstr ""
+
+#: businesses/models/order.py:61
+msgid "Order Notes"
+msgstr ""
+
+#: businesses/models/order.py:66
+msgid "For scheduled services or deliveries."
+msgstr ""
+
+#: businesses/models/order.py:70 businesses/models/order.py:93
+msgid "Order"
+msgstr ""
+
+#: businesses/models/order.py:71
+msgid "Orders"
+msgstr ""
+
+#: businesses/models/order.py:99 businesses/models/product.py:161
+#: businesses/models/review.py:42
+msgid "Product"
+msgstr ""
+
+#: businesses/models/order.py:111
+msgid "Quantity"
+msgstr ""
+
+#: businesses/models/order.py:115
+msgid "Unit Price"
+msgstr ""
+
+#: businesses/models/order.py:120
+msgid "Total Price"
+msgstr ""
+
+#: businesses/models/order.py:124
+msgid "Order Item"
+msgstr ""
+
+#: businesses/models/order.py:125
+msgid "Order Items"
+msgstr ""
+
+#: businesses/models/product.py:12
+msgid "Physical"
+msgstr ""
+
+#: businesses/models/product.py:13
+msgid "Digital"
+msgstr ""
+
+#: businesses/models/product.py:23
+msgid "Biashara inayomiliki bidhaa hii."
+msgstr ""
+
+#: businesses/models/product.py:28
+msgid "Product Name"
+msgstr ""
+
+#: businesses/models/product.py:29
+msgid "Jina la bidhaa."
+msgstr ""
+
+#: businesses/models/product.py:35
+msgid "URL-friendly identifier ya bidhaa."
+msgstr ""
+
+#: businesses/models/product.py:41
+msgid "Maelezo ya bidhaa hii."
+msgstr ""
+
+#: businesses/models/product.py:48
+msgid "Product Type"
+msgstr ""
+
+#: businesses/models/product.py:49
+msgid "Aina ya bidhaa: Physical, Digital, au Service."
+msgstr ""
+
+#: businesses/models/product.py:55 businesses/models/service.py:58
+msgid "Price"
+msgstr ""
+
+#: businesses/models/product.py:56
+msgid "Bei ya kawaida ya bidhaa."
+msgstr ""
+
+#: businesses/models/product.py:64
+msgid "Discount Price"
+msgstr ""
+
+#: businesses/models/product.py:65
+msgid "Bei ya punguzo ikiwa ipo."
+msgstr ""
+
+#: businesses/models/product.py:71 payments/admin/payment_method_admin.py:73
+#: payments/models/currency.py:71
+msgid "Currency"
+msgstr ""
+
+#: businesses/models/product.py:72
+msgid "Sarafu ya bei, mfano: TZS, USD."
+msgstr ""
+
+#: businesses/models/product.py:77
+msgid "Stock Quantity"
+msgstr ""
+
+#: businesses/models/product.py:78
+msgid "Idadi ya bidhaa zilizopo stock."
+msgstr ""
+
+#: businesses/models/product.py:84
+msgid "Unit"
+msgstr ""
+
+#: businesses/models/product.py:85
+msgid "Kipimo cha bidhaa, mfano: pcs, kg, litres."
+msgstr ""
+
+#: businesses/models/product.py:90 businesses/models/service.py:86
+msgid "Is Available"
+msgstr ""
+
+#: businesses/models/product.py:91
+msgid "Inaonesha kama bidhaa ipo sokoni au la."
+msgstr ""
+
+#: businesses/models/product.py:96
+msgid "Is Featured"
+msgstr ""
+
+#: businesses/models/product.py:97
+msgid "Inaonesha kama bidhaa ni ya kipekee (featured)."
+msgstr ""
+
+#: businesses/models/product.py:104
+msgid "Product Image"
+msgstr ""
+
+#: businesses/models/product.py:105
+msgid "Picha kuu ya bidhaa."
+msgstr ""
+
+#: businesses/models/product.py:112
+msgid "Additional Images"
+msgstr ""
+
+#: businesses/models/product.py:113
+msgid "Picha nyingine za bidhaa (URL links)."
+msgstr ""
+
+#: businesses/models/product.py:120
+msgid "Tags / Keywords"
+msgstr ""
+
+#: businesses/models/product.py:121
+msgid "Maneno muhimu au majina ya aina ya bidhaa."
+msgstr ""
+
+#: businesses/models/product.py:126
+msgid "Price includes VAT"
+msgstr ""
+
+#: businesses/models/product.py:127
+msgid "Inaonesha kama bei inajumuisha VAT."
+msgstr ""
+
+#: businesses/models/product.py:134
+msgid "Tax Rate (%)"
+msgstr ""
+
+#: businesses/models/product.py:135
+msgid "Kiwango cha VAT kilichojumuishwa, kwa asilimia."
+msgstr ""
+
+#: businesses/models/product.py:141
+msgid "External Link / Purchase Link"
+msgstr ""
+
+#: businesses/models/product.py:142
+msgid "Link ya kununua bidhaa kutoka nje ya mfumo huu (optional)."
+msgstr ""
+
+#: businesses/models/product.py:149
+msgid "Digital File"
+msgstr ""
+
+#: businesses/models/product.py:150
+msgid "Faili la bidhaa za kidigitali (ikiwa ni Digital Product)."
+msgstr ""
+
+#: businesses/models/product.py:156
+msgid "Language"
+msgstr ""
+
+#: businesses/models/product.py:157
+msgid "Lugha inayotumika kwenye maelezo ya bidhaa."
+msgstr ""
+
+#: businesses/models/product.py:162
+msgid "Products"
+msgstr ""
+
+#: businesses/models/review.py:23
+msgid "Mteja anayetoa tathmini hii."
+msgstr ""
+
+#: businesses/models/review.py:33
+msgid "Chagua kama review hii ni ya biashara fulani."
+msgstr ""
+
+#: businesses/models/review.py:43
+msgid "Chagua kama review hii ni ya bidhaa fulani."
+msgstr ""
+
+#: businesses/models/review.py:53
+msgid "Chagua kama review hii ni ya huduma fulani."
+msgstr ""
+
+#: businesses/models/review.py:57
+msgid "Rating"
+msgstr ""
+
+#: businesses/models/review.py:59
+msgid "Chagua alama (1 hadi 5) kulingana na uzoefu wako."
+msgstr ""
+
+#: businesses/models/review.py:63
+msgid "Review Content"
+msgstr ""
+
+#: businesses/models/review.py:64
+msgid "Andika maoni yako kuhusu huduma/bidhaa/biashara."
+msgstr ""
+
+#: businesses/models/review.py:75
+msgid "Is Approved"
+msgstr ""
+
+#: businesses/models/review.py:76
+msgid "Tiki kama review hii imepitishwa na admin."
+msgstr ""
+
+#: businesses/models/review.py:80
+msgid "Review"
+msgstr ""
+
+#: businesses/models/review.py:81
+msgid "Reviews"
+msgstr ""
+
+#: businesses/models/review.py:91
+msgid "Tafadhali toa review kwa kitu kimoja tu: biashara, bidhaa, au huduma."
+msgstr ""
+
+#: businesses/models/service.py:12
+msgid "One-time"
+msgstr ""
+
+#: businesses/models/service.py:13
+msgid "Per Hour"
+msgstr ""
+
+#: businesses/models/service.py:14
+msgid "Per Day"
+msgstr ""
+
+#: businesses/models/service.py:15
+msgid "Per Week"
+msgstr ""
+
+#: businesses/models/service.py:16
+msgid "Per Month"
+msgstr ""
+
+#: businesses/models/service.py:20
+msgid "At Provider Location"
+msgstr ""
+
+#: businesses/models/service.py:21
+msgid "At Client Location"
+msgstr ""
+
+#: businesses/models/service.py:22
+msgid "Remote / Online"
+msgstr ""
+
+#: businesses/models/service.py:31
+msgid "Biashara inayotoa huduma hii."
+msgstr ""
+
+#: businesses/models/service.py:39
+msgid "Category"
+msgstr ""
+
+#: businesses/models/service.py:40
+msgid "Aina ya huduma au biashara inayohusiana."
+msgstr ""
+
+#: businesses/models/service.py:45
+msgid "Service Name"
+msgstr ""
+
+#: businesses/models/service.py:46
+msgid "Jina la huduma."
+msgstr ""
+
+#: businesses/models/service.py:52
+msgid "Maelezo ya huduma."
+msgstr ""
+
+#: businesses/models/service.py:59
+msgid "Gharama ya huduma."
+msgstr ""
+
+#: businesses/models/service.py:66
+msgid "Billing Type"
+msgstr ""
+
+#: businesses/models/service.py:67
+msgid "Jinsi malipo yanavyofanyika: kwa mara moja, kwa saa, au muda mwingine."
+msgstr ""
+
+#: businesses/models/service.py:74
+msgid "Service Location Type"
+msgstr ""
+
+#: businesses/models/service.py:75
+msgid "Mahali pa kutolea huduma: kwa mtoa huduma, kwa mteja, au mtandaoni."
+msgstr ""
+
+#: businesses/models/service.py:80
+msgid "Requires Booking"
+msgstr ""
+
+#: businesses/models/service.py:81
+msgid "Inaonesha kama huduma inahitaji kuweka miadi (booking)."
+msgstr ""
+
+#: businesses/models/service.py:87
+msgid "Huduma inapatikana kwa sasa."
+msgstr ""
+
+#: businesses/models/service.py:93
+msgid "Duration (Minutes)"
+msgstr ""
+
+#: businesses/models/service.py:94
+msgid "Muda wa makadirio kwa huduma hii kwa dakika."
+msgstr ""
+
+#: businesses/models/service.py:99
+msgid "Services"
+msgstr ""
+
+#: businesses/serializers/booking_serializer.py:25
+msgid "Muda wa booking lazima uwe baada ya sasa"
+msgstr ""
+
+#: businesses/serializers/booking_serializer.py:58
+msgid "Sababu ya kughairi lazima ijazwe."
+msgstr ""
+
+#: businesses/serializers/booking_serializer.py:89
+msgid "Matendo hayawezi kuwa tupu."
+msgstr ""
+
+#: jamiikazini/settings/base.py:166 syllabus/models/lesson_sentence.py:19
+msgid "English"
+msgstr ""
+
+#: jamiikazini/settings/base.py:167 syllabus/models/lesson_sentence.py:18
+msgid "Swahili"
+msgstr ""
+
+#: jamiikazini/settings/base.py:168
+msgid "French"
+msgstr ""
+
+#: jamiikazini/settings/base.py:169
+msgid "Arabic"
+msgstr ""
+
+#: jamiitasks/admins/task_log_admin.py:71 payments/models/invoice.py:57
+msgid "Status"
+msgstr ""
+
+#: jamiitasks/admins/task_log_admin.py:75
+msgid "Duration"
+msgstr ""
+
+#: jamiitasks/admins/task_log_admin.py:132
+msgid "Task Trend Data (JSON)"
+msgstr ""
+
+#: jamiitasks/models/task_log.py:15
+msgid "Execution duration in milliseconds"
+msgstr ""
+
+#: jamiitasks/models/task_log.py:16
+msgid "Celery worker hostname"
+msgstr ""
+
+#: jamiitasks/models/task_log.py:18
+msgid "External reference e.g. transaction ref"
+msgstr ""
+
+#: jamiitasks/models/task_log.py:21
+msgid "Task Log"
+msgstr ""
+
+#: jamiitasks/models/task_log.py:22
+msgid "Task Logs"
+msgstr ""
+
+#: jamiiwallet/admins/topup_admin.py:24
+#, python-brace-format
+msgid "{updated} top-up(s) marked as PROCESSING."
+msgstr ""
+
+#: jamiiwallet/admins/topup_admin.py:33
+#, python-brace-format
+msgid "{updated} top-up(s) marked as FAILED."
+msgstr ""
+
+#: jamiiwallet/admins/transaction_admin.py:38
+#, python-brace-format
+msgid "{updated} transaction(s) marked as COMPLETED."
+msgstr ""
+
+#: jamiiwallet/admins/transaction_admin.py:47
+#, python-brace-format
+msgid "{updated} transaction(s) marked as FAILED."
+msgstr ""
+
+#: jamiiwallet/models/topup.py:16
+msgid "Initiated"
+msgstr ""
+
+#: jamiiwallet/models/topup.py:22 payments/models/paymentmethod.py:86
+msgid "Flutterwave"
+msgstr ""
+
+#: jamiiwallet/models/topup.py:23 payments/models/paymentmethod.py:85
+msgid "Stripe"
+msgstr ""
+
+#: jamiiwallet/models/topup.py:24 payments/models/paymentmethod.py:84
+msgid "PawaPay"
+msgstr ""
+
+#: jamiiwallet/models/topup.py:30
+msgid "User requesting the top up"
+msgstr ""
+
+#: jamiiwallet/models/topup.py:36
+msgid "Amount to top up"
+msgstr ""
+
+#: jamiiwallet/models/topup.py:48
+msgid "Payment channel or method"
+msgstr ""
+
+#: jamiiwallet/models/topup.py:54
+msgid "Unique reference for this topup request"
+msgstr ""
+
+#: jamiiwallet/models/topup.py:68
+msgid "Optional metadata for channel-specific data"
+msgstr ""
+
+#: jamiiwallet/models/topup.py:74
+msgid "Time when top up was confirmed"
+msgstr ""
+
+#: jamiiwallet/models/topup.py:79 jamiiwallet/models/transaction.py:17
+msgid "Top Up"
+msgstr ""
+
+#: jamiiwallet/models/topup.py:80
+msgid "Top Ups"
+msgstr ""
+
+#: jamiiwallet/models/topup.py:87
+#: jamiiwallet/serializers/transaction_serializer.py:28
+msgid "Amount must be greater than zero."
+msgstr ""
+
+#: jamiiwallet/models/transaction.py:18
+msgid "Withdrawal"
+msgstr ""
+
+#: jamiiwallet/models/transaction.py:19
+msgid "Transfer"
+msgstr ""
+
+#: jamiiwallet/models/transaction.py:20 payments/models/audit_log.py:25
+msgid "Payment"
+msgstr ""
+
+#: jamiiwallet/models/transaction.py:21
+msgid "Refund"
+msgstr ""
+
+#: jamiiwallet/models/transaction.py:27
+msgid "Reversed"
+msgstr ""
+
+#: jamiiwallet/models/transaction.py:33
+msgid "Wallet associated with this transaction"
+msgstr ""
+
+#: jamiiwallet/models/transaction.py:51
+msgid "User who initiated the transaction"
+msgstr ""
+
+#: jamiiwallet/models/transaction.py:60
+msgid "Counterparty user involved in this transaction, if applicable"
+msgstr ""
+
+#: jamiiwallet/models/transaction.py:74
+msgid "Key used to enforce idempotency for this transaction"
+msgstr ""
+
+#: jamiiwallet/models/transaction.py:99
+msgid "Transaction"
+msgstr ""
+
+#: jamiiwallet/models/transaction.py:100
+msgid "Transactions"
+msgstr ""
+
+#: jamiiwallet/models/transaction.py:130
+msgid "Transaction amount must be positive and greater than zero."
+msgstr ""
+
+#: jamiiwallet/models/transaction.py:133
+msgid "Reversed transactions must reference the original transaction."
+msgstr ""
+
+#: jamiiwallet/models/transaction.py:136
+msgid "Reversed transaction must have status set to REVERSED."
+msgstr ""
+
+#: jamiiwallet/serializers/transaction_serializer.py:32
+msgid "You do not own this wallet."
+msgstr ""
+
+#: jamiiwallet/serializers/transaction_serializer.py:39
+msgid "Counterparty is required for this transaction type."
+msgstr ""
+
+#: jamiiwallet/serializers/transaction_serializer.py:41
+msgid "Cannot perform transaction to the same wallet."
+msgstr ""
+
+#: jamiiwallet/serializers/transaction_serializer.py:48
+msgid "Insufficient wallet balance."
+msgstr ""
+
+#: kiini/admins/institution_admin.py:30
+msgid "Contact Info"
+msgstr ""
+
+#: kiini/admins/institution_admin.py:36
+msgid "Status & Metadata"
+msgstr ""
+
+#: kiini/helpers/validators.py:20
+msgid "Namba ya simu inapaswa kuwa ya nchi za Afrika Mashariki."
+msgstr ""
+
+#: kiini/models/base_entity.py:21
+msgid "Owner"
+msgstr ""
+
+#: kiini/models/base_entity.py:24
+msgid "Name"
+msgstr ""
+
+#: kiini/models/base_entity.py:31
+msgid "Namba ya simu ya kimataifa (Mfano: +255...)."
+msgstr ""
+
+#: kiini/models/base_entity.py:37
+msgid "Phone Verified"
+msgstr ""
+
+#: kiini/models/base_entity.py:38
+msgid "Je namba hii ya simu imethibitishwa kwa SMS?"
+msgstr ""
+
+#: kiini/models/base_entity.py:42 logistics/models/location.py:9
+msgid "Address"
+msgstr ""
+
+#: kiini/models/department.py:15
+msgid "Department Name"
+msgstr ""
+
+#: kiini/models/department.py:20 kiini/models/staff.py:28
+msgid "Department"
+msgstr ""
+
+#: kiini/models/department.py:21
+msgid "Departments"
+msgstr ""
+
+#: kiini/models/institution.py:13
+msgid "Domain"
+msgstr ""
+
+#: kiini/models/institution.py:14
+msgid "Mfano: institution_name.jamiikazini.com"
+msgstr ""
+
+#: kiini/models/institution.py:22
+msgid "Tier"
+msgstr ""
+
+#: kiini/models/institution.py:31 kiini/models/institution_type.py:39
+msgid "Institution Type"
+msgstr ""
+
+#: kiini/models/institution.py:38 payments/models/bulk_payment.py:43
+#: payments/models/bulk_payment.py:197 payments/models/payment_link.py:96
+#: payments/models/scheduled_payment.py:99
+msgid "Metadata"
+msgstr ""
+
+#: kiini/models/institution.py:39
+msgid "Taarifa za ziada kama config au settings."
+msgstr ""
+
+#: kiini/models/institution.py:44
+msgid "Institutions"
+msgstr ""
+
+#: kiini/models/institution_tier.py:10
+msgid "Micro Enterprise"
+msgstr ""
+
+#: kiini/models/institution_tier.py:11
+msgid "Small Enterprise"
+msgstr ""
+
+#: kiini/models/institution_tier.py:12
+msgid "Medium Enterprise"
+msgstr ""
+
+#: kiini/models/institution_tier.py:13
+msgid "Large Enterprise"
+msgstr ""
+
+#: kiini/models/institution_tier.py:14
+msgid "Corporate / Enterprise"
+msgstr ""
+
+#: kiini/models/institution_tier.py:20
+msgid "Tier Name"
+msgstr ""
+
+#: kiini/models/institution_tier.py:25
+msgid "Institution Tier"
+msgstr ""
+
+#: kiini/models/institution_tier.py:26
+msgid "Institution Tiers"
+msgstr ""
+
+#: kiini/models/institution_type.py:9
+msgid "Primary School"
+msgstr ""
+
+#: kiini/models/institution_type.py:10
+msgid "Secondary School"
+msgstr ""
+
+#: kiini/models/institution_type.py:11
+msgid "College"
+msgstr ""
+
+#: kiini/models/institution_type.py:12
+msgid "University"
+msgstr ""
+
+#: kiini/models/institution_type.py:13
+msgid "Vocational Training Center"
+msgstr ""
+
+#: kiini/models/institution_type.py:14
+msgid "Hospital"
+msgstr ""
+
+#: kiini/models/institution_type.py:15
+msgid "Health Center"
+msgstr ""
+
+#: kiini/models/institution_type.py:16
+msgid "Dispensary"
+msgstr ""
+
+#: kiini/models/institution_type.py:17
+msgid "Clinic"
+msgstr ""
+
+#: kiini/models/institution_type.py:18
+msgid "Non-Governmental Organization"
+msgstr ""
+
+#: kiini/models/institution_type.py:19
+msgid "Community-Based Organization"
+msgstr ""
+
+#: kiini/models/institution_type.py:20
+msgid "Faith-Based Organization"
+msgstr ""
+
+#: kiini/models/institution_type.py:21
+msgid "Private Company"
+msgstr ""
+
+#: kiini/models/institution_type.py:22
+msgid "Public Corporation"
+msgstr ""
+
+#: kiini/models/institution_type.py:23
+msgid "Cooperative Society"
+msgstr ""
+
+#: kiini/models/institution_type.py:24
+msgid "Government Ministry"
+msgstr ""
+
+#: kiini/models/institution_type.py:25
+msgid "Municipal Council"
+msgstr ""
+
+#: kiini/models/institution_type.py:26
+msgid "Parastatal Organization"
+msgstr ""
+
+#: kiini/models/institution_type.py:27
+msgid "Religious Institution"
+msgstr ""
+
+#: kiini/models/institution_type.py:28
+msgid "Training Institute"
+msgstr ""
+
+#: kiini/models/institution_type.py:34
+msgid "Type Name"
+msgstr ""
+
+#: kiini/models/institution_type.py:40
+msgid "Institution Types"
+msgstr ""
+
+#: kiini/models/staff.py:30
+msgid "Title"
+msgstr ""
+
+#: kiini/models/staff.py:31
+msgid "Position"
+msgstr ""
+
+#: kiini/models/staff.py:32
+msgid "Phone Number"
+msgstr ""
+
+#: kiini/models/staff.py:36
+msgid "Staff Profile"
+msgstr ""
+
+#: kiini/models/staff.py:37
+msgid "Staff Profiles"
+msgstr ""
+
+#: logistics/choices.py:8
+msgid "Boda Boda"
+msgstr ""
+
+#: logistics/choices.py:9
+msgid "Tuk Tuk / Bajaji"
+msgstr ""
+
+#: logistics/choices.py:10
+msgid "Public Transport / Taxi / Suzuki"
+msgstr ""
+
+#: logistics/choices.py:11
+msgid "Canter"
+msgstr ""
+
+#: logistics/choices.py:12
+msgid "Fuso"
+msgstr ""
+
+#: logistics/choices.py:13
+msgid "Scania"
+msgstr ""
+
+#: logistics/choices.py:14 logistics/models/transport_leg.py:14
+msgid "Train"
+msgstr ""
+
+#: logistics/choices.py:15
+msgid "Ship"
+msgstr ""
+
+#: logistics/choices.py:16
+msgid "Air Freight"
+msgstr ""
+
+#: logistics/choices.py:21
+msgid "Accepted"
+msgstr ""
+
+#: logistics/choices.py:23
+msgid "Expired"
+msgstr ""
+
+#: logistics/models/location.py:8
+msgid "Location Name"
+msgstr ""
+
+#: logistics/models/location.py:11
+msgid "Latitude"
+msgstr ""
+
+#: logistics/models/location.py:14
+msgid "Longitude"
+msgstr ""
+
+#: logistics/models/location.py:18 logistics/models/vehicle.py:98
+msgid "Created At"
+msgstr ""
+
+#: logistics/models/location.py:19 logistics/models/vehicle.py:99
+msgid "Updated At"
+msgstr ""
+
+#: logistics/models/location.py:23
+msgid "Locations"
+msgstr ""
+
+#: logistics/models/shipment.py:13 logistics/models/transport_leg.py:23
+msgid "In Transit"
+msgstr ""
+
+#: logistics/models/shipment.py:14
+msgid "Delivered"
+msgstr ""
+
+#: logistics/models/transport_leg.py:11
+msgid "Truck"
+msgstr ""
+
+#: logistics/models/transport_leg.py:12
+msgid "Drone"
+msgstr ""
+
+#: logistics/models/transport_leg.py:13
+msgid "Boat"
+msgstr ""
+
+#: logistics/models/transport_leg.py:15
+msgid "Bike"
+msgstr ""
+
+#: logistics/models/transport_leg.py:16
+msgid "Airplane"
+msgstr ""
+
+#: logistics/models/transport_leg.py:17 payments/models/audit_log.py:28
+#: payments/models/paymentmethod.py:73
+msgid "Other"
+msgstr ""
+
+#: logistics/models/transport_leg.py:21
+msgid "Scheduled"
+msgstr ""
+
+#: logistics/models/transport_leg.py:22
+msgid "Dispatched"
+msgstr ""
+
+#: logistics/models/transport_leg.py:24
+msgid "Delayed"
+msgstr ""
+
+#: logistics/models/transport_leg.py:34
+msgid "Order of leg in shipment route"
+msgstr ""
+
+#: logistics/models/transport_leg.py:59
+msgid "Total cost for this leg"
+msgstr ""
+
+#: logistics/models/transport_provider.py:22
+msgid "Dereva Binafsi"
+msgstr ""
+
+#: logistics/models/transport_provider.py:23
+msgid "Kampuni ya Usafirishaji"
+msgstr ""
+
+#: logistics/models/transport_provider.py:41
+msgid "Chagua kama huu ni usafiri binafsi au kampuni."
+msgstr ""
+
+#: logistics/models/transport_provider.py:47
+msgid ""
+"Weka GPS ya eneo la kikundi chako, au andika jina la eneo kama GPS "
+"haipatikani."
+msgstr ""
+
+#: logistics/models/transport_provider.py:54
+msgid "Pakia barua ya uthibitisho wa umoja wako."
+msgstr ""
+
+#: logistics/models/transport_provider.py:60
+msgid "Pakia picha yako ya utambulisho"
+msgstr ""
+
+#: logistics/models/transport_provider.py:64
+msgid "Transport Provider"
+msgstr ""
+
+#: logistics/models/transport_provider.py:65
+msgid "Transport Providers"
+msgstr ""
+
+#: logistics/models/transport_provider.py:73
+msgid "Unapaswa kupakia barua ya uthibitisho kabla ya kuidhinishwa."
+msgstr ""
+
+#: logistics/models/transport_provider.py:77
+msgid "Barua ya uthibitisho haipaswi kuzidi 1.5MB."
+msgstr ""
+
+#: logistics/models/transport_provider.py:81
+msgid "Picha haipaswi kuzidi 1.5MB."
+msgstr ""
+
+#: logistics/models/transport_provider_verification.py:12
+#: logistics/models/vehicle.py:12
+msgid "Verified"
+msgstr ""
+
+#: logistics/models/transport_provider_verification.py:31
+msgid "Transport Provider Verification"
+msgstr ""
+
+#: logistics/models/transport_provider_verification.py:32
+msgid "Transport Providers Verifications"
+msgstr ""
+
+#: logistics/models/transport_request.py:24
+msgid "Requestor Type"
+msgstr ""
+
+#: logistics/models/transport_request.py:35
+msgid "Package Description"
+msgstr ""
+
+#: logistics/models/transport_request.py:36
+msgid "Weight (kg)"
+msgstr ""
+
+#: logistics/models/transport_request.py:37
+msgid "Volume (m³)"
+msgstr ""
+
+#: logistics/models/transport_request.py:38
+msgid "Estimated Value"
+msgstr ""
+
+#: logistics/models/transport_request.py:41
+msgid "Suggested Transport Type"
+msgstr ""
+
+#: logistics/models/transport_request.py:44
+msgid "Pickup Location"
+msgstr ""
+
+#: logistics/models/transport_request.py:45
+msgid "Dropoff Location"
+msgstr ""
+
+#: logistics/models/transport_request.py:47
+msgid "Pickup Address Text"
+msgstr ""
+
+#: logistics/models/transport_request.py:48
+msgid "Dropoff Address Text"
+msgstr ""
+
+#: logistics/models/transport_request.py:55
+msgid "Request Status"
+msgstr ""
+
+#: logistics/models/transport_request.py:57
+msgid "Is Accepted"
+msgstr ""
+
+#: logistics/models/transport_request.py:59
+msgid "Requested At"
+msgstr ""
+
+#: logistics/models/transport_request.py:60
+msgid "Expires At"
+msgstr ""
+
+#: logistics/models/transport_request.py:63
+msgid "Transport Request"
+msgstr ""
+
+#: logistics/models/transport_request.py:64
+msgid "Transport Requests"
+msgstr ""
+
+#: logistics/models/vehicle.py:27
+msgid "Vehicle Type"
+msgstr ""
+
+#: logistics/models/vehicle.py:33
+msgid "Registration Number"
+msgstr ""
+
+#: logistics/models/vehicle.py:39
+msgid "Model Name"
+msgstr ""
+
+#: logistics/models/vehicle.py:45
+msgid "Maximum weight capacity in kilograms"
+msgstr ""
+
+#: logistics/models/vehicle.py:46
+msgid "Weight Capacity (kg)"
+msgstr ""
+
+#: logistics/models/vehicle.py:52
+msgid "Maximum volume capacity in cubic meters"
+msgstr ""
+
+#: logistics/models/vehicle.py:53
+msgid "Volume Capacity (m³)"
+msgstr ""
+
+#: logistics/models/vehicle.py:60
+msgid "Vehicle Image"
+msgstr ""
+
+#: logistics/models/vehicle.py:70
+msgid "Assigned Drivers"
+msgstr ""
+
+#: logistics/models/vehicle.py:79
+msgid "Active Driver"
+msgstr ""
+
+#: logistics/models/vehicle.py:84
+msgid ""
+"\n"
+"            Example:\n"
+"            {\n"
+"                \"TRA\": \"verified\",\n"
+"                \"LATRA\": \"pending\",\n"
+"                \"POLICE\": \"verified\",\n"
+"                \"INSURANCE\": \"failed\"\n"
+"            }\n"
+"        "
+msgstr ""
+
+#: logistics/models/vehicle.py:93
+msgid "Verification Statuses"
+msgstr ""
+
+#: logistics/models/vehicle.py:96
+msgid "Internal Notes"
+msgstr ""
+
+#: logistics/models/vehicle.py:103
+msgid "A maximum of 2 drivers can be assigned to a vehicle."
+msgstr ""
+
+#: logistics/models/vehicle.py:105
+msgid "Active driver must be one of the assigned drivers."
+msgstr ""
+
+#: payments/admin/audit_log_admin.py:41
+msgid "Audit Log Details"
+msgstr ""
+
+#: payments/admin/bulk_payment_admin.py:16
+#: payments/admin/payment_report_advanced_admin.py:77
+#: payments/admin/scheduled_payment_admin.py:16
+msgid "Taarifa za Msingi"
+msgstr ""
+
+#: payments/admin/bulk_payment_admin.py:19 payments/models/bulk_payment.py:36
+msgid "Data ya Malipo"
+msgstr ""
+
+#: payments/admin/bulk_payment_admin.py:23
+msgid "Takwimu"
+msgstr ""
+
+#: payments/admin/bulk_payment_admin.py:27
+#: payments/admin/bulk_payment_admin.py:48
+#: payments/admin/payment_report_advanced_admin.py:117
+msgid "Muda"
+msgstr ""
+
+#: payments/admin/bulk_payment_admin.py:42
+msgid "Taarifa za Utekelezaji"
+msgstr ""
+
+#: payments/admin/bulk_payment_admin.py:45
+#: payments/admin/payment_report_advanced_admin.py:104
+#: payments/admin/scheduled_payment_admin.py:25
+#: payments/models/bulk_payment.py:162
+msgid "Matokeo"
+msgstr ""
+
+#: payments/admin/bulk_payment_admin.py:56
+#: payments/admin/payment_report_advanced_admin.py:196
+msgid "Kiwango cha Mafanikio"
+msgstr ""
+
+#: payments/admin/currency_admin.py:18
+msgid "Currency Information"
+msgstr ""
+
+#: payments/admin/currency_admin.py:21 payments/models/exchange_rate.py:26
+#: payments/models/exchange_rate.py:42
+msgid "Exchange Rate"
+msgstr ""
+
+#: payments/admin/currency_admin.py:23
+msgid ""
+"Kiwango cha kubadilisha fedha hii kulinganisha na Tanzanian Shilling (TZS)."
+msgstr ""
+
+#: payments/admin/exchange_rate_admin.py:28 payments/models/currency.py:72
+msgid "Currencies"
+msgstr ""
+
+#: payments/admin/exchange_rate_admin.py:31
+msgid "Rate Information"
+msgstr ""
+
+#: payments/admin/exchange_rate_admin.py:33
+msgid "Weka kiwango cha kubadilisha sarafu ya msingi hadi lengwa."
+msgstr ""
+
+#: payments/admin/invoice_admin.py:57
+msgid "Invoice Details"
+msgstr ""
+
+#: payments/admin/invoice_admin.py:70
+msgid "Audit Info"
+msgstr ""
+
+#: payments/admin/invoice_admin.py:87
+#, python-format
+msgid "%d invoice(s) marked as paid."
+msgstr ""
+
+#: payments/admin/invoice_admin.py:88
+msgid "Mark selected invoices as paid"
+msgstr ""
+
+#: payments/admin/payment_failure_admin.py:16
+msgid "Payment Failure Details"
+msgstr ""
+
+#: payments/admin/payment_link_admin.py:16
+msgid "Taarifa za Kiungo"
+msgstr ""
+
+#: payments/admin/payment_link_admin.py:19
+#: payments/admin/scheduled_payment_admin.py:22
+msgid "Muda na Hali"
+msgstr ""
+
+#: payments/admin/payment_link_admin.py:22
+msgid "Matumizi"
+msgstr ""
+
+#: payments/admin/payment_link_admin.py:26
+msgid "Mipangilio"
+msgstr ""
+
+#: payments/admin/payment_link_admin.py:30
+msgid "Kiungo"
+msgstr ""
+
+#: payments/admin/payment_link_admin.py:39
+msgid "Inaweza Kutumika"
+msgstr ""
+
+#: payments/admin/payment_method_admin.py:51
+msgid "Account Details"
+msgstr ""
+
+#: payments/admin/payment_method_admin.py:53
+msgid ""
+"⚠️ Sensitive fields are encrypted at rest. Values here are auto-decrypted for "
+"admin view."
+msgstr ""
+
+#: payments/admin/payment_method_admin.py:68
+msgid "Account"
+msgstr ""
+
+#: payments/admin/payment_method_admin.py:88
+msgid "Please select exactly one payment method."
+msgstr ""
+
+#: payments/admin/payment_method_admin.py:94
+#, python-brace-format
+msgid "{method} set as default."
+msgstr ""
+
+#: payments/admin/payment_method_admin.py:95
+msgid "Set selected method as default"
+msgstr ""
+
+#: payments/admin/payment_method_admin.py:125
+msgid "Export selected methods as CSV"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:13
+#: payments/admin/payment_report_advanced_admin.py:133
+#: payments/admin/payment_report_advanced_admin.py:189
+#: payments/models/payment_report.py:39
+msgid "Aina ya Ripoti"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:26
+msgid "Hali ya Ripoti"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:84
+msgid "Muda wa Data"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:89
+msgid "Weka kipindi cha data unachotaka kuchambua."
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:91
+msgid "Hali na Maendeleo"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:99
+#: payments/models/payment_report.py:56
+msgid "Vichujio"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:102
+msgid "Vigezo maalum vya kuchuja data ya ripoti."
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:113
+msgid "Hitilafu"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:137
+msgid "Maendeleo"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:142
+msgid "Iko Tayari"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:148
+#, python-brace-format
+msgid ""
+"Malipo: {transactions}, Jumla: {amount}, Mafanikio: {success_rate}%, "
+"Wastani: {average}"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:155
+msgid "Hakuna data ya muhtasari"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:156
+msgid "Takwimu Muhimu"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:162
+msgid "Hakuna data bado"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:163
+msgid "Data ya Ripoti (Onesho)"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:169
+msgid "Hakuna muhtasari bado"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:170
+msgid "Muhtasari (Onesho)"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:181
+msgid "Hakuna ripoti zilizo tayari kwa upakualiji."
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:190
+#: payments/models/payment_report.py:33
+msgid "Mtumiaji"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:191
+msgid "Tarehe ya Mwanzo"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:192
+#: payments/models/payment_report.py:49
+msgid "Tarehe ya Mwisho"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:193
+#: payments/models/bulk_payment.py:177 payments/models/payment_link.py:65
+#: payments/models/payment_report.py:81 payments/models/scheduled_payment.py:85
+msgid "Hali"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:194
+msgid "Malipo Yote"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:195
+msgid "Kiasi Cha Jumla"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:197
+#: payments/models/payment_report.py:115
+msgid "Tarehe ya Kutengenezwa"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:204
+msgid "Mfumo"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:211
+msgid "Haijakamilika"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:215
+msgid "Toa ripoti zilizochaguliwa kama CSV"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:235
+#, python-brace-format
+msgid "Ripoti {count} zimeanzishwa upya kwa utengenezaji."
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:238
+msgid "Rudia kutengeneza ripoti zilizochaguliwa"
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:251
+#, python-brace-format
+msgid "Utengenezaji wa ripoti {count} umesitishwa."
+msgstr ""
+
+#: payments/admin/payment_report_advanced_admin.py:254
+msgid "Sitisha utengenezaji wa ripoti"
+msgstr ""
+
+#: payments/admin/scheduled_payment_admin.py:19
+msgid "Mpokeaji"
+msgstr ""
+
+#: payments/admin/scheduled_payment_admin.py:29
+#: payments/models/bulk_payment.py:31 payments/models/payment_link.py:45
+#: payments/models/scheduled_payment.py:77
+msgid "Maelezo"
+msgstr ""
+
+#: payments/admin/scheduled_payment_admin.py:38
+msgid "Imefika Wakati"
+msgstr ""
+
+#: payments/models/audit_log.py:20
+msgid "Create"
+msgstr ""
+
+#: payments/models/audit_log.py:21
+msgid "Update"
+msgstr ""
+
+#: payments/models/audit_log.py:22
+msgid "Delete"
+msgstr ""
+
+#: payments/models/audit_log.py:23
+msgid "Login"
+msgstr ""
+
+#: payments/models/audit_log.py:24
+msgid "Logout"
+msgstr ""
+
+#: payments/models/audit_log.py:26
+msgid "Failed 2FA"
+msgstr ""
+
+#: payments/models/audit_log.py:27
+msgid "Payment Retry"
+msgstr ""
+
+#: payments/models/audit_log.py:38
+msgid "User who performed the action, or null for system actions"
+msgstr ""
+
+#: payments/models/audit_log.py:53
+msgid "Target Content Type"
+msgstr ""
+
+#: payments/models/audit_log.py:54
+msgid "Model type of the affected object"
+msgstr ""
+
+#: payments/models/audit_log.py:60
+msgid "Target Object ID"
+msgstr ""
+
+#: payments/models/audit_log.py:61
+msgid "UUID of the affected object"
+msgstr ""
+
+#: payments/models/audit_log.py:70 payments/models/invoice.py:76
+msgid "Description (Encrypted)"
+msgstr ""
+
+#: payments/models/audit_log.py:71
+msgid "Additional details about the action (encrypted)"
+msgstr ""
+
+#: payments/models/audit_log.py:77
+msgid "Metadata (Encrypted)"
+msgstr ""
+
+#: payments/models/audit_log.py:78
+msgid "Additional structured data about the action (encrypted)"
+msgstr ""
+
+#: payments/models/audit_log.py:85
+msgid "IP address from where the action was performed"
+msgstr ""
+
+#: payments/models/audit_log.py:89
+msgid "Audit Log"
+msgstr ""
+
+#: payments/models/audit_log.py:90
+msgid "Audit Logs"
+msgstr ""
+
+#: payments/models/audit_log.py:142 payments/models/paymentmethod.py:223
+#: payments/tests/test_models/test_audit_log.py:21
+#: payments/tests/test_models/test_audit_log.py:35
+msgid "N/A"
+msgstr ""
+
+#: payments/models/audit_log.py:144
+#: payments/tests/test_models/test_audit_log.py:19
+#: payments/tests/test_models/test_audit_log.py:33
+#: payments/tests/test_models/test_audit_log.py:53
+#: payments/tests/test_models/test_audit_log.py:72
+#, python-brace-format
+msgid "{action} on {target} by {user}"
+msgstr ""
+
+#: payments/models/audit_log.py:155
+msgid "Invalid UUID format."
+msgstr ""
+
+#: payments/models/bulk_payment.py:19 payments/models/payment_link.py:25
+#: payments/models/scheduled_payment.py:28
+msgid "Imetengenezwa Na"
+msgstr ""
+
+#: payments/models/bulk_payment.py:20
+msgid "Mtumiaji aliyeunda template hii ya malipo mengi"
+msgstr ""
+
+#: payments/models/bulk_payment.py:25
+msgid "Jina la Template"
+msgstr ""
+
+#: payments/models/bulk_payment.py:26
+msgid "Jina la kutambulisha template hii ya malipo mengi"
+msgstr ""
+
+#: payments/models/bulk_payment.py:32
+msgid "Maelezo ya kina kuhusu template hii"
+msgstr ""
+
+#: payments/models/bulk_payment.py:37
+msgid "Orodha ya maagizo ya malipo na mpokeaji, kiasi, sarafu, nk"
+msgstr ""
+
+#: payments/models/bulk_payment.py:44
+msgid "Taarifa za ziada za template"
+msgstr ""
+
+#: payments/models/bulk_payment.py:49 payments/models/payment_link.py:16
+msgid "Inatumika"
+msgstr ""
+
+#: payments/models/bulk_payment.py:50
+msgid "Ikiwa template hii inatumika na inaweza kutumiwa"
+msgstr ""
+
+#: payments/models/bulk_payment.py:55
+msgid "Template ya Malipo Mengi"
+msgstr ""
+
+#: payments/models/bulk_payment.py:56
+msgid "Template za Malipo Mengi"
+msgstr ""
+
+#: payments/models/bulk_payment.py:68
+#: payments/serializers/bulk_payment_serializer.py:63
+msgid "Data ya malipo lazima iwe orodha"
+msgstr ""
+
+#: payments/models/bulk_payment.py:71
+msgid "Data ya malipo haiwezi kuwa tupu"
+msgstr ""
+
+#: payments/models/bulk_payment.py:74
+#: payments/serializers/bulk_payment_serializer.py:67
+msgid "Haiwezi kuzidi malipo 1000 kwa template moja"
+msgstr ""
+
+#: payments/models/bulk_payment.py:80
+#, python-brace-format
+msgid "Malipo katika nafasi {i} lazima iwe kamusi"
+msgstr ""
+
+#: payments/models/bulk_payment.py:87
+#, python-brace-format
+msgid "Malipo katika nafasi {i} inakosa uga unaohitajika: {field}"
+msgstr ""
+
+#: payments/models/bulk_payment.py:95
+#, python-brace-format
+msgid "Malipo katika nafasi {i} kiasi si sahihi: {amount}"
+msgstr ""
+
+#: payments/models/bulk_payment.py:99
+#, python-brace-format
+msgid "Malipo katika nafasi {i} kiasi si muundo sahihi"
+msgstr ""
+
+#: payments/models/bulk_payment.py:122
+msgid "Inasindika"
+msgstr ""
+
+#: payments/models/bulk_payment.py:123 payments/models/payment_report.py:24
+#: payments/models/scheduled_payment.py:20
+msgid "Imekamilika"
+msgstr ""
+
+#: payments/models/bulk_payment.py:124 payments/models/payment_report.py:25
+#: payments/models/scheduled_payment.py:21
+msgid "Imeshindwa"
+msgstr ""
+
+#: payments/models/bulk_payment.py:125
+msgid "Mafanikio Ya Kiasi"
+msgstr ""
+
+#: payments/models/bulk_payment.py:130
+msgid "Imefanywa Na"
+msgstr ""
+
+#: payments/models/bulk_payment.py:131
+msgid "Mtumiaji aliyeiteketeza malipo haya mengi"
+msgstr ""
+
+#: payments/models/bulk_payment.py:139
+msgid "Template"
+msgstr ""
+
+#: payments/models/bulk_payment.py:140
+msgid "Template iliyotumika kwa utekelezaji huu (ikiwepo)"
+msgstr ""
+
+#: payments/models/bulk_payment.py:144
+msgid "Jumla ya Malipo"
+msgstr ""
+
+#: payments/models/bulk_payment.py:145
+msgid "Jumla ya idadi ya malipo yanayosindika"
+msgstr ""
+
+#: payments/models/bulk_payment.py:150
+msgid "Idadi ya Mafanikio"
+msgstr ""
+
+#: payments/models/bulk_payment.py:151
+msgid "Idadi ya malipo yaliyofanikiwa kusindika"
+msgstr ""
+
+#: payments/models/bulk_payment.py:156
+msgid "Idadi ya Kushindwa"
+msgstr ""
+
+#: payments/models/bulk_payment.py:157
+msgid "Idadi ya malipo yaliyoshindwa"
+msgstr ""
+
+#: payments/models/bulk_payment.py:163
+msgid "Matokeo ya kina kwa kila jaribio la usindikaji wa malipo"
+msgstr ""
+
+#: payments/models/bulk_payment.py:169
+msgid "Ufunguo wa Kuzuia Marudio"
+msgstr ""
+
+#: payments/models/bulk_payment.py:170
+msgid "Ufunguo wa kipekee wa kuzuia utekelezaji mara mbili"
+msgstr ""
+
+#: payments/models/bulk_payment.py:178
+msgid "Hali ya sasa ya utekelezaji wa malipo mengi"
+msgstr ""
+
+#: payments/models/bulk_payment.py:183
+msgid "Imefanywa Tarehe"
+msgstr ""
+
+#: payments/models/bulk_payment.py:184
+msgid "Wakati malipo haya mengi yalipofanywa"
+msgstr ""
+
+#: payments/models/bulk_payment.py:190
+msgid "Imekamilika Tarehe"
+msgstr ""
+
+#: payments/models/bulk_payment.py:191
+msgid "Wakati malipo haya mengi yalipokamilika kusindika"
+msgstr ""
+
+#: payments/models/bulk_payment.py:198
+msgid "Taarifa za ziada za utekelezaji"
+msgstr ""
+
+#: payments/models/bulk_payment.py:203 payments/models/bulk_payment.py:204
+msgid "Utekelezaji wa Malipo Mengi"
+msgstr ""
+
+#: payments/models/bulk_payment.py:218
+msgid "Hesabu haiwezi kuwa hasi"
+msgstr ""
+
+#: payments/models/bulk_payment.py:222
+msgid "Yaliyofanikiwa + yaliyoshindwa haiwezi kuzidi jumla ya malipo"
+msgstr ""
+
+#: payments/models/currency.py:13
+msgid "Tanzanian Shilling"
+msgstr ""
+
+#: payments/models/currency.py:14
+msgid "Kenyan Shilling"
+msgstr ""
+
+#: payments/models/currency.py:15
+msgid "Ugandan Shilling"
+msgstr ""
+
+#: payments/models/currency.py:16
+msgid "Rwandan Franc"
+msgstr ""
+
+#: payments/models/currency.py:17
+msgid "Burundi Franc"
+msgstr ""
+
+#: payments/models/currency.py:18
+msgid "South Sudanese Pound"
+msgstr ""
+
+#: payments/models/currency.py:19
+msgid "US Dollar"
+msgstr ""
+
+#: payments/models/currency.py:20
+msgid "Euro"
+msgstr ""
+
+#: payments/models/currency.py:21
+msgid "British Pound"
+msgstr ""
+
+#: payments/models/currency.py:22
+msgid "South African Rand"
+msgstr ""
+
+#: payments/models/currency.py:40 payments/models/paymentmethod.py:90
+msgid "Tanzania"
+msgstr ""
+
+#: payments/models/currency.py:41 payments/models/paymentmethod.py:91
+msgid "Kenya"
+msgstr ""
+
+#: payments/models/currency.py:42 payments/models/paymentmethod.py:92
+msgid "Uganda"
+msgstr ""
+
+#: payments/models/currency.py:43 payments/models/paymentmethod.py:93
+msgid "Rwanda"
+msgstr ""
+
+#: payments/models/currency.py:44 payments/models/paymentmethod.py:94
+msgid "Burundi"
+msgstr ""
+
+#: payments/models/currency.py:45 payments/models/paymentmethod.py:95
+msgid "South Sudan"
+msgstr ""
+
+#: payments/models/currency.py:46
+msgid "United States"
+msgstr ""
+
+#: payments/models/currency.py:47
+msgid "European Union"
+msgstr ""
+
+#: payments/models/currency.py:48
+msgid "United Kingdom"
+msgstr ""
+
+#: payments/models/currency.py:49
+msgid "South Africa"
+msgstr ""
+
+#: payments/models/currency.py:56
+msgid "Currency code (ISO 4217) ya fedha."
+msgstr ""
+
+#: payments/models/currency.py:60
+msgid "Nchi inayotumia currency hii."
+msgstr ""
+
+#: payments/models/currency.py:62
+msgid "Ikiwa currency bado inatumika."
+msgstr ""
+
+#: payments/models/currency.py:67
+msgid "Kiwango cha kubadilisha fedha kulinganisha na TZS."
+msgstr ""
+
+#: payments/models/exchange_rate.py:13
+msgid "Base Currency"
+msgstr ""
+
+#: payments/models/exchange_rate.py:14
+msgid "Sarafu ya msingi ambayo viwango vingine vinaendeshwa"
+msgstr ""
+
+#: payments/models/exchange_rate.py:20
+msgid "Target Currency"
+msgstr ""
+
+#: payments/models/exchange_rate.py:21
+msgid "Sarafu ambayo kiwango kinatumika kubadilisha"
+msgstr ""
+
+#: payments/models/exchange_rate.py:27
+msgid "Kiwango cha kubadilisha kutoka sarafu ya msingi hadi sarafu lengwa"
+msgstr ""
+
+#: payments/models/exchange_rate.py:33
+msgid "Source"
+msgstr ""
+
+#: payments/models/exchange_rate.py:34
+msgid "Chanzo cha kiwango hiki (mfano: Forex API, Bank XYZ)"
+msgstr ""
+
+#: payments/models/exchange_rate.py:37
+msgid "Effective Date"
+msgstr ""
+
+#: payments/models/exchange_rate.py:38
+msgid "Tarehe ambayo kiwango hiki kinaanza kutumika"
+msgstr ""
+
+#: payments/models/exchange_rate.py:43
+msgid "Exchange Rates"
+msgstr ""
+
+#: payments/models/exchange_rate.py:49
+#, python-brace-format
+msgid "{base} → {target} @ {rate} (kutoka {date})"
+msgstr ""
+
+#: payments/models/invoice.py:16
+msgid "Overdue"
+msgstr ""
+
+#: payments/models/invoice.py:23
+msgid "Invoice Number"
+msgstr ""
+
+#: payments/models/invoice.py:24
+msgid "Nambari ya kipekee ya invoice"
+msgstr ""
+
+#: payments/models/invoice.py:31
+msgid "Mtumiaji aliyelipwa invoice hii"
+msgstr ""
+
+#: payments/models/invoice.py:36
+msgid "Amount"
+msgstr ""
+
+#: payments/models/invoice.py:37
+msgid "Kiasi cha msingi cha invoice"
+msgstr ""
+
+#: payments/models/invoice.py:43
+msgid "Tax"
+msgstr ""
+
+#: payments/models/invoice.py:44
+msgid "Kodi inayolipwa juu ya kiasi"
+msgstr ""
+
+#: payments/models/invoice.py:51
+msgid "Jumla ya kiasi + kodi"
+msgstr ""
+
+#: payments/models/invoice.py:58
+msgid "Hali ya invoice"
+msgstr ""
+
+#: payments/models/invoice.py:61
+msgid "Due Date"
+msgstr ""
+
+#: payments/models/invoice.py:62
+msgid "Tarehe ya mwisho ya kulipa"
+msgstr ""
+
+#: payments/models/invoice.py:67
+msgid "Paid At"
+msgstr ""
+
+#: payments/models/invoice.py:68
+msgid "Tarehe na wakati ulipolipwa"
+msgstr ""
+
+#: payments/models/invoice.py:77
+msgid "Maelezo ya ziada kuhusu invoice (imehifadhiwa kwa usalama)"
+msgstr ""
+
+#: payments/models/invoice.py:102
+msgid "Created By"
+msgstr ""
+
+#: payments/models/invoice.py:103
+msgid "Mtumiaji aliyefanya invoice hii"
+msgstr ""
+
+#: payments/models/invoice.py:111
+msgid "Last Modified By"
+msgstr ""
+
+#: payments/models/invoice.py:112
+msgid "Mtumiaji wa mwisho aliyeyabadilisha invoice hii"
+msgstr ""
+
+#: payments/models/invoice.py:117
+msgid "Invoice"
+msgstr ""
+
+#: payments/models/invoice.py:118
+msgid "Invoices"
+msgstr ""
+
+#: payments/models/payment_failure.py:18
+msgid "Kiasi cha Malipo"
+msgstr ""
+
+#: payments/models/payment_failure.py:25 payments/models/payment_link.py:39
+#: payments/models/scheduled_payment.py:42
+msgid "Sarafu"
+msgstr ""
+
+#: payments/models/payment_failure.py:29 payments/models/payment_link.py:89
+#: payments/models/scheduled_payment.py:92
+msgid "Rejea ya Malipo"
+msgstr ""
+
+#: payments/models/payment_failure.py:32
+msgid "Unknown error"
+msgstr ""
+
+#: payments/models/payment_failure.py:33
+msgid "Sababu ya Kushindwa"
+msgstr ""
+
+#: payments/models/payment_failure.py:37
+msgid "Idadi ya Jaribio"
+msgstr ""
+
+#: payments/models/payment_failure.py:48 payments/models/payment_failure.py:49
+msgid "Kushindwa kwa Malipo"
+msgstr ""
+
+#: payments/models/payment_link.py:17
+msgid "Imetumika"
+msgstr ""
+
+#: payments/models/payment_link.py:18
+msgid "Imekwisha"
+msgstr ""
+
+#: payments/models/payment_link.py:19 payments/models/payment_report.py:26
+#: payments/models/scheduled_payment.py:22
+msgid "Imesitishwa"
+msgstr ""
+
+#: payments/models/payment_link.py:26
+msgid "Mtumiaji aliyeunda kiungo hiki cha malipo"
+msgstr ""
+
+#: payments/models/payment_link.py:32 payments/models/scheduled_payment.py:35
+msgid "Kiasi"
+msgstr ""
+
+#: payments/models/payment_link.py:33
+msgid "Kiasi cha malipo kinachohitajika"
+msgstr ""
+
+#: payments/models/payment_link.py:40 payments/models/scheduled_payment.py:43
+msgid "Aina ya sarafu ya malipo"
+msgstr ""
+
+#: payments/models/payment_link.py:46
+msgid "Maelezo mafupi kuhusu malipo"
+msgstr ""
+
+#: payments/models/payment_link.py:52
+msgid "Msimbo wa Kiungo"
+msgstr ""
+
+#: payments/models/payment_link.py:53
+msgid "Msimbo wa kipekee wa kiungo cha malipo"
+msgstr ""
+
+#: payments/models/payment_link.py:57
+msgid "Inakwisha Tarehe"
+msgstr ""
+
+#: payments/models/payment_link.py:58
+msgid "Tarehe na wakati kiungo kitakapokwisha kuwa halali"
+msgstr ""
+
+#: payments/models/payment_link.py:66
+msgid "Hali ya kiungo cha malipo"
+msgstr ""
+
+#: payments/models/payment_link.py:75
+msgid "Imetumika Na"
+msgstr ""
+
+#: payments/models/payment_link.py:76
+msgid "Mtumiaji aliyetumia kiungo hiki cha malipo"
+msgstr ""
+
+#: payments/models/payment_link.py:82
+msgid "Imetumika Tarehe"
+msgstr ""
+
+#: payments/models/payment_link.py:83
+msgid "Tarehe na wakati kiungo kilipotumika"
+msgstr ""
+
+#: payments/models/payment_link.py:90 payments/models/scheduled_payment.py:93
+msgid "Nambari ya kumbukumbu ya malipo yaliyofanyika"
+msgstr ""
+
+#: payments/models/payment_link.py:97
+msgid "Taarifa za ziada kuhusu kiungo hiki"
+msgstr ""
+
+#: payments/models/payment_link.py:102
+msgid "Mbinu Zilizoruhusiwa"
+msgstr ""
+
+#: payments/models/payment_link.py:103
+msgid "Aina za mbinu za malipo zilizoruhusiwa"
+msgstr ""
+
+#: payments/models/payment_link.py:108
+msgid "Kiungo cha Malipo"
+msgstr ""
+
+#: payments/models/payment_link.py:109
+msgid "Viungo vya Malipo"
+msgstr ""
+
+#: payments/models/payment_link.py:126
+msgid "Tarehe ya kumalizika lazima iwe baada ya sasa"
+msgstr ""
+
+#: payments/models/payment_link.py:130 payments/models/scheduled_payment.py:147
+msgid "Kiasi lazima kiwe zaidi ya sifuri"
+msgstr ""
+
+#: payments/models/payment_report.py:15
+msgid "Muhtasari wa Malipo"
+msgstr ""
+
+#: payments/models/payment_report.py:16
+msgid "Uchambuzi wa Mapato"
+msgstr ""
+
+#: payments/models/payment_report.py:17
+msgid "Shughuli za Watumiaji"
+msgstr ""
+
+#: payments/models/payment_report.py:18
+msgid "Utendaji wa Mfumo wa Malipo"
+msgstr ""
+
+#: payments/models/payment_report.py:19
+msgid "Muhtasari wa Kila Siku"
+msgstr ""
+
+#: payments/models/payment_report.py:20
+msgid "Ripoti Maalum"
+msgstr ""
+
+#: payments/models/payment_report.py:23
+msgid "Inatengenezwa"
+msgstr ""
+
+#: payments/models/payment_report.py:34
+msgid "Mtumiaji aliyeomba ripoti hii"
+msgstr ""
+
+#: payments/models/payment_report.py:40
+msgid "Aina ya ripoti inayotengenezwa"
+msgstr ""
+
+#: payments/models/payment_report.py:45
+msgid "Tarehe ya Kuanzia"
+msgstr ""
+
+#: payments/models/payment_report.py:46
+msgid "Tarehe ya mwanzo wa data ya ripoti"
+msgstr ""
+
+#: payments/models/payment_report.py:50
+msgid "Tarehe ya mwisho wa data ya ripoti"
+msgstr ""
+
+#: payments/models/payment_report.py:57
+msgid "Vigezo na vichujio vya ripoti"
+msgstr ""
+
+#: payments/models/payment_report.py:64
+msgid "Data ya Ripoti"
+msgstr ""
+
+#: payments/models/payment_report.py:65
+msgid "Data iliyokusanywa na kuchambuliwa"
+msgstr ""
+
+#: payments/models/payment_report.py:72
+msgid "Muhtasari"
+msgstr ""
+
+#: payments/models/payment_report.py:73
+msgid "Muhtasari wa ripoti na viashiria muhimu"
+msgstr ""
+
+#: payments/models/payment_report.py:82
+msgid "Hali ya utengenezaji wa ripoti"
+msgstr ""
+
+#: payments/models/payment_report.py:86
+msgid "Asilimia ya Utekelezaji"
+msgstr ""
+
+#: payments/models/payment_report.py:87
+msgid "Asilimia ya utengenezaji wa ripoti"
+msgstr ""
+
+#: payments/models/payment_report.py:93
+msgid "URL ya Kupakua"
+msgstr ""
+
+#: payments/models/payment_report.py:94
+msgid "Kiungo cha kupakua ripoti kamili"
+msgstr ""
+
+#: payments/models/payment_report.py:100
+msgid "Umbizo la Faili"
+msgstr ""
+
+#: payments/models/payment_report.py:101
+msgid "Umbizo la faili ya ripoti"
+msgstr ""
+
+#: payments/models/payment_report.py:107
+#: payments/models/scheduled_payment.py:119
+msgid "Ujumbe wa Hitilafu"
+msgstr ""
+
+#: payments/models/payment_report.py:108
+msgid "Maelezo ya hitilafu ikiwa ripoti imeshindwa"
+msgstr ""
+
+#: payments/models/payment_report.py:116
+msgid "Tarehe na wakati ripoti ilipotengenezwa"
+msgstr ""
+
+#: payments/models/payment_report.py:121
+msgid "Tarehe ya Kukoma"
+msgstr ""
+
+#: payments/models/payment_report.py:122
+msgid "Tarehe ripoti itakapokoma kuwa halali"
+msgstr ""
+
+#: payments/models/payment_report.py:126
+msgid "Ripoti ya Malipo"
+msgstr ""
+
+#: payments/models/payment_report.py:127
+msgid "Ripoti za Malipo"
+msgstr ""
+
+#: payments/models/payment_report.py:136
+#, python-brace-format
+msgid "Ripoti ya {type} - {user} ({status})"
+msgstr ""
+
+#: payments/models/payment_report.py:149
+msgid "Tarehe ya kuanzia lazima iwe kabla ya tarehe ya mwisho"
+msgstr ""
+
+#: payments/models/payment_report.py:153
+msgid "Kipindi cha ripoti hakiwezi kuzidi mwaka mmoja"
+msgstr ""
+
+#: payments/models/payment_report.py:157
+msgid "Asilimia ya utekelezaji lazima iwe kati ya 0 na 100"
+msgstr ""
+
+#: payments/models/paymentmethod.py:57
+msgid "Wallet"
+msgstr ""
+
+#: payments/models/paymentmethod.py:58
+msgid "Credit Card"
+msgstr ""
+
+#: payments/models/paymentmethod.py:59
+msgid "PawaPay (MNO Gateway)"
+msgstr ""
+
+#: payments/models/paymentmethod.py:63
+msgid "Vodacom M-Pesa"
+msgstr ""
+
+#: payments/models/paymentmethod.py:64
+msgid "Airtel Money"
+msgstr ""
+
+#: payments/models/paymentmethod.py:65
+msgid "YAS (MixByYAS)"
+msgstr ""
+
+#: payments/models/paymentmethod.py:66
+msgid "HaloPesa"
+msgstr ""
+
+#: payments/models/paymentmethod.py:67
+msgid "EzyPesa"
+msgstr ""
+
+#: payments/models/paymentmethod.py:68
+msgid "MTN Mobile Money"
+msgstr ""
+
+#: payments/models/paymentmethod.py:69
+msgid "M-Pesa Kenya"
+msgstr ""
+
+#: payments/models/paymentmethod.py:70
+msgid "T-Kash"
+msgstr ""
+
+#: payments/models/paymentmethod.py:71
+msgid "Africell Money"
+msgstr ""
+
+#: payments/models/paymentmethod.py:72
+msgid "Equitel Money"
+msgstr ""
+
+#: payments/models/paymentmethod.py:74
+msgid "MixByYAS"
+msgstr ""
+
+#: payments/models/paymentmethod.py:200
+msgid "Unknown User"
+msgstr ""
+
+#: payments/models/paymentmethod.py:203
+msgid "Unknown MNO"
+msgstr ""
+
+#: payments/models/paymentmethod.py:204
+#, python-format
+msgid "%(mno)s via PawaPay - %(phone)s"
+msgstr ""
+
+#: payments/models/paymentmethod.py:209
+#, python-format
+msgid "Wallet (%(id)s) - %(user)s"
+msgstr ""
+
+#: payments/models/paymentmethod.py:214
+msgid "Unknown Gateway"
+msgstr ""
+
+#: payments/models/paymentmethod.py:217
+#, python-format
+msgid "Card ending %(last4)s via %(gateway)s - %(user)s"
+msgstr ""
+
+#: payments/models/paymentmethod.py:221
+#, python-format
+msgid "%(method)s - %(id)s"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:18
+msgid "Imerasimiwa"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:19
+msgid "Inafanyika"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:29
+msgid "Mtumiaji aliyeunda malipo yaliyorasimiwa"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:36
+msgid "Kiasi cha malipo"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:49
+msgid "Mbinu ya Malipo"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:50
+msgid "Mbinu ya malipo itakayotumika"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:57
+msgid "Mtumiaji Anayepokea"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:58
+msgid "Mtumiaja atakayepokea malipo"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:66
+msgid "Mkoba Anayepokea"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:67
+msgid "Mkoba utakayopokea malipo (hiari)"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:71
+msgid "Tarehe Iliyorasmishiwa"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:72
+msgid "Tarehe na wakati malipo yatafanyika"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:78
+msgid "Maelezo kuhusu malipo yaliyorasmishiwa"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:86
+msgid "Hali ya malipo yaliyorasmishiwa"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:100
+msgid "Taarifa za ziada kuhusu malipo yaliyorasmishiwa"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:106
+msgid "Imetekelezwa Tarehe"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:107
+msgid "Tarehe na wakati malipo yalipotekelezwa"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:113
+msgid "Imesitishwa Tarehe"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:114
+msgid "Tarehe na wakati malipo yalipositishwa"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:120
+msgid "Maelezo ya hitilafu ikiwa malipo yameshindwa"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:125
+#: payments/models/scheduled_payment.py:126
+msgid "Malipo Yaliyorasmishiwa"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:143
+msgid "Tarehe ya kurasmishwa lazima iwe baada ya sasa"
+msgstr ""
+
+#: payments/models/scheduled_payment.py:151
+msgid "Huwezi kujirasmishia malipo"
+msgstr ""
+
+#: payments/serializers/audit_log_serializer.py:93
+msgid "Invalid action type."
+msgstr ""
+
+#: payments/serializers/bulk_payment_serializer.py:65
+msgid "Orodha ya malipo haiwezi kuwa tupu"
+msgstr ""
+
+#: payments/serializers/bulk_payment_serializer.py:71
+#, python-brace-format
+msgid "Malipo katika nafasi {i} lazima iwe dict"
+msgstr ""
+
+#: payments/serializers/bulk_payment_serializer.py:74
+#, python-brace-format
+msgid "Malipo katika nafasi {i} yanakosa 'recipient_user_id' au 'amount'"
+msgstr ""
+
+#: payments/serializers/bulk_payment_serializer.py:80
+#, python-brace-format
+msgid "Kiasi cha malipo katika nafasi {i} si sahihi: {amount}"
+msgstr ""
+
+#: payments/serializers/bulk_payment_serializer.py:84
+#, python-brace-format
+msgid "Kiasi cha malipo katika nafasi {i} si muundo sahihi"
+msgstr ""
+
+#: payments/serializers/bulk_payment_serializer.py:191
+msgid "Template haipo au imezimwa."
+msgstr ""
+
+#: payments/serializers/bulk_payment_serializer.py:195
+msgid "Template haina data ya malipo."
+msgstr ""
+
+#: payments/serializers/bulk_payment_serializer.py:200
+msgid "Utekelezaji wenye ufunguo huu tayari upo — zuia marudio."
+msgstr ""
+
+#: payments/serializers/payment_report_serializer.py:86
+#: payments/serializers/payment_report_serializer.py:177
+#: payments/serializers/payment_report_serializer.py:271
+msgid "End date must be after start date"
+msgstr ""
+
+#: payments/serializers/payment_report_serializer.py:91
+#: payments/serializers/payment_report_serializer.py:182
+msgid "Report period cannot exceed 1 year"
+msgstr ""
+
+#: payments/serializers/payment_report_serializer.py:96
+msgid "Progress must be between 0 and 100"
+msgstr ""
+
+#: payments/serializers/payment_report_serializer.py:172
+msgid "Both start date and end date are required"
+msgstr ""
+
+#: payments/serializers/payment_report_serializer.py:218
+msgid "Cannot update report that is not in generating status"
+msgstr ""
+
+#: payments/serializers/paymentmethod_serializer.py:61
+msgid "Haitakiwi kuwa tupu kwa Wallet au Credit Card"
+msgstr ""
+
+#: payments/signals.py:25
+msgid "Mteja"
+msgstr ""
+
+#: payments/signals.py:31
+msgid "Tsh. "
+msgstr ""
+
+#: payments/signals.py:34
+#, python-brace-format
+msgid ""
+"Hujambo {full_name}, malipo yako ya {currency}{amount} kwa reference {ref} "
+"yameshindwa. Sababu: {reason}. Jaribu tena au wasiliana na huduma kwa wateja."
+msgstr ""
+
+#: payments/views/base.py:27
+msgid "Method not allowed."
+msgstr ""
+
+#: payments/views/bulk_payment_views.py:75
+msgid "Template haina malipo yoyote halali"
+msgstr ""
+
+#: payments/views/bulk_payment_views.py:81
+msgid "Wallet ya mtumiaji haipo"
+msgstr ""
+
+#: payments/views/bulk_payment_views.py:85
+msgid "Kiasi cha jumla lazima kiwe kikubwa kuliko sifuri"
+msgstr ""
+
+#: payments/views/bulk_payment_views.py:89
+msgid "Salio halitoshi kufanya malipo yote ya batch"
+msgstr ""
+
+#: payments/views/payment_report_views.py:106
+msgid "Failed to start report generation: {}"
+msgstr ""
+
+#: payments/views/payment_report_views.py:196
+msgid "Report is not ready yet"
+msgstr ""
+
+#: payments/views/payment_report_views.py:199
+msgid "Report has expired"
+msgstr ""
+
+#: payments/views/payment_report_views.py:214
+msgid "Can only regenerate completed or failed reports"
+msgstr ""
+
+#: payments/views/payment_report_views.py:227
+msgid "Report regeneration started"
+msgstr ""
+
+#: payments/views/payment_report_views.py:237
+msgid "Can only cancel reports that are generating"
+msgstr ""
+
+#: payments/views/payment_report_views.py:242
+msgid "Cancelled by user"
+msgstr ""
+
+#: payments/views/payment_report_views.py:248
+msgid "Report cancelled successfully"
+msgstr ""
+
+#: syllabus/admins/teacher_workstation_admin.py:43
+msgid "Taarifa za Mwl na Kituo"
+msgstr ""
+
+#: syllabus/admins/teacher_workstation_admin.py:51
+msgid "Hali ya Kazi"
+msgstr ""
+
+#: syllabus/admins/teacher_workstation_admin.py:54
+msgid "Taarifa za Mfumo"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:15
+msgid "January"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:16
+msgid "February"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:17
+msgid "March"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:18
+msgid "April"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:19
+msgid "May"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:20
+msgid "June"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:21
+msgid "July"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:22
+msgid "August"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:23
+msgid "September"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:24
+msgid "October"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:25
+msgid "November"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:26
+msgid "December"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:29
+msgid "Week 1"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:29
+msgid "Week 2"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:29
+msgid "Week 3"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:29
+msgid "Week 4"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:37
+msgid "Taasis ya Shule/Chuo"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:38
+msgid "Jina la shule au chuo. Mfano: 'Shule ya Msingi Mzingi'"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:44
+msgid "Mwaka wa Masomo"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:45
+msgid "Chagua mwaka wa masomo (miaka mitatu tu: uliopita, huu, ujao)."
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:49
+msgid "Jumla ya Siku za Mafunzo"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:50
+msgid "Jumla ya siku za masomo kwa mwaka mzima."
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:93
+msgid "Active"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:96
+msgid "Kalenda ya Mwaka"
+msgstr ""
+
+#: syllabus/models/annual_calendar.py:97
+msgid "Kalenda za Mwaka"
+msgstr ""
+
+#: syllabus/models/lesson_sentence.py:12
+msgid "Utangulizi / Introduction"
+msgstr ""
+
+#: syllabus/models/lesson_sentence.py:13
+msgid "Kuimarisha / Development"
+msgstr ""
+
+#: syllabus/models/lesson_sentence.py:14
+msgid "Hitimisho / Conclusion"
+msgstr ""
+
+#: syllabus/models/lesson_sentence.py:15
+msgid "Maoni / Reflection"
+msgstr ""
+
+#: syllabus/models/syllabus_version.py:17
+msgid "Evaluation Aid"
+msgstr ""
+
+#: syllabus/models/syllabus_version.py:18
+msgid ""
+"Maelezo kuhusu vifaa au njia za evaluation. Mfano: 'Quiz, Assignment, Class "
+"Observation.'"
+msgstr ""
+
+#: syllabus/models/teacher_workstation.py:19
+msgid ""
+"1. Chagua mwalimu anayehusiana na workstation hii. Mfano: 'ryoba."
+"dennis@jamiikazini.com'"
+msgstr ""
+
+#: syllabus/models/teacher_workstation.py:23
+msgid ""
+"2. Jina la shule ambapo mwalimu anafanya kazi. Mfano: 'Shule ya Msingi "
+"Mzingi'"
+msgstr ""
+
+#: syllabus/models/teacher_workstation.py:27
+msgid "3. Jina la wilaya. Mfano: 'Halimashauri ya Wilaya ya Mkinga'"
+msgstr ""
+
+#: syllabus/models/teacher_workstation.py:33
+msgid "4. Jina la kata (hiari). Mfano: 'Kata ya Parungu Kasera'"
+msgstr ""
+
+#: syllabus/models/teacher_workstation.py:39
+msgid "5. Jina la mkoa (hiari). Mfano: 'Tanga'"
+msgstr ""
+
+#: syllabus/models/teacher_workstation.py:44
+msgid "6. Weka False ikiwa mwalimu hafanyi kazi tena hapa. Mfano: False"
+msgstr ""
+
+#: syllabus/models/teacher_workstation.py:48
+msgid "Sehemu ya Kazi ya Mwalimu"
+msgstr ""
+
+#: syllabus/models/teacher_workstation.py:49
+msgid "Sehemu za Kazi za Walimu"
+msgstr ""
+
+#: syllabus/models/timetable.py:16
+msgid "Kituo cha Mwalimu"
+msgstr ""
+
+#: syllabus/models/timetable.py:17
+msgid ""
+"Chagua kituo cha kazi cha mwalimu. Hii itahusisha shule na halmashauri "
+"automatically."
+msgstr ""
+
+#: syllabus/models/timetable.py:22
+msgid "Somo (Version)"
+msgstr ""
+
+#: syllabus/models/timetable.py:23
+msgid ""
+"Chagua toleo la somo litakalofundishwa katika kipindi hiki. Hii inaonyesha "
+"darasa na syllabus version."
+msgstr ""
+
+#: syllabus/models/timetable.py:28
+msgid "Kipindi"
+msgstr ""
+
+#: syllabus/models/timetable.py:29
+msgid "Chagua kipindi cha siku ambacho somo litafundishwa."
+msgstr ""
+
+#: syllabus/models/timetable.py:35
+msgid "Muda wa Kuanza"
+msgstr ""
+
+#: syllabus/models/timetable.py:36
+msgid "Weka muda wa kuanza wa kipindi."
+msgstr ""
+
+#: syllabus/models/timetable.py:42
+msgid "Muda wa Kumaliza"
+msgstr ""
+
+#: syllabus/models/timetable.py:43
+msgid "Weka muda wa kuisha wa kipindi."
+msgstr ""
+
+#: syllabus/models/timetable.py:50
+msgid "Idadi ya Wavulana"
+msgstr ""
+
+#: syllabus/models/timetable.py:51
+msgid "Andika idadi ya wavulana walioandikishwa darasani."
+msgstr ""
+
+#: syllabus/models/timetable.py:56
+msgid "Idadi ya Wasichana"
+msgstr ""
+
+#: syllabus/models/timetable.py:57
+msgid "Andika idadi ya wasichana walioandikishwa darasani."
+msgstr ""
+
+#: syllabus/models/timetable.py:61
+msgid "Imehakikishwa"
+msgstr ""
+
+#: syllabus/models/timetable.py:62
+msgid "Weka True ikiwa mwalimu amethibitisha ratiba hii."
+msgstr ""
+
+#: syllabus/models/timetable.py:66
+msgid "Ratiba ya Mwalimu"
+msgstr ""
+
+#: syllabus/models/timetable.py:67
+msgid "Ratiba za Walimu"
+msgstr ""
+
+#: syllabus/serializers/teacher_workstation_serializer.py:45
+msgid "Jina la shule halitakiwi kuwa fupi sana."
+msgstr ""
+
+#: syllabus/serializers/teacher_workstation_serializer.py:62
+msgid "Mwalimu huyu tayari ana workstation moja."
+msgstr ""
+
+#: syllabus/services/calendar_service.py:78
+msgid "AnnualCalendar instance is required"
+msgstr ""
+
+#: syllabus/services/calendar_service.py:117
+msgid "Calendar missing required dates: {}"
+msgstr ""
+
+#: syllabus/services/calendar_service.py:135
+msgid "Calendar dates are not in chronological order ({} comes after {})."
+msgstr ""
+
+#: syllabus/services/calendar_service.py:144
+msgid "Calendar date {} is outside expected academic year"
+msgstr ""
+
+#: syllabus/services/period_calculator_service.py:38
+msgid "Calendar service is required"
+msgstr ""
+
+#: syllabus/services/period_calculator_service.py:41
+msgid "Periods per week must be greater than zero"
+msgstr ""
+
+#: syllabus/services/period_calculator_service.py:44
+msgid "Total periods needed must be greater than zero"
+msgstr ""
+
+#: syllabus/services/period_calculator_service.py:193
+msgid "No studying weeks available."
+msgstr ""
+
+#: syllabus/services/period_calculator_service.py:194
+msgid "Cannot allocate periods without studying weeks."
+msgstr ""
+
+#: syllabus/services/period_calculator_service.py:233
+msgid "Not enough studying weeks. "
+msgstr ""
+
+#: syllabus/services/period_calculator_service.py:276
+msgid "Increase teaching weeks or reduce syllabus content. "
+msgstr ""
+
+#: syllabus/services/period_calculator_service.py:285
+#, python-brace-format
+msgid "Need approximately {additional_weeks_needed} "
+msgstr ""

@@ -1,0 +1,282 @@
+{
+  "home": {
+    "welcome": "Welcome to Jamiikazini.",
+    "description": "This is a digital platform for institutions, businesses, professionals, and individuals across East Africa. It aims to be a hub for essential services like education, healthcare, transport, and payments — powered by modern technology that respects language, locality, and community needs.",
+    "login_cta": "Login to continue"
+  },
+
+  "topbar": {
+    "back": "Back",
+    "forward": "Forward",
+    "dashboard": "Dashboard",
+    "cart": "Cart",
+    "notifications": "Notifications",
+    "search": "Search"
+  },
+
+  "user": {
+    "menu": "User Menu",
+    "profile": "Profile",
+    "settings": "Settings",
+    "wallet": "Jamiiwallet",
+    "edit_profile": "Edit Profile",
+    "logout": "Logout",
+    "login": "Login"
+  },
+
+  "cart": {
+    "title": "My Cart",
+    "empty": "Your cart is empty.",
+    "edit": "Edit",
+    "checkout": "Checkout"
+  },
+
+  "notifications": {
+    "requests": "Requests",
+    "chats": "Discussions",
+    "accept": "Accept",
+    "decline": "Decline",
+    "view": "View",
+    "open_chat": "Open Discussion"
+  },
+
+  "search": {
+    "placeholder": "Search...",
+    "empty": "Search results will appear here..."
+  },
+
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+
+  "dashboard": {
+    "welcome": "Welcome to your dashboard",
+    "description": "Here you can view a summary of your activities"
+  },
+
+  "user_home": {
+    "welcome": "Welcome to Jamiikazini",
+    "description": "Choose a service to continue"
+  },
+  "services": {
+    "teaching": "Teaching Services",
+    "business": "Business Services",
+    "health": "Health Services",
+    "payments": "Payments"
+  },
+
+  "consent": {
+    "title": "Are you still here?",
+    "description": "For your account's security, please confirm you're still active. Otherwise, we'll log you out respectfully.",
+    "cancel": "No",
+    "confirm": "Yes, I'm here"
+  },
+
+  "auth": {
+    "password": "Password",
+    "password_placeholder": "Enter password",
+    "confirm_password": "Confirm Password",
+    "confirm_password_placeholder": "Re-enter password",
+    "passwords_do_not_match": "Passwords do not match",
+    "title": "Title",
+    "authenticate": "Authenticate",
+    "login": "Login",
+    "register": "Register"
+  },
+
+  "password": {
+    "label": "Password strength:",
+    "strength": {
+      "very_weak": "Very Weak",
+      "weak": "Weak",
+      "fair": "Fair",
+      "strong": "Strong",
+      "very_strong": "Very Strong"
+    }
+  },
+
+  "sidebar": {
+    "app_dashboard": "App Dashboard"
+  },
+
+  "tabs": {
+    "jamiikazini": "Jamiikazini",
+    "settings": "Settings",
+    "profile": "Profile",
+    "wallet": "Wallet",
+    "edit_profile": "Edit Profile",
+    "home": "Home",
+    "register": "Register",
+    "login": "Login",
+  
+    "kiini_dashboard": "Jamii",
+    "business_dashboard": "Business",
+    "education_dashboard": "Learning",
+    "gov_dashboard": "Government",
+    "health_dashboard": "Health",
+    "chat_dashboard": "Chat",
+    "wallet_dashboard": "Wallet",
+    "logistics_dashboard": "Logistics",
+    "payments_dashboard": "Payments",
+    "search_dashboard": "Search",
+    "portfolio_dashboard": "Portfolio",
+    "teaching": "Teaching Services"
+
+  },
+
+  "user_home": {
+    "welcome": "Welcome to your Dashboard",
+    "description": "This is where your personal information, bookings, notifications, etc. will appear."
+  },
+
+  "auth_login": {
+    "no_account": "Don't have an account? Register",
+    "no_token": "No token received from server",
+    "title": "Login",
+    "email_label": "Email",
+    "email_placeholder": "e.g. name@example.com",
+    "password_label": "Password",
+    "password_placeholder": "Your password",
+    "submit": "Sign In",
+    "loading": "Signing in...",
+    "invalid_credentials": "Invalid email or password. Please try again.",
+    "recaptcha_not_ready": "reCAPTCHA has not fully loaded. Please wait...",
+    "login_failed": "Login failed.",
+    "network_error": "Network or reCAPTCHA error."
+  },
+
+  "auth_register": {
+    "title": "Register",
+    "email_label": "Email",
+    "email_placeholder": "e.g. name@example.com",
+    "name_label": "Full Name",
+    "name_placeholder": "e.g. Ryoba Den",
+    "phone_label": "Phone Number (optional)",
+    "phone_placeholder": "e.g. 0712345678",
+    "submit": "Register",
+    "loading": "Registering...",
+    "success": "Registration successful! Please check your email to confirm.",
+    "errors": {
+      "password_mismatch": "Passwords do not match.",
+      "recaptcha_required": "Please verify that you are not a robot.",
+      "password_length": "Password must be at least 6 characters.",
+      "network": "Network error. Please try again."
+    }
+  },
+
+  "auth_verify_email": {
+    "title": "Email Verification",
+    "verifying": "Verifying your email...",
+    "success": "Your email has been successfully verified.",
+    "error": "Sorry! The link is invalid or has expired.",
+    "loading": "Loading...",
+    "to_login": "Go to Login"
+  },
+
+  "userandmenu": {
+    "load_failed": "Failed to load user or menu information."
+  },
+
+  "jamiiauth": {
+    "login_failed": "Login failed. Please check your credentials.",
+    "register_failed": "Registration failed. Please try again."
+  },
+
+  "business_dashboard": {
+    "loading": "Loading dashboard...",
+    "empty": "No data available for this business at the moment.",
+    "title": "Overview",
+    "errors": {
+      "failedToLoad": "Failed to load dashboard data."
+    },
+    "stats": {
+      "products": "Products",
+      "activeProducts": "Active Products",
+      "inactiveProducts": "Inactive Products",
+      "services": "Services",
+      "branches": "Branches",
+      "orders": "Orders",
+      "rating": "Rating",
+      "reviews": "Reviews"
+    },
+    "revenue": {
+      "summary": "Revenue Summary",
+      "last7": "Last 7 Days",
+      "last30": "Last 30 Days",
+      "total": "Total",
+      "chart": "Revenue Chart",
+      "label": "Day: {{label}}",
+      "amount": "Revenue"
+    },
+    "top_products": {
+      "empty": "No top products available.",
+      "sold": "{{count}} sold"
+    },
+    "top_services": {
+      "title": "Top Services",
+      "empty": "No top services available.",
+      "used": "{{count}} used"
+    }
+  },
+
+  "invite": {
+    "title": "Invite Your Friends",
+    "share_whatsapp": "Share via WhatsApp",
+    "share_facebook": "Share via Facebook",
+    "copy_link": "Copy Link",
+    "link_copied": "Link Copied!",
+    "share_text": "Join Jamiikazini – the best service platform in East Africa! 🌍"
+  },
+
+  "invite": {
+    "title": "Invite Your Friends",
+    "share_text": "Join Jamiikazini – the best service platform in East Africa! 🌍",
+    "invites_you": "is inviting you to join Jamiikazini – the best service platform in East Africa! 🌍",
+    "copy_link": "Copy Link",
+    "link_copied": "Link Copied!"
+  },
+
+  "currencies": {
+    "tzs": "Tanzanian Shilling",
+    "kes": "Kenyan Shilling",
+    "ugx": "Ugandan Shilling",
+    "rwf": "Rwandan Franc",
+    "bif": "Burundian Franc",
+    "usd": "US Dollar",
+    "eur": "Euro",
+    "gbp": "British Pound",
+    "last_updated": "Last updated",
+    "auto_refresh": "Auto-refresh",
+    "refresh_rates": "Refresh Rates",
+    "estimated_rates": "Using estimated rates",
+    "select_currency": "Select Currency",
+    "success": {
+      "rates_updated": "Exchange rates updated: {{count}} currencies",
+      "rates_refreshed": "Exchange rates refreshed successfully",
+      "currency_changed": "Currency changed to {{currency}}"
+    },
+    "errors": {
+      "no_token": "No access token found",
+      "not_authenticated": "Not authenticated",
+      "invalid_response": "Invalid response format",
+      "fetch_failed": "Failed to fetch exchange rates",
+      "unauthorized": "Unauthorized - stopping auto-refresh",
+      "auth_required": "Authentication required",
+      "session_expired": "Session expired. Please login again.",
+      "server_error": "Server error. Please try again later.",
+      "save_preference_failed": "Failed to save currency preference",
+      "login_required": "Please login to refresh rates"
+    },
+    "warnings": {
+      "using_estimated": "Using estimated rates",
+      "using_fallback": "Using estimated exchange rates"
+    },
+    "info": {
+      "auto_refreshing": "Auto-refreshing exchange rates...",
+      "auto_refresh_enabled": "Auto-refresh enabled",
+      "auto_refresh_disabled": "Auto-refresh disabled"
+    }
+  }
+
+}

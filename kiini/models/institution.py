@@ -1,0 +1,48 @@
+# kiini/models/institution.py
+
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+from .institution_tier import InstitutionTier
+from .institution_type import InstitutionType
+from .base_entity import AbstractEntity
+
+class Institution(AbstractEntity):
+    domain = models.CharField(
+        max_length=255,
+        unique=True,
+        verbose_name=_("Domain"),
+        help_text=_("Mfano: institution_name.jamiikazini.com")
+    )
+    
+    tier = models.ForeignKey(
+        InstitutionTier,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        verbose_name=_("Tier"),
+        related_name="institutions"
+    )
+
+    institution_type = models.ForeignKey(
+        InstitutionType,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        verbose_name=_("Institution Type"),
+        related_name="institutions"
+    )
+
+    metadata = models.JSONField(
+        blank=True,
+        null=True,
+        verbose_name=_("Metadata"),
+        help_text=_("Taarifa za ziada kama config au settings.")
+    )
+
+    class Meta:
+        verbose_name = _("Institution")
+        verbose_name_plural = _("Institutions")
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name

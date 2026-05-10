@@ -1,0 +1,194 @@
+{
+  "home": {
+    "welcome": "ジャミーカジニへようこそ。",
+    "description": "これは、東アフリカ全域の機関、企業、専門家、個人のためのデジタルプラットフォームです。教育、医療、交通、決済などの重要なサービスの中心となることを目指しており、言語、地域性、コミュニティのニーズを尊重する最新技術によって支えられています。",
+    "login_cta": "続行するにはログインしてください"
+  },
+
+  "topbar": {
+    "back": "戻る",
+    "forward": "進む",
+    "dashboard": "ダッシュボード",
+    "cart": "カート",
+    "notifications": "通知",
+    "search": "検索"
+  },
+
+  "user": {
+    "menu": "ユーザーメニュー",
+    "profile": "プロフィール",
+    "settings": "設定",
+    "wallet": "ジャミーウォレット",
+    "edit_profile": "プロフィールを編集",
+    "logout": "ログアウト",
+    "login": "ログイン"
+  },
+
+  "cart": {
+    "title": "マイカート",
+    "empty": "カートに商品がありません。",
+    "edit": "編集",
+    "checkout": "チェックアウト"
+  },
+
+  "notifications": {
+    "requests": "リクエスト",
+    "chats": "チャット",
+    "accept": "承認",
+    "decline": "拒否",
+    "view": "表示",
+    "open_chat": "チャットを開く"
+  },
+
+  "search": {
+    "placeholder": "検索...",
+    "empty": "検索結果はここに表示されます..."
+  },
+
+  "actions": {
+    "save": "保存",
+    "cancel": "キャンセル"
+  },
+
+  "dashboard": {
+    "welcome": "あなたのダッシュボードへようこそ",
+    "description": "ここでは自分の活動概要を確認できます"
+  },
+
+  "consent": {
+    "title": "まだご在席ですか？",
+    "description": "アカウントのセキュリティのため、まだ操作中かご確認ください。操作がない場合はログアウトされます。",
+    "cancel": "いいえ",
+    "confirm": "はい、います"
+  },
+
+  "auth": {
+    "password": "パスワード",
+    "password_placeholder": "パスワードを入力",
+    "confirm_password": "パスワード確認",
+    "confirm_password_placeholder": "もう一度パスワードを入力",
+    "passwords_do_not_match": "パスワードが一致しません",
+    "title": "タイトル",
+    "authenticate": "認証",
+    "login": "ログイン",
+    "register": "登録"
+  },
+
+  "password": {
+    "label": "パスワード強度:",
+    "strength": {
+      "very_weak": "非常に弱い",
+      "weak": "弱い",
+      "fair": "普通",
+      "strong": "強い",
+      "very_strong": "非常に強い"
+    }
+  },
+
+  "sidebar": {
+    "app_dashboard": "アプリダッシュボード"
+  },
+
+  "tabs": {
+    "jamiikazini": "ジャミーカジニ",
+    "settings": "設定",
+    "profile": "プロフィール",
+    "wallet": "ウォレット",
+    "edit_profile": "プロフィール編集",
+    "home": "ホーム",
+    "register": "登録",
+    "login": "ログイン"
+  },
+
+  "user_home": {
+    "welcome": "あなたのダッシュボードへようこそ",
+    "description": "ここに個人情報、予約、通知などが表示されます。"
+  },
+
+  "auth_login": {
+    "title": "ログイン",
+    "email_label": "メールアドレス",
+    "email_placeholder": "例: name@example.com",
+    "password_label": "パスワード",
+    "password_placeholder": "あなたのパスワード",
+    "submit": "ログイン",
+    "loading": "読み込み中...",
+    "recaptcha_not_ready": "reCAPTCHAがまだ読み込まれていません。少々お待ちください...",
+    "login_failed": "ログインに失敗しました。",
+    "network_error": "ネットワークまたはreCAPTCHAのエラーです。"
+  },
+
+  "auth_register": {
+    "title": "登録",
+    "email_label": "メールアドレス",
+    "email_placeholder": "例: name@example.com",
+    "name_label": "フルネーム",
+    "name_placeholder": "例: 山田太郎",
+    "phone_label": "電話番号（任意）",
+    "phone_placeholder": "例: 09012345678",
+    "submit": "登録する",
+    "loading": "登録中...",
+    "success": "登録に成功しました！確認のためメールをご確認ください。",
+    "errors": {
+      "password_mismatch": "パスワードが一致しません。",
+      "recaptcha_required": "ロボットではないことを確認してください。",
+      "password_length": "パスワードは6文字以上である必要があります。",
+      "network": "ネットワークエラー。もう一度お試しください。"
+    }
+  },
+
+  "auth_verify_email": {
+    "title": "メール認証",
+    "verifying": "メールを確認中...",
+    "success": "メールが正常に認証されました。",
+    "error": "申し訳ありません。リンクが無効か、期限切れです。",
+    "loading": "読み込み中...",
+    "to_login": "ログイン画面へ"
+  },
+
+  "userandmenu": {
+    "load_failed": "ユーザーまたはメニュー情報の読み込みに失敗しました。"
+  },
+
+  "jamiiauth": {
+    "login_failed": "ログインに失敗しました。認証情報を確認してください。",
+    "register_failed": "登録に失敗しました。もう一度お試しください。"
+  },
+
+  "business_dashboard": {
+    "loading": "ダッシュボードを読み込んでいます...",
+    "empty": "現在、このビジネスに関連するデータはありません。",
+    "title": "概要",
+    "errors": {
+      "failedToLoad": "ダッシュボードデータの読み込みに失敗しました。"
+    },
+    "stats": {
+      "products": "製品",
+      "activeProducts": "有効な製品",
+      "inactiveProducts": "無効な製品",
+      "services": "サービス",
+      "branches": "支店",
+      "orders": "注文",
+      "rating": "評価",
+      "reviews": "レビュー"
+    },
+    "revenue": {
+      "summary": "収益概要",
+      "last7": "過去7日間",
+      "last30": "過去30日間",
+      "total": "合計",
+      "chart": "収益グラフ",
+      "label": "日付: {{label}}",
+      "amount": "収益"
+    },
+    "top_products": {
+      "empty": "人気商品がありません。",
+      "sold": "{{count}} 件販売済み"
+    },
+    "top_services": {
+      "title": "人気サービス",
+      "empty": "人気サービスがありません。",
+      "used": "{{count}} 回使用"
+    }
+  }
+}

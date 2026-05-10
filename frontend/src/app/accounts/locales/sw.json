@@ -1,0 +1,78 @@
+{
+  "profile": {
+    "title": "Wasifu Wangu",
+    "description": "Angalia na badilisha taarifa zako binafsi"
+  },
+  "edit_profile": {
+    "title": "Hariri Wasifu",
+    "description": "Sasisha taarifa zako binafsi"
+  },
+  "settings": {
+    "title": "Mipangilio",
+    "description": "Sanidi mapendeleo ya akaunti yako"
+  },
+  "wallet": {
+    "title": "Pochi Yangu",
+    "description": "Angalia salio na miamala"
+  },
+  "personal_info": "Taarifa Binafsi",
+  "full_name": "Jina Kamili",
+  "email": "Barua Pepe",
+  "phone": "Namba ya Simu",
+  "national_id": "Kitambulisho cha Taifa",
+  "member_since": "Mwanachama Tangu",
+  "account_status": "Hali ya Akaunti",
+  "email_verified": "Barua Pepe Imethibitishwa",
+  "phone_verified": "Simu Imethibitishwa",
+  "2fa_enabled": "Uthibitishaji wa Hatua Mbili",
+  "account_active": "Akaunti Inafanya Kazi",
+  "manage_security": "Simamia Usalama",
+  "primary_institution": "Taasisi Kuu",
+  "view_institution": "Angalia Taasisi",
+  "two_factor_authentication": "Uthibitishaji wa Hatua Mbili",
+  "2fa_status": "Hali ya 2FA",
+  "2fa_enabled_desc": "Akaunti yako inalindwa na uthibitishaji wa hatua mbili",
+  "2fa_disabled_desc": "Ongeza safu ya ziada ya usalama kwenye akaunti yako",
+  "enable_2fa": "Washa 2FA",
+  "disable_2fa": "Zima 2FA",
+  "change_password": "Badilisha Nywila",
+  "update_password": "Sasisha Nywila",
+  "danger_zone": "Eneo la Hatari",
+  "logout": "Ondoka",
+  "logout_success": "Umeondoka kwa mafanikio",
+  "your_institutions": "Taasisi Zako",
+  "no_institutions_yet": "Bado hujaunda taasisi yoyote.",
+  "create_institution": "Unda Taasisi",
+  "your_businesses": "Biashara Zako",
+  "no_businesses_yet": "Bado hujaunda biashara yoyote.",
+  "create_business": "Unda Biashara",
+  "recent_activity": "Shughuli za Hivi Karibuni",
+  "no_recent_activity": "Hakuna shughuli za hivi karibuni za kuonyesha.",
+  "recent_conversations": "Mazungumzo ya Hivi Karibuni",
+  "no_conversations_yet": "Hakuna mazungumzo bado.",
+  "open_chat": "Fungua Chat",
+  "start_chat": "Anza Mazungumzo",
+  "user": "Mtumiaji",
+  "edit": "Hariri",
+  "create": "Unda",
+  "copied": "imenakiliwa kwenye ubao wa kunakili",
+  "errors": {
+    "failed_to_load_profile": "Imeshindwa kupakia taarifa za wasifu"
+  },
+  "tabs": {
+    "overview": "Muhtasari",
+    "institutions": "Taasisi",
+    "businesses": "Biashara",
+    "chat": "Mazungumzo",
+    "activity": "Shughuli",
+    "security": "Usalama"
+  },
+
+  "save": "Hifadhi",
+  "cancel": "Ghairi",
+  "profile_updated": "Wasifu umesasishwa",
+  "errors": {
+    "failed_to_load_profile": "Imeshindwa kupakia taarifa za wasifu",
+    "failed_to_update": "Imeshindwa kusasisha wasifu"
+  }
+}

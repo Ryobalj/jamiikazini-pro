@@ -1,0 +1,53 @@
+{
+  "title": "My Wallet",
+  "available_balance": "Available Balance",
+  "this_month": "This Month",
+  "income": "Income",
+  "expenses": "Expenses",
+  "quick_actions": "Quick Actions",
+  "topup": "Top Up",
+  "send": "Send",
+  "request": "Request",
+  "refresh": "Refresh",
+  "refreshing": "Refreshing...",
+  "refreshed": "Wallet refreshed",
+  "recent_transactions": "Recent Transactions",
+  "view_all": "View All",
+  "no_transactions": "No transactions yet",
+  "payment_methods": "Payment Methods",
+  "no_cards": "No payment cards added yet",
+  "add_card": "Add Card",
+  "saved_beneficiaries": "Saved Beneficiaries",
+  "no_beneficiaries": "No saved beneficiaries yet",
+  "add_beneficiary": "Add Beneficiary",
+  "topup_wallet": "Top Up Wallet",
+  "amount": "Amount",
+  "payment_channel": "Payment Channel",
+  "cancel": "Cancel",
+  "confirm_topup": "Confirm Top Up",
+  "invalid_amount": "Please enter a valid amount",
+  "topup_initiated": "Top up initiated successfully",
+  "topup_failed": "Top up failed. Please try again.",
+  "copied": "Copied to clipboard",
+  "tabs": {
+    "transactions": "Transactions",
+    "cards": "Cards",
+    "beneficiaries": "Beneficiaries"
+  },
+  "transaction_types": {
+    "top_up": "Top Up",
+    "withdrawal": "Withdrawal",
+    "transfer": "Transfer",
+    "payment": "Payment",
+    "refund": "Refund"
+  },
+  "status": {
+    "pending": "Pending",
+    "completed": "Completed",
+    "failed": "Failed",
+    "reversed": "Reversed"
+  },
+  "errors": {
+    "failed_to_load_wallet": "Failed to load wallet data"
+  }
+}

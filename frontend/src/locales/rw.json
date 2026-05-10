@@ -1,0 +1,194 @@
+{
+  "home": {
+    "welcome": "Ikaze kuri Jamiikazini.",
+    "description": "Iyi ni urubuga rw’ikoranabuhanga ku bigo, ubucuruzi, abahanga n’abantu ku giti cyabo muri Afurika y’Iburasirazuba. Igamije kuba igicumbi cy'ibikorwa nk’uburezi, ubuvuzi, ubwikorezi, n’ubwishyu — bikozwe mu ikoranabuhanga ryubaha ururimi, aho abantu batuye n’ibyo bakeneye.",
+    "login_cta": "Injira kugirango ukomeze"
+  },
+
+  "topbar": {
+    "back": "Subira inyuma",
+    "forward": "Jya imbere",
+    "dashboard": "Dashibodi",
+    "cart": "Agasanduku",
+    "notifications": "Amatangazo",
+    "search": "Shakisha"
+  },
+
+  "user": {
+    "menu": "Menyu y’Umukoresha",
+    "profile": "Umwirondoro",
+    "settings": "Ibyifuzo",
+    "wallet": "Jamiiwallet",
+    "edit_profile": "Hindura Umwirondoro",
+    "logout": "Sohoka",
+    "login": "Injira"
+  },
+
+  "cart": {
+    "title": "Agasanduku Kanjye",
+    "empty": "Nta kintu kirimo mu gasanduku.",
+    "edit": "Hindura",
+    "checkout": "Kwishyura"
+  },
+
+  "notifications": {
+    "requests": "Gusaba",
+    "chats": "Ikiganiro",
+    "accept": "Emera",
+    "decline": "Haka",
+    "view": "Reba",
+    "open_chat": "Tangira Ikiganiro"
+  },
+
+  "search": {
+    "placeholder": "Shakisha...",
+    "empty": "Ibisubizo bizagaragara hano..."
+  },
+
+  "actions": {
+    "save": "Bika",
+    "cancel": "Hagarika"
+  },
+
+  "dashboard": {
+    "welcome": "Ikaze kuri dashibodi yawe",
+    "description": "Aha ushobora kureba incamake y’ibikorwa byawe"
+  },
+
+  "consent": {
+    "title": "Uracyahari?",
+    "description": "Kubera umutekano w’konti yawe, nyamuneka emeza ko uracyari hano. Niba bitabaye ibyo, tuzagufungira mu mahoro.",
+    "cancel": "Oya",
+    "confirm": "Yego, ndi hano"
+  },
+
+  "auth": {
+    "password": "Ijambo ry’ibanga",
+    "password_placeholder": "Andika ijambo ry’ibanga",
+    "confirm_password": "Emeza Ijambo ry’ibanga",
+    "confirm_password_placeholder": "Andika bwa kabiri",
+    "passwords_do_not_match": "Amagambo y’ibanga ntahura",
+    "title": "Umutwe",
+    "authenticate": "Emeza",
+    "login": "Injira",
+    "register": "Iyandikishe"
+  },
+
+  "password": {
+    "label": "Imbaraga z’ijambo ry’ibanga:",
+    "strength": {
+      "very_weak": "Ryoroshye cyane",
+      "weak": "Ryoroshye",
+      "fair": "Hagati",
+      "strong": "Rikomeye",
+      "very_strong": "Rikomeye cyane"
+    }
+  },
+
+  "sidebar": {
+    "app_dashboard": "Dashibodi y’Urubuga"
+  },
+
+  "tabs": {
+    "jamiikazini": "Jamiikazini",
+    "settings": "Ibyifuzo",
+    "profile": "Umwirondoro",
+    "wallet": "Agafuka",
+    "edit_profile": "Hindura Umwirondoro",
+    "home": "Ahabanza",
+    "register": "Iyandikishe",
+    "login": "Injira"
+  },
+
+  "user_home": {
+    "welcome": "Ikaze kuri Dashibodi yawe",
+    "description": "Aha ni ho amakuru yawe bwite, gahunda, n’amatangazo bizagaragara."
+  },
+
+  "auth_login": {
+    "title": "Injira",
+    "email_label": "Email",
+    "email_placeholder": "nka. izina@urugero.com",
+    "password_label": "Ijambo ry’ibanga",
+    "password_placeholder": "Ijambo ry’ibanga ryawe",
+    "submit": "Injira",
+    "loading": "Birimo gupakira...",
+    "recaptcha_not_ready": "reCAPTCHA ntirarangira gupakirwa. Tegereza...",
+    "login_failed": "Kwinjira byanze.",
+    "network_error": "Ikibazo cya interineti cyangwa reCAPTCHA."
+  },
+
+  "auth_register": {
+    "title": "Iyandikishe",
+    "email_label": "Email",
+    "email_placeholder": "nka. izina@urugero.com",
+    "name_label": "Izina Ryose",
+    "name_placeholder": "nka. Jean Dusabe",
+    "phone_label": "Numero ya Telefoni (si ngombwa)",
+    "phone_placeholder": "nka. 0789123456",
+    "submit": "Iyandikishe",
+    "loading": "Birimo kwiyandikisha...",
+    "success": "Kwiyandikisha byagenze neza! Reba email yawe kugirango wemeze.",
+    "errors": {
+      "password_mismatch": "Amagambo y’ibanga ntahura.",
+      "recaptcha_required": "Nyamuneka emera ko utari robot.",
+      "password_length": "Ijambo ry’ibanga rigomba kuba nibura inyuguti 6.",
+      "network": "Ikibazo cya interineti. Ongera ugerageze."
+    }
+  },
+
+  "auth_verify_email": {
+    "title": "Kwemeza Email",
+    "verifying": "Birimo kwemeza email yawe...",
+    "success": "Email yawe yemejwe neza.",
+    "error": "Ihuriye cyangwa igihe kirarangiye.",
+    "loading": "Birimo gupakira...",
+    "to_login": "Jya ku Injira"
+  },
+
+  "userandmenu": {
+    "load_failed": "Byanze gupakira amakuru y’umukoresha cyangwa menyu."
+  },
+
+  "jamiiauth": {
+    "login_failed": "Kwinjira byanze. Reba niba amakuru yawe ari yo.",
+    "register_failed": "Kwiyandikisha byanze. Ongera ugerageze."
+  },
+
+  "business_dashboard": {
+    "loading": "Birimo gupakira dashibodi...",
+    "empty": "Nta makuru aboneka kuri ubu bucuruzi.",
+    "title": "Incamake",
+    "errors": {
+      "failedToLoad": "Byanze gupakira amakuru ya dashibodi."
+    },
+    "stats": {
+      "products": "Ibicuruzwa",
+      "activeProducts": "Ibicuruzwa Bikora",
+      "inactiveProducts": "Ibicuruzwa Bidakora",
+      "services": "Serivisi",
+      "branches": "Amashami",
+      "orders": "Amategeko",
+      "rating": "Urutonde",
+      "reviews": "Inyunganizi"
+    },
+    "revenue": {
+      "summary": "Incamake y’Inyungu",
+      "last7": "Iminsi 7",
+      "last30": "Iminsi 30",
+      "total": "Byose hamwe",
+      "chart": "Ikarita y’Inyungu",
+      "label": "Umunsi: {{label}}",
+      "amount": "Inyungu"
+    },
+    "top_products": {
+      "empty": "Nta bicuruzwa bikunzwe biboneka.",
+      "sold": "{{count}} byagurishijwe"
+    },
+    "top_services": {
+      "title": "Serivisi Zikunzwe",
+      "empty": "Nta serivisi zikunzwe ziboneka.",
+      "used": "{{count}} zakoreshejwe"
+    }
+  }
+}

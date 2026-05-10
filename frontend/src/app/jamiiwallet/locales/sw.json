@@ -1,0 +1,53 @@
+{
+  "title": "Pochi Yangu",
+  "available_balance": "Salio Linalopatikana",
+  "this_month": "Mwezi Huu",
+  "income": "Mapato",
+  "expenses": "Matumizi",
+  "quick_actions": "Vitendo vya Haraka",
+  "topup": "Weka Fedha",
+  "send": "Tuma",
+  "request": "Omba",
+  "refresh": "Sasisha",
+  "refreshing": "Inasasisha...",
+  "refreshed": "Pochi imesasishwa",
+  "recent_transactions": "Miamala ya Hivi Karibuni",
+  "view_all": "Ona Zote",
+  "no_transactions": "Hakuna miamala bado",
+  "payment_methods": "Njia za Malipo",
+  "no_cards": "Hakuna kadi za malipo bado",
+  "add_card": "Ongeza Kadi",
+  "saved_beneficiaries": "Wanufaika Waliohifadhiwa",
+  "no_beneficiaries": "Hakuna wanufaika waliohifadhiwa",
+  "add_beneficiary": "Ongeza Mnufaika",
+  "topup_wallet": "Weka Fedha Pochini",
+  "amount": "Kiasi",
+  "payment_channel": "Njia ya Malipo",
+  "cancel": "Ghairi",
+  "confirm_topup": "Thibitisha Kuweka Fedha",
+  "invalid_amount": "Tafadhali ingiza kiasi sahihi",
+  "topup_initiated": "Uwekaji fedha umeanzishwa",
+  "topup_failed": "Uwekaji fedha umeshindwa. Tafadhali jaribu tena.",
+  "copied": "Imenakiliwa kwenye ubao wa kunakili",
+  "tabs": {
+    "transactions": "Miamala",
+    "cards": "Kadi",
+    "beneficiaries": "Wanufaika"
+  },
+  "transaction_types": {
+    "top_up": "Kuweka Fedha",
+    "withdrawal": "Kutoa Fedha",
+    "transfer": "Kuhamisha",
+    "payment": "Malipo",
+    "refund": "Kurejesha"
+  },
+  "status": {
+    "pending": "Inasubiri",
+    "completed": "Imekamilika",
+    "failed": "Imeshindwa",
+    "reversed": "Imerejeshwa"
+  },
+  "errors": {
+    "failed_to_load_wallet": "Imeshindwa kupakia data za pochi"
+  }
+}

@@ -1,0 +1,32 @@
+#!/usr/bin/env python
+"""Django's command-line utility for administrative tasks."""
+import os
+import sys
+from decouple import config
+
+import django.core.files.locks
+import threading
+django.core.files.locks.lock = lambda f, flags: None
+django.core.files.locks.unlock = lambda f: None
+
+
+def main():
+    """Run administrative tasks."""
+    # Tumia settings ya 'jamiikazini.settings.dev' au override kwa DJANGO_SETTINGS_MODULE
+    default_settings = config("DJANGO_SETTINGS_MODULE", default="jamiikazini.settings.dev")
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', default_settings)
+
+    try:
+        from django.core.management import execute_from_command_line
+    except ImportError as exc:
+        raise ImportError(
+            "Couldn't import Django. Are you sure it's installed and "
+            "available on your PYTHONPATH environment variable? Did you "
+            "forget to activate a virtual environment?"
+        ) from exc
+
+    execute_from_command_line(sys.argv)
+
+
+if __name__ == '__main__':
+    main()

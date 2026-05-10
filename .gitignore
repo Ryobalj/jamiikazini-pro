@@ -1,0 +1,84 @@
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+.env
+.env.local
+*.log
+
+# Django
+/staticfiles/
+media/
+/tmp/
+
+# Node
+node_modules/
+.next/
+out/
+
+# VSCode
+.vscode/
+
+# pycache
+**/__pycache__/
+
+# others
+.DS_Store
+*.bak
+*.swp
+*.swo
+
+# ===========================
+# ADDITIONAL (Added)
+# ===========================
+
+# Virtual Environment
+venv/
+.venv/
+env/
+jamiienv/
+*env/
+
+# Database dumps
+*.dump
+*.sql.gz
+
+# IDE
+.idea/
+*.iml
+.vscode/settings.json
+
+# OS
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Production
+*.pid
+*.sock
+
+# GeoIP
+geoip/*.mmdb
+
+# Logs
+logs/*.log
+*.log.*
+
+# SASS/CSS
+.sass-cache/
+*.css.map
+
+# Backup files
+*.backup
+*.old
+
+# Docker
+docker-compose.override.yml
+
+# Temporary files
+~$*
+*.tmp

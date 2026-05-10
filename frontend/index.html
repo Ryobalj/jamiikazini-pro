@@ -1,0 +1,47 @@
+<!-- frontend/index.html -->
+<!DOCTYPE html>
+<html lang="sw" dir="ltr">
+  <head>
+    <script type="module">
+      import { injectIntoGlobalHook } from "/@react-refresh";
+      injectIntoGlobalHook(window);
+      window.$RefreshReg$ = () => {};
+      window.$RefreshSig$ = () => (type) => type;
+    </script>
+
+    <script type="module" src="/@vite/client"></script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Jamiikazini</title>
+
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+    <meta name="description" content="Jamiikazini ni jukwaa la kijamii na biashara kwa Afrika Mashariki." />
+    <meta name="keywords" content="jamii, biashara, afya, elimu, teknolojia, Tanzania, Kenya, Uganda" />
+    <meta name="author" content="Jamiikazini Team" />
+    <meta property="og:title" content="Jamiikazini" />
+    <meta property="og:description" content="Jukwaa la kijamii na biashara." />
+    <meta property="og:image" content="/logo.png" />
+    <meta property="og:url" content="https://jamiikazini.com" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', 'Inter', 'Roboto', sans-serif;
+        background-color: #fff;
+        min-height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,4 @@
+/* globals.css */
+html, body, #root {
+  min-height: 100vh;
+}

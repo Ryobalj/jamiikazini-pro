@@ -1,0 +1,70 @@
+{
+  "profile": {
+    "title": "My Profile",
+    "description": "View and manage your account information"
+  },
+  "edit_profile": {
+    "title": "Edit Profile",
+    "description": "Update your personal information"
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Configure your account preferences"
+  },
+  "wallet": {
+    "title": "My Wallet",
+    "description": "View balance and transactions"
+  },
+  "personal_info": "Personal Information",
+  "full_name": "Full Name",
+  "email": "Email Address",
+  "phone": "Phone Number",
+  "national_id": "National ID",
+  "member_since": "Member Since",
+  "account_status": "Account Status",
+  "email_verified": "Email Verified",
+  "phone_verified": "Phone Verified",
+  "2fa_enabled": "Two-Factor Authentication",
+  "account_active": "Account Active",
+  "manage_security": "Manage Security",
+  "primary_institution": "Primary Institution",
+  "view_institution": "View Institution",
+  "two_factor_authentication": "Two-Factor Authentication",
+  "2fa_status": "2FA Status",
+  "2fa_enabled_desc": "Your account is protected with two-factor authentication",
+  "2fa_disabled_desc": "Add an extra layer of security to your account",
+  "enable_2fa": "Enable 2FA",
+  "disable_2fa": "Disable 2FA",
+  "change_password": "Change Password",
+  "update_password": "Update Password",
+  "danger_zone": "Danger Zone",
+  "logout": "Logout",
+  "logout_success": "Logged out successfully",
+  "your_institutions": "Your Institutions",
+  "no_institutions_yet": "You haven't created any institutions yet.",
+  "create_institution": "Create Institution",
+  "your_businesses": "Your Businesses",
+  "no_businesses_yet": "You haven't created any businesses yet.",
+  "create_business": "Create Business",
+  "recent_activity": "Recent Activity",
+  "no_recent_activity": "No recent activity to display.",
+  "recent_conversations": "Recent Conversations",
+  "no_conversations_yet": "No conversations yet.",
+  "open_chat": "Open Chat",
+  "start_chat": "Start a Conversation",
+  "user": "User",
+  "edit": "Edit",
+  "create": "Create",
+  "copied": "copied to clipboard",
+  "errors": {
+    "failed_to_load_profile": "Failed to load profile data"
+  },
+  "tabs": {
+    "overview": "Overview",
+    "institutions": "Institutions",
+    "businesses": "Businesses",
+    "chat": "Chat",
+    "activity": "Activity",
+    "security": "Security"
+  }
+}

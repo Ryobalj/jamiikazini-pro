@@ -1,0 +1,106 @@
+/* Font Import - ensure these fonts are available */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;600&display=swap');
+
+/* Font Global Override */
+body, input, select, textarea, button {
+  font-family: 'Poppins', 'Roboto', 'Inter', sans-serif !important;
+}
+
+/* Header Styling */
+#header {
+  background-color: #1976D2; /* Bahari Bluu */
+  color: #FFFFFF;
+  border-bottom: 3px solid #F57C00; /* Chungwa Moto as accent */
+}
+
+/* Branding Title */
+#branding h1 {
+  color: #FFFFFF;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Main Content Background */
+#content {
+  background-color: #FAFAFA;
+  color: #424242; /* Makaa Kijivu */
+}
+
+/* Module Headers */
+.module h2 {
+  color: #2E7D32; /* Nyasi Kijani */
+  font-weight: 600;
+}
+
+/* Save Buttons */
+.submit-row input.default {
+  background-color: #2E7D32; /* Nyasi Kijani */
+  border-color: #2E7D32;
+  color: white;
+  font-weight: 600;
+}
+
+.submit-row input.default:hover {
+  background-color: #1b5e20;
+  border-color: #1b5e20;
+}
+
+/* Glow Pulse Animation */
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 8px #F57C00, 0 0 16px #F57C00;
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 0px #F57C00, 0 0 0px #F57C00;
+    opacity: 0.4;
+  }
+}
+
+/* Use glow on alerts or active elements */
+#glowPulse {
+  animation: glowPulse 2s infinite;
+}
+
+/* Login Page Customization */
+.login #container {
+  border: none;
+  box-shadow: 0 0 10px rgba(21, 101, 192, 0.2);
+  background: #ffffff;
+  font-family: 'Inter', sans-serif;
+}
+
+.login h1 {
+  font-family: 'Poppins', sans-serif;
+  color: #1976D2;
+  font-size: 26px;
+}
+
+/* Links */
+a {
+  color: #1976D2;
+}
+
+a:hover {
+  color: #125ea9;
+}
+
+/* Form Fields */
+input, select, textarea {
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+}
+
+/* Dark Mode Ready (optional future) */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #121212;
+    color: #ffffff;
+  }
+  #content {
+    background-color: #1E1E1E;
+  }
+}

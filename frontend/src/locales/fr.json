@@ -1,0 +1,193 @@
+{
+  "home": {
+    "welcome": "Bienvenue sur Jamiikazini.",
+    "description": "Il s'agit d'une plateforme numérique pour les institutions, les entreprises, les professionnels et les particuliers de toute l'Afrique de l'Est. Elle vise à être un centre pour les services essentiels tels que l'éducation, la santé, le transport et les paiements — propulsée par une technologie moderne qui respecte la langue, la localité et les besoins communautaires.",
+    "login_cta": "Connectez-vous pour continuer"
+  },
+
+  "topbar": {
+    "back": "Retour",
+    "forward": "Suivant",
+    "dashboard": "Tableau de bord",
+    "cart": "Panier",
+    "notifications": "Notifications",
+    "search": "Rechercher"
+  },
+
+  "user": {
+    "menu": "Menu utilisateur",
+    "profile": "Profil",
+    "settings": "Paramètres",
+    "wallet": "Portefeuille Jamii",
+    "edit_profile": "Modifier le profil",
+    "logout": "Se déconnecter",
+    "login": "Se connecter"
+  },
+
+  "cart": {
+    "title": "Mon Panier",
+    "empty": "Votre panier est vide.",
+    "edit": "Modifier",
+    "checkout": "Paiement"
+  },
+
+  "notifications": {
+    "requests": "Demandes",
+    "chats": "Discussions",
+    "accept": "Accepter",
+    "decline": "Refuser",
+    "view": "Voir",
+    "open_chat": "Ouvrir la discussion"
+  },
+
+  "search": {
+    "placeholder": "Rechercher...",
+    "empty": "Les résultats de recherche apparaîtront ici..."
+  },
+
+  "actions": {
+    "save": "Enregistrer",
+    "cancel": "Annuler"
+  },
+
+  "dashboard": {
+    "welcome": "Bienvenue sur votre tableau de bord",
+    "description": "Ici, vous pouvez voir un résumé de vos activités"
+  },
+
+  "consent": {
+    "title": "Êtes-vous toujours là ?",
+    "description": "Pour la sécurité de votre compte, veuillez confirmer que vous êtes toujours actif. Sinon, nous vous déconnecterons respectueusement.",
+    "cancel": "Non",
+    "confirm": "Oui, je suis là"
+  },
+
+  "auth": {
+    "password": "Mot de passe",
+    "password_placeholder": "Entrez le mot de passe",
+    "confirm_password": "Confirmer le mot de passe",
+    "confirm_password_placeholder": "Ressaisir le mot de passe",
+    "passwords_do_not_match": "Les mots de passe ne correspondent pas",
+    "title": "Titre",
+    "authenticate": "Authentifier",
+    "login": "Connexion",
+    "register": "S'inscrire"
+  },
+
+  "password": {
+    "label": "Solidité du mot de passe :",
+    "strength": {
+      "very_weak": "Très faible",
+      "weak": "Faible",
+      "fair": "Moyen",
+      "strong": "Fort",
+      "very_strong": "Très fort"
+    }
+  },
+
+  "sidebar": {
+    "app_dashboard": "Tableau de bord"
+  },
+
+  "tabs": {
+    "jamiikazini": "Jamiikazini",
+    "settings": "Paramètres",
+    "profile": "Profil",
+    "wallet": "Portefeuille",
+    "edit_profile": "Modifier le profil",
+    "home": "Accueil",
+    "register": "S'inscrire",
+    "login": "Connexion"
+  },
+
+  "user_home": {
+    "welcome": "Bienvenue sur votre tableau de bord",
+    "description": "C'est ici que vos informations personnelles, réservations, notifications, etc. apparaîtront."
+  },
+
+  "auth_login": {
+    "title": "Connexion",
+    "email_label": "Email",
+    "email_placeholder": "ex. nom@example.com",
+    "password_label": "Mot de passe",
+    "password_placeholder": "Votre mot de passe",
+    "submit": "Connexion",
+    "loading": "Chargement...",
+    "recaptcha_not_ready": "reCAPTCHA n'est pas encore complètement chargé. Veuillez patienter...",
+    "login_failed": "Échec de la connexion.",
+    "network_error": "Erreur réseau ou reCAPTCHA."
+  },
+
+  "auth_register": {
+    "title": "Inscription",
+    "email_label": "Email",
+    "email_placeholder": "ex. nom@example.com",
+    "name_label": "Nom complet",
+    "name_placeholder": "ex. Jean Dupont",
+    "phone_label": "Numéro de téléphone (facultatif)",
+    "phone_placeholder": "ex. 0712345678",
+    "submit": "S'inscrire",
+    "loading": "Inscription en cours...",
+    "success": "Inscription réussie ! Veuillez vérifier votre email pour confirmer.",
+    "errors": {
+      "password_mismatch": "Les mots de passe ne correspondent pas.",
+      "recaptcha_required": "Veuillez vérifier que vous n'êtes pas un robot.",
+      "password_length": "Le mot de passe doit contenir au moins 6 caractères.",
+      "network": "Erreur réseau. Veuillez réessayer."
+    }
+  },
+
+  "auth_verify_email": {
+    "title": "Vérification de l'email",
+    "verifying": "Vérification de votre email en cours...",
+    "success": "Votre email a été vérifié avec succès.",
+    "error": "Désolé ! Le lien est invalide ou a expiré.",
+    "loading": "Chargement...",
+    "to_login": "Aller à la connexion"
+  },
+
+  "userandmenu": {
+    "load_failed": "Échec du chargement des informations utilisateur ou du menu."
+  },
+
+  "jamiiauth": {
+    "login_failed": "Échec de la connexion. Veuillez vérifier vos identifiants.",
+    "register_failed": "Échec de l'inscription. Veuillez réessayer."
+  },
+
+  "business_dashboard": {
+    "loading": "Chargement du tableau de bord...",
+    "empty": "Aucune donnée disponible pour cette entreprise pour le moment.",
+    "title": "Aperçu",
+    "errors": {
+      "failedToLoad": "Échec du chargement des données du tableau de bord."
+    },
+    "stats": {
+      "products": "Produits",
+      "activeProducts": "Produits actifs",
+      "inactiveProducts": "Produits inactifs",
+      "services": "Services",
+      "branches": "Succursales",
+      "orders": "Commandes",
+      "rating": "Note",
+      "reviews": "Avis"
+    },
+    "revenue": {
+      "summary": "Résumé des revenus",
+      "last7": "7 derniers jours",
+      "last30": "30 derniers jours",
+      "total": "Total",
+      "chart": "Graphique des revenus",
+      "label": "Jour : {{label}}",
+      "amount": "Revenus"
+    },
+    "top_products": {
+      "empty": "Aucun produit en tête disponible.",
+      "sold": "{{count}} vendus"
+    },
+    "top_services": {
+      "empty": "Aucun service en tête disponible.",
+      "used": "{{count}} utilisés"
+    }
+  }
+}

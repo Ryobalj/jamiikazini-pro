@@ -1,0 +1,252 @@
+{
+  "home": {
+    "welcome": "Karibu Jamiikazini.",
+    "description": "Hili ni jukwaa la kidijitali kwa taasisi, biashara, wataalamu, na watu binafsi kote Afrika Mashariki. Lengo lake ni kuwa kitovu cha huduma muhimu kama elimu, afya, usafiri, na malipo — likiendeshwa na teknolojia ya kisasa inayozingatia lugha, mazingira, na mahitaji ya jamii.",
+    "login_cta": "Ingia ili kuendelea"
+  },
+
+  "topbar": {
+    "back": "Nyuma",
+    "forward": "Mbele",
+    "dashboard": "Dashibodi",
+    "cart": "Kikapu",
+    "notifications": "Arifa",
+    "search": "Tafuta"
+  },
+
+  "user": {
+    "menu": "Menyu ya Mtumiaji",
+    "profile": "Wasifu",
+    "settings": "Mipangilio",
+    "wallet": "Jamiiwallet",
+    "edit_profile": "Hariri Wasifu",
+    "logout": "Ondoka",
+    "login": "Ingia"
+  },
+
+  "cart": {
+    "title": "Kikapu Changu",
+    "empty": "Kikapu chako ni tupu.",
+    "edit": "Hariri",
+    "checkout": "Maliza Kununua"
+  },
+
+  "notifications": {
+    "requests": "Maombi",
+    "chats": "Majadiliano",
+    "accept": "Kubali",
+    "decline": "Kataa",
+    "view": "Tazama",
+    "open_chat": "Fungua Majadiliano"
+  },
+
+  "search": {
+    "placeholder": "Tafuta...",
+    "empty": "Matokeo ya utafutaji yataonekana hapa..."
+  },
+
+  "actions": {
+    "save": "Hifadhi",
+    "cancel": "Ghairi"
+  },
+
+  "dashboard": {
+    "welcome": "Karibu kwenye dashibodi yako",
+    "description": "Hapa unaweza kuona muhtasari wa shughuli zako",
+    "overview": "Muhtasari",
+    "products": "Bidhaa",
+    "services": "Huduma",
+    "branches": "Matawi",
+    "settings": "Mipangilio"
+  },
+
+  "user_home": {
+    "welcome": "Karibu Jamiikazini",
+    "description": "Chagua huduma unayotaka kuendelea nayo"
+  },
+  "services": {
+    "teaching": "Huduma za Ufundishaji",
+    "business": "Huduma za Biashara",
+    "health": "Huduma za Afya",
+    "payments": "Malipo"
+  },
+
+  "consent": {
+    "title": "Bado uko hapa?",
+    "description": "Kwa usalama wa akaunti yako, tafadhali thibitisha kuwa bado uko hai. Vinginevyo, tutakutoa kwa heshima.",
+    "cancel": "Hapana",
+    "confirm": "Ndiyo, niko hapa"
+  },
+
+  "auth": {
+    "password": "Nenosiri",
+    "password_placeholder": "Weka nenosiri",
+    "confirm_password": "Thibitisha Nenosiri",
+    "confirm_password_placeholder": "Weka tena nenosiri",
+    "passwords_do_not_match": "Nenosiri halilingani",
+    "title": "Idhinisha",
+    "authenticate": "Thibitisha",
+    "login": "Ingia",
+    "register": "Jisajili",
+    "session_expired": "Session yako imeisha. Tafadhali login tena.",
+    "session_near_expiry": "Session yako karibu itaisha kabisa. Tafadhali jiandae kuingia tena.",
+    "kicked_for_inactivity": "Umeondolewa kwa sababu ya kutokuwepo kwa muda mrefu."
+  },
+
+  "errors": {
+    "fetch_user_or_menu": "Imeshindikana kupakia taarifa za mtumiaji au menyu."
+  },
+  
+  "password": {
+    "label": "Nguvu ya nenosiri:",
+    "strength": {
+      "very_weak": "Dhaifu Sana",
+      "weak": "Dhaifu",
+      "fair": "Wastani",
+      "strong": "Imara",
+      "very_strong": "Imara Sana"
+    }
+  },
+
+  "sidebar": {
+    "app_dashboard": "Dashibodi ya Programu"
+  },
+
+  "tabs": {
+    "jamiikazini": "Jamiikazini",
+    "settings": "Mipangilio",
+    "profile": "Wasifu",
+    "wallet": "Pochi",
+    "edit_profile": "Hariri Wasifu",
+    "home": "Nyumbani",
+    "register": "Jisajili",
+    "login": "Ingia",
+    "kiini_dashboard": "Jamii",
+    "business_dashboard": "Biashara",
+    "education_dashboard": "Elimu",
+    "gov_dashboard": "Serikali",
+    "health_dashboard": "Afya",
+    "chat_dashboard": "Majadiliano",
+    "wallet_dashboard": "Pochi",
+    "logistics_dashboard": "Usafirishaji",
+    "payments_dashboard": "Malipo",
+    "search_dashboard": "Utafutaji",
+    "portfolio_dashboard": "Yanihusuyo",
+    "teaching": "Huduma za Ufundishaji"
+  },
+
+  "user_home": {
+    "welcome": "Karibu kwenye Dashibodi yako",
+    "description": "Hapa ndipo taarifa zako binafsi, nafasi zako, arifa na mengineyo yataonekana."
+  },
+
+  "auth_login": {
+    "invalid_credentials": "Barua pepe au nywila si sahihi. Tafadhali jaribu tena.",
+    "no_account":"Hauna akaunti, Tafadhali jisajili",
+    "no_token": "Hakuna tokeni iliyotumwa",
+    "title": "Ingia",
+    "email_label": "Barua Pepe",
+    "email_placeholder": "mf. jina@mfano.com",
+    "password_label": "Nywila",
+    "password_placeholder": "Nenosiri lako",
+    "submit": "Wasilisha",
+    "loading": "Inapakia...",
+    "recaptcha_not_ready": "reCAPTCHA haijapakia kikamilifu. Tafadhali subiri...",
+    "login_failed": "Kuingia kumeharibika.",
+    "network_error": "Hitilafu ya mtandao au reCAPTCHA."
+  },
+
+  "auth_register": {
+    "title": "Usajili",
+    "email_label": "Barua Pepe",
+    "email_placeholder": "mf. jina@mfano.com",
+    "name_label": "Jina Kamili",
+    "name_placeholder": "mf. Ryoba Den",
+    "phone_label": "Namba ya Simu (si lazima)",
+    "phone_placeholder": "mf. 0712345678",
+    "submit": "Wasilisha",
+    "loading": "Inasajili...",
+    "success": "Usajili umefanikiwa! Tafadhali angalia barua pepe yako kuthibitisha.",
+    "errors": {
+      "password_mismatch": "Nenosiri halilingani.",
+      "recaptcha_required": "Tafadhali thibitisha kuwa wewe si roboti.",
+      "password_length": "Nenosiri linapaswa kuwa na herufi angalau 6.",
+      "network": "Hitilafu ya mtandao. Tafadhali jaribu tena."
+    }
+  },
+
+  "auth_verify_email": {
+    "title": "Uthibitisho wa Barua Pepe",
+    "verifying": "Inathibitisha barua pepe yako...",
+    "success": "Barua pepe yako imethibitishwa kikamilifu.",
+    "error": "Samahani! Kiungo si sahihi au kimepitwa na wakati.",
+    "loading": "Inapakia...",
+    "to_login": "Nenda kwenye Kuingia"
+  },
+
+  "userandmenu": {
+    "load_failed": "Imeshindwa kupakia taarifa za mtumiaji au menyu."
+  },
+
+  "jamiiauth": {
+    "login_failed": "Kuingia kumeharibika. Tafadhali hakikisha taarifa zako.",
+    "register_failed": "Usajili ulishindikana. Tafadhali jaribu tena."
+  },
+
+  "invite": {
+    "title": "Waambie Marafiki Wako",
+    "share_text": "Jiunge na Jamiikazini – jukwaa bora la huduma Afrika Mashariki! 🌍",
+    "invites_you": "anakualika kujiunga na Jamiikazini – jukwaa bora la huduma Afrika Mashariki! 🌍",
+    "copy_link": "Nakili Link",
+    "link_copied": "Link Imenakiliwa!"
+  },
+
+  "session": {
+    "expired_alert": "Session yako imeisha. Tafadhali login tena.",
+    "expiring_soon": "⚠️ Session yako karibu itaisha kabisa. Tafadhali jiandae kuingia tena.",
+    "inactive_logout": "Umeondolewa kwa sababu ya kutokuwepo."
+  },
+
+  "currencies": {
+    "tzs": "Shilingi ya Tanzania",
+    "kes": "Shilingi ya Kenya",
+    "ugx": "Shilingi ya Uganda",
+    "rwf": "Faranga ya Rwanda",
+    "bif": "Faranga ya Burundi",
+    "usd": "Dola ya Marekani",
+    "eur": "Euro",
+    "gbp": "Pauni ya Uingereza",
+    "last_updated": "Imesasishwa",
+    "auto_refresh": "Sasisha kiotomatiki",
+    "refresh_rates": "Sasisha Viwango",
+    "estimated_rates": "Inatumia makadirio",
+    "select_currency": "Chagua Sarafu",
+    "success": {
+      "rates_updated": "Viwango vya ubadilishaji vimesasishwa: {{count}} sarafu",
+      "rates_refreshed": "Viwango vya ubadilishaji vimesasishwa",
+      "currency_changed": "Sarafu imebadilishwa kuwa {{currency}}"
+    },
+    "errors": {
+      "no_token": "Hakuna tokeni ya ufikiaji",
+      "not_authenticated": "Hujathibitishwa",
+      "invalid_response": "Muundo wa majibu si sahihi",
+      "fetch_failed": "Imeshindwa kupata viwango vya ubadilishaji",
+      "unauthorized": "Hujaidhinishwa - inasimamisha usasishaji kiotomatiki",
+      "auth_required": "Uthibitishaji unahitajika",
+      "session_expired": "Kipindi kimeisha. Tafadhali ingia tena.",
+      "server_error": "Hitilafu ya seva. Tafadhali jaribu tena baadaye.",
+      "save_preference_failed": "Imeshindwa kuhifadhi mapendeleo ya sarafu",
+      "login_required": "Tafadhali ingia ili kusasisha viwango"
+    },
+    "warnings": {
+      "using_estimated": "Inatumia makadirio ya viwango",
+      "using_fallback": "Inatumia makadirio ya viwango vya ubadilishaji"
+    },
+    "info": {
+      "auto_refreshing": "Inasasisha viwango vya ubadilishaji kiotomatiki...",
+      "auto_refresh_enabled": "Usasishaji kiotomatiki umewashwa",
+      "auto_refresh_disabled": "Usasishaji kiotomatiki umezimwa"
+    }
+  }
+
+}

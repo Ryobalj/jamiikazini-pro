@@ -1,0 +1,194 @@
+{
+  "home": {
+    "welcome": "Tukusanyukidde ku Jamiikazini.",
+    "description": "Kino kye kisakate kya tekinologiya ekikozesebwa abakozi, amasomero, bizinensi, n’abantu ababulijjo mu Buvanjuba bwa Afirika. Kikolebwa okuba ekitundu kya buweereza ng’okusomesa, eddagala, entambula n’okusasula — nga kyakolebwa mu tekinologiya y’emulembe ey'obwenkanya ku lulimi, ekifo, n'ebyo abantu byetaaga.",
+    "login_cta": "Yingira okusobola okwongera"
+  },
+
+  "topbar": {
+    "back": "Dda",
+    "forward": "Mumaaso",
+    "dashboard": "Ebyokukola",
+    "cart": "Kapu",
+    "notifications": "Obubaka",
+    "search": "Noonya"
+  },
+
+  "user": {
+    "menu": "Menyu y'Omukozesa",
+    "profile": "Ebibaluwa",
+    "settings": "Ebikozesebwa",
+    "wallet": "Jamiiwallet",
+    "edit_profile": "Kyuusa Ebibaluwa",
+    "logout": "Fuluma",
+    "login": "Yingira"
+  },
+
+  "cart": {
+    "title": "Kapu Yange",
+    "empty": "Kapu yo terimu bikozesebwa.",
+    "edit": "Kyuusa",
+    "checkout": "Sasula"
+  },
+
+  "notifications": {
+    "requests": "Ebisaba",
+    "chats": "Okubuuza",
+    "accept": "Kkiriza",
+    "decline": "Gana",
+    "view": "Laba",
+    "open_chat": "Bulaako Okubuuza"
+  },
+
+  "search": {
+    "placeholder": "Noonya...",
+    "empty": "Ebivudde mu kunoonyereza birabikira wano..."
+  },
+
+  "actions": {
+    "save": "Teekako",
+    "cancel": "Sazaamu"
+  },
+
+  "dashboard": {
+    "welcome": "Tukusanyukidde ku mukutu gwo",
+    "description": "Wano osobola okulaba ebyokukola byo"
+  },
+
+  "consent": {
+    "title": "Okyali wano?",
+    "description": "Okukuuma akawunti yo, tukusaba okakasa nga okyakola. Obanga si bwekityo, tujja kukugobera mu ngeri ey’ekitiibwa.",
+    "cancel": "Nedda",
+    "confirm": "Yee, nkyali wano"
+  },
+
+  "auth": {
+    "password": "Paasa wadi",
+    "password_placeholder": "Teekamu paasa wadi",
+    "confirm_password": "Kakasa Paasa wadi",
+    "confirm_password_placeholder": "Ddamu teekamu paasa wadi",
+    "passwords_do_not_match": "Paasa wadi tezikwatagana",
+    "title": "Mutwe",
+    "authenticate": "Kakasa",
+    "login": "Yingira",
+    "register": "Wandiika"
+  },
+
+  "password": {
+    "label": "Amaanyi g’obusumuluzo:",
+    "strength": {
+      "very_weak": "Bunafu nnyo",
+      "weak": "Bunafu",
+      "fair": "Obusobozi obusatuukirivu",
+      "strong": "Bugumu",
+      "very_strong": "Bugumu nnyo"
+    }
+  },
+
+  "sidebar": {
+    "app_dashboard": "Mukutu Gwa App"
+  },
+
+  "tabs": {
+    "jamiikazini": "Jamiikazini",
+    "settings": "Ebikozesebwa",
+    "profile": "Ebibaluwa",
+    "wallet": "Ekikapu",
+    "edit_profile": "Kyuusa Ebibaluwa",
+    "home": "Waka",
+    "register": "Wandiika",
+    "login": "Yingira"
+  },
+
+  "user_home": {
+    "welcome": "Tukusanyukidde ku Mukutu gwo",
+    "description": "Wano mwe mulabikira ebikwata ku ggwe, ebiteekebwateekebwa, obubaka, n'ebirala."
+  },
+
+  "auth_login": {
+    "title": "Yingira",
+    "email_label": "Imeyiro",
+    "email_placeholder": "nga: erinnya@kikugu.com",
+    "password_label": "Paasa wadi",
+    "password_placeholder": "Paasa wadi yo",
+    "submit": "Yingira",
+    "loading": "Kutikkula...",
+    "recaptcha_not_ready": "reCAPTCHA terituuse bulungi. Tereza...",
+    "login_failed": "Okuyingira kulemereddwa.",
+    "network_error": "Obuzibu ku muyunga oba reCAPTCHA."
+  },
+
+  "auth_register": {
+    "title": "Wandiika",
+    "email_label": "Imeyiro",
+    "email_placeholder": "nga: erinnya@kikugu.com",
+    "name_label": "Erinnya lyo lyonna",
+    "name_placeholder": "nga: Musa Kato",
+    "phone_label": "Namba ya Ssimu (si ya kyetaago)",
+    "phone_placeholder": "nga: 0788123456",
+    "submit": "Wandiika",
+    "loading": "Ku wandiika...",
+    "success": "Okuyingira kukoleddwa bulungi! Kebera imeyiro yo okakasa.",
+    "errors": {
+      "password_mismatch": "Paasa wadi tezikwatagana.",
+      "recaptcha_required": "Kakasa nti si roboti.",
+      "password_length": "Paasa wadi erina okuba wansi wa busa wansi bwa 6.",
+      "network": "Obuzibu ku muyunga. Gezaako nate."
+    }
+  },
+
+  "auth_verify_email": {
+    "title": "Okukakasa Imeyiro",
+    "verifying": "Okukakasa imeyiro yo...",
+    "success": "Imeyiro yo ekakasiddwa bulungi.",
+    "error": "Tusonyiwe! Enkola eno teriiyo oba eweddeko.",
+    "loading": "Kutikkula...",
+    "to_login": "Genda ku Yingira"
+  },
+
+  "userandmenu": {
+    "load_failed": "Kulemereddwa okutikkula eby'omukozesa oba menyu."
+  },
+
+  "jamiiauth": {
+    "login_failed": "Okuyingira kulemereddwa. Kakasizaako obulungi.",
+    "register_failed": "Okwewandiisa kulemereddwa. Gezaako nate."
+  },
+
+  "business_dashboard": {
+    "loading": "Kutikkula eby'okukola...",
+    "empty": "Tewali bibonerezo ku bizinensi eno mu kiseera kino.",
+    "title": "Obubaka Bukulu",
+    "errors": {
+      "failedToLoad": "Kulemereddwa okutikkula eby'okukola."
+    },
+    "stats": {
+      "products": "Ebintu",
+      "activeProducts": "Ebintu ebikola",
+      "inactiveProducts": "Ebintu ebitaliko kikolwa",
+      "services": "Obuweereza",
+      "branches": "Ebitundu",
+      "orders": "Ebiteekeddwa",
+      "rating": "Okwesaamu",
+      "reviews": "Ebikwasiddwa"
+    },
+    "revenue": {
+      "summary": "Obubaka bw'ensimbi",
+      "last7": "Sabiiti 1",
+      "last30": "Sabiiti 4",
+      "total": "Obungi",
+      "chart": "Kika ky’ensimbi",
+      "label": "Lunaku: {{label}}",
+      "amount": "Ensimbi"
+    },
+    "top_products": {
+      "empty": "Tewali ebintu ebisinga.",
+      "sold": "{{count}} ebiguliddwa"
+    },
+    "top_services": {
+      "title": "Obuweereza Obusinga",
+      "empty": "Tewali buweereza bungi.",
+      "used": "{{count}} byakozesebwa"
+    }
+  }
+}

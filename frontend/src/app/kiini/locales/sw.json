@@ -1,0 +1,57 @@
+{
+  "dashboard": {
+    "title": "Dashboard ya Taasisi",
+    "welcomeMessage": "Karibu kwenye dashibodi kuu ya Kiini - mfumo wa kusimamia taasisi, vitengo, na wafanyakazi.",
+    "institutions": "Taasisi",
+    "departments": "Idara",
+    "staff-profiles": "Watumishi",
+    "institution-tiers": "Ngazi za Taasisi",
+    "institution-types": "Aina za Taasisi"
+  },
+  "institution": {
+    "title": "Wasifu wa Taasisi",
+    "description": "Angalia na simamia taarifa za taasisi yako",
+    "not_found": "Taasisi haipo",
+    "create": "Unda Taasisi",
+    "back_to_profile": "Rudi kwenye Wasifu",
+    "settings": "Mipangilio",
+    "edit": "Hariri",
+    "info": {
+      "title": "Taarifa za Taasisi",
+      "established": "Ilianzishwa",
+      "tier": "Kiwango",
+      "type": "Aina",
+      "businesses": "Biashara"
+    },
+    "members": {
+      "title": "Wanachama",
+      "none": "Hakuna wanachama bado",
+      "invite": "Alika Wanachama"
+    },
+    "businesses_section": {
+      "title": "Biashara za Taasisi",
+      "create": "Unda Biashara",
+      "none": "Bado hakuna biashara kwenye taasisi hii",
+      "create_first": "Unda Biashara ya Kwanza"
+    },
+    "errors": {
+      "failed_to_load": "Imeshindwa kupakia taarifa za taasisi"
+    }
+  },
+  "departments": {
+    "title": "Usimamizi wa Vitengo",
+    "description": "Unda, hariri, na ondoa vitengo vya ndani ya taasisi yako."
+  },
+  "staff": {
+    "title": "Wafanyakazi",
+    "description": "Angalia na simamia taarifa za watumishi wa taasisi."
+  },
+  "tiers": {
+    "title": "Ngazi za Taasisi",
+    "description": "Hii ni orodha ya ngazi zilizopo kwa taasisi kama vile Ndogo, Kati, Kubwa."
+  },
+  "types": {
+    "title": "Aina za Taasisi",
+    "description": "Angalia au chagua aina ya taasisi kama kampuni binafsi, NGO, au taasisi ya serikali."
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "dashboard": {
+    "title": "Institution Dashboard",
+    "welcomeMessage": "Welcome to the Kiini main dashboard - a system for managing institutions, departments, and staff.",
+    "institutions": "Institutions",
+    "departments": "Departments",
+    "staff-profiles": "Staff Profiles",
+    "institution-tiers": "Institution Tiers",
+    "institution-types": "Institution Types"
+  },
+  "institution": {
+    "title": "Institution Profile",
+    "description": "View and manage your institution details",
+    "not_found": "Institution not found",
+    "create": "Create Institution",
+    "back_to_profile": "Back to Profile",
+    "settings": "Settings",
+    "edit": "Edit",
+    "info": {
+      "title": "Institution Information",
+      "established": "Established",
+      "tier": "Tier",
+      "type": "Type",
+      "businesses": "Businesses"
+    },
+    "members": {
+      "title": "Members",
+      "none": "No members yet",
+      "invite": "Invite Members"
+    },
+    "businesses_section": {
+      "title": "Institution Businesses",
+      "create": "Create Business",
+      "none": "No businesses in this institution yet",
+      "create_first": "Create First Business"
+    },
+    "errors": {
+      "failed_to_load": "Failed to load institution details"
+    }
+  },
+  "departments": {
+    "title": "Department Management",
+    "description": "Create, edit, and delete departments within your institution."
+  },
+  "staff": {
+    "title": "Staff Members",
+    "description": "View and manage staff information for the institution."
+  },
+  "tiers": {
+    "title": "Institution Tiers",
+    "description": "List of available tiers for institutions such as Small, Medium, Large."
+  },
+  "types": {
+    "title": "Institution Types",
+    "description": "View or select institution type such as private company, NGO, or government institution."
+  }
+}

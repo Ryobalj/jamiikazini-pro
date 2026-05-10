@@ -1,0 +1,3 @@
+from .institution_views import InstitutionViewSet
+from .department_views import DepartmentViewSet
+from .staff_views import StaffProfileViewSet

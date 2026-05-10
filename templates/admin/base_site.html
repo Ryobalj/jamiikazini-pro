@@ -1,0 +1,16 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}Jamiikazini Pro CEO Dashboard{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'admin/css/custom.css' %}">
+{% endblock %}
+
+{% block branding %}
+  <div style="display: flex; align-items: center;">
+    <img id="glowPulse" src="{% static 'admin/img/logo.png' %}" alt="Jamiikazini Logo" class="logo-glow" style="height: 40px; margin-right: 10px;">
+    <h1>Jamiikazini Admin</h1>
+  </div>
+{% endblock %}

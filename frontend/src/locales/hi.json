@@ -1,0 +1,194 @@
+{
+  "home": {
+    "welcome": "Jamiikazini में आपका स्वागत है।",
+    "description": "यह एक डिजिटल प्लेटफॉर्म है जो पूर्वी अफ्रीका में संस्थानों, व्यवसायों, पेशेवरों और व्यक्तियों के लिए बनाया गया है। इसका उद्देश्य शिक्षा, स्वास्थ्य सेवा, परिवहन और भुगतान जैसी आवश्यक सेवाओं के लिए एक केंद्र बनना है — जो भाषा, स्थान और समुदाय की आवश्यकताओं का सम्मान करता है।",
+    "login_cta": "जारी रखने के लिए लॉगिन करें"
+  },
+
+  "topbar": {
+    "back": "पीछे",
+    "forward": "आगे",
+    "dashboard": "डैशबोर्ड",
+    "cart": "कार्ट",
+    "notifications": "सूचनाएं",
+    "search": "खोजें"
+  },
+
+  "user": {
+    "menu": "यूज़र मेन्यू",
+    "profile": "प्रोफ़ाइल",
+    "settings": "सेटिंग्स",
+    "wallet": "Jamii वॉलेट",
+    "edit_profile": "प्रोफ़ाइल संपादित करें",
+    "logout": "लॉगआउट",
+    "login": "लॉगिन"
+  },
+
+  "cart": {
+    "title": "मेरा कार्ट",
+    "empty": "आपका कार्ट खाली है।",
+    "edit": "संपादित करें",
+    "checkout": "चेकआउट"
+  },
+
+  "notifications": {
+    "requests": "अनुरोध",
+    "chats": "चर्चाएं",
+    "accept": "स्वीकारें",
+    "decline": "अस्वीकारें",
+    "view": "देखें",
+    "open_chat": "चर्चा खोलें"
+  },
+
+  "search": {
+    "placeholder": "खोजें...",
+    "empty": "खोज परिणाम यहाँ दिखाई देंगे..."
+  },
+
+  "actions": {
+    "save": "सहेजें",
+    "cancel": "रद्द करें"
+  },
+
+  "dashboard": {
+    "welcome": "आपके डैशबोर्ड में आपका स्वागत है",
+    "description": "यहाँ आप अपनी गतिविधियों का सार देख सकते हैं"
+  },
+
+  "consent": {
+    "title": "क्या आप अभी भी यहाँ हैं?",
+    "description": "आपके खाते की सुरक्षा के लिए, कृपया पुष्टि करें कि आप अभी भी सक्रिय हैं। अन्यथा, हम आपको सम्मानपूर्वक लॉगआउट कर देंगे।",
+    "cancel": "नहीं",
+    "confirm": "हाँ, मैं यहाँ हूँ"
+  },
+
+  "auth": {
+    "password": "पासवर्ड",
+    "password_placeholder": "पासवर्ड दर्ज करें",
+    "confirm_password": "पासवर्ड की पुष्टि करें",
+    "confirm_password_placeholder": "पासवर्ड दोबारा दर्ज करें",
+    "passwords_do_not_match": "पासवर्ड मेल नहीं खाते",
+    "title": "शीर्षक",
+    "authenticate": "प्रमाणित करें",
+    "login": "लॉगिन",
+    "register": "पंजीकरण"
+  },
+
+  "password": {
+    "label": "पासवर्ड की ताकत:",
+    "strength": {
+      "very_weak": "बहुत कमजोर",
+      "weak": "कमजोर",
+      "fair": "सामान्य",
+      "strong": "मजबूत",
+      "very_strong": "बहुत मजबूत"
+    }
+  },
+
+  "sidebar": {
+    "app_dashboard": "ऐप डैशबोर्ड"
+  },
+
+  "tabs": {
+    "jamiikazini": "Jamiikazini",
+    "settings": "सेटिंग्स",
+    "profile": "प्रोफ़ाइल",
+    "wallet": "वॉलेट",
+    "edit_profile": "प्रोफ़ाइल संपादित करें",
+    "home": "होम",
+    "register": "पंजीकरण",
+    "login": "लॉगिन"
+  },
+
+  "user_home": {
+    "welcome": "आपके डैशबोर्ड में आपका स्वागत है",
+    "description": "यहाँ आपकी व्यक्तिगत जानकारी, बुकिंग्स, सूचनाएं आदि दिखाई देंगी।"
+  },
+
+  "auth_login": {
+    "title": "लॉगिन",
+    "email_label": "ईमेल",
+    "email_placeholder": "जैसे name@example.com",
+    "password_label": "पासवर्ड",
+    "password_placeholder": "आपका पासवर्ड",
+    "submit": "लॉगिन",
+    "loading": "लोड हो रहा है...",
+    "recaptcha_not_ready": "reCAPTCHA अभी पूरी तरह लोड नहीं हुआ है। कृपया प्रतीक्षा करें...",
+    "login_failed": "लॉगिन विफल रहा।",
+    "network_error": "नेटवर्क या reCAPTCHA त्रुटि।"
+  },
+
+  "auth_register": {
+    "title": "पंजीकरण",
+    "email_label": "ईमेल",
+    "email_placeholder": "जैसे name@example.com",
+    "name_label": "पूरा नाम",
+    "name_placeholder": "जैसे John Doe",
+    "phone_label": "फोन नंबर (वैकल्पिक)",
+    "phone_placeholder": "जैसे 0712345678",
+    "submit": "पंजीकरण करें",
+    "loading": "पंजीकरण जारी है...",
+    "success": "पंजीकरण सफल! कृपया पुष्टि के लिए अपना ईमेल देखें।",
+    "errors": {
+      "password_mismatch": "पासवर्ड मेल नहीं खाते।",
+      "recaptcha_required": "कृपया पुष्टि करें कि आप रोबोट नहीं हैं।",
+      "password_length": "पासवर्ड कम से कम 6 अक्षर का होना चाहिए।",
+      "network": "नेटवर्क त्रुटि। कृपया पुनः प्रयास करें।"
+    }
+  },
+
+  "auth_verify_email": {
+    "title": "ईमेल सत्यापन",
+    "verifying": "आपके ईमेल की पुष्टि हो रही है...",
+    "success": "आपका ईमेल सफलतापूर्वक सत्यापित हो गया है।",
+    "error": "माफ़ कीजिए! लिंक अमान्य है या समाप्त हो चुका है।",
+    "loading": "लोड हो रहा है...",
+    "to_login": "लॉगिन पर जाएं"
+  },
+
+  "userandmenu": {
+    "load_failed": "उपयोगकर्ता या मेनू जानकारी लोड करने में विफल।"
+  },
+
+  "jamiiauth": {
+    "login_failed": "लॉगिन विफल रहा। कृपया अपनी जानकारी जांचें।",
+    "register_failed": "पंजीकरण विफल रहा। कृपया पुनः प्रयास करें।"
+  },
+
+  "business_dashboard": {
+    "loading": "डैशबोर्ड लोड हो रहा है...",
+    "empty": "इस व्यवसाय के लिए अभी कोई डेटा उपलब्ध नहीं है।",
+    "title": "सारांश",
+    "errors": {
+      "failedToLoad": "डैशबोर्ड डेटा लोड करने में विफल।"
+    },
+    "stats": {
+      "products": "उत्पाद",
+      "activeProducts": "सक्रिय उत्पाद",
+      "inactiveProducts": "निष्क्रिय उत्पाद",
+      "services": "सेवाएं",
+      "branches": "शाखाएं",
+      "orders": "आदेश",
+      "rating": "रेटिंग",
+      "reviews": "समीक्षाएं"
+    },
+    "revenue": {
+      "summary": "राजस्व सारांश",
+      "last7": "पिछले 7 दिन",
+      "last30": "पिछले 30 दिन",
+      "total": "कुल",
+      "chart": "राजस्व चार्ट",
+      "label": "दिन: {{label}}",
+      "amount": "राजस्व"
+    },
+    "top_products": {
+      "empty": "कोई शीर्ष उत्पाद उपलब्ध नहीं है।",
+      "sold": "{{count}} बिके"
+    },
+    "top_services": {
+      "title": "शीर्ष सेवाएं",
+      "empty": "कोई शीर्ष सेवाएं उपलब्ध नहीं हैं।",
+      "used": "{{count}} बार उपयोग किया गया"
+    }
+  }
+}

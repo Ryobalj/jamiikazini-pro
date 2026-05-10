@@ -1,0 +1,194 @@
+{
+  "home": {
+    "welcome": "Bem-vindo ao Jamiikazini.",
+    "description": "Esta é uma plataforma digital para instituições, empresas, profissionais e indivíduos de toda a África Oriental. Ela visa ser um centro de serviços essenciais como educação, saúde, transporte e pagamentos — impulsionado por tecnologia moderna que respeita a língua, a localidade e as necessidades da comunidade.",
+    "login_cta": "Entrar para continuar"
+  },
+
+  "topbar": {
+    "back": "Voltar",
+    "forward": "Avançar",
+    "dashboard": "Painel",
+    "cart": "Carrinho",
+    "notifications": "Notificações",
+    "search": "Pesquisar"
+  },
+
+  "user": {
+    "menu": "Menu do Usuário",
+    "profile": "Perfil",
+    "settings": "Configurações",
+    "wallet": "Jamiiwallet",
+    "edit_profile": "Editar Perfil",
+    "logout": "Sair",
+    "login": "Entrar"
+  },
+
+  "cart": {
+    "title": "Meu Carrinho",
+    "empty": "Seu carrinho está vazio.",
+    "edit": "Editar",
+    "checkout": "Finalizar Compra"
+  },
+
+  "notifications": {
+    "requests": "Solicitações",
+    "chats": "Conversas",
+    "accept": "Aceitar",
+    "decline": "Recusar",
+    "view": "Ver",
+    "open_chat": "Abrir Conversa"
+  },
+
+  "search": {
+    "placeholder": "Pesquisar...",
+    "empty": "Os resultados da pesquisa aparecerão aqui..."
+  },
+
+  "actions": {
+    "save": "Salvar",
+    "cancel": "Cancelar"
+  },
+
+  "dashboard": {
+    "welcome": "Bem-vindo ao seu painel",
+    "description": "Aqui você pode ver um resumo das suas atividades"
+  },
+
+  "consent": {
+    "title": "Você ainda está aí?",
+    "description": "Para a segurança da sua conta, por favor, confirme se você ainda está ativo. Caso contrário, encerraremos sua sessão respeitosamente.",
+    "cancel": "Não",
+    "confirm": "Sim, estou aqui"
+  },
+
+  "auth": {
+    "password": "Senha",
+    "password_placeholder": "Digite a senha",
+    "confirm_password": "Confirmar Senha",
+    "confirm_password_placeholder": "Redigite a senha",
+    "passwords_do_not_match": "As senhas não coincidem",
+    "title": "Título",
+    "authenticate": "Autenticar",
+    "login": "Entrar",
+    "register": "Registrar"
+  },
+
+  "password": {
+    "label": "Força da senha:",
+    "strength": {
+      "very_weak": "Muito fraca",
+      "weak": "Fraca",
+      "fair": "Razoável",
+      "strong": "Forte",
+      "very_strong": "Muito forte"
+    }
+  },
+
+  "sidebar": {
+    "app_dashboard": "Painel do App"
+  },
+
+  "tabs": {
+    "jamiikazini": "Jamiikazini",
+    "settings": "Configurações",
+    "profile": "Perfil",
+    "wallet": "Carteira",
+    "edit_profile": "Editar Perfil",
+    "home": "Início",
+    "register": "Registrar",
+    "login": "Entrar"
+  },
+
+  "user_home": {
+    "welcome": "Bem-vindo ao seu Painel",
+    "description": "Aqui aparecerão suas informações pessoais, reservas, notificações, etc."
+  },
+
+  "auth_login": {
+    "title": "Entrar",
+    "email_label": "Email",
+    "email_placeholder": "ex. nome@exemplo.com",
+    "password_label": "Senha",
+    "password_placeholder": "Sua senha",
+    "submit": "Entrar",
+    "loading": "Carregando...",
+    "recaptcha_not_ready": "reCAPTCHA ainda não carregou completamente. Por favor, aguarde...",
+    "login_failed": "Falha no login.",
+    "network_error": "Erro de rede ou reCAPTCHA."
+  },
+
+  "auth_register": {
+    "title": "Registrar",
+    "email_label": "Email",
+    "email_placeholder": "ex. nome@exemplo.com",
+    "name_label": "Nome completo",
+    "name_placeholder": "ex. João da Silva",
+    "phone_label": "Número de telefone (opcional)",
+    "phone_placeholder": "ex. 0712345678",
+    "submit": "Registrar",
+    "loading": "Registrando...",
+    "success": "Registro realizado com sucesso! Verifique seu email para confirmar.",
+    "errors": {
+      "password_mismatch": "As senhas não coincidem.",
+      "recaptcha_required": "Por favor, verifique que você não é um robô.",
+      "password_length": "A senha deve ter pelo menos 6 caracteres.",
+      "network": "Erro de rede. Tente novamente."
+    }
+  },
+
+  "auth_verify_email": {
+    "title": "Verificação de Email",
+    "verifying": "Verificando seu email...",
+    "success": "Seu email foi verificado com sucesso.",
+    "error": "Desculpe! O link é inválido ou expirou.",
+    "loading": "Carregando...",
+    "to_login": "Ir para Login"
+  },
+
+  "userandmenu": {
+    "load_failed": "Falha ao carregar informações do usuário ou menu."
+  },
+
+  "jamiiauth": {
+    "login_failed": "Falha no login. Verifique suas credenciais.",
+    "register_failed": "Falha no registro. Tente novamente."
+  },
+
+  "business_dashboard": {
+    "loading": "Carregando painel...",
+    "empty": "Nenhum dado disponível para este negócio no momento.",
+    "title": "Resumo",
+    "errors": {
+      "failedToLoad": "Falha ao carregar dados do painel."
+    },
+    "stats": {
+      "products": "Produtos",
+      "activeProducts": "Produtos Ativos",
+      "inactiveProducts": "Produtos Inativos",
+      "services": "Serviços",
+      "branches": "Filiais",
+      "orders": "Pedidos",
+      "rating": "Avaliação",
+      "reviews": "Avaliações"
+    },
+    "revenue": {
+      "summary": "Resumo de Receita",
+      "last7": "Últimos 7 Dias",
+      "last30": "Últimos 30 Dias",
+      "total": "Total",
+      "chart": "Gráfico de Receita",
+      "label": "Dia: {{label}}",
+      "amount": "Receita"
+    },
+    "top_products": {
+      "empty": "Nenhum produto em destaque disponível.",
+      "sold": "{{count}} vendidos"
+    },
+    "top_services": {
+      "title": "Serviços em Destaque",
+      "empty": "Nenhum serviço em destaque disponível.",
+      "used": "{{count}} usados"
+    }
+  }
+}

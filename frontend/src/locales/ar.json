@@ -1,0 +1,194 @@
+{
+  "home": {
+    "welcome": "مرحبًا بك في Jamiikazini.",
+    "description": "هذه منصة رقمية للمؤسسات، والشركات، والمهنيين، والأفراد في جميع أنحاء شرق إفريقيا. تهدف إلى أن تكون مركزًا للخدمات الأساسية مثل التعليم، والرعاية الصحية، والنقل، والمدفوعات — مدعومة بتكنولوجيا حديثة تحترم اللغة، والموقع، واحتياجات المجتمع.",
+    "login_cta": "سجّل الدخول للمتابعة"
+  },
+
+  "topbar": {
+    "back": "العودة",
+    "forward": "التالي",
+    "dashboard": "لوحة التحكم",
+    "cart": "سلة المشتريات",
+    "notifications": "الإشعارات",
+    "search": "بحث"
+  },
+
+  "user": {
+    "menu": "قائمة المستخدم",
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات",
+    "wallet": "محفظة Jamii",
+    "edit_profile": "تعديل الملف",
+    "logout": "تسجيل الخروج",
+    "login": "تسجيل الدخول"
+  },
+
+  "cart": {
+    "title": "سلة مشترياتي",
+    "empty": "سلة المشتريات فارغة.",
+    "edit": "تعديل",
+    "checkout": "الدفع"
+  },
+
+  "notifications": {
+    "requests": "الطلبات",
+    "chats": "المناقشات",
+    "accept": "قبول",
+    "decline": "رفض",
+    "view": "عرض",
+    "open_chat": "فتح النقاش"
+  },
+
+  "search": {
+    "placeholder": "ابحث...",
+    "empty": "ستظهر نتائج البحث هنا..."
+  },
+
+  "actions": {
+    "save": "حفظ",
+    "cancel": "إلغاء"
+  },
+
+  "dashboard": {
+    "welcome": "مرحبًا بك في لوحة التحكم الخاصة بك",
+    "description": "يمكنك هنا رؤية ملخص لأنشطتك"
+  },
+
+  "consent": {
+    "title": "هل ما زلت هنا؟",
+    "description": "لحماية حسابك، يرجى تأكيد أنك لا تزال نشطًا. وإلا، فسنقوم بتسجيل خروجك باحترام.",
+    "cancel": "لا",
+    "confirm": "نعم، أنا هنا"
+  },
+
+  "auth": {
+    "password": "كلمة المرور",
+    "password_placeholder": "أدخل كلمة المرور",
+    "confirm_password": "تأكيد كلمة المرور",
+    "confirm_password_placeholder": "أعد إدخال كلمة المرور",
+    "passwords_do_not_match": "كلمتا المرور غير متطابقتين",
+    "title": "العنوان",
+    "authenticate": "المصادقة",
+    "login": "تسجيل الدخول",
+    "register": "تسجيل"
+  },
+
+  "password": {
+    "label": "قوة كلمة المرور:",
+    "strength": {
+      "very_weak": "ضعيفة جدًا",
+      "weak": "ضعيفة",
+      "fair": "متوسطة",
+      "strong": "قوية",
+      "very_strong": "قوية جدًا"
+    }
+  },
+
+  "sidebar": {
+    "app_dashboard": "لوحة التطبيقات"
+  },
+
+  "tabs": {
+    "jamiikazini": "Jamiikazini",
+    "settings": "الإعدادات",
+    "profile": "الملف الشخصي",
+    "wallet": "المحفظة",
+    "edit_profile": "تعديل الملف",
+    "home": "الرئيسية",
+    "register": "تسجيل",
+    "login": "تسجيل الدخول"
+  },
+
+  "user_home": {
+    "welcome": "مرحبًا بك في لوحة التحكم",
+    "description": "هنا ستظهر معلوماتك الشخصية، والحجوزات، والإشعارات، وغيرها."
+  },
+
+  "auth_login": {
+    "title": "تسجيل الدخول",
+    "email_label": "البريد الإلكتروني",
+    "email_placeholder": "مثال: name@example.com",
+    "password_label": "كلمة المرور",
+    "password_placeholder": "كلمة مرورك",
+    "submit": "تسجيل الدخول",
+    "loading": "جارٍ التحميل...",
+    "recaptcha_not_ready": "reCAPTCHA لم يتم تحميله بالكامل. الرجاء الانتظار...",
+    "login_failed": "فشل تسجيل الدخول.",
+    "network_error": "خطأ في الشبكة أو في reCAPTCHA."
+  },
+
+  "auth_register": {
+    "title": "تسجيل",
+    "email_label": "البريد الإلكتروني",
+    "email_placeholder": "مثال: name@example.com",
+    "name_label": "الاسم الكامل",
+    "name_placeholder": "مثال: محمد علي",
+    "phone_label": "رقم الهاتف (اختياري)",
+    "phone_placeholder": "مثال: 0712345678",
+    "submit": "تسجيل",
+    "loading": "جارٍ التسجيل...",
+    "success": "تم التسجيل بنجاح! الرجاء التحقق من بريدك الإلكتروني للتأكيد.",
+    "errors": {
+      "password_mismatch": "كلمتا المرور غير متطابقتين.",
+      "recaptcha_required": "يرجى التحقق أنك لست روبوتًا.",
+      "password_length": "يجب أن تكون كلمة المرور على الأقل 6 أحرف.",
+      "network": "حدث خطأ في الشبكة. حاول مرة أخرى."
+    }
+  },
+
+  "auth_verify_email": {
+    "title": "تأكيد البريد الإلكتروني",
+    "verifying": "جاري التحقق من بريدك الإلكتروني...",
+    "success": "تم التحقق من بريدك الإلكتروني بنجاح.",
+    "error": "عذرًا! الرابط غير صالح أو انتهت صلاحيته.",
+    "loading": "جارٍ التحميل...",
+    "to_login": "اذهب إلى تسجيل الدخول"
+  },
+
+  "userandmenu": {
+    "load_failed": "فشل تحميل معلومات المستخدم أو القائمة."
+  },
+
+  "jamiiauth": {
+    "login_failed": "فشل تسجيل الدخول. يرجى التحقق من معلوماتك.",
+    "register_failed": "فشل التسجيل. يرجى المحاولة مرة أخرى."
+  },
+
+  "business_dashboard": {
+    "loading": "جارٍ تحميل لوحة التحكم...",
+    "empty": "لا توجد بيانات متاحة لهذه المؤسسة حاليًا.",
+    "title": "نظرة عامة",
+    "errors": {
+      "failedToLoad": "فشل تحميل بيانات لوحة التحكم."
+    },
+    "stats": {
+      "products": "المنتجات",
+      "activeProducts": "المنتجات النشطة",
+      "inactiveProducts": "المنتجات غير النشطة",
+      "services": "الخدمات",
+      "branches": "الفروع",
+      "orders": "الطلبات",
+      "rating": "التقييم",
+      "reviews": "المراجعات"
+    },
+    "revenue": {
+      "summary": "ملخص الإيرادات",
+      "last7": "آخر 7 أيام",
+      "last30": "آخر 30 يومًا",
+      "total": "الإجمالي",
+      "chart": "مخطط الإيرادات",
+      "label": "اليوم: {{label}}",
+      "amount": "الإيرادات"
+    },
+    "top_products": {
+      "empty": "لا توجد منتجات رائجة حالياً.",
+      "sold": "تم بيع {{count}}"
+    },
+    "top_services": {
+      "title": "أفضل الخدمات",
+      "empty": "لا توجد خدمات رائجة حالياً.",
+      "used": "تم استخدامه {{count}} مرة"
+    }
+  }
+}

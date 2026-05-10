@@ -1,0 +1,194 @@
+{
+  "home": {
+    "welcome": "Barka da zuwa Jamiikazini.",
+    "description": "Wannan dandali ne na dijital ga cibiyoyi, kasuwanci, ƙwararru da mutane a fadin Gabashin Afirka. Burinsa shine ya zama cibiyar ayyuka masu mahimmanci kamar ilimi, lafiya, sufuri da biyan kuɗi — yana amfani da fasahar zamani wacce ke mutunta harshe, yanki da bukatun al’umma.",
+    "login_cta": "Shiga domin ci gaba"
+  },
+
+  "topbar": {
+    "back": "Komawa baya",
+    "forward": "Gaba",
+    "dashboard": "Allon kulawa",
+    "cart": "Keken siyayya",
+    "notifications": "Sanarwa",
+    "search": "Nema"
+  },
+
+  "user": {
+    "menu": "Menu ɗin Mai Amfani",
+    "profile": "Bayanin Kai",
+    "settings": "Saituna",
+    "wallet": "Jamiiwallet",
+    "edit_profile": "Gyara Bayanin Kai",
+    "logout": "Fita",
+    "login": "Shiga"
+  },
+
+  "cart": {
+    "title": "Keken Siyayyata na",
+    "empty": "Babu kaya a cikin kekin siyayyarka.",
+    "edit": "Gyara",
+    "checkout": "Biya"
+  },
+
+  "notifications": {
+    "requests": "Buƙatu",
+    "chats": "Tattaunawa",
+    "accept": "Amince",
+    "decline": "Ki",
+    "view": "Duba",
+    "open_chat": "Buɗe Tattaunawa"
+  },
+
+  "search": {
+    "placeholder": "Nema...",
+    "empty": "Sakamakon bincike zai bayyana a nan..."
+  },
+
+  "actions": {
+    "save": "Ajiye",
+    "cancel": "Soke"
+  },
+
+  "dashboard": {
+    "welcome": "Barka da zuwa allon kulawarka",
+    "description": "A nan zaka iya duba taƙaitaccen bayani game da ayyukanka"
+  },
+
+  "consent": {
+    "title": "Har yanzu kana nan?",
+    "description": "Domin kare asusunka, da fatan zaka tabbatar kana ci gaba da kasancewa. In ba haka ba, zamu fice ka daga tsarin cikin ladabi.",
+    "cancel": "A'a",
+    "confirm": "Eh, ina nan"
+  },
+
+  "auth": {
+    "password": "Kalmar sirri",
+    "password_placeholder": "Shigar da kalmar sirri",
+    "confirm_password": "Tabbatar da kalmar sirri",
+    "confirm_password_placeholder": "Sake shigar da kalmar sirri",
+    "passwords_do_not_match": "Kalmar sirri ba su daidaita ba",
+    "title": "Take",
+    "authenticate": "Tabbatarwa",
+    "login": "Shiga",
+    "register": "Rajista"
+  },
+
+  "password": {
+    "label": "Ƙarfin kalmar sirri:",
+    "strength": {
+      "very_weak": "Mara ƙarfi sosai",
+      "weak": "Mara ƙarfi",
+      "fair": "Matsakaici",
+      "strong": "Mai ƙarfi",
+      "very_strong": "Mai ƙarfi sosai"
+    }
+  },
+
+  "sidebar": {
+    "app_dashboard": "Allon Kulawa na App"
+  },
+
+  "tabs": {
+    "jamiikazini": "Jamiikazini",
+    "settings": "Saituna",
+    "profile": "Bayanin Kai",
+    "wallet": "Wallet",
+    "edit_profile": "Gyara Bayaninka",
+    "home": "Gida",
+    "register": "Rajista",
+    "login": "Shiga"
+  },
+
+  "user_home": {
+    "welcome": "Barka da zuwa allon kulawarka",
+    "description": "A nan zaka ga bayananka, bukatun ka, sanarwa da sauran su."
+  },
+
+  "auth_login": {
+    "title": "Shiga",
+    "email_label": "Imel",
+    "email_placeholder": "misali: suna@misali.com",
+    "password_label": "Kalmar sirri",
+    "password_placeholder": "Kalmar sirrinka",
+    "submit": "Shiga",
+    "loading": "Ana lodawa...",
+    "recaptcha_not_ready": "reCAPTCHA bai gama loduwa ba. Da fatan za a jira...",
+    "login_failed": "Shiga ya kasa.",
+    "network_error": "Kuskuren sadarwa ko reCAPTCHA."
+  },
+
+  "auth_register": {
+    "title": "Rajista",
+    "email_label": "Imel",
+    "email_placeholder": "misali: suna@misali.com",
+    "name_label": "Cikakken suna",
+    "name_placeholder": "misali: Yusuf Abdullahi",
+    "phone_label": "Lambar waya (zabi ne)",
+    "phone_placeholder": "misali: 08012345678",
+    "submit": "Rajista",
+    "loading": "Ana rajista...",
+    "success": "An yi rajista cikin nasara! Da fatan za a duba imel don tabbatarwa.",
+    "errors": {
+      "password_mismatch": "Kalmar sirri ba su dace ba.",
+      "recaptcha_required": "Da fatan za a tabbatar ba kai ba ne robot.",
+      "password_length": "Kalmar sirri dole ta zama akalla haruffa 6.",
+      "network": "Kuskuren sadarwa. Da fatan za a sake gwadawa."
+    }
+  },
+
+  "auth_verify_email": {
+    "title": "Tabbatar da Imel",
+    "verifying": "Ana tabbatar da imel ɗinka...",
+    "success": "An tabbatar da imel ɗinka cikin nasara.",
+    "error": "Yi hakuri! Hanyan haɗin ya lalace ko ya ƙare.",
+    "loading": "Ana lodawa...",
+    "to_login": "Komawa shiga"
+  },
+
+  "userandmenu": {
+    "load_failed": "An kasa loda bayanan mai amfani ko menu."
+  },
+
+  "jamiiauth": {
+    "login_failed": "Shiga ya kasa. Da fatan za a duba bayanan shigarka.",
+    "register_failed": "Rajista ta kasa. Da fatan za a sake gwadawa."
+  },
+
+  "business_dashboard": {
+    "loading": "Ana lodin dashboard...",
+    "empty": "Babu bayanai a halin yanzu ga wannan kasuwanci.",
+    "title": "Takaitawa",
+    "errors": {
+      "failedToLoad": "An kasa loda bayanan dashboard."
+    },
+    "stats": {
+      "products": "Kayayyaki",
+      "activeProducts": "Kayayyaki masu aiki",
+      "inactiveProducts": "Kayayyaki marasa aiki",
+      "services": "Ayyuka",
+      "branches": "Rassa",
+      "orders": "Umarni",
+      "rating": "Kimanta",
+      "reviews": "Sharhi"
+    },
+    "revenue": {
+      "summary": "Takaitaccen Haraji",
+      "last7": "Kwanaki 7 da suka wuce",
+      "last30": "Kwanaki 30 da suka wuce",
+      "total": "Jimla",
+      "chart": "Jadawalin Haraji",
+      "label": "Rana: {{label}}",
+      "amount": "Haraji"
+    },
+    "top_products": {
+      "empty": "Babu kayayyakin da suka fi kowa a halin yanzu.",
+      "sold": "{{count}} an sayar"
+    },
+    "top_services": {
+      "title": "Ayyuka Masu Salo",
+      "empty": "Babu ayyuka da suka fi a halin yanzu.",
+      "used": "{{count}} an yi amfani"
+    }
+  }
+}
