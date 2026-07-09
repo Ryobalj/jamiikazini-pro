@@ -1,4 +1,4 @@
-# jamiikazini/syllabus/serializers/lesson_sentence_serializer.py
+﻿# jamiikazini/syllabus/serializers/lesson_sentence_serializer.py
 
 from rest_framework import serializers
 from syllabus.models.lesson_sentence import LessonSentence
@@ -58,6 +58,6 @@ class LessonSentenceSerializer(serializers.ModelSerializer):
 
         for field in TEXT_FIELDS:
             value = self._val(data, field)
-            data[field] = value.strip() if value else None
+            data[field] = value.strip() if value else ""  # NOT NULL columns: "" si None
 
         return data

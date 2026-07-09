@@ -1,13 +1,9 @@
 // src/app/businesses/layouts/BusinessDashboardLayout.jsx
 
 import React from "react";
-import { Outlet, useParams, NavLink } from "react-router-dom";
-import { LayoutDashboard, Package, Wrench, Building2, Settings } from "lucide-react";
+import { Outlet } from "react-router-dom";
 
 export default function BusinessDashboardLayout() {
-  const { id } = useParams();
-  const base = `/dashboard/${id}`;
-
   return (
     <div className="flex min-h-screen">
       {/* Main content */}

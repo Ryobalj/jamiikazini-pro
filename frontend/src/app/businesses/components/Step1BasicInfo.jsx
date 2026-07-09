@@ -13,7 +13,7 @@ import {
   TooltipProvider,
 } from "@/components/ui/tooltip";
 
-export default function Step1BasicInfo({ formData, updateForm, goNext, goBack, errors }) {
+export default function Step1BasicInfo({ formData, updateForm, goNext, errors }) {
   const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const [checking, setChecking] = useState(false);

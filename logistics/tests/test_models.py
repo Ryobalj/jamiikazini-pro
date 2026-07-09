@@ -1,8 +1,8 @@
-# logistics/tests/test_models.py
+﻿# logistics/tests/test_models.py
 
 from django.test import TestCase
 from accounts.models import User
-from core.models import Institution
+from kiini.models import Institution
 from logistics.models import TransportProvider, TransportProviderVerification
 
 class TransportProviderModelTest(TestCase):
@@ -16,11 +16,7 @@ class TransportProviderModelTest(TestCase):
         )
 
     def test_create_transport_provider(self):
-        tp = TransportProvider.objects.create(
-            user=self.user,
-            institution=self.institution,
-            location="Dar es Salaam",
-        )
+        tp = TransportProvider.objects.create(user=self.user, institution=self.institution)
         self.assertEqual(tp.user.email, 'driver@example.com')
         self.assertFalse(tp.is_approved)
 

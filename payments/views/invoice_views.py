@@ -87,7 +87,6 @@ class InvoiceViewSet(BaseCRUDViewSet):
                 "old_status": old_status,
                 "new_status": invoice.status,
                 "amount": str(invoice.total_amount),
-                "currency": invoice.currency,
             },
         )
 

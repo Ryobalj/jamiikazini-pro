@@ -1,4 +1,4 @@
-# logistics/permissions.py
+﻿# logistics/permissions.py
 
 from rest_framework import permissions
 
@@ -25,7 +25,9 @@ class IsProviderOwnerOrReadOnly(permissions.BasePermission):
             return True
 
         # Hapa, hakikisha user ana `transport_provider` na yeye ndiye mmiliki wa gari
-        return hasattr(request.user, 'transport_provider') and obj.provider == request.user.transport_provider
+        provider = request.user.transport_providers.first()
+        obj_provider = getattr(obj, 'provider', None) or getattr(obj, 'transport_provider', None)
+        return provider is not None and obj_provider == provider
 
 
 class IsInstitutionOrBusiness(permissions.BasePermission):

@@ -1,3 +1,5 @@
+﻿from unittest.mock import patch as _patch
+from security.authentication.throttling import JamiiThrottle
 import pytest
 from django.urls import reverse
 from rest_framework.test import APIClient
@@ -89,6 +91,7 @@ class TestNationalIDVerificationView:
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     @override_settings(DJANGO_ENV="development")
+    @_patch.object(JamiiThrottle, 'THROTTLE_RATES', {'security_authentication_throttle': '3/min'})
     def test_throttle_limit(self):
         self.client.force_authenticate(user=self.user)
         for i in range(3):  # max allowed attempts (assuming limit is 3)

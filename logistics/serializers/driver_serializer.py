@@ -1,4 +1,4 @@
-# logistics/serializers/driver_serializer.py
+﻿# logistics/serializers/driver_serializer.py
 
 from rest_framework import serializers
 from logistics.models.driver import Driver
@@ -14,7 +14,7 @@ class DriverSerializer(serializers.ModelSerializer):
             'phone_number', 'profile_image', 'is_verified',
             'is_active', 'created_at', 'updated_at', 'provider_url'
         ]
-        read_only_fields = ['id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'transport_provider', 'created_at', 'updated_at']
 
     def validate_license_number(self, value):
         if self.instance:

@@ -1,4 +1,4 @@
-# kiini/permissions/access.py
+﻿# kiini/permissions/access.py
 
 from rest_framework import permissions
 from rest_framework.permissions import BasePermission
@@ -69,9 +69,19 @@ class IsInstitutionAdminOrReadOnly(BasePermission):
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
             return True
-        if request.method == "POST":
-            return request.user.is_authenticated
-        return request.user.is_authenticated and request.user.role == 'INSTITUTION_ADMIN'
+        # Writes: authenticated; umiliki hukaguliwa object-level
+        return request.user.is_authenticated
+
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        user = request.user
+        if user.is_staff or user.is_superuser:
+            return True
+        # Mmiliki wa object (mf. Business.owner) anaruhusiwa kuhariri chake
+        if getattr(obj, "owner_id", None) == user.id:
+            return True
+        return user.role == "INSTITUTION_ADMIN"
 
 
 class IsVerificationOwnerOrInstitutionAdmin(BasePermission):

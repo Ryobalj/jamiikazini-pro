@@ -28,7 +28,7 @@ function Branches() {
       setBranches(res.data.results || []);
       setCount(res.data.count || 0);
       setErrorMsg("");
-    } catch (err) {
+    } catch {
       setErrorMsg(t("errors.failed_to_fetch"));
     } finally {
       setLoading(false);

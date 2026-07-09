@@ -76,7 +76,7 @@ export default function Register() {
 
       alert(t("auth_register.success"));
       navigate("/security/login");
-    } catch (error) {
+    } catch {
       setErrors({ general: t("auth_register.errors.network") });
     } finally {
       setSubmitting(false);

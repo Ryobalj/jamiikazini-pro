@@ -1,4 +1,4 @@
-import pytest
+﻿import pytest
 from datetime import date, timedelta
 from syllabus.models.annual_calendar import AnnualCalendar
 from syllabus.serializers.annual_calendar_serializer import AnnualCalendarSerializer
@@ -22,12 +22,12 @@ class TestAnnualCalendarSerializer:
             "term_break_start_month": "March",
             "term_break_start_week": 3,
             "term_break_start_date": date(today.year, 3, 15),
-            "midannual_start_month": "April",
-            "midannual_start_week": 1,
-            "midannual_start_date": date(today.year, 4, 2),
-            "midannual_break_start_month": "May",
+            "midannual_start_month": "May",
+            "midannual_start_week": 3,
+            "midannual_start_date": date(today.year, 5, 20),
+            "midannual_break_start_month": "April",
             "midannual_break_start_week": 2,
-            "midannual_break_start_date": date(today.year, 5, 10),
+            "midannual_break_start_date": date(today.year, 4, 10),
             "annual_break_start_month": "June",
             "annual_break_start_week": 3,
             "annual_break_start_date": date(today.year, 6, 16),
@@ -50,7 +50,7 @@ class TestAnnualCalendarSerializer:
         AnnualCalendar.objects.create(**base_data)
         serializer = AnnualCalendarSerializer(data=base_data)
         assert not serializer.is_valid()
-        assert "institute" in serializer.errors
+        assert "unique" in str(serializer.errors)
 
     def test_date_must_be_in_declared_year(self, base_data):
         base_data["term_start_date"] = date(base_data["year"] + 1, 1, 5)

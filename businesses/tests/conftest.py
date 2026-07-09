@@ -28,7 +28,7 @@ def business_factory(db, user_factory, unique_institution):
 
 
 @pytest.fixture
-def product_factory(db, business_factory):
+def product_factory(db, business_factory, default_currency):
     """Create a Product for a Business."""
     def create_product(business=None, **kwargs):
         business = business or business_factory()
@@ -40,8 +40,12 @@ def product_factory(db, business_factory):
         kwargs.setdefault("language_code", "sw")
         kwargs.setdefault("tax_inclusive", True)
         kwargs.setdefault("tax_rate", 18)
-        kwargs.setdefault("currency", "TZS")
+        # Product.currency is a FK to payments.Currency (not a plain "TZS" string)
+        kwargs.setdefault("currency", default_currency)
         kwargs.setdefault("unit", "pcs")
+        if isinstance(kwargs.get("currency"), str):
+            from payments.models.currency import Currency
+            kwargs["currency"] = Currency.objects.get_or_create(code=kwargs["currency"])[0]
         return Product.objects.create(business=business, **kwargs)
     return create_product
 
@@ -80,6 +84,28 @@ def review_factory(db, business_factory, user_factory):
         user = user or user_factory()
         return Review.objects.create(business=business, user=user, **kwargs)
     return create_review
+
+
+@pytest.fixture
+def setup_review(db, business_factory, product_factory, service_factory, user_factory):
+    """Bundle of business/product/service/user plus one review - used by review view tests."""
+    business = business_factory()
+    product = product_factory(business=business)
+    service = service_factory(business=business)
+    user = user_factory(role="CLIENT")
+    review = Review.objects.create(
+        user=user,
+        product=product,
+        rating=4,
+        content="Huduma nzuri sana",
+    )
+    return {
+        "business": business,
+        "product": product,
+        "service": service,
+        "user": user,
+        "review": review,
+    }
 
 
 @pytest.fixture

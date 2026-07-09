@@ -1,4 +1,4 @@
-# businesses/views/branch_views.py
+﻿# businesses/views/branch_views.py
 
 from rest_framework import viewsets, permissions
 from businesses.models.branch import Branch
@@ -21,7 +21,15 @@ class BranchViewSet(viewsets.ModelViewSet):
 
     @conditional_2fa_required(action_type="admin_action")
     def perform_create(self, serializer):
-        serializer.save(business_id=self.kwargs['business_pk'])
+        from rest_framework.exceptions import PermissionDenied
+        from businesses.models.business import Business
+        business = Business.objects.filter(pk=self.kwargs["business_pk"]).first()
+        user = self.request.user
+        if business is None:
+            raise PermissionDenied("Business not found.")
+        if not (user.is_staff or user.is_superuser or business.owner_id == user.id):
+            raise PermissionDenied("Ni mmiliki wa biashara pekee anayeweza kuongeza tawi.")
+        serializer.save(business=business)
 
     @conditional_2fa_required(action_type="admin_action")
     def perform_update(self, serializer):

@@ -1,4 +1,5 @@
-import pytest
+﻿import pytest
+from payments.models.currency import Currency
 from decimal import Decimal
 from django.core.files.uploadedfile import SimpleUploadedFile
 from businesses.models.product import Product
@@ -32,7 +33,7 @@ class TestProductSerializers:
             type="physical",
             price=Decimal("10000.00"),
             discount_price=Decimal("9000.00"),
-            currency="TZS",
+            currency=Currency.objects.get_or_create(code="TZS")[0],
             quantity_in_stock=20,
             unit="pcs",
             is_available=True,
@@ -62,7 +63,7 @@ class TestProductSerializers:
             "type": "physical",
             "price": "5000.00",
             "discount_price": "7000.00",  # invalid
-            "currency": "TZS",
+            # currency ni nullable - tunaacha ili validation ya discount ifike
             "quantity_in_stock": 10,
             "unit": "pcs",
             "is_available": True,

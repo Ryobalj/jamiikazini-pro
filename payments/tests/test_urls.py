@@ -26,24 +26,23 @@ class TestPaymentsRoutes:
         user = user_factory()
         api_client.force_authenticate(user=user)
 
+        # CurrencyViewSet ni ReadOnly kwa makusudi (currencies husimamiwa na system)
+        currency = currency_factory(code="USD")
+
         url = reverse("payments:currency-list")
         resp = api_client.post(
             url,
-            {"code": "USD", "name": "US Dollar", "exchange_rate_to_tzs": "2500.00"},
+            {"code": "KES", "name": "Kenyan Shilling", "exchange_rate_to_tzs": "18.00"},
             format="json",
         )
-        assert resp.status_code == status.HTTP_201_CREATED
-        currency_id = resp.json()["id"]
+        assert resp.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
 
-        url_detail = reverse("payments:currency-detail", kwargs={"pk": currency_id})
+        resp = api_client.get(url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        url_detail = reverse("payments:currency-detail", kwargs={"pk": currency.id})
         resp = api_client.get(url_detail)
         assert resp.status_code == status.HTTP_200_OK
-
-        resp = api_client.patch(url_detail, {"name": "US Dollar Updated"}, format="json")
-        assert resp.status_code == status.HTTP_200_OK
-
-        resp = api_client.delete(url_detail)
-        assert resp.status_code == status.HTTP_204_NO_CONTENT
 
     def test_exchange_rate_list(self, api_client, user_factory):
         user = user_factory()

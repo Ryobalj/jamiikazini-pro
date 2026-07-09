@@ -1,0 +1,27 @@
+{% load i18n %}<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Jamiikazini{% endblock %}</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: #f9fafb; color: #111827;
+           display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+    .card { text-align: center; padding: 2.5rem 3rem; background: #fff; border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,.06); max-width: 28rem; }
+    .code { font-size: 4rem; font-weight: 800; color: #16a34a; margin: 0; }
+    h1 { font-size: 1.25rem; margin: .5rem 0 1rem; }
+    p { color: #6b7280; line-height: 1.6; }
+    a { display: inline-block; margin-top: 1.25rem; padding: .6rem 1.5rem; background: #16a34a;
+        color: #fff; text-decoration: none; border-radius: .5rem; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <p class="code">{% block code %}{% endblock %}</p>
+    <h1>{% block heading %}{% endblock %}</h1>
+    <p>{% block message %}{% endblock %}</p>
+    <a href="/">{% trans "Rudi Mwanzo" %}</a>
+  </div>
+</body>
+</html>

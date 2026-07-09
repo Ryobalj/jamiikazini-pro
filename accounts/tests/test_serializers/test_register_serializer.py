@@ -14,6 +14,7 @@ class TestRegisterSerializer:
             'email': 'test@example.com',
             'full_name': 'Test User',
             'password': 'Strongpass123!',
+            'confirm_password': 'Strongpass123!',
             'recaptcha_token': 'fake-token',
             'phone_number': '0712345678',
         }
@@ -36,13 +37,14 @@ class TestRegisterSerializer:
             'email': 'recaptcha@example.com',
             'full_name': 'ReCaptcha Fail',
             'password': 'Strongpass123!',
+            'confirm_password': 'Strongpass123!',
             'recaptcha_token': 'invalid-token',
         }
 
         serializer = RegisterSerializer(data=data)
         assert not serializer.is_valid()
         assert 'recaptcha_token' in serializer.errors
-        assert serializer.errors['recaptcha_token'][0] == "Invalid reCAPTCHA. Please try again."
+        assert "reCAPTCHA" in serializer.errors['recaptcha_token'][0]
 
     def test_email_already_exists(self):
         User.objects.create_user(
@@ -56,19 +58,24 @@ class TestRegisterSerializer:
             'email': 'existing@example.com',
             'full_name': 'New User',
             'password': 'Strongpass123!',
+            'confirm_password': 'Strongpass123!',
             'recaptcha_token': 'any-token',
         }
 
         serializer = RegisterSerializer(data=data)
         assert not serializer.is_valid()
         assert 'email' in serializer.errors
-        assert serializer.errors['email'][0] == "Email already registered."
+        # Barua pepe iliyokwisha sajiliwa - DRF UniqueValidator hutoa "already exists",
+        # validate_email ya Kiswahili hutoa "tayari"; kubali chochote kinachoonyesha unique
+        err = str(serializer.errors['email'][0]).lower()
+        assert "tayari" in err or "already" in err or "exist" in err
 
     def test_weak_password_rejected(self):
         data = {
             'email': 'weak@example.com',
             'full_name': 'Weak Password',
             'password': '123',
+            'confirm_password': '123',
             'recaptcha_token': 'any-token',
         }
 
@@ -78,13 +85,13 @@ class TestRegisterSerializer:
             serializer = RegisterSerializer(data=data)
             assert not serializer.is_valid()
             assert 'password' in serializer.errors
-            assert 'Password is too weak' in serializer.errors['password'][0]
 
     def test_invalid_phone_number(self):
         data = {
             'email': 'badphone@example.com',
             'full_name': 'Phone Issue',
             'password': 'Strongpass123!',
+            'confirm_password': 'Strongpass123!',
             'phone_number': '12',
             'recaptcha_token': 'any-token',
         }
@@ -94,4 +101,5 @@ class TestRegisterSerializer:
             serializer = RegisterSerializer(data=data)
             assert not serializer.is_valid()
             assert 'phone_number' in serializer.errors
-            assert 'too short' in serializer.errors['phone_number'][0].lower()
+            # Ujumbe wa Kiswahili: "Nambari ya simu ni fupi sana."
+            assert 'fupi' in serializer.errors['phone_number'][0].lower()

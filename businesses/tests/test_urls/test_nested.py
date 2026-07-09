@@ -1,4 +1,4 @@
-import pytest
+﻿import pytest
 from rest_framework.reverse import reverse
 from django.contrib.gis.geos import Point
 
@@ -8,7 +8,7 @@ pytestmark = pytest.mark.django_db
 @pytest.mark.django_db
 def test_categories_route(api_client, category_factory):
     category_factory(name="Afya", slug="afya")
-    url = reverse("businesses:category-list")
+    url = reverse("businesses:business-categories-list")
     response = api_client.get(url)
     assert response.status_code == 200
     assert isinstance(response.json(), list)
@@ -16,16 +16,22 @@ def test_categories_route(api_client, category_factory):
     assert response.json()[0]["slug"] == "afya"
 
 
-def test_orders_routes(api_client, order_factory):
+def test_orders_routes(api_client, order_factory, product_factory):
     order = order_factory()
-    url = reverse("businesses:business-orders-list", kwargs={"business_pk": order.business.pk})
+    product = order.business.products.first() or product_factory(business=order.business)
+    url = reverse("businesses:product-orders-list",
+                  kwargs={"business_pk": order.business.pk, "product_slug": product.slug})
     response = api_client.get(url)
     assert response.status_code in [200, 403, 401]
 
 
-def test_bookings_routes(api_client, booking_factory):
-    booking_factory()
-    url = reverse("businesses:booking-list")
+def test_bookings_routes(api_client, booking_factory, branch_factory):
+    booking = booking_factory()
+    branch = branch_factory(business=booking.service.business)
+    url = reverse("businesses:service-bookings-list",
+                  kwargs={"business_pk": booking.service.business.pk,
+                          "branch_pk": branch.pk,
+                          "service_pk": booking.service.pk})
     response = api_client.get(url)
     assert response.status_code in [200, 403, 401]
 
@@ -86,8 +92,9 @@ def test_product_review_nested(api_client, product_factory, user_factory):
     product = product_factory()
     api_client.force_authenticate(user=user)
 
-    url = f"/api/v1/businesses/{product.business.id}/products/{product.id}/reviews/"
+    url = f"/api/v1/businesses/{product.business.id}/products/{product.slug}/reviews/"
     payload = {
+        "product": str(product.id),
         "rating": 4,
         "content": "Bidhaa bora kabisa!"
     }

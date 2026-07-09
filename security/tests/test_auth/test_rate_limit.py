@@ -1,12 +1,12 @@
 # security/tests/test_auth/test_rate_limit.py
 
 import pytest
-import time
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.urls import reverse
 from accounts.models import User
 from kiini.models.institution import Institution
+from security.authentication.throttling import JamiiThrottle
 
 @pytest.mark.django_db
 class TestRateLimiting:
@@ -25,7 +25,10 @@ class TestRateLimiting:
             institution=institution
         )
 
-    def test_rate_limit_blocks_after_limit(self, create_user):
+    def test_rate_limit_blocks_after_limit(self, create_user, mocker):
+        # Weka rate ndogo (3/hour) moja kwa moja kwenye throttle - haitegemei
+        # settings-mutation ambayo DRF hairekebishi kwenye nested dict
+        mocker.patch.object(JamiiThrottle, "get_rate", return_value="3/hour")
         client = APIClient()
         url = reverse("jamii_auth:unified_login")
 
@@ -54,47 +57,31 @@ class TestRateLimiting:
         )
         assert response.status_code == 429  # ✅ Too Many Requests
 
-    def test_rate_limit_resets_after_wait(self, create_user, settings):
+    def test_rate_limit_resets_after_wait(self, create_user, mocker):
         client = APIClient()
         url = reverse("jamii_auth:unified_login")
 
-        # Override throttle limit temporarily
-        settings.REST_FRAMEWORK['DEFAULT_THROTTLE_RATES']['security_authentication_throttle'] = '2/min'
+        # Rate 2/min + saa inayodhibitiwa (badala ya time.sleep halisi ya sekunde 61)
+        mocker.patch.object(JamiiThrottle, "get_rate", return_value="2/min")
+        clock = {"now": 1_000_000.0}
+        mocker.patch.object(JamiiThrottle, "timer", lambda self: clock["now"])
+
+        payload = {
+            "email": "ratelimit@example.com",
+            "password": "wrong",
+            "recaptcha_token": "PASSED",
+        }
 
         for _ in range(2):
-            client.post(
-                url,
-                {
-                    "email": "ratelimit@example.com",
-                    "password": "wrong",
-                    "recaptcha_token": "PASSED"
-                },
-                **{'HTTP_X_FORWARDED_FOR': '127.0.0.1'}
-            )
+            client.post(url, payload, **{'HTTP_X_FORWARDED_FOR': '127.0.0.1'})
 
         # Jaribio la 3 linapaswa kuzuiwa
-        response = client.post(
-            url,
-            {
-                "email": "ratelimit@example.com",
-                "password": "wrong",
-                "recaptcha_token": "PASSED"
-            },
-            **{'HTTP_X_FORWARDED_FOR': '127.0.0.1'}
-        )
+        response = client.post(url, payload, **{'HTTP_X_FORWARDED_FOR': '127.0.0.1'})
         assert response.status_code == 429
 
-        # Subiri kwa sekunde 61 ili limit i-expire
-        time.sleep(61)
+        # Sogeza saa mbele sekunde 61 ili dirisha la dakika moja li-expire
+        clock["now"] += 61
 
-        # Jaribio jipya baada ya kusubiri linapaswa kuruhusiwa
-        response = client.post(
-            url,
-            {
-                "email": "ratelimit@example.com",
-                "password": "wrong",
-                "recaptcha_token": "PASSED"
-            },
-            **{'HTTP_X_FORWARDED_FOR': '127.0.0.1'}
-        )
-        assert response.status_code == 401  # ✅ credentials bado si sahihi, but rate limit imepita
+        # Jaribio jipya baada ya "kusubiri" linapaswa kuruhusiwa (401, si 429)
+        response = client.post(url, payload, **{'HTTP_X_FORWARDED_FOR': '127.0.0.1'})
+        assert response.status_code == 401  # credentials bado si sahihi, but rate limit imepita

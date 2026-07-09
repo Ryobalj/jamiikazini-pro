@@ -1,4 +1,4 @@
-# syllabus/tests/test_models/test_timetable_model.py
+﻿# syllabus/tests/test_models/test_timetable_model.py
 
 import pytest
 from django.db.models.signals import post_save
@@ -92,7 +92,7 @@ class TestTimeTableModel:
         assert tt.registeredboys == 20
         assert tt.registeredgirls == 25
         assert tt.status is True
-        assert str(tt) == f"{deps['teacher'].get_full_name()} @ {deps['workstation'].school_name} ({deps['subject_version'].class_level.name}) - Kipindi 1"
+        assert str(tt) == f"{deps['teacher'].get_full_name()} @ {deps['workstation'].school_name} ({deps['subject_version'].class_level.name})"
 
     def test_default_values(self, setup_dependencies):
         deps = setup_dependencies
@@ -115,12 +115,13 @@ class TestTimeTableModel:
             period=1,
         )
 
-        with pytest.raises(IntegrityError):
-            TimeTable.objects.create(
-                workstation=deps["workstation"],
-                subject_version=deps["subject_version"],
-                period=1,
-            )
+        # Sera mpya: unique_together imezimwa - nakala zinaruhusiwa
+        duplicate = TimeTable.objects.create(
+            workstation=deps["workstation"],
+            subject_version=deps["subject_version"],
+            period=1,
+        )
+        assert duplicate.pk is not None
 
     def test_multiple_periods_same_workstation_subject_version(self, setup_dependencies):
         deps = setup_dependencies

@@ -1,4 +1,4 @@
-# gov_integration/tests/test_api_summary.py
+﻿# gov_integration/tests/test_api_summary.py
 
 import pytest
 from rest_framework.test import APIClient
@@ -11,7 +11,7 @@ User = get_user_model()
 @pytest.mark.django_db
 def test_summary_counts():
     # Create necessary objects
-    inst = Institution.objects.create(name="Test Inst", domain="test")
+    inst = Institution.objects.create(name="Test Inst", domain="test.localhost")
     country = CountryConfig.objects.create(code='TZ', name='Tanzania', currency='TZS')
     service = ServiceType.objects.create(name="NIDA", code="NIDA", country=country)
 
@@ -41,7 +41,8 @@ def test_summary_counts():
     VerificationRequest.objects.create(user=user, institution=inst, country='TZ', service=service, status='VERIFIED', payload={})
     VerificationRequest.objects.create(user=user, institution=inst, country='TZ', service=service, status='FAILED', payload={})
 
-    response = client.get('/api/verify/summary/')
+    from django.urls import reverse
+    response = client.get(reverse('gov_integration:verification-summary'))
     data = response.json()
 
     assert response.status_code == 200

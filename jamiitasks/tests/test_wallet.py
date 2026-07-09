@@ -1,6 +1,7 @@
-# jamiitasks/tests/test_wallet.py
+﻿# jamiitasks/tests/test_wallet.py
 
 import pytest
+from payments.models.currency import Currency
 from decimal import Decimal
 from django.utils import timezone
 from django.contrib.auth import get_user_model
@@ -18,25 +19,18 @@ User = get_user_model()
 def test_confirm_topup_transaction_success(mocker):
     # 1. Tengeneza mtumiaji na wallet
     user = User.objects.create_user(username='client1', email='client@example.com', password='pass')
-    wallet = Wallet.objects.create(user=user, balance=Decimal('100.00'), currency='TZS')
+    wallet, _ = Wallet.objects.update_or_create(user=user, defaults={"balance": Decimal('100.00'), "currency": Currency.objects.get_or_create(code="TZS")[0]})
 
-    # 2. Tengeneza TopUp
+    # 2. Mock gateway KABLA ya create - TopUp.save() inaendesha task eagerly
+    mocker.patch('jamiitasks.tasks.wallet.confirm_with_gateway', return_value=True)
+
     topup = TopUp.objects.create(
-        wallet=wallet,
         user=user,
         amount=Decimal('50.00'),
-        status=TopUp.TopUpStatus.PENDING,
+        status=TopUp.TopUpStatus.INITIATED,
         reference='TX12345',
         metadata={'gateway': 'simulated'},
-        initiated_at=timezone.now(),
     )
-
-    # 3. Hakikisha balance ya awali
-    assert wallet.balance == Decimal('100.00')
-    assert Transaction.objects.count() == 0
-
-    # 4. Simulate external confirmation always successful
-    mocker.patch('jamiitasks.tasks.wallet.simulate_payment_gateway_confirmation', return_value=True)
 
     # 5. Run celery task directly
     result = confirm_topup_transaction(topup.id)

@@ -1,4 +1,4 @@
-# payments/models/audit_log.py
+﻿# payments/models/audit_log.py
 
 from django.db import models
 from django.conf import settings
@@ -23,8 +23,11 @@ class AuditAction(models.TextChoices):
     LOGIN = "LOGIN", _("Login")
     LOGOUT = "LOGOUT", _("Logout")
     PAYMENT = "PAYMENT", _("Payment")
-    FAILED_2FA = "FAILED_2FA", _("Failed 2FA")  # 🚨 security
-    PAYMENT_RETRY = "PAYMENT_RETRY", _("Payment Retry")  # 🚨 security
+    SUCCESSFUL_2FA = "SUCCESSFUL_2FA", _("Successful 2FA")  # security (high-value OTP)
+    FAILED_2FA = "FAILED_2FA", _("Failed 2FA")  # ðŸš¨ security
+    PAYMENT_RETRY = "PAYMENT_RETRY", _("Payment Retry")  # ðŸš¨ security
+    VALIDATION = "VALIDATION", _("Validation")  # transaction pre-checks (jamiiwallet engine)
+    INVOICE_STATUS_CHANGE = "INVOICE_STATUS_CHANGE", _("Invoice Status Change")  # invoice mark-paid n.k.
     OTHER = "OTHER", _("Other")
 
 
@@ -39,7 +42,7 @@ class AuditLog(TimeStampedModel):
         db_index=True,
     )
     action = models.CharField(
-        max_length=20,
+        max_length=32,
         choices=AuditAction.choices,
         verbose_name=_("Action"),
         db_index=True,
@@ -54,16 +57,17 @@ class AuditLog(TimeStampedModel):
         help_text=_("Model type of the affected object"),
         db_index=True,
     )
-    object_id = models.UUIDField(
+    object_id = models.CharField(
+        max_length=64,
         null=True,
         blank=True,
         verbose_name=_("Target Object ID"),
-        help_text=_("UUID of the affected object"),
+        help_text=_("Primary key of the affected object (UUID or integer)"),
         db_index=True,
     )
     target_object = GenericForeignKey("content_type", "object_id")
 
-    # 🔐 Encrypted fields
+    # ðŸ” Encrypted fields
     _description = models.TextField(
         blank=True,
         db_column="description",
@@ -148,11 +152,9 @@ class AuditLog(TimeStampedModel):
         )
 
     def clean(self):
-        if self.object_id:
-            try:
-                uuid.UUID(str(self.object_id))
-            except ValueError:
-                raise ValidationError({"object_id": _("Invalid UUID format.")})
+        # object_id accepts any model pk (UUID or integer) - normalise to str
+        if self.object_id is not None:
+            self.object_id = str(self.object_id)
 
     def save(self, *args, **kwargs):
         self.full_clean()
@@ -174,11 +176,9 @@ class AuditLog(TimeStampedModel):
         if target_obj:
             content_type = ContentType.objects.get_for_model(target_obj)
             object_id = getattr(target_obj, "pk", None)
-            if object_id and not isinstance(object_id, uuid.UUID):
-                try:
-                    object_id = uuid.UUID(str(object_id))
-                except Exception:
-                    object_id = str(object_id)
+            if object_id is not None:
+                # pk yoyote (UUID au integer) huhifadhiwa kama str - inaendana na clean()
+                object_id = str(object_id)
 
         log_entry = AuditLog.objects.create(
             user=user,
@@ -190,7 +190,7 @@ class AuditLog(TimeStampedModel):
             ip_address=ip_address,
         )
 
-        # 🚨 Auto Slack Alerts for sensitive actions
+        # ðŸš¨ Auto Slack Alerts for sensitive actions
         if action in [AuditAction.FAILED_2FA, AuditAction.PAYMENT_RETRY]:
             try:
                 send_slack_alert(

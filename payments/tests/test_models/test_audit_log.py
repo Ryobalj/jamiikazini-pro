@@ -78,16 +78,20 @@ def test_str_with_content_type_but_no_user(user_factory):
 
 
 @pytest.mark.django_db
-def test_clean_with_invalid_uuid(user_factory):
+def test_clean_normalises_object_id_to_str(user_factory):
+    # Design mpya: object_id ni CharField - pk yoyote (UUID/int) hu-normalise kuwa str
     user = user_factory()
     log = AuditLog(
         user=user,
         action=AuditAction.OTHER,
-        object_id="invalid-uuid"
+        object_id=uuid.UUID("00000000-0000-0000-0000-000000000123")
     )
-    with pytest.raises(ValidationError) as exc:
-        log.clean()
-    assert "Invalid UUID format" in str(exc.value)
+    log.clean()
+    assert log.object_id == "00000000-0000-0000-0000-000000000123"
+
+    log2 = AuditLog(user=user, action=AuditAction.OTHER, object_id=42)
+    log2.clean()
+    assert log2.object_id == "42"
 
 
 @pytest.mark.django_db
@@ -132,7 +136,7 @@ def test_log_action_with_uuid_target(user_factory):
     assert isinstance(log, AuditLog)
     assert log.user == user
     assert log.action == AuditAction.CREATE
-    assert log.object_id == target.pk
+    assert log.object_id == str(target.pk)
     assert log.metadata == {"key": "value"}
     assert log.ip_address == "127.0.0.1"
 
@@ -148,5 +152,5 @@ def test_log_action_with_non_uuid_pk(user_factory):
         action=AuditAction.PAYMENT,
         target_obj=target
     )
-    assert isinstance(log.object_id, uuid.UUID)
+    assert log.object_id == str(target.pk)
     assert log.action == AuditAction.PAYMENT

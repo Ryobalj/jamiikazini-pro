@@ -1,4 +1,4 @@
-import pytest
+﻿import pytest
 from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
@@ -29,14 +29,14 @@ def category():
 
 
 def test_category_list(api_client, category):
-    url = reverse("category-list")
+    url = reverse("businesses:business-categories-list")
     response = api_client.get(url)
     assert response.status_code == 200
     assert any(cat["slug"] == category.slug for cat in response.data)
 
 
 def test_category_retrieve(api_client, category):
-    url = reverse("category-detail", kwargs={"slug": category.slug})
+    url = reverse("businesses:business-categories-detail", kwargs={"slug": category.slug})
     response = api_client.get(url)
     assert response.status_code == 200
     assert response.data["slug"] == category.slug
@@ -44,7 +44,7 @@ def test_category_retrieve(api_client, category):
 
 def test_category_create_authenticated(api_client, user):
     api_client.force_authenticate(user=user)
-    url = reverse("category-list")
+    url = reverse("businesses:business-categories-list")
     data = {
         "name": "Education",
         "slug": "education"
@@ -55,7 +55,7 @@ def test_category_create_authenticated(api_client, user):
 
 
 def test_category_create_unauthenticated(api_client):
-    url = reverse("category-list")
+    url = reverse("businesses:business-categories-list")
     data = {
         "name": "Finance",
         "slug": "finance"
@@ -66,7 +66,7 @@ def test_category_create_unauthenticated(api_client):
 
 def test_category_update_authenticated(api_client, user, category):
     api_client.force_authenticate(user=user)
-    url = reverse("category-detail", kwargs={"slug": category.slug})
+    url = reverse("businesses:business-categories-detail", kwargs={"slug": category.slug})
     data = {
         "name": "Healthcare",
         "slug": category.slug
@@ -78,7 +78,7 @@ def test_category_update_authenticated(api_client, user, category):
 
 def test_category_delete_authenticated(api_client, user, category):
     api_client.force_authenticate(user=user)
-    url = reverse("category-detail", kwargs={"slug": category.slug})
+    url = reverse("businesses:business-categories-detail", kwargs={"slug": category.slug})
     response = api_client.delete(url)
     assert response.status_code == 204
     assert not BusinessCategory.objects.filter(slug=category.slug).exists()

@@ -1,4 +1,4 @@
-import pytest
+﻿import pytest
 from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
@@ -53,7 +53,7 @@ def inactive_business(owner, category):
 
 
 def test_public_business_detail_success(api_client, active_business):
-    url = reverse("public-business-detail", kwargs={"pk": active_business.pk})
+    url = reverse("businesses:public-business-detail", kwargs={"pk": active_business.pk})
     response = api_client.get(url)
     assert response.status_code == status.HTTP_200_OK
     assert response.data["id"] == str(active_business.id)
@@ -61,12 +61,12 @@ def test_public_business_detail_success(api_client, active_business):
 
 
 def test_public_business_detail_not_found(api_client, inactive_business):
-    url = reverse("public-business-detail", kwargs={"pk": inactive_business.pk})
+    url = reverse("businesses:public-business-detail", kwargs={"pk": inactive_business.pk})
     response = api_client.get(url)
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
 
 def test_public_business_detail_invalid_uuid(api_client):
-    url = reverse("public-business-detail", kwargs={"pk": "invalid-uuid"})
+    url = reverse("businesses:public-business-detail", kwargs={"pk": "00000000-0000-0000-0000-000000000000"})
     response = api_client.get(url)
     assert response.status_code == status.HTTP_404_NOT_FOUND

@@ -270,7 +270,8 @@ class PaymentReportViewSet(BaseCRUDViewSet):
         """Enhanced list with summary metadata"""
         response = super().list(request, *args, **kwargs)
 
-        if response.status_code == 200:
+        # Bila pagination response.data ni list - summary huwezekana tu kwenye dict
+        if response.status_code == 200 and isinstance(response.data, dict):
             queryset = self.filter_queryset(self.get_queryset())
             response.data["summary"] = {
                 "total_count": queryset.count(),

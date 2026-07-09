@@ -11,7 +11,6 @@ export default function SchemeStatus({ schemeData }) {
     hasSubjects,
     selectedSubject,
     selectedCalendar,
-    workstations,
     timetableSubjects
   } = schemeData;
 

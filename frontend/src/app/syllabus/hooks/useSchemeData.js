@@ -69,7 +69,9 @@ export default function useSchemeData() {
         setPrefillData(JSON.parse(stored));
         localStorage.removeItem("schemeSubjectData");
         toast.info(t("scheme.data_prefilled"));
-      } catch {}
+      } catch {
+        /* stored prefill is optional - ignore corrupt JSON */
+      }
     }
 
     if (location.state?.subjectData) {
@@ -224,7 +226,9 @@ export default function useSchemeData() {
 
             toast.success(t("scheme.generated_success"));
             return;
-          } catch {}
+          } catch {
+            /* fallback fetch failed - fall through to generic error handling */
+          }
         }
 
         handleApiError(err);

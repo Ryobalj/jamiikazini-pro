@@ -30,15 +30,16 @@ from django.dispatch import receiver
 
 User = get_user_model()
 
-# Disable wallet auto-creation signal during tests
-try:
-    signals.post_save.disconnect(
-        receiver=Wallet.create_wallet_for_user,
-        sender=User
-    )
-except Exception:
-    # In case signal is already disconnected
-    pass
+# Disable wallet auto-creation signal during tests.
+# NB: the receiver is create_or_reactivate_wallet in jamiiwallet/signals.py -
+# the old Wallet.create_wallet_for_user reference never existed, so the
+# disconnect silently no-oped and fixtures creating wallets hit duplicates.
+from jamiiwallet.signals import create_or_reactivate_wallet
+
+signals.post_save.disconnect(
+    receiver=create_or_reactivate_wallet,
+    sender=User
+)
 
 
 os.environ["TESTING"] = "True"
@@ -82,16 +83,17 @@ def user_factory(db, default_currency):
             is_staff = True
             is_superuser = True
 
-        # Create user
+        # Create user (kwargs za test zinashinda defaults, bila kujirudia)
+        reserved = ["email", "password", "role", "full_name", "is_active", "is_staff", "is_superuser"]
         user = User.objects.create_user(
             email=email,
             password=password,
             full_name=full_name,
             role=role,
-            is_active=True,
-            is_staff=is_staff,
-            is_superuser=is_superuser,
-            **{k: v for k, v in kwargs.items() if k not in ["email", "password", "role", "full_name"]}
+            is_active=kwargs.get("is_active", True),
+            is_staff=kwargs.get("is_staff", is_staff),
+            is_superuser=kwargs.get("is_superuser", is_superuser),
+            **{k: v for k, v in kwargs.items() if k not in reserved}
         )
 
         # Only create wallet if it doesn't exist
@@ -190,6 +192,22 @@ def institution_type_factory(db):
     def create_type(name="PRIVATE_COMPANY", **kwargs):
         return InstitutionType.objects.create(name=name, **kwargs)
     return create_type
+
+
+@pytest.fixture
+def business_factory(db, user_factory, unique_institution):
+    """Create a Business instance (inapatikana kwa apps zote, si businesses tu)."""
+    from businesses.models import Business
+
+    def create_business(owner=None, **kwargs):
+        owner = owner or user_factory()
+        return Business.objects.create(
+            owner=owner,
+            institution=kwargs.pop("institution", unique_institution),
+            name=kwargs.pop("name", f"Business {uuid.uuid4().hex[:6]}"),
+            **kwargs
+        )
+    return create_business
 
 
 # =======================
@@ -294,19 +312,21 @@ def payment_method_factory(db, user_factory):
 
 
 @pytest.fixture
-def payment_report_factory():
+def payment_report_factory(user_factory):
     def create_payment_report(user=None, **kwargs):
         from payments.models.payment_report import PaymentReport
         from django.utils import timezone
-        from accounts.models import User
-        from decimal import Decimal
 
-        user = user or User.objects.first()
+        user = user or user_factory()
+        end = kwargs.pop("end_date", timezone.now())
+        start = kwargs.pop("start_date", end - timedelta(days=30))
         defaults = {
             "user": user,
-            "transaction_count": 1,
-            "total_amount": Decimal("100.00"),
-            "report_date": kwargs.get("report_date", timezone.now().date()),
+            "report_type": PaymentReport.ReportType.TRANSACTION_SUMMARY,
+            "status": PaymentReport.Status.GENERATING,
+            "progress_percentage": 0,
+            "start_date": start,
+            "end_date": end,
         }
         defaults.update(kwargs)
         return PaymentReport.objects.create(**defaults)

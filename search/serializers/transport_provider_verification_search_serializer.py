@@ -8,6 +8,10 @@ class VerificationRequestSerializer(serializers.Serializer):
     status = serializers.CharField()
     verified_at = serializers.DateField(allow_null=True)
 
+    class Meta:
+        # ref_name ya kipekee - inagongana na gov_integration.VerificationRequestSerializer
+        ref_name = "TPVSearchVerificationRequest"
+
 
 class TransportProviderVerificationSearchSerializer(serializers.Serializer):
     id = serializers.IntegerField()

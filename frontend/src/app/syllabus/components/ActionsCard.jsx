@@ -261,7 +261,7 @@ const ActionsCard = ({
   const renderLessonPlanPreview = () => {
     if (!generatedLessonPlan || !previewMode) return null;
 
-    const { meta, lesson, steps, assessment } = generatedLessonPlan;
+    const { meta, steps, assessment } = generatedLessonPlan;
     
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">

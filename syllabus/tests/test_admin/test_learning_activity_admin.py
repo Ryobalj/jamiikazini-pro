@@ -1,9 +1,10 @@
-# syllabus/tests/test_admin/test_learning_activity_admin.py
+﻿# syllabus/tests/test_admin/test_learning_activity_admin.py
 
 import pytest
 from django.contrib.admin.sites import site
 from syllabus.models.learning_activity import LearningActivity
-from syllabus.admins.learning_activity_admin import LearningActivityAdmin, LearningActivityInline
+from syllabus.admins.learning_activity_admin import LearningActivityAdmin
+from syllabus.admins.specific_competence_admin import LearningActivityInline
 from syllabus.models.specific_competence import SpecificCompetence
 
 @pytest.mark.django_db
@@ -27,8 +28,8 @@ class TestLearningActivityAdmin:
     def test_inline_admin_settings(self):
         inline = LearningActivityInline(SpecificCompetence, site)
         assert inline.model == LearningActivity
-        assert inline.extra == 0
-        assert inline.readonly_fields == ("order",)
-        assert inline.ordering == ("order",)
+        assert inline.extra == 1
+        assert inline.readonly_fields == ()
+        assert inline.ordering is None
         assert inline.show_change_link is True
-        assert inline.fields == ("name", "order")
+        assert inline.fields == ("name",)

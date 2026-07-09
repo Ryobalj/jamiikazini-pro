@@ -9,6 +9,10 @@ class BusinessSerializer(serializers.Serializer):
     description = serializers.CharField()
     is_active = serializers.BooleanField()
 
+    class Meta:
+        # ref_name ya kipekee - inagongana na businesses.BusinessSerializer kwenye schema
+        ref_name = "ServiceSearchBusiness"
+
 
 class CategorySerializer(serializers.Serializer):
     id = serializers.IntegerField()

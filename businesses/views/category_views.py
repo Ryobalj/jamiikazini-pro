@@ -1,4 +1,4 @@
-# businesses/views/category_views.py
+﻿# businesses/views/category_views.py
 
 from rest_framework import viewsets, permissions
 from businesses.models.category import BusinessCategory
@@ -12,6 +12,8 @@ class BusinessCategoryViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     lookup_field = "slug"
     search_fields = ['name']
+    from rest_framework.filters import OrderingFilter as _OrderingFilter
+    filter_backends = [_OrderingFilter]
     ordering_fields = ['name']
     ordering = ['name']
 

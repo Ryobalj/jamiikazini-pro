@@ -2,6 +2,7 @@
 
 import re
 import json
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 from kiini.models.base_entity import AbstractEntity
@@ -103,7 +104,8 @@ class PaymentMethod(AbstractEntity):
     mno = models.CharField(max_length=20, choices=MNOType.choices, blank=True, null=True)
     country_code = models.CharField(max_length=2, choices=CountryCode.choices, default=CountryCode.TZ)
     gateway = models.CharField(max_length=20, choices=GatewayType.choices, blank=True, null=True)
-    _account_identifier = models.CharField(max_length=100, blank=True, null=True, db_column="account_identifier")
+    # TextField: thamani huhifadhiwa ikiwa encrypted (Fernet token > 100 chars kwa identifier ndefu)
+    _account_identifier = models.TextField(blank=True, null=True, db_column="account_identifier")
     currency = models.ForeignKey(
         Currency,
         on_delete=models.SET_NULL,
@@ -159,6 +161,29 @@ class PaymentMethod(AbstractEntity):
         if self.is_flutterwave:
             return FlutterwaveGateway()
         return None
+
+    # ---------- EAC Phone Validation ----------
+    @staticmethod
+    def validate_eac_phone(phone, country_code="TZ"):
+        """Thibitisha namba ya simu ni halali kwa nchi za Afrika Mashariki (EAC)."""
+        if not phone:
+            return phone
+        error = ValidationError(
+            _("Namba ya simu si halali kwa nchi za Afrika Mashariki (EAC).")
+        )
+        pattern = EAC_REGEX.get(country_code)
+        if not pattern or not re.match(pattern, phone):
+            raise error
+        prefixes = EAC_PREFIXES.get(country_code, set())
+        national = phone[4:]  # nchi zote za EAC zina country code ya tarakimu 3 (+2XX)
+        if prefixes and not any(national.startswith(p) for p in prefixes):
+            raise error
+        return phone
+
+    def clean(self):
+        super().clean()
+        if self.phone:
+            PaymentMethod.validate_eac_phone(str(self.phone), self.country_code or "TZ")
 
     # ---------- Intelligent Account Detection ----------
     def _detect_identifier_type(self, identifier: str):

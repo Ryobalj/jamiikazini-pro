@@ -1,9 +1,9 @@
 // src/lib/axios.js
 import axios from "axios";
 
-// Determine environment
-const isProduction = import.meta.env.PROD || process.env.NODE_ENV === 'production';
-const isDevelopment = import.meta.env.DEV || process.env.NODE_ENV === 'development';
+// Determine environment (Vite injects these; `process` does not exist in the browser)
+const isProduction = import.meta.env.PROD;
+const isDevelopment = import.meta.env.DEV;
 
 // Get API URL from environment variables with fallbacks
 let BASE_URL = "";
@@ -91,7 +91,7 @@ const processQueue = async () => {
     
     try {
       await api.request(requestConfig);
-    } catch (error) {
+    } catch {
       // Error is handled by response interceptor
     }
     

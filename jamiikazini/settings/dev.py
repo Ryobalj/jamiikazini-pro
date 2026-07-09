@@ -13,6 +13,13 @@ from .base import *
 
 INTERNAL_IPS = ["127.0.0.1"]
 
+# Local dev runs without Redis; the locmem cache is fine for a single
+# runserver process even though django_ratelimit flags it as non-shared.
+SILENCED_SYSTEM_CHECKS = [
+    "django_ratelimit.E003",
+    "django_ratelimit.W001",
+]
+
 # Database (Local development)
 DATABASES = {
     "default": {

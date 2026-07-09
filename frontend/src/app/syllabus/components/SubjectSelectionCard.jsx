@@ -5,7 +5,6 @@ const SubjectSelectionCard = ({
   timetables,
   selectedTimetable,
   setSelectedTimetable,
-  form,
   setForm,
   currentSubjectInfo,
   loadActivitiesForTimetable,

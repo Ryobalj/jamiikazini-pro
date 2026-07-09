@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "@/lib/auth";
 import InputField from "@/components/InputField";
 import * as Icons from "lucide-react";
 import { useAppContext } from "@/context/AppContext";
@@ -13,7 +12,7 @@ const RECAPTCHA_V3_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
 export default function Login() {
   const navigate = useNavigate();
-  const { setUser, setUserMenu } = useAppContext();
+  const { setUser } = useAppContext();
   const { t } = useTranslation();
 
   const [formData, setFormData] = useState({ email: "", password: "" });

@@ -1,4 +1,4 @@
-# logistics/tests/test_transport_leg_edge.py
+﻿# logistics/tests/test_transport_leg_edge.py
 
 import pytest
 from django.urls import reverse
@@ -32,8 +32,8 @@ class TestTransportLegEdgeCases:
         )
 
     @pytest.fixture
-    def provider(self):
-        return TransportProvider.objects.create(name="Edge Provider")
+    def provider(self, user):
+        return TransportProvider.objects.create(user=user)
 
     @pytest.fixture
     def shipment(self, user, product):
@@ -46,7 +46,7 @@ class TestTransportLegEdgeCases:
 
     @pytest.fixture
     def product(self):
-        return Product.objects.create(name="Edge Product", description="Test", price=100)
+        from logistics.factories import ProductFactory; return ProductFactory(name="Edge Product", description="Test", price=100)
 
     @pytest.fixture
     def leg(self, shipment, provider):
@@ -63,26 +63,26 @@ class TestTransportLegEdgeCases:
         )
 
     def test_unauthorized_status_update(self, client, leg):
-        url = reverse("transport-legs-update-status", args=[leg.id])
+        url = reverse("logistics:transport-legs-update-status", args=[leg.id])
         response = client.post(url, {"status": "IN_TRANSIT"}, format="json")
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_invalid_status_value(self, client, user, leg):
         client.force_authenticate(user=user)
-        url = reverse("transport-legs-update-status", args=[leg.id])
+        url = reverse("logistics:transport-legs-update-status", args=[leg.id])
         response = client.post(url, {"status": "INVALID_STATUS"}, format="json")
         assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_unauthorized_user_cannot_update_leg(self, client, another_user, leg):
         client.force_authenticate(user=another_user)
-        url = reverse("transport-legs-update-status", args=[leg.id])
+        url = reverse("logistics:transport-legs-update-status", args=[leg.id])
         response = client.post(url, {"status": "IN_TRANSIT"}, format="json")
         # Depending on your access control, either 403 Forbidden or 404 Not Found
         assert response.status_code in [status.HTTP_403_FORBIDDEN, status.HTTP_404_NOT_FOUND]
 
     def test_duplicate_status_logs(self, client, user, leg):
         client.force_authenticate(user=user)
-        url = reverse("transport-legs-update-status", args=[leg.id])
+        url = reverse("logistics:transport-legs-update-status", args=[leg.id])
         client.post(url, {"status": "IN_TRANSIT"}, format="json")
         client.post(url, {"status": "IN_TRANSIT"}, format="json")
 

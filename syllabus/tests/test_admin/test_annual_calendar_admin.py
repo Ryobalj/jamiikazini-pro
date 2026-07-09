@@ -1,4 +1,4 @@
-# syllabus/tests/test_admin/test_annual_calendar_admin.py
+﻿# syllabus/tests/test_admin/test_annual_calendar_admin.py
 
 import pytest
 from django.contrib.admin.sites import AdminSite
@@ -20,14 +20,10 @@ class TestAnnualCalendarAdmin:
         site = AdminSite()
         admin_instance = AnnualCalendarAdmin(AnnualCalendar, site)
         expected_fields = (
-            "id",
-            "institute",
-            "year",
-            "total_learning_days",
-            "status",
-            "term_start_date",
-            "midannual_start_date",
-            "annual_break_start_date",
+            "id", "institute", "year", "total_learning_days", "status",
+            "term_start_date", "midterm_break_start_date", "midterm_start_date",
+            "term_break_start_date", "annual_startdate", "midannual_break_start_date",
+            "midannual_start_date", "annual_break_start_date",
         )
         assert admin_instance.list_display == expected_fields
 

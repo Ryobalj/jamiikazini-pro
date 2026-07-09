@@ -1,4 +1,4 @@
-# logistics/serializers/shipment_serializer.py
+﻿# logistics/serializers/shipment_serializer.py
 
 from rest_framework import serializers
 from logistics.models import Shipment, TransportProvider
@@ -11,7 +11,10 @@ from businesses.serializers.product_serializer import ProductMinimalSerializer
 class TransportProviderSerializer(serializers.ModelSerializer):
     class Meta:
         model = TransportProvider
-        fields = ['id', 'name', 'contact_info']  # add more fields as needed
+        fields = ['id', 'user', 'institution', 'provider_type', 'is_approved']
+        # ref_name ya kipekee - vinginevyo inagongana na transport_provider_serializer
+        # yenye jina lile lile kwenye drf_yasg schema generation
+        ref_name = "ShipmentTransportProvider"
 
 
 class ShipmentSerializer(serializers.ModelSerializer):
@@ -43,7 +46,7 @@ class ShipmentSerializer(serializers.ModelSerializer):
             'transport_fee', 'total_cost',
             'created_at', 'updated_at'
         ]
-        read_only_fields = ['id', 'sender', 'status', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'sender', 'created_at', 'updated_at']
 
     def create(self, validated_data):
         validated_data['sender'] = self.context['request'].user

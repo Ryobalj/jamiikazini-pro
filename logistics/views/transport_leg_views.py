@@ -1,4 +1,4 @@
-# logistics/views/transport_leg_views.py
+﻿# logistics/views/transport_leg_views.py
 
 from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
@@ -16,6 +16,16 @@ class TransportLegViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def update_status(self, request, pk=None):
         leg = self.get_object()
+        # Usalama: ni provider wa leg hii au staff pekee wanaoruhusiwa
+        is_owner = (
+            leg.provider is not None
+            and leg.provider.user_id == request.user.id
+        )
+        if not (is_owner or request.user.is_staff or request.user.is_superuser):
+            return Response(
+                {"detail": "Only the assigned transport provider can update this leg."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
         serializer = LegStatusLogSerializer(data=request.data)
         if serializer.is_valid():
             log = serializer.save(leg=leg, updated_by=request.user)
@@ -31,8 +41,8 @@ class TransportLegViewSet(viewsets.ModelViewSet):
         sender = getattr(shipment, 'sender', None)
         institution = getattr(sender, 'institution', None)
 
-        if institution and institution.slug:
-            url = generate_subdomain_url(institution.slug, f"/track/shipment/{shipment.id}/")
+        if institution and institution.domain:
+            url = generate_subdomain_url(institution.domain, f"/track/shipment/{shipment.id}/")
             return Response({'track_url': url}, status=status.HTTP_200_OK)
         return Response({'detail': 'Sender institution slug not available'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -43,8 +53,8 @@ class TransportLegViewSet(viewsets.ModelViewSet):
         receiver = getattr(shipment, 'receiver', None)
         institution = getattr(receiver, 'institution', None)
 
-        if institution and institution.slug:
-            url = generate_subdomain_url(institution.slug, f"/incoming/shipments/{shipment.id}/")
+        if institution and institution.domain:
+            url = generate_subdomain_url(institution.domain, f"/incoming/shipments/{shipment.id}/")
             return Response({'receiver_url': url}, status=status.HTTP_200_OK)
         return Response({'detail': 'Receiver institution slug not available'}, status=status.HTTP_400_BAD_REQUEST)
 

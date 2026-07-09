@@ -30,7 +30,9 @@ export const useLessonPlanSubmission = (selectedTimetable) => {
   }, [search, specificActivities]);
 
   // Load activities for selected timetable
-  const loadActivitiesForTimetable = useCallback(async (timetableId) => {
+  // NOTE: callers pass a timetableId but this loads from selectedTimetable state;
+  // param kept (underscored) so call sites stay valid.
+  const loadActivitiesForTimetable = useCallback(async (_timetableId) => {
     if (!selectedTimetable) return;
 
     const abortController = new AbortController();

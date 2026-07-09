@@ -77,7 +77,8 @@ def test_readonly_fields(admin_instance):
 def test_fieldsets_structure(admin_instance):
     fs = admin_instance.fieldsets
     assert fs[0][0] == "General Info"
-    assert fs[0][1]["fields"] == ("subject_version", "name", "order", "is_active")
+    # MainCompetence has no is_active field; keep in sync with the admin fieldsets
+    assert fs[0][1]["fields"] == ("subject_version", "name", "order")
 
     assert fs[1][0] == "Timestamps"
     assert fs[1][1]["fields"] == ("created_at", "updated_at")

@@ -1,4 +1,4 @@
-import pytest
+﻿import pytest
 from rest_framework import status
 from rest_framework.test import APIClient
 from businesses.models.order import Order, OrderItem
@@ -24,14 +24,15 @@ class TestOrderViewSet:
             "service": service
         }
 
-    def get_url(self, business_id=None, order_id=None):
-        base = f"/api/v1/businesses/{business_id}/orders/"
+    def get_url(self, business_id=None, order_id=None, product_slug=None):
+        # Flat orders API: /api/v1/businesses/orders/
+        base = "/api/v1/orders/"
         return base if not order_id else f"{base}{order_id}/"
 
     def test_create_order(self, setup):
         client = APIClient()
         client.force_authenticate(user=setup["client"])
-        url = self.get_url(setup["business"].id)
+        url = self.get_url(setup["business"].id, product_slug=setup["product"].slug)
         payload = {
             "business": setup["business"].id,
             "notes": "Deliver early",
@@ -50,7 +51,7 @@ class TestOrderViewSet:
         OrderItem.objects.create(order=order, product=setup["product"], quantity=1, unit_price=Decimal("100.00"))
         client = APIClient()
         client.force_authenticate(user=setup["client"])
-        url = self.get_url(setup["business"].id, order.id)
+        url = self.get_url(setup["business"].id, order.id, product_slug=setup["product"].slug)
         response = client.get(url)
         assert response.status_code == status.HTTP_200_OK
         assert response.data["id"] == str(order.id)
@@ -59,7 +60,7 @@ class TestOrderViewSet:
         Order.objects.create(client=setup["client"], business=setup["business"], total_amount=Decimal("100.00"))
         client = APIClient()
         client.force_authenticate(user=setup["provider"])
-        url = self.get_url(setup["business"].id)
+        url = self.get_url(setup["business"].id, product_slug=setup["product"].slug)
         response = client.get(url)
         assert response.status_code == status.HTTP_200_OK
         assert len(response.data) == 1
@@ -69,7 +70,7 @@ class TestOrderViewSet:
         OrderItem.objects.create(order=order, product=setup["product"], quantity=1, unit_price=Decimal("100.00"))
         client = APIClient()
         client.force_authenticate(user=setup["provider"])
-        url = self.get_url(setup["business"].id, order.id)
+        url = self.get_url(setup["business"].id, order.id, product_slug=setup["product"].slug)
         response = client.patch(url, {"notes": "Received"}, format="json")
         assert response.status_code == status.HTTP_200_OK
         assert response.data["notes"] == "Received"
@@ -78,7 +79,7 @@ class TestOrderViewSet:
         order = Order.objects.create(client=setup["client"], business=setup["business"], total_amount=Decimal("100.00"))
         client = APIClient()
         client.force_authenticate(user=setup["client"])
-        url = self.get_url(setup["business"].id, order.id)
+        url = self.get_url(setup["business"].id, order.id, product_slug=setup["product"].slug)
         response = client.delete(url)
         assert response.status_code == status.HTTP_204_NO_CONTENT
 
@@ -87,20 +88,21 @@ class TestOrderViewSet:
         intruder = user_factory(email="hacker@jamii.com")
         client = APIClient()
         client.force_authenticate(user=intruder)
-        url = self.get_url(setup["business"].id, order.id)
+        url = self.get_url(setup["business"].id, order.id, product_slug=setup["product"].slug)
         response = client.delete(url)
-        assert response.status_code == status.HTTP_403_FORBIDDEN
+        # isolation ya filter: random user haoni order (404)
+        assert response.status_code in [status.HTTP_403_FORBIDDEN, status.HTTP_404_NOT_FOUND]
 
     def test_unauthenticated_user_blocked(self, setup):
         order = Order.objects.create(client=setup["client"], business=setup["business"], total_amount=Decimal("100.00"))
-        url = self.get_url(setup["business"].id, order.id)
+        url = self.get_url(setup["business"].id, order.id, product_slug=setup["product"].slug)
         response = APIClient().get(url)
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_validation_fails_without_items(self, setup):
         client = APIClient()
         client.force_authenticate(user=setup["client"])
-        url = self.get_url(setup["business"].id)
+        url = self.get_url(setup["business"].id, product_slug=setup["product"].slug)
         payload = {
             "business": setup["business"].id,
             "notes": "Empty order",

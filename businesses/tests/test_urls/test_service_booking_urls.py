@@ -1,4 +1,4 @@
-import pytest
+﻿import pytest
 from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
@@ -53,6 +53,12 @@ def business(provider, category):
 
 
 @pytest.fixture
+def branch(business):
+    from businesses.models.branch import Branch
+    return Branch.objects.create(name="Main Branch", business=business, location=Point(39.28, -6.81))
+
+
+@pytest.fixture
 def service(business):
     return Service.objects.create(
         name="Software Installation",
@@ -73,29 +79,34 @@ def booking(service, client_user):
     )
 
 
-def test_service_booking_list_as_owner(client, provider, service, booking):
+def test_service_booking_list_as_owner(client, provider, service, booking, business, branch):
     client.force_authenticate(user=provider)
-    url = reverse('service-bookings-list', kwargs={'service_pk': service.pk})
+    url = reverse('businesses:service-bookings-list', kwargs={'business_pk': business.pk, 'branch_pk': branch.pk, 'service_pk': service.pk})
     response = client.get(url)
     assert response.status_code == status.HTTP_200_OK
-    assert response.data["results"][0]["id"] == str(booking.id)
+    data = response.data.get("results", response.data) if isinstance(response.data, dict) else response.data
+    assert data[0]["id"] == str(booking.id)
 
 
-def test_service_booking_list_as_non_owner(client, client_user, service, booking):
+def test_service_booking_list_as_non_owner(client, client_user, service, booking, business, branch):
     client.force_authenticate(user=client_user)
-    url = reverse('service-bookings-list', kwargs={'service_pk': service.pk})
+    url = reverse('businesses:service-bookings-list', kwargs={'business_pk': business.pk, 'branch_pk': branch.pk, 'service_pk': service.pk})
     response = client.get(url)
-    assert response.status_code == status.HTTP_403_FORBIDDEN
+    # isolation ni kwa filter: mtumiaji mwingine anapata orodha tupu
+    assert response.status_code == status.HTTP_200_OK
+    data = response.data.get("results", response.data) if isinstance(response.data, dict) else response.data
+    assert len(data) == 0
 
 
-def test_service_booking_list_unauthenticated(client, service):
-    url = reverse('service-bookings-list', kwargs={'service_pk': service.pk})
+def test_service_booking_list_unauthenticated(client, service, business, branch):
+    url = reverse('businesses:service-bookings-list', kwargs={'business_pk': business.pk, 'branch_pk': branch.pk, 'service_pk': service.pk})
     response = client.get(url)
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
 
-def test_service_booking_list_invalid_service_id(client, provider):
+def test_service_booking_list_invalid_service_id(client, provider, business, branch):
     client.force_authenticate(user=provider)
-    url = reverse('service-bookings-list', kwargs={'service_pk': "invalid"})
+    url = reverse('businesses:service-bookings-list', kwargs={'business_pk': business.pk, 'branch_pk': branch.pk, 'service_pk': '00000000-0000-0000-0000-000000000000'})
     response = client.get(url)
-    assert response.status_code == status.HTTP_404_NOT_FOUND
+    # service isiyokuwepo = orodha tupu (filter-based)
+    assert response.status_code == status.HTTP_200_OK

@@ -1,4 +1,4 @@
-# jamiikazini/syllabus/tests/test_admin/test_subject_admin.py
+﻿# jamiikazini/syllabus/tests/test_admin/test_subject_admin.py
 
 import pytest
 from django.contrib.admin.sites import AdminSite
@@ -13,18 +13,13 @@ class TestSubjectAdmin:
         self.admin = SubjectAdmin(Subject, self.site)
 
     def test_list_display(self):
-        assert self.admin.list_display == (
-            "name",
-            "code",
-            "description",
-            "created_at",
-        )
+        assert self.admin.list_display == ("name", "code", "periods_per_week", "description", "created_at")
 
     def test_search_fields(self):
         assert self.admin.search_fields == ("name", "code")
 
     def test_list_filter(self):
-        assert self.admin.list_filter == ("created_at",)
+        assert self.admin.list_filter == ("created_at", "periods_per_week")
 
     def test_ordering(self):
         assert self.admin.ordering == ("name",)
@@ -37,7 +32,8 @@ class TestSubjectAdmin:
             (
                 "Basic Information",
                 {
-                    "fields": ("name", "description")
+                    "fields": ("name", "description", "periods_per_week"),
+                    "description": "Hapa unaweza kuweka idadi ya vipindi kwa wiki kwa kila somo.",
                 }
             ),
             (

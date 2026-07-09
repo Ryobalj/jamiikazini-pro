@@ -1,92 +1,106 @@
-# payments/tests/test_serializers/test_payment_report
+﻿# payments/tests/test_serializers/test_payment_report_serializer.py
+#
+# Rewritten against the current PaymentReport design (report_type/status/
+# date-range/async generation). The old tests targeted a long-gone model
+# with report_date/total_amount/transaction_count fields.
 
 import pytest
-from decimal import Decimal
-from datetime import date
-from django.utils.formats import localize
+from datetime import timedelta
+from django.utils import timezone
 from payments.serializers.payment_report_serializer import (
     PaymentReportSerializer,
     PaymentReportSummarySerializer,
+    PaymentReportCreateSerializer,
+    PaymentReportUpdateSerializer,
 )
 from payments.models.payment_report import PaymentReport
-from accounts.models import User
 
 
 pytestmark = pytest.mark.django_db
 
 
 @pytest.fixture
-def user():
-    return User.objects.create_user(
-        username="amina", password="pass1234", email="amina@example.com"
-    )
+def report_user(user_factory):
+    return user_factory(full_name="Amina Report", role="CLIENT")
 
 
 @pytest.fixture
-def payment_report(user):
-    report = PaymentReport.objects.create(
-        user=user,
-        report_date=date(2025, 1, 1),
-        total_amount=Decimal("9876.54"),
-        transaction_count=5,
-        metadata={"source": "mobile"},
+def payment_report(report_user):
+    end = timezone.now()
+    start = end - timedelta(days=30)
+    return PaymentReport.objects.create(
+        user=report_user,
+        report_type=PaymentReport.ReportType.TRANSACTION_SUMMARY,
+        status=PaymentReport.Status.GENERATING,
+        progress_percentage=50,
+        start_date=start,
+        end_date=end,
     )
-    return report
 
 
-def test_payment_report_serializer_output(payment_report, user):
-    serializer = PaymentReportSerializer(payment_report)
-    data = serializer.data
+def test_payment_report_serializer_output(payment_report, report_user):
+    data = PaymentReportSerializer(payment_report).data
 
-    # Linganisha id ya report kama int (sio string)
-    assert data["id"] == payment_report.id
-
-    # Linganisha user id kama string (ikiwa serializer ya user inarudisha id kama CharField)
-    assert data["user"]["id"] == str(user.id)
-
-    # Linganisha user full_name
-    assert data["user"]["full_name"] == user.full_name
-
-    # Linganisha total_amount kama string (DecimalField inarudisha string)
-    assert data["total_amount"] == str(payment_report.total_amount)
-
-    # Linganisha transaction_count
-    assert data["transaction_count"] == payment_report.transaction_count
+    assert data["id"] == str(payment_report.id)
+    assert data["report_type"] == PaymentReport.ReportType.TRANSACTION_SUMMARY
+    assert data["status"] == PaymentReport.Status.GENERATING
+    assert data["progress_display"] == "50%"
+    assert data["is_ready"] == payment_report.is_ready
+    assert data["is_expired"] == payment_report.is_expired
+    assert data["user"] is not None
 
 
 def test_payment_report_serializer_readonly_fields(payment_report):
-    serializer = PaymentReportSerializer(payment_report, data={
-        "user": 999,
-        "formatted_total_amount": "123.45",
-    }, partial=True)
-
+    serializer = PaymentReportSerializer(
+        payment_report,
+        data={"user": 999, "status": PaymentReport.Status.COMPLETED},
+        partial=True,
+    )
     assert serializer.is_valid(), serializer.errors
     instance = serializer.save()
 
-    # confirm user not overridden
+    # user is read-only and must not be overridden
     assert instance.user == payment_report.user
-    # confirm amount still same
-    assert instance.total_amount == payment_report.total_amount
 
 
 def test_payment_report_summary_serializer_output(payment_report):
-    serializer = PaymentReportSummarySerializer(payment_report)
-    data = serializer.data
+    data = PaymentReportSummarySerializer(payment_report).data
 
-    assert data["id"] == payment_report.id
-    assert data["report_date"] == str(payment_report.report_date)
-    assert Decimal(data["total_amount"]) == payment_report.total_amount
-    assert data["transaction_count"] == 5
-
-    # formatted amount consistency
-    expected = payment_report.formatted_total_amount()
-    assert data["formatted_total_amount"] == expected
+    assert data["id"] == str(payment_report.id)
+    assert data["report_type"] == PaymentReport.ReportType.TRANSACTION_SUMMARY
+    assert data["duration_days"] == 30
+    assert data["progress_display"] == "50%"
 
 
-def test_get_formatted_total_amount_direct(payment_report):
-    serializer = PaymentReportSerializer()
-    summary_serializer = PaymentReportSummarySerializer()
+def test_create_serializer_rejects_reversed_dates(report_user):
+    end = timezone.now()
+    start = end + timedelta(days=1)  # start after end - invalid
+    serializer = PaymentReportCreateSerializer(data={
+        "report_type": PaymentReport.ReportType.DAILY_SUMMARY,
+        "start_date": start,
+        "end_date": end,
+    })
+    assert not serializer.is_valid()
+    assert "end_date" in serializer.errors
 
-    # directly call helper
-    assert serializer.get_formatted_total_amount(payment_report) == payment_report.formatted_total_amount()
-    assert summary_serializer.get_formatted_total_amount(payment_report) == payment_report.formatted_total_amount()
+
+def test_create_serializer_rejects_range_over_one_year(report_user):
+    end = timezone.now()
+    start = end - timedelta(days=400)
+    serializer = PaymentReportCreateSerializer(data={
+        "report_type": PaymentReport.ReportType.CUSTOM,
+        "start_date": start,
+        "end_date": end,
+    })
+    assert not serializer.is_valid()
+    assert "end_date" in serializer.errors
+
+
+def test_update_serializer_blocked_when_not_generating(payment_report):
+    payment_report.status = PaymentReport.Status.COMPLETED
+    payment_report.save()
+
+    serializer = PaymentReportUpdateSerializer(
+        payment_report, data={"file_format": "CSV"}, partial=True
+    )
+    assert not serializer.is_valid()

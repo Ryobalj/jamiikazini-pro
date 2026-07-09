@@ -1,4 +1,4 @@
-# jamiikazini/syllabus/tests/test_serializers/test_teacher_workstation_serializer.py
+﻿# jamiikazini/syllabus/tests/test_serializers/test_teacher_workstation_serializer.py
 
 import pytest
 from django.db.models.signals import post_save
@@ -9,6 +9,12 @@ from syllabus.serializers.teacher_workstation_serializer import (
 )
 from jamiiwallet.models.wallet import Wallet
 from jamiiwallet.signals import create_or_reactivate_wallet
+
+class _Req:
+    """Fake request kwa CurrentUserDefault."""
+    def __init__(self, user):
+        self.user = user
+
 
 @pytest.mark.django_db
 class TestTeacherMiniSerializer:
@@ -65,7 +71,7 @@ class TestTeacherWorkStationSerializer:
             "district": "Mkinga",
         }
 
-        serializer = TeacherWorkStationSerializer(data=data)
+        serializer = TeacherWorkStationSerializer(data=data, context={"request": _Req(user)})
 
         assert not serializer.is_valid()
         assert "school_name" in serializer.errors
@@ -85,12 +91,10 @@ class TestTeacherWorkStationSerializer:
             "district": "Mkinga",
         }
 
-        serializer = TeacherWorkStationSerializer(data=data)
+        serializer = TeacherWorkStationSerializer(data=data, context={"request": _Req(user)})
 
         assert not serializer.is_valid()
-        assert "teacher" in serializer.errors
-        # Convert ErrorDetail to string
-        assert str(serializer.errors["teacher"][0]) == "Mwalimu huyu tayari ana workstation moja."
+        assert "tayari ana workstation" in str(serializer.errors)
 
     def test_create_workstation_success(self, user):
         data = {
@@ -102,7 +106,7 @@ class TestTeacherWorkStationSerializer:
             "is_active": True,
         }
 
-        serializer = TeacherWorkStationSerializer(data=data)
+        serializer = TeacherWorkStationSerializer(data=data, context={"request": _Req(user)})
 
         assert serializer.is_valid(), serializer.errors
 

@@ -1,4 +1,4 @@
-# businesses/views/service_views.py
+﻿# businesses/views/service_views.py
 
 from typing import Optional
 from rest_framework import viewsets, permissions
@@ -52,7 +52,7 @@ class ServiceViewSet(viewsets.ModelViewSet):
         instance.delete()
 
     @action(detail=False, methods=["get"], url_path="nearby", permission_classes=[permissions.AllowAny])
-    def nearby(self, request) -> Response:
+    def nearby(self, request, **kwargs) -> Response:
         """
         Rudisha huduma zilizo karibu zaidi.
         Parameta:
@@ -78,5 +78,8 @@ class ServiceViewSet(viewsets.ModelViewSet):
             .order_by("distance")
         )
         page = self.paginate_queryset(qs)
-        serializer = self.get_serializer(page, many=True)
-        return self.get_paginated_response(serializer.data)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(qs, many=True)
+        return Response(serializer.data)

@@ -1,7 +1,14 @@
-# syllabus/tests/test_models/test_lesson_sentence_model.py
+﻿# syllabus/tests/test_models/test_lesson_sentence_model.py
 
 import pytest
 from syllabus.models.lesson_sentence import LessonSentence
+
+
+class _Ctx:
+    """pick_random(ctx) inahitaji language na is_awali (defaults za model)."""
+    def __init__(self, language="sw", is_awali=False):
+        self.language = language
+        self.is_awali = is_awali
 
 
 @pytest.mark.django_db
@@ -15,9 +22,10 @@ class TestLessonSentenceModel:
         )
 
     def test_str_method(self, sample_sentence):
+        # __str__ ya sasa: "<category display> (<language>)"
         result = str(sample_sentence)
-        assert "Utangulizi" in result  # get_category_display()
-        assert "Kuwahoji wanafunzi"[:30] in result
+        assert "Utangulizi" in result
+        assert sample_sentence.language in result
 
     def test_defaults(self):
         obj = LessonSentence.objects.create()
@@ -51,13 +59,13 @@ class TestLessonSentenceModel:
             teaching_sw="B",
         )
 
-        result = LessonSentence.pick_random(LessonSentence.Category.INTRO)
+        result = LessonSentence.pick_random(LessonSentence.Category.INTRO, _Ctx())
         assert result is not None
         assert result.category == LessonSentence.Category.INTRO
         assert isinstance(result, LessonSentence)
 
     def test_pick_random_returns_none_when_empty(self):
-        result = LessonSentence.pick_random(LessonSentence.Category.CONCLUSION)
+        result = LessonSentence.pick_random(LessonSentence.Category.CONCLUSION, _Ctx())
         assert result is None
 
     def test_pick_random_only_active(self):
@@ -72,7 +80,7 @@ class TestLessonSentenceModel:
             is_active=False,
         )
 
-        result = LessonSentence.pick_random(LessonSentence.Category.DEVELOPMENT)
+        result = LessonSentence.pick_random(LessonSentence.Category.DEVELOPMENT, _Ctx())
 
         # Lazima apewe active tu
         assert result.is_active is True
@@ -98,7 +106,7 @@ class TestLessonSentenceModel:
 
         # Collect many picks to ensure only active results come out
         results = {
-            LessonSentence.pick_random(LessonSentence.Category.REFLECTION).teaching_sw
+            LessonSentence.pick_random(LessonSentence.Category.REFLECTION, _Ctx()).teaching_sw
             for _ in range(20)
         }
 

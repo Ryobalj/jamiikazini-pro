@@ -59,7 +59,8 @@ class TestSyllabusCRUD:
 
         resp2 = self.client.get(f"{BASE_URL}subjects/{subj_id}/")
         assert resp2.status_code == 200
-        assert resp2.json()["name"] == name
+        # Serializer hufanya .title() kwenye jina - linganisha bila kujali herufi
+        assert resp2.json()["name"].lower() == name.lower()
 
         resp3 = self.client.patch(f"{BASE_URL}subjects/{subj_id}/", {"periods_per_week": 6})
         assert resp3.status_code == 200
@@ -168,7 +169,7 @@ class TestSyllabusCRUD:
             "timefinish": "09:00:00",
             "registeredboys": 10,
             "registeredgirls": 12,
-            "status": "Scheduled"
+            "status": True
         }
         resp = self.client.post(f"{BASE_URL}timetables/", payload)
         assert resp.status_code == 201

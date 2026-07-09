@@ -28,11 +28,6 @@ export default function UserDropMenu({ onClose }) {
     onClose?.();
   };
 
-  const handleNavigate = (path) => {
-    navigate(path);
-    onClose?.();
-  };
-
   return (
     <div
       ref={menuRef}

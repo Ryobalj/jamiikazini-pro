@@ -1,12 +1,12 @@
-# logistics/tests/test_transport_leg.py
+﻿# logistics/tests/test_transport_leg.py
 
 import pytest
 from django.urls import reverse
-from rest_framework.test import APIClient
+from django.contrib.auth import get_user_model
+from rest_framework.test import APIClient, APITestCase
 from rest_framework import status
 from django.contrib.gis.geos import Point
 from logistics.models import TransportLeg, LegStatusLog, TransportProvider, Shipment
-from accounts.models import User
 from businesses.models.product import Product
 
 
@@ -14,28 +14,29 @@ User = get_user_model()
 
 class TransportLegTrackURLTests(APITestCase):
     def setUp(self):
-        self.user = User.objects.create_user(email='client@example.com', password='pass1234')
+        from kiini.models import Institution
+        inst = Institution.objects.create(name="Jamii", domain="jamii.jamiikazini.com")
+        self.user = User.objects.create_user(email='client@example.com', password='pass1234', institution=inst)
         self.client = APIClient()
         self.client.force_authenticate(user=self.user)
 
-        self.provider = TransportProvider.objects.create(
-            user=self.user,
-            name='JamiiTransport',
-            slug='jamii',
-            contact_info='078999888'
-        )
+        self.provider = TransportProvider.objects.create(user=self.user)
 
-        self.product = Product.objects.create(name='Test Product', price=1000)
+        from logistics.factories import BusinessFactory
+        self.product = Product.objects.create(
+            name='Test Product', slug='test-product-leg', price=1000,
+            business=BusinessFactory(),
+        )
 
         self.receiver = User.objects.create_user(email='receiver@example.com', password='pass1234')
         self.shipment = Shipment.objects.create(
             sender=self.user,
             receiver=self.receiver,
             product=self.product,
-            preferred_transport_modes=["ROAD"],
-            route_details="From A to B",
+            route_details={"start": [39.2, -6.8], "end": [39.3, -6.9]},
             transport_fee=2000,
             jamiikazini_commission=500,
+            total_cost=2500,
         )
 
         self.leg = TransportLeg.objects.create(
@@ -43,13 +44,16 @@ class TransportLegTrackURLTests(APITestCase):
             provider=self.provider,
             sequence_number=1,
             origin_name="Dar",
+            origin_coords=Point(39.2, -6.8),
             destination_name="Arusha",
+            destination_coords=Point(36.7, -3.4),
             mode="ROAD",
-            status="PENDING"
+            status="PENDING",
+            total_cost=1000,
         )
 
     def test_transport_leg_track_url_returns_correct_url(self):
-        url = reverse('transportleg-track-url', kwargs={'pk': self.leg.pk})
+        url = reverse('logistics:transport-legs-track-url', kwargs={'pk': self.leg.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn('track_url', response.data)
@@ -71,8 +75,8 @@ class TestTransportLegAPI:
         )
 
     @pytest.fixture
-    def provider(self):
-        return TransportProvider.objects.create(name="Provider A")
+    def provider(self, user):
+        return TransportProvider.objects.create(user=user)
 
     @pytest.fixture
     def shipment(self, user, product):
@@ -85,11 +89,8 @@ class TestTransportLegAPI:
 
     @pytest.fixture
     def product(self):
-        return Product.objects.create(
-            name="Test Product",
-            description="Test",
-            price=100
-        )
+        from logistics.factories import ProductFactory
+        return ProductFactory(name="Test Product", description="Test", price=100)
 
     @pytest.fixture
     def leg(self, shipment, provider):
@@ -107,7 +108,7 @@ class TestTransportLegAPI:
 
     def test_create_leg(self, client, user, shipment, provider):
         client.force_authenticate(user=user)
-        url = reverse("transport-legs-list")
+        url = reverse("logistics:transport-legs-list")
         data = {
             "shipment": shipment.id,
             "provider": provider.id,
@@ -124,7 +125,7 @@ class TestTransportLegAPI:
 
     def test_update_leg_status(self, client, user, leg):
         client.force_authenticate(user=user)
-        url = reverse("transport-legs-update-status", args=[leg.id])
+        url = reverse("logistics:transport-legs-update-status", args=[leg.id])
         data = {
             "status": "DISPATCHED",
             "remarks": "Left warehouse"
@@ -138,7 +139,7 @@ class TestTransportLegAPI:
     def test_list_leg_status_logs(self, client, user, leg):
         log = LegStatusLog.objects.create(leg=leg, status="SCHEDULED", updated_by=user)
         client.force_authenticate(user=user)
-        url = reverse("leg-status-logs-list")
+        url = reverse("logistics:leg-status-logs-list")
         response = client.get(url)
         assert response.status_code == status.HTTP_200_OK
         assert any(str(log.status) in str(entry["status"]) for entry in response.data)

@@ -21,14 +21,15 @@ class UserMenuTests(APITestCase):
             full_name="Test User",
         )
         # Assign institution
+        # 'roles' ni property inayotokana na 'role' - weka 'role'
         self.user.institution = self.institution
-        self.user.roles = ["CLIENT"]
+        self.user.role = "CLIENT"
         self.user.save()
         self.client.force_authenticate(user=self.user)
 
     def test_user_menu_without_roles(self):
         """Check menu when user has no roles."""
-        self.user.roles = []
+        self.user.role = ""
         self.user.save()
         url = reverse("kiini:user-menu")  # ✅ New namespace
         response = self.client.get(url)
@@ -37,7 +38,7 @@ class UserMenuTests(APITestCase):
 
     def test_user_menu_with_valid_role(self):
         """Check menu when user has a valid role."""
-        self.user.roles = ["CLIENT"]
+        self.user.role = "CLIENT"
         self.user.save()
         url = reverse("kiini:user-menu")  # ✅ New namespace
         response = self.client.get(url)
@@ -46,7 +47,7 @@ class UserMenuTests(APITestCase):
 
     def test_user_menu_with_domain_check(self):
         """Check menu when user has matching domain."""
-        self.user.roles = ["INSTITUTION_ADMIN"]
+        self.user.role = "INSTITUTION_ADMIN"
         self.user.save()
         url = reverse("kiini:user-menu")  # ✅ New namespace
         response = self.client.get(url)

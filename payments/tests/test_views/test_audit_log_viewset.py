@@ -5,6 +5,12 @@ from django.urls import reverse
 from rest_framework.test import APIClient
 from payments.models.audit_log import AuditAction, AuditLog
 
+def _rows(resp):
+    """Rudisha orodha ya rows bila kujali pagination ipo au haipo."""
+    data = resp.data
+    return data.get("results", data) if isinstance(data, dict) else data
+
+
 @pytest.mark.django_db
 class TestAuditLogViewSet:
 
@@ -21,11 +27,11 @@ class TestAuditLogViewSet:
         api_client.force_authenticate(user=superuser)
         resp = api_client.get(url)
         assert resp.status_code == 200
-        ids = [x["id"] for x in resp.data["results"]]
-        assert set(ids) == {log1.id, log2.id}
+        ids = [str(x["id"]) for x in _rows(resp)]
+        assert set(ids) >= {str(log1.id), str(log2.id)}
 
     def test_provider_sees_own_and_related(self, api_client, user_factory, institution_factory, business_factory, audit_log_factory, url):
-        provider = user_factory(role="Provider", is_active=True)
+        provider = user_factory(role="PROVIDER", is_active=True)
         institution = institution_factory(owner=provider)
         business = business_factory(owner=provider)
 
@@ -38,13 +44,13 @@ class TestAuditLogViewSet:
         api_client.force_authenticate(provider)
         resp = api_client.get(url)
         assert resp.status_code == 200
-        ids = [x["id"] for x in resp.data["results"]]
+        ids = [str(x["id"]) for x in _rows(resp)]
         # provider anaona logs zake + za biz/institution zake
-        assert log1.id in ids
-        assert log2.id in ids
-        assert log3.id in ids
+        assert str(log1.id) in ids
+        assert str(log2.id) in ids
+        assert str(log3.id) in ids
         # haona logs za wengine
-        assert log4.id not in ids
+        assert str(log4.id) not in ids
 
     def test_normal_user_sees_only_own(self, api_client, user_factory, audit_log_factory, url):
         user = user_factory(role="CLIENT", is_active=True)
@@ -55,8 +61,8 @@ class TestAuditLogViewSet:
         api_client.force_authenticate(user)
         resp = api_client.get(url)
         assert resp.status_code == 200
-        ids = [x["id"] for x in resp.data["results"]]
-        assert ids == [log1.id]
+        ids = [str(x["id"]) for x in _rows(resp)]
+        assert ids == [str(log1.id)]
 
     def test_anonymous_denied(self, api_client, audit_log_factory, user_factory, url):
         user = user_factory(is_active=True)

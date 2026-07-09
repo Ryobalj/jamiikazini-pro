@@ -6,6 +6,17 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 export default [
   { ignores: ['dist'] },
   {
+    // Node-context config files (run by Vite/Tailwind in Node, not the browser)
+    files: ['*.config.js'],
+    languageOptions: {
+      globals: { ...globals.node },
+      sourceType: 'module',
+    },
+    rules: {
+      ...js.configs.recommended.rules,
+    },
+  },
+  {
     files: ['**/*.{js,jsx}'],
     languageOptions: {
       ecmaVersion: 2020,
@@ -23,7 +34,11 @@ export default [
     rules: {
       ...js.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // ^[A-Z_] ignore: components referenced only from JSX look unused to eslint
+      // (no eslint-plugin-react jsx-uses-vars here); applies to params too, e.g.
+      // `function InfoRow({ icon: Icon })` where <Icon /> is the only usage.
+      // `motion` (framer-motion) is lowercase but used only as <motion.div> in JSX.
+      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]|^motion$', argsIgnorePattern: '^[A-Z_]' }],
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },

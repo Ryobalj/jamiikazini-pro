@@ -97,8 +97,6 @@ export default function MySubjects() {
       const uniqueSubjects = [];
       const seenSubjects = new Set();
       
-      // Object ya kukusanya students per class level (UNIQUE PER CLASS LEVEL)
-      const studentsPerClassLevel = {};
       // Object ya kukusanya periods per week per subject (KUTOKA SUBJECT MODEL)
       const periodsPerWeekPerSubject = {};
       // Object ya kukusanya class level data
@@ -999,7 +997,7 @@ export default function MySubjects() {
                   {t("my_subjects.cannot_group_subjects")}
                 </p>
                 <div className="space-y-3">
-                  {timetables.slice(0, 5).map((timetable, index) => (
+                  {timetables.slice(0, 5).map((timetable) => (
                     <div key={timetable.id} className="p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
                       <div className="flex flex-col space-y-2">
                         {timetable.subject_name && (

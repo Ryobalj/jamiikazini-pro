@@ -1,4 +1,4 @@
-# jamiikazini/syllabus/serializers/subject_version_serializer.py
+﻿# jamiikazini/syllabus/serializers/subject_version_serializer.py
 
 from rest_framework import serializers
 from syllabus.models import SubjectVersion
@@ -60,10 +60,17 @@ class SubjectVersionSerializer(serializers.ModelSerializer):
         """
         Convert strings 'true'/'false' to real booleans automatically.
         """
-        if "is_english" in data:
-            data["is_english"] = data["is_english"] in [True, "true", "True", 1, "1"]
-
-        if "is_awali" in data:
-            data["is_awali"] = data["is_awali"] in [True, "true", "True", 1, "1"]
+        # QueryDict ya form-data ni immutable - tengeneza nakala kabla ya kubadilisha
+        if hasattr(data, "copy"):
+            data = data.copy()
+        _TRUTHY = [True, "true", "True", 1, "1"]
+        _FALSY = [False, "false", "False", 0, "0"]
+        for key in ("is_english", "is_awali"):
+            if key in data:
+                if data[key] in _TRUTHY:
+                    data[key] = True
+                elif data[key] in _FALSY:
+                    data[key] = False
+                # vinginevyo: acha DRF ikatae value batili
 
         return super().to_internal_value(data)

@@ -1,4 +1,4 @@
-# logistics/tests/test_driver.py
+﻿# logistics/tests/test_driver.py
 
 import pytest
 from django.urls import reverse
@@ -6,7 +6,7 @@ from rest_framework.test import APIClient
 from rest_framework import status
 
 from accounts.models import User
-from institutions.models import Institution
+from kiini.models import Institution
 from logistics.models import TransportProvider, Driver
 
 
@@ -36,7 +36,7 @@ class TestDriverAPI:
         return TransportProvider.objects.create(user=user, institution=institution)
 
     @pytest.fixture
-    def auth_client(self, client, user):
+    def auth_client(self, client, user, provider):
         client.force_authenticate(user=user)
         return client
 
@@ -50,7 +50,7 @@ class TestDriverAPI:
         )
 
     def test_create_driver_success(self, auth_client):
-        url = reverse('driver-list')
+        url = reverse('logistics:driver-list')
         data = {
             "full_name": "Driver One",
             "license_number": "DL10001",
@@ -61,13 +61,13 @@ class TestDriverAPI:
         assert response.data['full_name'] == "Driver One"
 
     def test_list_drivers(self, auth_client, driver):
-        url = reverse('driver-list')
+        url = reverse('logistics:driver-list')
         response = auth_client.get(url)
         assert response.status_code == status.HTTP_200_OK
         assert len(response.data) >= 1
 
     def test_update_driver(self, auth_client, driver):
-        url = reverse('driver-detail', args=[driver.id])
+        url = reverse('logistics:driver-detail', args=[driver.id])
         payload = {
             "phone_number": "0788888888"
         }
@@ -76,7 +76,7 @@ class TestDriverAPI:
         assert response.data['phone_number'] == "0788888888"
 
     def test_delete_driver(self, auth_client, driver):
-        url = reverse('driver-detail', args=[driver.id])
+        url = reverse('logistics:driver-detail', args=[driver.id])
         response = auth_client.delete(url)
         assert response.status_code == status.HTTP_204_NO_CONTENT
         assert Driver.objects.count() == 0
@@ -90,7 +90,7 @@ class TestDriverAPI:
         )
 
         # Attempt to create another with same license
-        url = reverse('driver-list')
+        url = reverse('logistics:driver-list')
         data = {
             "full_name": "Driver B",
             "license_number": "DLX001",
@@ -101,6 +101,6 @@ class TestDriverAPI:
         assert 'license_number' in response.data
 
     def test_unauthorized_user_cannot_access(self, client, driver):
-        url = reverse('driver-detail', args=[driver.id])
+        url = reverse('logistics:driver-detail', args=[driver.id])
         response = client.get(url)
         assert response.status_code in [401, 403]

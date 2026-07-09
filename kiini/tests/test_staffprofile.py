@@ -60,7 +60,8 @@ class StaffProfileAPITestCase(APITestCase):
             "title": "Deputy",
             "department": None
         }
-        response = self.client.post(url, data)
+        # format='json' - form-encoding haiwezi ku-encode None kwa 'department'
+        response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data["user"], new_user.id)
 
@@ -68,7 +69,7 @@ class StaffProfileAPITestCase(APITestCase):
         url = reverse("kiini:institution-staffprofiles-detail", args=[self.inst1.id, self.staff1.id])
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["id"], self.staff1.id)
+        self.assertEqual(str(response.data["id"]), str(self.staff1.id))
 
     def test_user_cannot_access_other_institution_staff_profile(self):
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {self.admin2_token}")

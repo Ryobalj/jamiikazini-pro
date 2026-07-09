@@ -1,10 +1,12 @@
-# businesses/serializers/branch_serializer.py
+﻿# businesses/serializers/branch_serializer.py
 
 from rest_framework import serializers
 from businesses.models.branch import Branch
+from kiini.serializers.gis_fields import PointJSONField
 
 
 class BranchSerializer(serializers.ModelSerializer):
+    location = PointJSONField(required=False, allow_null=True)
     class Meta:
         model = Branch
         fields = [
@@ -19,7 +21,7 @@ class BranchSerializer(serializers.ModelSerializer):
             'services',
             'created_at',
         ]
-        read_only_fields = ['id', 'created_at']
+        read_only_fields = ['id', 'business', 'created_at']  # business inajazwa na view kutoka URL
         extra_kwargs = {
             'business': {'help_text': "Biashara inayomiliki tawi hili."},
             'name': {'help_text': "Jina la tawi (mfano: Tawi la Mlimani City)."},

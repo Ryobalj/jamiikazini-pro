@@ -1,4 +1,4 @@
-import pytest
+﻿import pytest
 from rest_framework.test import APIClient
 from rest_framework import status
 from businesses.models.review import Review
@@ -32,7 +32,7 @@ class TestReviewViewSet:
     def test_list_only_approved(self, setup_data):
         """Reviews zisizopitishwa zisirudishwe."""
         client = APIClient()
-        response = client.get("/api/v1/businesses/reviews/")
+        response = client.get("/api/v1/reviews/")
         assert response.status_code == status.HTTP_200_OK
         ids = [str(r["id"]) for r in response.data]
         assert str(setup_data["approved"].id) in ids
@@ -41,7 +41,7 @@ class TestReviewViewSet:
     def test_filter_by_target(self, setup_data):
         """Hakikisha filter ya target_type na target_id inafanya kazi."""
         client = APIClient()
-        url = f"/api/v1/businesses/reviews/?target_type=product&target_id={setup_data['product'].id}"
+        url = f"/api/v1/reviews/?target_type=product&target_id={setup_data['product'].id}"
         response = client.get(url)
 
         assert response.status_code == status.HTTP_200_OK
@@ -57,7 +57,7 @@ class TestReviewViewSet:
             "rating": 5,
             "content": "Nzuri sana!",
         }
-        response = client.post("/api/v1/businesses/reviews/", payload, format="json")
+        response = client.post("/api/v1/reviews/", payload, format="json")
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert "Review hii tayari ipo" in str(response.data)
 
@@ -66,7 +66,7 @@ class TestReviewViewSet:
         client = APIClient()
         client.force_authenticate(user=setup_data["user"])
         payload = {"rating": 1}
-        url = f"/api/v1/businesses/reviews/{setup_data['approved'].id}/"
+        url = f"/api/v1/reviews/{setup_data['approved'].id}/"
 
         response = client.patch(url, payload, format="json")
         assert response.status_code == status.HTTP_200_OK
@@ -77,7 +77,7 @@ class TestReviewViewSet:
         """Huwezi kubadilisha review ya mtumiaji mwingine."""
         client = APIClient()
         client.force_authenticate(user=setup_data["other_user"])
-        url = f"/api/v1/businesses/reviews/{setup_data['approved'].id}/"
+        url = f"/api/v1/reviews/{setup_data['approved'].id}/"
 
         response = client.patch(url, {"rating": 2}, format="json")
         assert response.status_code == status.HTTP_403_FORBIDDEN
@@ -86,7 +86,7 @@ class TestReviewViewSet:
         """Huwezi kufuta review ya mtumiaji mwingine."""
         client = APIClient()
         client.force_authenticate(user=setup_data["other_user"])
-        url = f"/api/v1/businesses/reviews/{setup_data['approved'].id}/"
+        url = f"/api/v1/reviews/{setup_data['approved'].id}/"
 
         response = client.delete(url)
         assert response.status_code == status.HTTP_403_FORBIDDEN

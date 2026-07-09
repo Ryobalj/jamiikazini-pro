@@ -57,16 +57,23 @@ class AuditLogSerializer(serializers.ModelSerializer):
         """
         request = self.context.get("request")
         expand = request.query_params.get("expand") if request else None
-        if expand == "target_object" and obj.target_object:
+        if expand != "target_object":
+            return None
+        try:
+            target = obj.target_object
+        except (ValueError, TypeError):
+            # object_id isiyolingana na pk ya model lengwa (mfano uuid-str kwa int pk)
+            target = None
+        if target:
             from rest_framework.serializers import ModelSerializer
 
             # Dynamically generate a simple serializer for the target object
             class TargetSerializer(ModelSerializer):
                 class Meta:
-                    model = obj.target_object.__class__
+                    model = target.__class__
                     fields = "__all__"
 
-            return TargetSerializer(obj.target_object).data
+            return TargetSerializer(target).data
         return None
 
 
@@ -75,6 +82,10 @@ class AuditLogCreateSerializer(serializers.ModelSerializer):
     A lightweight serializer for creating logs programmatically.
     Typically used in service layers, not exposed directly to end-users.
     """
+
+    # description/metadata ni properties (encrypted) - bila hizi DRF angezifanya read-only kimya
+    description = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    metadata = serializers.JSONField(required=False, allow_null=True)
 
     class Meta:
         model = AuditLog

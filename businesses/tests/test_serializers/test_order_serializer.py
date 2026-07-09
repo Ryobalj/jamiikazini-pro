@@ -1,4 +1,4 @@
-# businesses/tests/test_serializers/test_order_serializer.py
+﻿# businesses/tests/test_serializers/test_order_serializer.py
 
 import pytest
 from decimal import Decimal
@@ -32,7 +32,7 @@ def test_order_serializer_create_valid(user_factory, business_factory, product_f
 
     serializer = OrderSerializer(data=data, context={"request": None})
     assert serializer.is_valid(), serializer.errors
-    order = serializer.save()
+    order = serializer.save(client=client)
 
     assert order.items.count() == 1
     assert order.total_amount == Decimal("20.00")
@@ -115,7 +115,7 @@ def test_order_serializer_update(user_factory, business_factory, product_factory
 
     serializer = OrderSerializer(instance=order, data=update_data)
     assert serializer.is_valid(), serializer.errors
-    order = serializer.save()
+    order = serializer.save(client=client)
 
     assert order.status == "PROCESSING"
     assert order.total_amount == Decimal("30.00")

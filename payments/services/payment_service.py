@@ -12,6 +12,7 @@ from django.conf import settings
 import logging
 import re
 import traceback
+import uuid
 
 from jamiiwallet.models.wallet import Wallet
 from jamiiwallet.models.transaction import Transaction
@@ -21,7 +22,7 @@ from jamiitasks.tasks.payments_gateway_tasks import poll_transaction_status
 from payments.gateways.registry import get_gateway
 from payments.models.invoice import Invoice
 from payments.models.audit_log import AuditLog
-from payments.models.paymentmethod import PaymentMethod
+from payments.models.paymentmethod import PaymentMethod, PaymentMethodType
 from security.helpers.payment_otp import enforce_high_value_otp
 from security.helpers.security import BaseLoginLogger
 from security.helpers.alerts import send_slack_alert
@@ -72,11 +73,11 @@ class PaymentService:
 
     @staticmethod
     def _get_gateway_from_method(pm: PaymentMethod) -> str:
-        if pm.method_type == PaymentMethod.PaymentMethodType.PAWAPAY:
+        if pm.method_type == PaymentMethodType.PAWAPAY:
             return "pawapay"
-        elif pm.method_type == PaymentMethod.PaymentMethodType.WALLET:
+        elif pm.method_type == PaymentMethodType.WALLET:
             return "wallet"
-        elif pm.method_type == PaymentMethod.PaymentMethodType.CREDIT_CARD:
+        elif pm.method_type == PaymentMethodType.CREDIT_CARD:
             # map credit card to a named gateway (stripe/flutterwave) via metadata if present
             # If payment method carries gateway hint, use it; otherwise return generic 'credit_card'
             hint = (pm.metadata or {}).get("gateway") if hasattr(pm, "metadata") else None
@@ -507,7 +508,7 @@ class PaymentService:
             method_type = payment_method.method_type
             gateway_name = PaymentService._get_gateway_from_method(payment_method)
             gw = None
-            if method_type != PaymentMethod.PaymentMethodType.WALLET:
+            if method_type != PaymentMethodType.WALLET:
                 try:
                     gw = get_gateway(gateway_name)
                 except Exception as e:
@@ -515,7 +516,7 @@ class PaymentService:
                     gw = None
 
             # Wallet → transfer
-            if method_type == PaymentMethod.PaymentMethodType.WALLET:
+            if method_type == PaymentMethodType.WALLET:
                 if not recipient_wallet:
                     if invoice:
                         recipient_user = invoice.user
@@ -525,15 +526,25 @@ class PaymentService:
                     raise ValidationError("Recipient wallet is required for WALLET payments (provide invoice or recipient_user).")
 
                 payer_wallet = Wallet.objects.select_for_update().get(user=user)
+                recipient_user = recipient_wallet.user
+                # Engine signature: initiate(account_identifier, amount, txn_type, metadata).
+                # Preprocessor inahitaji source_txn_id + merchant_id; TRANSFER inahitaji recipient_id.
+                # counterparty (User FK) na wallet huwekwa baada ya initiate.
+                txn_metadata = {
+                    "source_txn_id": idempotency_key or uuid.uuid4().hex,
+                    "merchant_id": "JAMIIKAZINI",
+                    "recipient_id": str(recipient_user.id),
+                    **(metadata or {}),
+                }
                 txn = TransactionEngine.initiate(
-                    wallet=payer_wallet,
+                    account_identifier=user.email,
                     amount=amount_dec,
-                    transaction_type=Transaction.TransactionType.TRANSFER,
-                    initiated_by=user,
-                    counterparty=recipient_wallet,
-                    metadata=metadata or {},
-                    idempotency_key=idempotency_key,
+                    txn_type=Transaction.TransactionType.TRANSFER,
+                    metadata=txn_metadata,
                 )
+                txn.counterparty = recipient_user
+                txn.wallet = payer_wallet
+                txn.save(update_fields=["counterparty", "wallet"])
                 txn = TransactionEngine.process(txn)
 
                 if invoice and txn.status == Transaction.TransactionStatus.COMPLETED:

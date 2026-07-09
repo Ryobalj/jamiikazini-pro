@@ -1,4 +1,4 @@
-import pytest
+﻿import pytest
 from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
@@ -41,7 +41,7 @@ def test_public_business_detail_view_success(public_business):
     response = APIClient().get(url)
 
     assert response.status_code == status.HTTP_200_OK
-    assert response.data["id"] == public_business.id
+    assert str(response.data["id"]) == str(public_business.id)
     assert response.data["name"] == public_business.name
 
 
@@ -53,7 +53,7 @@ def test_public_business_detail_view_not_found_for_inactive(inactive_business):
 
 
 def test_public_business_detail_view_invalid_id():
-    url = reverse("businesses:public-business-detail", kwargs={"pk": 9999})
+    url = reverse("businesses:public-business-detail", kwargs={"pk": "00000000-0000-0000-0000-000000000000"})
     response = APIClient().get(url)
 
     assert response.status_code == status.HTTP_404_NOT_FOUND

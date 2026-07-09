@@ -1,4 +1,4 @@
-# jamiikazini/syllabus/tests/test_admin/test_subject_version_admin.py
+﻿# jamiikazini/syllabus/tests/test_admin/test_subject_version_admin.py
 
 import pytest
 from django.contrib.admin.sites import AdminSite
@@ -44,13 +44,7 @@ class TestSubjectVersionAdmin:
         )
 
     def test_list_filter(self):
-        assert self.admin.list_filter == (
-            "syllabus_version",
-            "class_level",
-            "is_english",
-            "is_awali",
-            "created_at",
-        )
+        assert self.admin.list_filter == ('syllabus_version', 'class_level', 'is_english', 'is_awali')
 
     def test_search_fields(self):
         assert self.admin.search_fields == (

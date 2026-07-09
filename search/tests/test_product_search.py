@@ -1,9 +1,17 @@
-# search/tests/test_product_search.py
+﻿# search/tests/test_product_search.py
 
+import pytest
+from django.conf import settings
+
+# These tests index into a live Elasticsearch cluster; skip when ES is off (local dev).
+if not getattr(settings, "ELASTICSEARCH_ENABLED", False):
+    pytest.skip("Requires live Elasticsearch (ELASTICSEARCH_ENABLED=False)", allow_module_level=True)
+
+from payments.models.currency import Currency
 from rest_framework.test import APITestCase
 from django.contrib.gis.geos import Point
 from businesses.models import Product, Business, BusinessCategory
-from core.models import Institution
+from kiini.models import Institution
 from search.documents.product_document import ProductDocument
 from search.serializers.product_search_serializer import ProductSearchSerializer
 
@@ -32,7 +40,7 @@ class ProductSearchTest(APITestCase):
             type="food",
             price=2000,
             discount_price=1800,
-            currency="TZS",
+            currency=Currency.objects.get_or_create(code="TZS")[0],
             quantity_in_stock=20,
             unit="Litre",
             is_available=True,
@@ -54,7 +62,7 @@ class ProductSearchTest(APITestCase):
             type="food",
             price=2500,
             discount_price=None,
-            currency="TZS",
+            currency=Currency.objects.get_or_create(code="TZS")[0],
             quantity_in_stock=15,
             unit="Cup",
             is_available=True,

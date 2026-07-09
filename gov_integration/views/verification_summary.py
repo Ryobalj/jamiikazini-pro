@@ -1,4 +1,4 @@
-# gov_integration/views/verification_summary.py
+﻿# gov_integration/views/verification_summary.py
 import csv
 from django.http import HttpResponse
 from rest_framework.views import APIView
@@ -11,7 +11,7 @@ class VerificationSummaryView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        institution = getattr(request, 'institution', None)
+        institution = getattr(request, 'institution', None) or getattr(request.user, 'institution', None)
         if not institution:
             return Response({"detail": "Institution context missing."}, status=400)
 

@@ -51,7 +51,8 @@ class TestLoginHistoryView:
 
         assert response.status_code == status.HTTP_200_OK
         assert len(response.data['results']) == 1
-        assert response.data['results'][0]['user'] == user.id
+        # FlexibleIDField hurudisha kitambulisho kama string
+        assert response.data['results'][0]['user'] == str(user.id)
 
     def test_admin_can_view_another_user_login_history(self, create_user, create_login_history):
         admin = create_user(email="admin@example.com", role="ADMIN")
@@ -65,7 +66,7 @@ class TestLoginHistoryView:
 
         assert response.status_code == status.HTTP_200_OK
         assert len(response.data['results']) == 1
-        assert response.data['results'][0]['user'] == normal_user.id
+        assert response.data['results'][0]['user'] == str(normal_user.id)
 
     def test_filter_login_history_by_date(self, create_user, create_login_history):
         user = create_user()

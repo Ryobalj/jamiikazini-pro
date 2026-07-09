@@ -1,9 +1,9 @@
-#logistics/models/__init__.py
+﻿#logistics/models/__init__.py
 
 from .transport_provider import TransportProvider
 from .transport_provider_verification import TransportProviderVerification
 from .driver import Driver
-from .shipment import Shipment
+from .shipment import Shipment, ShipmentStatus
 from .location import Location
 from .transport_assignment import TransportAssignment
 from .transport_leg import (

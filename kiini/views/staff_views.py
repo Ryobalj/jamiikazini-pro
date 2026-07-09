@@ -17,17 +17,20 @@ class StaffProfileViewSet(viewsets.ModelViewSet):
     serializer_class = StaffProfileSerializer
     permission_classes = [IsAuthenticated, IsInstitutionAdminOrReadOnly]
 
-    def get_institution_pk(self):
+    def get_queryset(self):
+        # Isolation ya queryset: kama URL-institution si ya mtumiaji, rudisha tupu
+        # (retrieve -> 404, si 403 - usifichue kuwepo kwa rekodi ya taasisi nyingine)
+        institution_pk = self.kwargs.get("institution_pk")
+        if str(self.request.user.institution_id) != str(institution_pk):
+            return StaffProfile.objects.none()
+        return StaffProfile.objects.filter(institution_id=institution_pk)
+
+    def perform_create(self, serializer):
+        # Linda writes: mtumiaji asiweze kuunda staff kwenye taasisi si yake
         institution_pk = self.kwargs.get("institution_pk")
         if str(self.request.user.institution_id) != str(institution_pk):
             raise PermissionDenied("You do not have access to this institution.")
-        return institution_pk
-
-    def get_queryset(self):
-        return StaffProfile.objects.filter(institution_id=self.get_institution_pk())
-
-    def perform_create(self, serializer):
-        serializer.save(institution_id=self.get_institution_pk())
+        serializer.save(institution_id=institution_pk)
 
 
 class StaffProfileDetail(generics.RetrieveAPIView):
@@ -37,11 +40,8 @@ class StaffProfileDetail(generics.RetrieveAPIView):
     serializer_class = StaffProfileSerializer
     permission_classes = [IsAuthenticated, IsInstitutionAdminOrReadOnly]
 
-    def get_institution_pk(self):
+    def get_queryset(self):
         institution_pk = self.kwargs.get("institution_pk")
         if str(self.request.user.institution_id) != str(institution_pk):
-            raise PermissionDenied("You do not have access to this institution.")
-        return institution_pk
-
-    def get_queryset(self):
-        return StaffProfile.objects.filter(institution_id=self.get_institution_pk())
+            return StaffProfile.objects.none()
+        return StaffProfile.objects.filter(institution_id=institution_pk)

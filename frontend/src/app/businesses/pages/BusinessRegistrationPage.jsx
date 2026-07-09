@@ -104,7 +104,9 @@ export default function BusinessRegistrationPage() {
     return Object.keys(errors).length === 0;
   };
 
-  const validateAllSteps = () => {
+  // TODO: not wired into the submit flow yet - kept for the final-step validation
+  // (underscore prefix keeps eslint quiet until it is used)
+  const _validateAllSteps = () => {
     let isValid = true;
     const allErrors = {};
 

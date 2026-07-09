@@ -1,4 +1,5 @@
-import pytest
+﻿import pytest
+from payments.models.currency import Currency
 from businesses.models.review import Review
 from businesses.serializers.review_serializer import ReviewSerializer
 from businesses.models.business import Business
@@ -30,7 +31,7 @@ class TestReviewSerializer:
             slug="sabuni-asili",
             type="physical",
             price=1000,
-            currency="TZS",
+            currency=Currency.objects.get_or_create(code="TZS")[0],
             quantity_in_stock=10,
             unit="pcs",
             is_available=True,
@@ -115,7 +116,7 @@ class TestReviewSerializer:
     def test_review_serializer_prevents_duplicate(self, setup_review, rf):
         """Hakikisha review maradufu inazuiwa na inarejesha 'non_field_errors'."""
         payload = {
-            "product": setup_review["product"].id,  # ✅ ID bila str()
+            "product": setup_review["product"].id,  # âœ… ID bila str()
             "rating": 5,
             "content": "Naipenda hii!",
         }

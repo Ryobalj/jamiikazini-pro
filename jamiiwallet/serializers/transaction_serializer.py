@@ -11,9 +11,10 @@ from jamiiwallet.models.wallet import Wallet
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
+        # NB: Transaction haina field 'description' - tumia 'metadata' kwa data ya ziada
         fields = [
             'id', 'wallet', 'counterparty', 'transaction_type', 'amount',
-            'description', 'status', 'reference', 'created_at', 'updated_at'
+            'metadata', 'status', 'reference', 'created_at', 'updated_at'
         ]
         read_only_fields = ['id', 'status', 'reference', 'created_at', 'updated_at']
 

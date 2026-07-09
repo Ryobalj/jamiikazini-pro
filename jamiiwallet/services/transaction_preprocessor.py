@@ -1,7 +1,8 @@
-# jamiiwallet/services/transaction_preprocessor.py
+﻿# jamiiwallet/services/transaction_preprocessor.py
 
 import logging
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 from django.db import transaction as db_transaction
 from accounts.models import User
 from kiini.helpers.validators import validate_eac_phone
@@ -26,7 +27,7 @@ def sync_pre_process_transaction(account_identifier: str, metadata: dict):
     - Returns validated (user, metadata)
     """
 
-    logger.info(f"🔍 Starting pre-processing for identifier={account_identifier}")
+    logger.info(f"ðŸ” Starting pre-processing for identifier={account_identifier}")
 
     if not account_identifier:
         raise ValidationError("Account identifier is required.")
@@ -85,9 +86,9 @@ def sync_pre_process_transaction(account_identifier: str, metadata: dict):
             raise ValidationError(f"Metadata '{key}' is missing or empty.")
 
     # Optionally auto-fill missing optional metadata
-    metadata.setdefault("validated_at", str(db_transaction.now()))
+    metadata.setdefault("validated_at", str(timezone.now()))
 
-    logger.info(f"✅ Pre-processing passed for user={user.email} metadata={metadata}")
+    logger.info(f"âœ… Pre-processing passed for user={user.email} metadata={metadata}")
     return user, metadata
 
 

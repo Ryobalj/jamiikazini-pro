@@ -1,6 +1,7 @@
 # payments/tests/test_serializers/test_payment_link_serializer.py
 
 import pytest
+import uuid
 from django.utils import timezone
 from decimal import Decimal
 from payments.models.payment_link import PaymentLink
@@ -15,11 +16,17 @@ class TestPaymentLinkSerializer:
 
     @pytest.fixture
     def user(self):
-        return User.objects.create_user(username="testuser", password="password")
+        # User model inatumia email, si username
+        return User.objects.create_user(
+            email=f"pl_{uuid.uuid4().hex[:8]}@example.com", password="password"
+        )
 
     @pytest.fixture
     def currency(self):
-        return Currency.objects.create(code="TZS", name="Tanzanian Shilling", symbol="Sh")
+        obj, _ = Currency.objects.get_or_create(
+            code="TZS", defaults={"name": "Tanzanian Shilling", "symbol": "Sh"}
+        )
+        return obj
 
     @pytest.fixture
     def valid_data(self, user, currency):

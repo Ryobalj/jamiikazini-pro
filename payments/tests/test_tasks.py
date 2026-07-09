@@ -55,23 +55,20 @@ class TestProcessPayment:
         amount = Decimal("200.00")
         reference = "REF_FAIL_TEST"
 
-        with patch('jamiitasks.tasks.payment_tasks.process_payment.request') as mock_request:
-            mock_request.retries = 0
-            
-            with patch('jamiitasks.tasks.payment_tasks.Wallet.objects.get') as mock_wallet_get:
-                mock_wallet = MagicMock()
-                mock_wallet.balance = Decimal('100.00')
-                mock_wallet_get.return_value = mock_wallet
-                
-                # Mock the retry method
-                with patch.object(process_payment, 'retry') as mock_retry:
-                    mock_retry.side_effect = Exception("Retry called")
-                    
-                    with pytest.raises(Exception, match="Retry called"):
-                        process_payment.run(user.id, amount, reference)
-                    
-                    # Verify retry was called
-                    mock_retry.assert_called_once()
+        # push_request ndiyo njia rasmi ya celery kuweka request context kwenye tests
+        # (kupatch property 'request' kunavunjika - haina setter/deleter)
+        process_payment.push_request(retries=0, id="test-retry")
+        try:
+            with patch.object(process_payment, 'retry') as mock_retry:
+                mock_retry.side_effect = Exception("Retry called")
+
+                with pytest.raises(Exception, match="Retry called"):
+                    process_payment.run(user.id, amount, reference)
+
+                # Verify retry was attempted (huweza kuitwa tena kwenye except-block)
+                assert mock_retry.call_count >= 1
+        finally:
+            process_payment.pop_request()
 
     def test_process_payment_max_retries_exceeded(self, user_with_wallet):
         """Test payment failure after max retries exceeded."""
@@ -79,26 +76,21 @@ class TestProcessPayment:
         amount = Decimal("200.00")
         reference = "REF_MAX_RETRIES"
 
-        with patch('jamiitasks.tasks.payment_tasks.process_payment.request') as mock_request:
-            type(mock_request).retries = PropertyMock(return_value=5)
-            type(mock_request).max_retries = PropertyMock(return_value=5)
-            
-            with patch('jamiitasks.tasks.payment_tasks.Wallet.objects.get') as mock_wallet_get:
-                mock_wallet = MagicMock()
-                mock_wallet.balance = Decimal('100.00')
-                mock_wallet_get.return_value = mock_wallet
-                
-                # Call the task directly to trigger MaxRetriesExceededError
-                result = process_payment(user.id, amount, reference)
-                
-                assert result["success"] is False
-                assert result["type"] == "standard"
-                
-                # Verify PaymentFailure record was created
-                assert PaymentFailure.objects.filter(
-                    user_id=user.id, 
-                    reference=reference
-                ).exists()
+        # retries zimezidi max_retries (5) - retry() itatupa MaxRetriesExceededError
+        process_payment.push_request(retries=99, id="test-max-retries")
+        try:
+            result = process_payment.run(user.id, amount, reference)
+        finally:
+            process_payment.pop_request()
+
+        assert result["success"] is False
+        assert result["type"] == "standard"
+
+        # Verify PaymentFailure record was created
+        assert PaymentFailure.objects.filter(
+            user_id=user.id,
+            reference=reference
+        ).exists()
 
 
 class TestRetryFailedTopups:
@@ -190,10 +182,16 @@ class TestNotifyWalletBalanceChange:
 
         with patch('jamiitasks.tasks.payment_tasks.notify_wallet_balance_change.retry') as mock_retry:
             mock_retry.side_effect = Exception("Retry called")
-            
-            with pytest.raises(Exception, match="Retry called"):
-                notify_wallet_balance_change.run(wallet_id, user_id, new_balance)
-            
+
+            # Lazimisha exception ndani ya try block tu (SUCCESS hutokea ndani ya try)
+            def _boom(task_name, task_id, payload, status, extra=None):
+                if status == "SUCCESS":
+                    raise RuntimeError("boom")
+
+            with patch('jamiitasks.tasks.payment_tasks._safe_log_execution', side_effect=_boom):
+                with pytest.raises(Exception, match="Retry called"):
+                    notify_wallet_balance_change.run(wallet_id, user_id, new_balance)
+
             # Verify retry was called
             mock_retry.assert_called_once()
 
@@ -211,23 +209,19 @@ class TestPaymentFailureIntegration:
         PaymentFailure.objects.filter(reference=reference).delete()
         
         # Trigger the task with insufficient balance to cause failure
-        with patch('jamiitasks.tasks.payment_tasks.process_payment.request') as mock_request:
-            type(mock_request).retries = PropertyMock(return_value=5)
-            type(mock_request).max_retries = PropertyMock(return_value=5)
-            
-            with patch('jamiitasks.tasks.payment_tasks.Wallet.objects.get') as mock_wallet_get:
-                mock_wallet = MagicMock()
-                mock_wallet.balance = Decimal('100.00')
-                mock_wallet_get.return_value = mock_wallet
-                
-                result = process_payment(user.id, amount, reference)
-                
-                # Verify the result
-                assert result["success"] is False
-                
-                # Verify PaymentFailure was created with correct data
-                failure = PaymentFailure.objects.get(reference=reference)
-                assert failure.user_id == user.id
-                assert failure.amount == amount
-                assert failure.retries == 5
-                assert "Insufficient balance" in failure.reason
+        # retries zimezidi max_retries (5) - retry() itatupa MaxRetriesExceededError
+        process_payment.push_request(retries=99, id="test-integration-max")
+        try:
+            result = process_payment.run(user.id, amount, reference)
+        finally:
+            process_payment.pop_request()
+
+        # Verify the result
+        assert result["success"] is False
+
+        # Verify PaymentFailure was created with correct data
+        failure = PaymentFailure.objects.get(reference=reference)
+        assert failure.user_id == user.id
+        assert failure.amount == amount
+        assert failure.retries == 5
+        assert "Insufficient balance" in failure.reason

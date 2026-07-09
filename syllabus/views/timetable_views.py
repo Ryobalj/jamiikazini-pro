@@ -1,6 +1,7 @@
 # syllabus/views/timetable_views.py
 
 from rest_framework import viewsets, filters, status
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -46,8 +47,5 @@ class TimeTableViewSet(viewsets.ModelViewSet):
         if user.role == "CLIENT":
             ws = serializer.validated_data.get('workstation')
             if ws and ws.teacher != user:
-                return Response(
-                    {"detail": "Unaweza tu kutumia workstation yako mwenyewe."}, 
-                    status=status.HTTP_403_FORBIDDEN
-                )
+                raise PermissionDenied("Unaweza tu kutumia workstation yako mwenyewe.")
         serializer.save()

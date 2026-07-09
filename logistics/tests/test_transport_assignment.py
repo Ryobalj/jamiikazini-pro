@@ -1,4 +1,4 @@
-# logistics/tests/test_transport_assignment.py
+﻿# logistics/tests/test_transport_assignment.py
 
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -19,20 +19,29 @@ class TransportAssignmentTests(APITestCase):
         self.client = APIClient()
 
         # Create user and authenticate
-        self.user = User.objects.create_user(username="provider1", password="testpass")
+        self.user = User.objects.create_user(email="provider1@example.com", password="testpass", full_name="Provider One", role="TRANSPORTER")
         self.client.force_authenticate(user=self.user)
 
         self.provider = TransportProvider.objects.create(user=self.user)
-        self.vehicle = Vehicle.objects.create(owner=self.user, plate_number="T123ABC")
+        self.vehicle = Vehicle.objects.create(
+            provider=self.provider,
+            vehicle_type="canter",
+            registration_number="T123ABC",
+        )
 
+        from logistics.factories import BusinessFactory
         self.request = TransportRequest.objects.create(
-            origin=Point(39.2, -6.8),
-            destination=Point(39.3, -6.9),
-            description="Cargo from A to B"
+            business=BusinessFactory(),
+            package_description="Cargo from A to B",
+            weight_kg=10.0,
+            pickup_location=Point(39.2, -6.8),
+            dropoff_location=Point(37.7, -6.8),
+            pickup_address_text="Dar es Salaam",
+            dropoff_address_text="Morogoro",
         )
 
     def test_assign_request_successfully(self):
-        url = reverse("assignment-assign-request", args=[self.request.id])
+        url = reverse("logistics:assignment-assign-request", args=[self.request.id])
         response = self.client.post(url, {"vehicle": self.vehicle.id})
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -45,7 +54,7 @@ class TransportAssignmentTests(APITestCase):
             vehicle=self.vehicle
         )
 
-        url = reverse("assignment-assign-request", args=[self.request.id])
+        url = reverse("logistics:assignment-assign-request", args=[self.request.id])
         response = self.client.post(url, {"vehicle": self.vehicle.id})
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -58,7 +67,7 @@ class TransportAssignmentTests(APITestCase):
             vehicle=self.vehicle
         )
 
-        url = reverse("assignment-mark-in-transit", args=[assignment.id])
+        url = reverse("logistics:assignment-mark-in-transit", args=[assignment.id])
         response = self.client.post(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -73,11 +82,11 @@ class TransportAssignmentTests(APITestCase):
             assignment_status=TransportAssignment.STATUS_COMPLETED
         )
 
-        url = reverse("assignment-mark-in-transit", args=[assignment.id])
+        url = reverse("logistics:assignment-mark-in-transit", args=[assignment.id])
         response = self.client.post(url)
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn("Cannot change status", str(response.data["non_field_errors"]))
+        self.assertIn("Cannot change status", str(response.data))
 
     def test_mark_completed_after_delivered(self):
         assignment = TransportAssignment.objects.create(
@@ -87,7 +96,7 @@ class TransportAssignmentTests(APITestCase):
             assignment_status=TransportAssignment.STATUS_DELIVERED
         )
 
-        url = reverse("assignment-mark-completed", args=[assignment.id])
+        url = reverse("logistics:assignment-mark-completed", args=[assignment.id])
         response = self.client.post(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -101,7 +110,7 @@ class TransportAssignmentTests(APITestCase):
             vehicle=self.vehicle
         )
 
-        url = reverse("assignment-cancel", args=[assignment.id])
+        url = reverse("logistics:assignment-cancel", args=[assignment.id])
         response = self.client.post(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -116,8 +125,8 @@ class TransportAssignmentTests(APITestCase):
             assignment_status=TransportAssignment.STATUS_DELIVERED
         )
 
-        url = reverse("assignment-mark-in-transit", args=[assignment.id])
+        url = reverse("logistics:assignment-mark-in-transit", args=[assignment.id])
         response = self.client.post(url)
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn("Cannot change status", str(response.data["non_field_errors"]))
+        self.assertIn("Cannot change status", str(response.data))

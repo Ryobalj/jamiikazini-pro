@@ -40,7 +40,7 @@ export default function SchemeOfWorkPage() {
   const [pdfLoading, setPdfLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
   
-  const [previewMode, setPreviewMode] = useState(false);
+  const [, setPreviewMode] = useState(false);
   const [error, setError] = useState(null);
   
   const [viewMode, setViewMode] = useState("table");

@@ -1,7 +1,7 @@
 // src/app/businesses/pages/Overview.jsx
 
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import api from '@/lib/axios';
 import { useCurrency } from '@/context/CurrencyContext';
@@ -37,9 +37,8 @@ import TopServices from '@/app/businesses/components/dashboards/TopServices';
 
 export default function BusinessDashboard() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const { t } = useTranslation("businesses");
-  const { currency, formatCurrency, formatCompact } = useCurrency();
+  const { formatCurrency } = useCurrency();
   
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);

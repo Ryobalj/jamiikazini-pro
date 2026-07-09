@@ -1,6 +1,11 @@
-# search/tests/test_shipment_search.py
+﻿# search/tests/test_shipment_search.py
 
 import pytest
+from django.conf import settings
+
+# These tests index into a live Elasticsearch cluster; skip when ES is off (local dev).
+if not getattr(settings, "ELASTICSEARCH_ENABLED", False):
+    pytest.skip("Requires live Elasticsearch (ELASTICSEARCH_ENABLED=False)", allow_module_level=True)
 from django.urls import reverse
 from rest_framework.test import APIClient
 from model_bakery import baker

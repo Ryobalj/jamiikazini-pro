@@ -1,5 +1,7 @@
 # jamiikazini/syllabus/views/specific_competence_views.py
 
+import uuid
+
 from rest_framework import viewsets
 from rest_framework.permissions import IsAdminUser
 from django.db.models import Max
@@ -24,11 +26,20 @@ class SpecificCompetenceViewSet(viewsets.ModelViewSet):
     ordering = ["main_competence", "order"]
 
     def get_queryset(self):
-        return (
+        queryset = (
             SpecificCompetence.objects
             .select_related("main_competence", "main_competence__subject_version")
             .all()
         )
+        # Nested route: /main-competences/<pk>/specific-competences/
+        main_competence_id = self.kwargs.get("main_competence_pk")
+        if main_competence_id:
+            try:
+                uuid.UUID(str(main_competence_id))
+            except (ValueError, TypeError):
+                return queryset.none()
+            queryset = queryset.filter(main_competence=main_competence_id)
+        return queryset
 
     def perform_create(self, serializer):
         main_comp = serializer.validated_data["main_competence"]

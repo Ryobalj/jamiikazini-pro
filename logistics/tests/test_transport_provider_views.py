@@ -1,10 +1,10 @@
-# logistics/tests/test_transport_provider_views.py
+﻿# logistics/tests/test_transport_provider_views.py
 
 from rest_framework.test import APITestCase
 from rest_framework import status
 from django.urls import reverse
 from accounts.models import User
-from core.models import Institution
+from kiini.models import Institution
 from logistics.models import TransportProvider
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -24,22 +24,15 @@ class TransportProviderViewSetTest(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {str(refresh.access_token)}')
 
     def test_create_transport_provider(self):
-        url = reverse('transport-provider-list')
-        data = {
-            'location': 'Mwanza',
-            'is_approved': False
-        }
-        response = self.client.post(url, data)
+        url = reverse('logistics:transport-provider-list')
+        data = {'location': {'type': 'Point', 'coordinates': [32.9, -2.52]}, 'is_approved': False}
+        response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data['location'], 'Mwanza')
+        self.assertEqual(response.data['location']['coordinates'], [32.9, -2.52])
 
     def test_list_transport_providers(self):
-        TransportProvider.objects.create(
-            user=self.user,
-            institution=self.institution,
-            location='Mbeya'
-        )
-        url = reverse('transport-provider-list')
+        TransportProvider.objects.create(user=self.user, institution=self.institution)
+        url = reverse('logistics:transport-provider-list')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)

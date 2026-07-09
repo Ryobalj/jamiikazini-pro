@@ -41,11 +41,11 @@ class TestSyllabusAdminOnlyCRUD:
         payload = {
             "year": 2025,
             "institute": f"Test Institute {uuid.uuid4().hex[:6]}",
-            "term_count": 3
+            "total_learning_days": 194
         }
         # Create
         resp = self.client.post(f"{BASE_URL}annual-calendars/", payload)
-        assert resp.status_code == 201
+        assert resp.status_code == 201, resp.json()
         ac_id = resp.json()["id"]
 
         # Read
@@ -53,7 +53,7 @@ class TestSyllabusAdminOnlyCRUD:
         assert resp2.status_code == 200
 
         # Update
-        resp3 = self.client.patch(f"{BASE_URL}annual-calendars/{ac_id}/", {"term_count": 4})
+        resp3 = self.client.patch(f"{BASE_URL}annual-calendars/{ac_id}/", {"total_learning_days": 200})
         assert resp3.status_code == 200
 
         # Delete
@@ -88,8 +88,8 @@ class TestSyllabusAdminOnlyCRUD:
     # LessonSentence CRUD
     # -------------------------
     def test_lesson_sentence_crud(self):
-        text = f"This is a sample lesson sentence {uuid.uuid4().hex[:6]}"
-        payload = {"text": text}
+        text = f"Fundisha kwa vitendo {uuid.uuid4().hex[:6]}"
+        payload = {"teaching_sw": text, "teaching_en": "Teach practically"}
 
         # Create
         resp = self.client.post(f"{BASE_URL}lesson-sentences/", payload)
@@ -101,7 +101,7 @@ class TestSyllabusAdminOnlyCRUD:
         assert resp2.status_code == 200
 
         # Update
-        resp3 = self.client.patch(f"{BASE_URL}lesson-sentences/{ls_id}/", {"text": "Updated sentence."})
+        resp3 = self.client.patch(f"{BASE_URL}lesson-sentences/{ls_id}/", {"teaching_sw": "Sentensi iliyosasishwa."})
         assert resp3.status_code == 200
 
         # Delete

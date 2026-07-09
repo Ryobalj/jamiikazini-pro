@@ -1,8 +1,8 @@
-# logistics/tests/test_serializers.py
+﻿# logistics/tests/test_serializers.py
 
 from django.test import TestCase
 from accounts.models import User
-from core.models import Institution
+from kiini.models import Institution
 from logistics.models import TransportProvider
 from logistics.serializers.transport_provider_serializer import TransportProviderSerializer
 
@@ -18,7 +18,7 @@ class TransportProviderSerializerTest(TestCase):
 
     def test_serializer_valid(self):
         data = {
-            'location': 'Dodoma',
+            'location': {'type': 'Point', 'coordinates': [35.75, -6.17]},
             'is_approved': False
         }
         serializer = TransportProviderSerializer(data=data)

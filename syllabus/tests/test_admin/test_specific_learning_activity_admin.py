@@ -1,4 +1,4 @@
-# jamiikazini/syllabus/tests/test_admin/test_specific_learning_activity_admin.py
+﻿# jamiikazini/syllabus/tests/test_admin/test_specific_learning_activity_admin.py
 
 import pytest
 from django.contrib.admin.sites import AdminSite
@@ -70,7 +70,7 @@ class TestSpecificLearningActivityAdmin:
             method="Some teaching method",
             name="Activity Name",
             assessment_criteria="Criteria",
-            teaching_aids="Aids",
+            teaching_aids=["Aids"],
         )
         list_display = admin_instance.get_list_display(request=None)
         assert "name_preview" in list_display
@@ -90,7 +90,7 @@ class TestSpecificLearningActivityAdmin:
             method=long_method,
             name="Activity Name",
             assessment_criteria="Criteria",
-            teaching_aids="Aids",
+            teaching_aids=["Aids"],
         )
         preview = admin_instance.method_preview(obj)
         assert len(preview) <= 43  # 40 chars + "..."
@@ -103,7 +103,7 @@ class TestSpecificLearningActivityAdmin:
             method="Method",
             name=long_name,
             assessment_criteria="Criteria",
-            teaching_aids="Aids",
+            teaching_aids=["Aids"],
         )
         preview = admin_instance.name_preview(obj)
         assert len(preview) <= 53  # 50 chars + "..."

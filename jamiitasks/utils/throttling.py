@@ -41,7 +41,13 @@ def throttled_task(limit=None, period=None, rate_limit=None, redis_key=None):
 
         @wraps(fn)
         def wrapper(*args, **kwargs):
-            if not limiter.allow(redis_key or fn.__name__):
+            try:
+                allowed = limiter.allow(redis_key or fn.__name__)
+            except Exception as exc:
+                # Redis down/unreachable: run unthrottled rather than crash the task
+                logger.warning(f"Throttle check unavailable for {fn.__name__} ({exc}); running unthrottled")
+                allowed = True
+            if not allowed:
                 logger.warning(f"⛔ Task {fn.__name__} throttled — too many calls")
                 from jamiitasks.models import TaskLog
                 TaskLog.record(fn.__name__, "THROTTLED", details="Too many calls", reference=redis_key)

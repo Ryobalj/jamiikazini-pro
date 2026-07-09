@@ -1,4 +1,4 @@
-# jamiiwallet/models/transaction.py
+﻿# jamiiwallet/models/transaction.py
 
 from django.db import models
 from django.conf import settings
@@ -76,6 +76,9 @@ class Transaction(models.Model):
 
     # Encrypted unique reference
     _reference = models.CharField(max_length=512, unique=True, db_column="reference")
+
+    # Free-form transaction metadata (source_txn_id, merchant_id, channel...)
+    metadata = models.JSONField(default=dict, blank=True)
 
     # Encrypted receipt data
     _receipt = models.TextField(null=True, blank=True, db_column="receipt")

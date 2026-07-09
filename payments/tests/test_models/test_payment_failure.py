@@ -65,6 +65,13 @@ def test_unique_together_constraint(user):
 
 
 def test_ordering(payment_failure, user):
+    # Sukuma created_at ya rekodi ya kwanza nyuma dhahiri ili kuepuka tie ya
+    # microsecond (ordering ni -created_at; rekodi mbili kwenye microsecond moja
+    # huleta mpangilio usio na uhakika)
+    from datetime import timedelta
+    payment_failure.created_at = timezone.now() - timedelta(hours=1)
+    payment_failure.save()
+
     newer = PaymentFailure.objects.create(
         user=user,
         amount=Decimal("100.00"),
@@ -81,7 +88,15 @@ def test_created_and_updated_times_are_timezone_aware(payment_failure):
 
 
 def test_updated_at_changes_on_save(payment_failure):
+    # Rudisha updated_at nyuma dhahiri (kupitia .update() ili kuepuka save() hook)
+    # ili kuepuka tie ya microsecond kati ya updated_at ya awali na baada ya save
+    from datetime import timedelta
+    PaymentFailure.objects.filter(pk=payment_failure.pk).update(
+        updated_at=timezone.now() - timedelta(hours=1)
+    )
+    payment_failure.refresh_from_db()
     old_updated = payment_failure.updated_at
+
     payment_failure.reason = "Updated reason"
     payment_failure.save()
     payment_failure.refresh_from_db()

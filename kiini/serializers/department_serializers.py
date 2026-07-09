@@ -20,4 +20,6 @@ class DepartmentSerializer(serializers.ModelSerializer):
             'created',
             'modified',
         ]
-        read_only_fields = ['id', 'created', 'modified']
+        # institution huwekwa na view kutoka nested URL (perform_create) -
+        # bila kuifanya read-only, POST ingedai institution mwilini (400)
+        read_only_fields = ['id', 'institution', 'created', 'modified']

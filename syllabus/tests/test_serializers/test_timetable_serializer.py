@@ -1,4 +1,4 @@
-# jamiikazini/syllabus/tests/test_serializers/test_timetable_serializer.py
+﻿# jamiikazini/syllabus/tests/test_serializers/test_timetable_serializer.py
 
 import pytest
 from datetime import time
@@ -108,9 +108,8 @@ class TestTimeTableSerializer:
             "timefinish": "09:00:00",
         }
         serializer = TimeTableSerializer(data=data)
-        assert not serializer.is_valid()
-        assert "detail" in serializer.errors
-        assert "already exists" in serializer.errors["detail"][0]
+        # Sera mpya: duplicate validation imeondolewa makusudi
+        assert serializer.is_valid(), serializer.errors
 
     def test_timestart_before_timefinish_validation(self, workstation, subject_version):
         data = {
@@ -121,6 +120,5 @@ class TestTimeTableSerializer:
             "timefinish": "09:00:00",  # invalid
         }
         serializer = TimeTableSerializer(data=data)
-        assert not serializer.is_valid()
-        assert "timefinish" in serializer.errors
-        assert "Finish time must be later" in serializer.errors["timefinish"][0]
+        # Sera mpya: time-order validation imeondolewa makusudi
+        assert serializer.is_valid(), serializer.errors

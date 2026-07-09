@@ -40,13 +40,16 @@ class AuditLogViewSet(BaseReadOnlyViewSet):
         if user.is_superuser:
             return self.queryset
 
-        if getattr(user, "role", None) == "Provider":
+        # Thamani halisi ya role ni "PROVIDER" (ROLE_CHOICES) - "Provider" isingelingana kamwe
+        if getattr(user, "role", None) == "PROVIDER":
             institution_ct = ContentType.objects.get_for_model(Institution)
             business_ct = ContentType.objects.get_for_model(Business)
 
             # institutions & businesses owned by this provider
-            user_institution_ids = user.institutions.values_list("id", flat=True)
-            user_business_ids = user.businesses.values_list("id", flat=True)
+            # object_id ni CharField - linganisha kwa str, si UUID
+            # (query moja kwa moja - User haina related manager 'institutions')
+            user_institution_ids = [str(i) for i in Institution.objects.filter(owner=user).values_list("id", flat=True)]
+            user_business_ids = [str(i) for i in Business.objects.filter(owner=user).values_list("id", flat=True)]
 
             return self.queryset.filter(
                 Q(content_type=institution_ct, object_id__in=user_institution_ids)

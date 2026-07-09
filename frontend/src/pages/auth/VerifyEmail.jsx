@@ -21,7 +21,7 @@ export default function VerifyEmail() {
         setMessage(
           res.data.message || t("auth_verify_email.success")
         );
-      } catch (err) {
+      } catch {
         setError(t("auth_verify_email.error"));
       } finally {
         setLoading(false);

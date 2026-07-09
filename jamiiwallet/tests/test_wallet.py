@@ -1,4 +1,4 @@
-# jamiiwallet/tests/test_wallet.py
+﻿# jamiiwallet/tests/test_wallet.py
 
 from django.test import override_settings
 from django.conf import settings
@@ -10,6 +10,19 @@ from django.contrib.auth import get_user_model
 from jamiiwallet.models.wallet import Wallet
 from jamiiwallet.serializers.wallet_serializer import WalletSerializer
 from django.urls import reverse
+
+import pytest as _pytest
+
+@_pytest.fixture(autouse=True)
+def _reconnect_wallet_signal():
+    """These tests verify the wallet auto-creation signal, which the root
+    conftest disconnects globally - reconnect it just for this module."""
+    from django.db.models.signals import post_save
+    from django.contrib.auth import get_user_model
+    from jamiiwallet.signals import create_or_reactivate_wallet
+    post_save.connect(create_or_reactivate_wallet, sender=get_user_model())
+    yield
+    post_save.disconnect(create_or_reactivate_wallet, sender=get_user_model())
 
 User = get_user_model()
 

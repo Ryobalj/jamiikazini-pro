@@ -22,7 +22,7 @@ const ActivitySearchCard = ({
   const [showDropdown, setShowDropdown] = useState(false);
   const [rateLimitWarning, setRateLimitWarning] = useState(false);
   const [searchStats, setSearchStats] = useState({ time: 0, quality: "good" });
-  const [searchOptions, setSearchOptions] = useState({
+  const [searchOptions] = useState({
     searchInMethods: true,
     searchInDescriptions: true,
     searchInNames: true,

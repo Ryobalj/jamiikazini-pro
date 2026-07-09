@@ -31,7 +31,6 @@ export default function SchemeActions({
     handleFetchScheme,
     handlePreviewScheme,
     handleDownloadPDF,
-    clearScheme,
     fetchInitialData
   } = schemeData;
 
@@ -52,8 +51,8 @@ export default function SchemeActions({
     }
   };
 
-  // Helper function to handle preview with feedback
-  const handlePreviewWithFeedback = async () => {
+  // TODO: preview button not wired up yet; underscore keeps eslint quiet until it is
+  const _handlePreviewWithFeedback = async () => {
     if (!isFormValid) {
       toast.warning(t("scheme.select_subject_and_calendar"), {
         position: "bottom-right",

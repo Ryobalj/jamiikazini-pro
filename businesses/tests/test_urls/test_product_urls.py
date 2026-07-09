@@ -1,4 +1,4 @@
-import pytest
+﻿import pytest
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
@@ -53,29 +53,33 @@ def product(business):
     )
 
 
-def test_product_list(api_client, product):
-    url = reverse("product-list")
+def test_product_list(api_client, product, business, user):
+    api_client.force_authenticate(user=user)
+    url = reverse("businesses:business-products-list", kwargs={"business_pk": business.pk})
     response = api_client.get(url)
     assert response.status_code == 200
-    assert any(prod["slug"] == product.slug for prod in response.data)
+    data = response.data.get("results", response.data) if isinstance(response.data, dict) else response.data
+    assert any(prod["slug"] == product.slug for prod in data)
 
 
-def test_product_detail(api_client, product):
-    url = reverse("product-detail", kwargs={"pk": product.pk})
+def test_product_detail(api_client, product, business, user):
+    api_client.force_authenticate(user=user)
+    url = reverse("businesses:business-products-detail", kwargs={"business_pk": business.pk, "slug": product.slug})
     response = api_client.get(url)
     assert response.status_code == 200
     assert response.data["slug"] == product.slug
 
 
 def test_nearby_product_list(api_client, product):
-    url = reverse("product-nearby-list")
+    url = reverse("businesses:product-nearby-list")
     response = api_client.get(url, {"lat": -6.8, "lng": 39.2})
     assert response.status_code == 200
     assert isinstance(response.data, list)
 
 
-def test_generate_product_url(api_client, product):
-    url = reverse("generate-product-url", kwargs={"slug": product.slug})
+def test_generate_product_url(api_client, product, user):
+    api_client.force_authenticate(user=user)
+    url = reverse("businesses:generate-product-url", kwargs={"slug": product.slug})
     response = api_client.get(url)
     assert response.status_code == 200
     assert "url" in response.data
@@ -83,10 +87,11 @@ def test_generate_product_url(api_client, product):
 
 def test_product_create_authenticated(api_client, user, business):
     api_client.force_authenticate(user=user)
-    url = reverse("product-list")
+    url = reverse("businesses:business-products-list", kwargs={"business_pk": business.pk})
     data = {
         "name": "New Product",
         "slug": "new-product",
+        "type": "physical",
         "price": 5000,
         "business": business.id,
         "is_available": True
@@ -97,10 +102,11 @@ def test_product_create_authenticated(api_client, user, business):
 
 
 def test_product_create_unauthenticated(api_client, business):
-    url = reverse("product-list")
+    url = reverse("businesses:business-products-list", kwargs={"business_pk": business.pk})
     data = {
         "name": "New Product",
         "slug": "new-product",
+        "type": "physical",
         "price": 5000,
         "business": business.id,
         "is_available": True

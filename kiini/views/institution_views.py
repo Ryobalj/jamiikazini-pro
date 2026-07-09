@@ -1,5 +1,6 @@
 # kiini/views/institution_views.py
 
+from django.db.models import Q
 from rest_framework import viewsets, permissions
 from kiini.models.institution import Institution
 from kiini.serializers.institution_serializers import InstitutionSerializer
@@ -13,7 +14,12 @@ class InstitutionViewSet(viewsets.ModelViewSet):
         user = self.request.user
         if user.is_superuser:
             return Institution.objects.all()
-        return Institution.objects.filter(owner=user)
+        # Mtumiaji aone taasisi anazomiliki NA taasisi yake (uanachama) -
+        # bila hili mwanachama hakuweza kuona taasisi yake mwenyewe
+        q = Q(owner=user)
+        if getattr(user, "institution_id", None):
+            q |= Q(pk=user.institution_id)
+        return Institution.objects.filter(q).distinct()
 
     def perform_create(self, serializer):
         institution = serializer.save(owner=self.request.user)

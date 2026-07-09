@@ -1,4 +1,6 @@
-# syllabus/tests/test_admin/test_lesson_sentence_admin.py
+﻿# syllabus/tests/test_admin/test_lesson_sentence_admin.py
+# Imefuatishwa na LessonSentenceAdmin ya sasa (short_teaching_sw/short_teaching_en,
+# language kwenye list_display/filters/fieldsets, search_fields kamili).
 
 import pytest
 from django.contrib import admin
@@ -16,22 +18,22 @@ class TestLessonSentenceAdmin:
     def test_list_display(self, admin_instance):
         assert admin_instance.list_display == (
             "category",
-            "teaching_sw_short",
-            "teaching_en_short",
+            "short_teaching_sw",
+            "short_teaching_en",
             "is_active",
+            "is_awali",
+            "language",
             "created_at",
         )
 
     def test_list_filter(self, admin_instance):
-        assert admin_instance.list_filter == ("category", "is_active")
+        assert admin_instance.list_filter == ("category", "is_active", "language")
 
     def test_search_fields(self, admin_instance):
-        assert admin_instance.search_fields == (
-            "teaching_sw",
-            "teaching_en",
-            "reflection_sw",
-            "reflection_en",
-        )
+        assert "teaching_sw" in admin_instance.search_fields
+        assert "teaching_en" in admin_instance.search_fields
+        assert "reflection_sw" in admin_instance.search_fields
+        assert "reflection_en" in admin_instance.search_fields
 
     def test_ordering(self, admin_instance):
         assert admin_instance.ordering == ("category", "-created_at")
@@ -40,51 +42,30 @@ class TestLessonSentenceAdmin:
         assert admin_instance.readonly_fields == ("created_at", "updated_at")
 
     def test_fieldsets(self, admin_instance):
-        # Extract fieldsets as plain tuples
-        fieldsets = tuple((title, opts["fields"]) for title, opts in admin_instance.fieldsets)
+        titles = [title for title, _ in admin_instance.fieldsets]
+        assert titles == [
+            "General", "Swahili Content", "English Content",
+            "Reflection / Feedback", "Timestamps",
+        ]
+        general_fields = dict(admin_instance.fieldsets)["General"]["fields"]
+        assert general_fields == ("category", "language", "is_active")
 
-        assert fieldsets == (
-            ("General", ("category", "is_active")),
-            (
-                "Swahili Content",
-                (
-                    "teaching_sw", "learning_sw",
-                    "indicator_primary_sw", "indicator_secondary_sw",
-                ),
-            ),
-            (
-                "English Content",
-                (
-                    "teaching_en", "learning_en",
-                    "indicator_primary_en", "indicator_secondary_en",
-                ),
-            ),
-            (
-                "Reflection / Feedback",
-                (
-                    "reflection_sw", "reflection_comment_sw",
-                    "reflection_en", "reflection_comment_en",
-                ),
-            ),
-            ("Timestamps", ("created_at", "updated_at")),
-        )
-
-    def test_teaching_sw_short_method(self, admin_instance):
+    def test_short_teaching_sw_method(self, admin_instance):
         obj = LessonSentence(teaching_sw="Hii ni sentensi ya kufundishia kwa Kiswahili ambayo ni ndefu zaidi ya herufi hamsini.")
-        result = admin_instance.teaching_sw_short(obj)
+        result = admin_instance.short_teaching_sw(obj)
         assert result.endswith("...")
-        assert len(result) < len(obj.teaching_sw)  # Should be shortened
+        assert len(result) < len(obj.teaching_sw)
 
-    def test_teaching_sw_short_empty(self, admin_instance):
+    def test_short_teaching_sw_empty(self, admin_instance):
         obj = LessonSentence(teaching_sw="")
-        assert admin_instance.teaching_sw_short(obj) == ""
+        assert admin_instance.short_teaching_sw(obj) == ""
 
-    def test_teaching_en_short_method(self, admin_instance):
+    def test_short_teaching_en_method(self, admin_instance):
         obj = LessonSentence(teaching_en="This is an English teaching sentence that exceeds fifty characters long for testing.")
-        result = admin_instance.teaching_en_short(obj)
+        result = admin_instance.short_teaching_en(obj)
         assert result.endswith("...")
         assert len(result) < len(obj.teaching_en)
 
-    def test_teaching_en_short_empty(self, admin_instance):
-        obj = LessonSentence(teaching_en=None)
-        assert admin_instance.teaching_en_short(obj) == ""
+    def test_short_teaching_en_empty(self, admin_instance):
+        obj = LessonSentence(teaching_en="")
+        assert admin_instance.short_teaching_en(obj) == ""

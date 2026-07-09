@@ -19,8 +19,15 @@ class TestGovVerification(unittest.TestCase):
         config = get_gov_api_config("xx", "unknown")
         self.assertIsNone(config)
 
+    @patch("gov_integration.helpers.verification.get_gov_api_config")
     @patch("gov_integration.helpers.verification.requests.post")
-    def test_verify_entity_real_api_success(self, mock_post):
+    def test_verify_entity_real_api_success(self, mock_post, mock_config):
+        # Config must include an api_key, otherwise verify_entity never calls
+        # the real API and falls back to the mock response.
+        mock_config.return_value = {
+            "api_url": "https://gov.example.test/verify",
+            "api_key": "test-key",
+        }
         mock_response_obj = MagicMock()
         mock_response_obj.status_code = 200
         mock_response_obj.json.return_value = {"verified": True}

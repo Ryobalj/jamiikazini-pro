@@ -1,6 +1,7 @@
-# jamiiwallet/services/transaction_engine.py
+﻿# jamiiwallet/services/transaction_engine.py
 
 from decimal import Decimal, ROUND_DOWN
+from contextlib import nullcontext
 from django.db import transaction as db_transaction
 from django.utils import timezone
 from django.core.exceptions import ValidationError, PermissionDenied
@@ -10,13 +11,13 @@ from jamiiwallet.models.transaction import Transaction
 from jamiiwallet.models.wallet import Wallet
 from payments.models.audit_log import AuditLog, AuditAction
 
-# 🔹 Pre-processing imports
+# ðŸ”¹ Pre-processing imports
 from jamiiwallet.services.transaction_preprocessor import (
     sync_pre_process_transaction,
     async_pre_process_transaction,
 )
 
-# 🔹 Cache layer imports
+# ðŸ”¹ Cache layer imports
 from jamiiwallet.services.cache_utils import (
     get_cached_balance,
     set_cached_balance,
@@ -67,12 +68,12 @@ class TransactionEngine:
                 case _:
                     raise ValidationError("Unsupported transaction type.")
 
-            # ✅ Ikiwa hakuna error — mark as completed
+            # âœ… Ikiwa hakuna error â€” mark as completed
             transaction.status = Transaction.TransactionStatus.COMPLETED
             transaction.updated_at = timezone.now()
             transaction.save(update_fields=["status", "updated_at"])
 
-            # 🔹 Audit log
+            # ðŸ”¹ Audit log
             AuditLog.log_action(
                 user=transaction.user,
                 action=AuditAction.PAYMENT if transaction.transaction_type in [
@@ -90,7 +91,7 @@ class TransactionEngine:
                 },
             )
 
-            logger.info(f"✅ Transaction processed successfully: id={transaction.id}")
+            logger.info(f"âœ… Transaction processed successfully: id={transaction.id}")
             return transaction
 
         except Exception as e:
@@ -101,9 +102,9 @@ class TransactionEngine:
                 "error": str(e),
                 "failed_at": timezone.now().isoformat(),
             }
-            transaction.save(update_fields=["status", "updated_at", "receipt"])
+            transaction.save(update_fields=["status", "updated_at", "_receipt"])
 
-            # 🔹 Audit log kwa failures
+            # ðŸ”¹ Audit log kwa failures
             AuditLog.log_action(
                 user=transaction.user,
                 action=AuditAction.PAYMENT_RETRY,
@@ -117,7 +118,7 @@ class TransactionEngine:
                 },
             )
 
-            logger.error(f"❌ Transaction {transaction.id} failed: {e}", exc_info=True)
+            logger.error(f"âŒ Transaction {transaction.id} failed: {e}", exc_info=True)
             raise
 
     # -----------------------------------------------------------------------------------
@@ -126,9 +127,9 @@ class TransactionEngine:
         """
         Anzisha transaction mpya ikiwa na hatua ya async/sync pre-processing na idempotency check.
         """
-        logger.info(f"🚀 Initiating transaction for {account_identifier} with {txn_type}")
+        logger.info(f"ðŸš€ Initiating transaction for {account_identifier} with {txn_type}")
 
-        # 1️⃣ Pre-processing (sync, kabla ya kuunda transaction)
+        # 1ï¸âƒ£ Pre-processing (sync, kabla ya kuunda transaction)
         try:
             user, metadata = sync_pre_process_transaction(account_identifier, metadata)
             AuditLog.log_action(
@@ -138,10 +139,10 @@ class TransactionEngine:
                 description="Pre-processing validation successful",
                 metadata={"identifier": account_identifier, **(metadata or {})},
             )
-            logger.info(f"✅ Pre-processing passed for {account_identifier}")
+            logger.info(f"âœ… Pre-processing passed for {account_identifier}")
 
         except ValidationError as ve:
-            logger.warning(f"⚠️ Pre-processing failed for {account_identifier}: {ve}")
+            logger.warning(f"âš ï¸ Pre-processing failed for {account_identifier}: {ve}")
             AuditLog.log_action(
                 user=None,
                 action=AuditAction.VALIDATION,
@@ -151,7 +152,7 @@ class TransactionEngine:
             )
             raise
 
-        # 2️⃣ Idempotency check
+        # 2ï¸âƒ£ Idempotency check
         ref_key = metadata.get("idempotency_key") if metadata else None
         if ref_key:
             existing = Transaction.objects.filter(
@@ -159,7 +160,7 @@ class TransactionEngine:
                 metadata__idempotency_key=ref_key,
             ).first()
             if existing:
-                logger.warning(f"⚠️ Duplicate idempotent transaction detected: {existing.id}")
+                logger.warning(f"âš ï¸ Duplicate idempotent transaction detected: {existing.id}")
                 AuditLog.log_action(
                     user=user,
                     action=AuditAction.OTHER,
@@ -169,7 +170,7 @@ class TransactionEngine:
                 )
                 return existing
 
-        # 3️⃣ Kuunda transaction
+        # 3ï¸âƒ£ Kuunda transaction
         txn = Transaction.objects.create(
             user=user,
             amount=amount,
@@ -178,7 +179,7 @@ class TransactionEngine:
             metadata=metadata or {},
         )
 
-        # 4️⃣ Audit log
+        # 4ï¸âƒ£ Audit log
         AuditLog.log_action(
             user=user,
             action=AuditAction.CREATE,
@@ -187,9 +188,9 @@ class TransactionEngine:
             metadata={"idempotency_key": ref_key, **(metadata or {})},
         )
 
-        logger.info(f"🟢 Transaction initiated: {txn.id}")
+        logger.info(f"ðŸŸ¢ Transaction initiated: {txn.id}")
 
-        # 5️⃣ Trigger optional async preprocessor for background audit
+        # 5ï¸âƒ£ Trigger optional async preprocessor for background audit
         async_pre_process_transaction.delay(account_identifier, metadata)
 
         return txn
@@ -199,13 +200,24 @@ class TransactionEngine:
     def _top_up(transaction: Transaction):
         wallet = Wallet.objects.select_for_update().get(user=transaction.user)
 
+        # Debit the refunding party (merchant) first, then credit the payer.
+        if transaction.counterparty_id:
+            refunder_wallet = Wallet.objects.select_for_update().get(user_id=transaction.counterparty_id)
+            with acquire_balance_lock(refunder_wallet.user.id) or nullcontext():
+                if refunder_wallet.balance < transaction.amount:
+                    raise ValidationError("Insufficient balance to issue refund.")
+                invalidate_cached_balance(refunder_wallet.user.id)
+                refunder_wallet.balance -= transaction.amount
+                refunder_wallet.save(update_fields=["balance"])
+                set_cached_balance(refunder_wallet.user.id, refunder_wallet.balance)
+
         with acquire_balance_lock(wallet.user.id) or nullcontext():
             invalidate_cached_balance(wallet.user.id)
             wallet.balance += transaction.amount
             wallet.save(update_fields=["balance"])
             set_cached_balance(wallet.user.id, wallet.balance)
 
-        logger.debug(f"💰 Wallet top-up successful for {wallet.user}: +{transaction.amount}")
+        logger.debug(f"ðŸ’° Wallet top-up successful for {wallet.user}: +{transaction.amount}")
 
         AuditLog.log_action(
             user=transaction.user,
@@ -228,7 +240,7 @@ class TransactionEngine:
             wallet.save(update_fields=["balance"])
             set_cached_balance(wallet.user.id, wallet.balance)
 
-        logger.debug(f"🏧 Wallet withdrawal successful for {wallet.user}: -{transaction.amount}")
+        logger.debug(f"ðŸ§ Wallet withdrawal successful for {wallet.user}: -{transaction.amount}")
 
         AuditLog.log_action(
             user=transaction.user,
@@ -266,7 +278,7 @@ class TransactionEngine:
                 set_cached_balance(sender_wallet.user.id, sender_wallet.balance)
                 set_cached_balance(recipient_wallet.user.id, recipient_wallet.balance)
 
-        logger.debug(f"🔁 Transfer {transaction.amount} from {sender_wallet.user} to {recipient_wallet.user}")
+        logger.debug(f"ðŸ” Transfer {transaction.amount} from {sender_wallet.user} to {recipient_wallet.user}")
 
         AuditLog.log_action(
             user=transaction.user,
@@ -311,7 +323,7 @@ class TransactionEngine:
                 set_cached_balance(payer_wallet.user.id, payer_wallet.balance)
                 set_cached_balance(merchant_wallet.user.id, merchant_wallet.balance)
 
-        logger.debug(f"💳 Payment {transaction.amount} from {payer_wallet.user} to merchant {merchant_wallet.user}")
+        logger.debug(f"ðŸ’³ Payment {transaction.amount} from {payer_wallet.user} to merchant {merchant_wallet.user}")
 
         AuditLog.log_action(
             user=transaction.user,
@@ -338,13 +350,24 @@ class TransactionEngine:
 
         wallet = Wallet.objects.select_for_update().get(user=transaction.user)
 
+        # Debit the refunding party (merchant) first, then credit the payer.
+        if transaction.counterparty_id:
+            refunder_wallet = Wallet.objects.select_for_update().get(user_id=transaction.counterparty_id)
+            with acquire_balance_lock(refunder_wallet.user.id) or nullcontext():
+                if refunder_wallet.balance < transaction.amount:
+                    raise ValidationError("Insufficient balance to issue refund.")
+                invalidate_cached_balance(refunder_wallet.user.id)
+                refunder_wallet.balance -= transaction.amount
+                refunder_wallet.save(update_fields=["balance"])
+                set_cached_balance(refunder_wallet.user.id, refunder_wallet.balance)
+
         with acquire_balance_lock(wallet.user.id) or nullcontext():
             invalidate_cached_balance(wallet.user.id)
             wallet.balance += transaction.amount
             wallet.save(update_fields=["balance"])
             set_cached_balance(wallet.user.id, wallet.balance)
 
-        logger.debug(f"↩️ Refund {transaction.amount} to {wallet.user} from txn {source_txn_id}")
+        logger.debug(f"â†©ï¸ Refund {transaction.amount} to {wallet.user} from txn {source_txn_id}")
 
         AuditLog.log_action(
             user=transaction.user,

@@ -1,4 +1,4 @@
-# logistics/views/transport_assignment_views.py
+﻿# logistics/views/transport_assignment_views.py
 
 from rest_framework import viewsets, permissions, status as drf_status
 from rest_framework.decorators import action
@@ -34,11 +34,11 @@ class TransportAssignmentViewSet(viewsets.ModelViewSet):
 
         vehicle_id = request.data.get("vehicle")
         try:
-            vehicle = Vehicle.objects.get(id=vehicle_id, owner=request.user)
+            vehicle = Vehicle.objects.get(id=vehicle_id, provider__user=request.user)
         except Vehicle.DoesNotExist:
             return Response({"detail": "Invalid or unauthorized vehicle."}, status=drf_status.HTTP_400_BAD_REQUEST)
 
-        assigned_to = getattr(request.user, "transportprovider", None)
+        assigned_to = request.user.transport_providers.first()
         if not assigned_to:
             return Response({"detail": "User is not a registered transport provider."}, status=drf_status.HTTP_400_BAD_REQUEST)
 

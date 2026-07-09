@@ -1,4 +1,4 @@
-import pytest
+﻿import pytest
 from rest_framework import status
 from rest_framework.test import APIClient
 from django.urls import reverse
@@ -58,7 +58,8 @@ class TestBranchViewSet:
         res = client.get(url)
 
         assert res.status_code == status.HTTP_200_OK
-        assert any(b["id"] == setup_data["branch"].id for b in res.data)
+        data = res.data.get("results", res.data) if isinstance(res.data, dict) else res.data
+        assert any(str(b["id"]) == str(setup_data["branch"].id) for b in data)
 
     def test_retrieve_branch(self, setup_data):
         client = APIClient()
@@ -78,7 +79,7 @@ class TestBranchViewSet:
         data = {
             "name": "Tawi Jipya",
             "description": "Maelezo ya tawi jipya",
-            "location": None,
+            "location": {"type": "Point", "coordinates": [39.28, -6.81]},
             "phone": "0744123456",
             "email": "tawi@huduma.com",
             "is_active": True,
@@ -97,7 +98,7 @@ class TestBranchViewSet:
         data = {
             "name": "Tawi Fake",
             "description": "Hakuna ruhusa",
-            "location": None,
+            "location": {"type": "Point", "coordinates": [39.28, -6.81]},
             "phone": "0711000000",
             "email": "fake@huduma.com",
             "is_active": True,

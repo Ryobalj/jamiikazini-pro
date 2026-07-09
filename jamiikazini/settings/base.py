@@ -1,6 +1,7 @@
-# jamiikazini/settings/base.py
+﻿# jamiikazini/settings/base.py
 
 import os
+import sys
 import logging
 from pathlib import Path
 from decouple import config
@@ -15,7 +16,12 @@ from sentry_sdk.integrations.django import DjangoIntegration
 # ===========================
 # Basic Configuration
 # ===========================
-TESTING = os.environ.get('TESTING') == 'True'
+# True under pytest even when settings load before conftest sets TESTING=True
+TESTING = (
+    os.environ.get('TESTING') == 'True'
+    or 'pytest' in sys.modules
+    or any('pytest' in arg for arg in sys.argv[:1])
+)
 DJANGO_ENV = config("DJANGO_ENV", default="development")
 
 # Base directory
@@ -91,6 +97,10 @@ ALLOWED_HOSTS = (
     if IS_RENDER_APP else
     DEV_HOSTS
 )
+
+if TESTING:
+    # subdomain-isolation tests hit hosts like test.localhost
+    ALLOWED_HOSTS = list(ALLOWED_HOSTS) + [".localhost", "testserver"]
 
 # ===========================
 # Application Definition
@@ -366,8 +376,8 @@ SWAGGER_USE_COMPAT_RENDERERS = False
 # ===========================
 # GDAL
 # ===========================
-GDAL_LIBRARY_PATH = r'C:\OSGeo4W\bin\gdal312.dll'
-GEOS_LIBRARY_PATH = r'C:\OSGeo4W\bin\geos_c.dll'
+GDAL_LIBRARY_PATH = config('GDAL_LIBRARY_PATH', default=r'C:\OSGeo4W\bin\gdal312.dll')
+GEOS_LIBRARY_PATH = config('GEOS_LIBRARY_PATH', default=r'C:\OSGeo4W\bin\geos_c.dll')
 
 
 # ===========================
@@ -411,6 +421,14 @@ CELERY_BROKER_URL = config("REDIS_URL", default="redis://localhost:6379/0")
 CELERY_RESULT_BACKEND = CELERY_BROKER_URL
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
+
+if TESTING:
+    # Run tasks synchronously during tests: without a broker every .delay()
+    # blocks in kombu's connection-retry backoff (~1 min per call).
+    CELERY_TASK_ALWAYS_EAGER = True
+    CELERY_TASK_EAGER_PROPAGATES = True
+    CELERY_BROKER_CONNECTION_RETRY = False
+    CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = False
 
 from celery.schedules import crontab
 

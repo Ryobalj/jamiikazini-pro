@@ -36,10 +36,11 @@ class PaymentViewSet(viewsets.ViewSet):
         except Exception as e:
             return Response({"detail": str(e)}, status=status.HTTP_403_FORBIDDEN)
 
-        # Dispatch kwa service layer
+        # Dispatch kwa service layer (amount ni required; huja toka invoice)
         try:
-            txn = PaymentService.process_payment(
+            result = PaymentService.process_payment(
                 user=user,
+                amount=invoice.total_amount,
                 invoice=invoice,
                 payment_method=payment_method
             )
@@ -48,10 +49,16 @@ class PaymentViewSet(viewsets.ViewSet):
         except NotImplementedError as e:
             return Response({"detail": str(e)}, status=status.HTTP_501_NOT_IMPLEMENTED)
 
+        # process_payment hurudisha dict (provider/tx/status) - shughulikia kwa usalama
+        transaction_id = (
+            result.get("tx") if isinstance(result, dict)
+            else getattr(result, "reference", None)
+        )
         return Response({
-            "transaction_id": txn.reference,   # standardized identifier
+            "transaction_id": transaction_id,
             "invoice_id": str(invoice.id),
-            "amount": str(txn.amount),
+            "amount": str(invoice.total_amount),
+            "result": result if isinstance(result, dict) else None,
             "status": "success"
         }, status=status.HTTP_200_OK)
 

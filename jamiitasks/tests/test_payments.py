@@ -1,4 +1,4 @@
-# jamiitasks/tests/test_payments.py
+﻿# jamiitasks/tests/test_payments.py
 
 import pytest
 from decimal import Decimal
@@ -11,11 +11,17 @@ pytestmark = pytest.mark.django_db
 
 @pytest.fixture
 def user_wallet(user):
-    return Wallet.objects.create(user=user, balance=Decimal("100.00"))
+    wallet, _ = Wallet.objects.update_or_create(
+        user=user, defaults={"balance": Decimal("100.00")}
+    )
+    return wallet
 
 @pytest.fixture
 def business_wallet(business_user):
-    return Wallet.objects.create(user=business_user, balance=Decimal("0.00"))
+    wallet, _ = Wallet.objects.update_or_create(
+        user=business_user, defaults={"balance": Decimal("0.00")}
+    )
+    return wallet
 
 def test_topup_creates_pending_transaction(user):
     txn = pg.initiate_topup(user, Decimal("50.00"))

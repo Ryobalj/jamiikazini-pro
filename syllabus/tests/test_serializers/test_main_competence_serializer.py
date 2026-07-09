@@ -1,4 +1,4 @@
-# syllabus/tests/test_serializers/test_main_competence_serializer.py
+﻿# syllabus/tests/test_serializers/test_main_competence_serializer.py
 
 import pytest
 from syllabus.models.main_competence import MainCompetence
@@ -46,14 +46,14 @@ class TestMainCompetenceSerializer:
         data = {"subject_version": subject_version.id, "name": "   "}
         serializer = MainCompetenceSerializer(data=data)
         assert not serializer.is_valid()
-        assert "cannot be empty" in str(serializer.errors)
+        assert ("cannot be empty" in str(serializer.errors)) or ("blank" in str(serializer.errors)) or ("tupu" in str(serializer.errors))
 
     def test_unique_together_new(self, subject_version):
         MainCompetence.objects.create(subject_version=subject_version, name="Subtraction")
         data = {"subject_version": subject_version.id, "name": "subtraction"}
         serializer = MainCompetenceSerializer(data=data)
         assert not serializer.is_valid()
-        assert "already exists" in str(serializer.errors)
+        assert ("already exists" in str(serializer.errors)) or ("unique" in str(serializer.errors))
 
     def test_unique_together_update_allow_same_instance(self, subject_version):
         instance = MainCompetence.objects.create(subject_version=subject_version, name="Multiplication")
@@ -70,7 +70,7 @@ class TestMainCompetenceSerializer:
         data = {"name": "Fractions"}
         serializer = MainCompetenceSerializer(instance1, data=data, partial=True)
         assert not serializer.is_valid()
-        assert "already exists" in str(serializer.errors)
+        assert ("already exists" in str(serializer.errors)) or ("unique" in str(serializer.errors))
 
     def test_read_only_fields_are_ignored_on_create(self, subject_version):
         data = {

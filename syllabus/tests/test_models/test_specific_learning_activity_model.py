@@ -1,4 +1,4 @@
-# jamiikazini/syllabus/tests/test_models/test_specific_learning_activity_model.py
+﻿# jamiikazini/syllabus/tests/test_models/test_specific_learning_activity_model.py
 
 import pytest
 from syllabus.models.specific_learning_activity import SpecificLearningActivity
@@ -49,8 +49,8 @@ class TestSpecificLearningActivityModel:
             method="Method X",
             name="This is a very long activity name for testing __str__",
             assessment_criteria="Criteria",
-            teaching_aids="Aids",
-            references="Refs",
+            teaching_aids=["Aids"],
+            references=["Refs"],
             periods=2,
         )
         assert obj.__str__().startswith("This is a very long activity name")
@@ -62,14 +62,14 @@ class TestSpecificLearningActivityModel:
             method="M1",
             name="Activity 1",
             assessment_criteria="C1",
-            teaching_aids="T1",
+            teaching_aids=["T1"],
         )
         obj2 = SpecificLearningActivity.objects.create(
             learning_activity=learning_activity,
             method="M2",
             name="Activity 2",
             assessment_criteria="C2",
-            teaching_aids="T2",
+            teaching_aids=["T2"],
         )
         assert obj1.order == 1
         assert obj2.order == 2
@@ -80,7 +80,7 @@ class TestSpecificLearningActivityModel:
             method="M",
             name="Duplicate Name",
             assessment_criteria="C",
-            teaching_aids="T",
+            teaching_aids=["T"],
         )
         with pytest.raises(Exception):
             SpecificLearningActivity.objects.create(
@@ -88,5 +88,5 @@ class TestSpecificLearningActivityModel:
                 method="M2",
                 name="Duplicate Name",
                 assessment_criteria="C2",
-                teaching_aids="T2",
+                teaching_aids=["T2"],
             )

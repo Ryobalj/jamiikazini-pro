@@ -11,7 +11,7 @@ from django.db import transaction as db_txn
 from django.contrib.auth import get_user_model
 
 from celery import shared_task, current_app
-from celery.exceptions import MaxRetriesExceededError
+from celery.exceptions import MaxRetriesExceededError, Retry
 from jamiikazini.celery import app as celery_app  # your celery app
 
 from payments.services.payment_orchestrator import PaymentOrchestrator
@@ -288,7 +288,7 @@ def retry_failed_topups():
     return f"Retried {retried_count} failed top-up(s)."
 
 
-@shared_task(bind=True, name="payment_tasks.process_payment")
+@shared_task(bind=True, max_retries=5, name="payment_tasks.process_payment")
 def process_payment(self, user_id, amount, reference, payment_type="standard"):
     """
     Enhanced payment task that supports different payment types
@@ -320,44 +320,39 @@ def process_payment(self, user_id, amount, reference, payment_type="standard"):
             logger.info(f"Payment {reference} ({payment_type}) for user {user_id} processed successfully")
             return {"success": True, "type": payment_type}
 
-    except MaxRetriesExceededError:
-        # note: Celery raises MaxRetriesExceededError differently; catch as a safeguard
-        PaymentFailure.objects.create(
-            user_id=user_id,
-            amount=amount,
-            reference=reference,
-            reason="Insufficient balance or persistent error",
-            retries=getattr(self, "max_retries", 0),
-            metadata={"payment_type": payment_type}
-        )
-        _safe_log_execution(task_name, task_id, payload, "FAILED", {"finished_at": timezone.now(), "error": "MaxRetriesExceeded"})
+    except Retry:
+        # Retry halali ya celery - iachie worker (except Exception isiikamate)
+        raise
+
+    except (MaxRetriesExceededError, Exception) as exc:
+        # KUMBUKA: retry(exc=...) ikiisha retries, celery hurusha exc YENYEWE
+        # (si MaxRetriesExceededError) - kwa hivyo tunakagua retries wenyewe.
+        tb = traceback.format_exc()
+        retries = getattr(self.request, "retries", 0)
+        max_retries = getattr(self, "max_retries", 0) or 0
+        logger.warning(f"Retry {retries} for payment {reference} failed: {exc}")
+
+        if not isinstance(exc, MaxRetriesExceededError) and retries < max_retries:
+            raise self.retry(exc=exc, countdown=_compute_backoff(retries, base=5))
+
+        # Retries zimeisha - permanent failure: rekodi + DLQ
+        # NB: PaymentFailure model haina field 'metadata'
+        try:
+            PaymentFailure.objects.create(
+                user_id=user_id,
+                amount=amount,
+                reference=reference,
+                reason=str(exc) or "Insufficient balance or persistent error",
+                retries=max_retries,
+            )
+        except Exception:
+            logger.exception("Failed to create PaymentFailure record")
+
+        _push_to_dlq(task_name=task_name, task_id=task_id, payload=payload, exc=exc, tb=tb, attempts=max_retries, metadata={"source": "process_payment"})
+        _safe_log_execution(task_name, task_id, payload, "FAILED", {"finished_at": timezone.now(), "error": str(exc)})
+
         logger.error(f"Payment {reference} ({payment_type}) failed permanently")
         return {"success": False, "type": payment_type}
-
-    except Exception as exc:
-        tb = traceback.format_exc()
-        logger.warning(f"Retry {getattr(self.request, 'retries', 0)} for payment {reference} failed: {exc}")
-        try:
-            raise self.retry(exc=exc, countdown=_compute_backoff(getattr(self.request, "retries", 0), base=5))
-        except MaxRetriesExceededError:
-            # create PaymentFailure, push to DLQ for operator visibility
-            try:
-                PaymentFailure.objects.create(
-                    user_id=user_id,
-                    amount=amount,
-                    reference=reference,
-                    reason=str(exc),
-                    retries=getattr(self, "max_retries", 0),
-                    metadata={"payment_type": payment_type}
-                )
-            except Exception:
-                logger.exception("Failed to create PaymentFailure record")
-
-            _push_to_dlq(task_name=task_name, task_id=task_id, payload=payload, exc=exc, tb=tb, attempts=getattr(self, "max_retries", 0), metadata={"source": "process_payment"})
-            _safe_log_execution(task_name, task_id, payload, "FAILED", {"finished_at": timezone.now(), "error": str(exc)})
-
-            logger.error(f"Payment {reference} ({payment_type}) failed permanently")
-            return {"success": False, "type": payment_type}
 
 
 @shared_task(name="payment_tasks.retry_failed_payments")

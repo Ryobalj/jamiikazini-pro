@@ -66,7 +66,7 @@ export default function Home() {
           } else {
             setUserBusinesses([]);
           }
-        } catch (userErr) {
+        } catch {
           setUserBusinesses([]);
         }
       } else {

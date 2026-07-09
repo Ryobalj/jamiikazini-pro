@@ -1,4 +1,4 @@
-# jamiiwallet/serializers/topup_serializer.py
+﻿# jamiiwallet/serializers/topup_serializer.py
 
 from rest_framework import serializers
 from jamiiwallet.models.topup import TopUp
@@ -21,16 +21,6 @@ class TopUpSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-        user = self.context['request'].user
-        wallet = Wallet.objects.get(user=user)
-
-        topup = TopUp.objects.create(
-            wallet=wallet,
-            amount=validated_data['amount']
-        )
-
-        # Delay task to process the transaction
-        from jamiitasks.tasks.wallet import confirm_topup_transaction
-        confirm_topup_transaction.delay(topup.id)
-
-        return topup
+        # TopUp is user-based; the view queues the confirmation task itself.
+        validated_data.setdefault("user", self.context["request"].user)
+        return TopUp.objects.create(**validated_data)

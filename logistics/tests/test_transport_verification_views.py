@@ -1,11 +1,12 @@
-# logistics/tests/test_transport_verification_views.py
+﻿# logistics/tests/test_transport_verification_views.py
 
 from rest_framework.test import APITestCase, APIClient
 from django.urls import reverse
 from accounts.models import User
-from core.models import Institution
+from kiini.models import Institution
 from logistics.models import TransportProviderVerification
 from unittest.mock import patch
+import logistics.views.transport_provider_verification_views  # noqa: F401 - needed so @patch can resolve the module
 
 class TransportProviderVerificationTests(APITestCase):
     def setUp(self):
@@ -24,14 +25,25 @@ class TransportProviderVerificationTests(APITestCase):
             full_name="Admin User",
             institution=self.institution
         )
-        self.verify_url = reverse("transportproviderverification-verify-all")
+        self.verify_url = reverse("logistics:transport-verification-verify-all")
         self.client = APIClient()
 
-    @patch("gov_integration.helpers.verification.verify_entity")
+    @patch("logistics.views.transport_provider_verification_views.verify_entity")
     def test_verify_all_for_transporter(self, mock_verify):
+        # request_id must be a real VerificationRequest pk (FK on the tpv record)
+        from gov_integration.models import VerificationRequest, CountryConfig, ServiceType
+        country = CountryConfig.objects.create(code="TZ", name="Tanzania", currency="TZS")
+        service = ServiceType.objects.create(name="NIDA", code="NIDA", country=country)
+        vr = VerificationRequest.objects.create(
+            user=self.transporter,
+            institution=self.institution,
+            country="TZ",
+            service=service,
+            payload={"national_id_number": "12345678"},
+        )
         mock_verify.return_value = {
             "status": "success",
-            "data": {"request_id": "mock123"},
+            "data": {"request_id": vr.id},
         }
         self.client.force_authenticate(user=self.transporter)
         data = {
@@ -54,7 +66,7 @@ class TransportProviderVerificationTests(APITestCase):
 
     def test_viewset_queryset_filtering(self):
         tpv = TransportProviderVerification.objects.create(user=self.transporter, institution=self.institution)
-        url = reverse("transportproviderverification-list")
+        url = reverse("logistics:transport-verification-list")
 
         # Transporter should only see their own record
         self.client.force_authenticate(user=self.transporter)

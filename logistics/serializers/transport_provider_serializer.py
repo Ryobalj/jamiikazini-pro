@@ -1,4 +1,4 @@
-# logistics/serializers/transport_provider_serializer.py
+﻿# logistics/serializers/transport_provider_serializer.py
 
 from rest_framework import serializers
 from logistics.models.transport_provider import TransportProvider
@@ -6,6 +6,7 @@ from logistics.models.transport_provider_verification import TransportProviderVe
 from gov_integration.models.verification_request import VerificationRequest
 from accounts.serializers import SimpleUserSerializer
 from kiini.serializers.institution_serializers import InstitutionSerializer
+from logistics.serializers.transport_request_serializers import PointJSONField
 
 
 class VerificationRequestStatusSerializer(serializers.ModelSerializer):
@@ -18,6 +19,7 @@ class TransportProviderSerializer(serializers.ModelSerializer):
     user = SimpleUserSerializer(read_only=True)
     institution = InstitutionSerializer(read_only=True)
     provider_type_display = serializers.CharField(source='get_provider_type_display', read_only=True)
+    location = PointJSONField(required=False, allow_null=True)
 
     class Meta:
         model = TransportProvider
@@ -77,3 +79,6 @@ class TransportProviderVerificationSerializer(serializers.ModelSerializer):
             'updated_at',
         ]
         read_only_fields = ['id', 'created_at', 'updated_at', 'overall_status']
+        # ref_name ya kipekee - inagongana na transport_provider_verification_serializer
+        # yenye TransportProviderVerificationSerializer jina lile lile kwenye schema
+        ref_name = "TransportProviderVerificationNested"

@@ -1,4 +1,4 @@
-# logistics/tests/test_transport_request.py
+﻿# logistics/tests/test_transport_request.py
 
 import pytest
 from django.urls import reverse
@@ -24,7 +24,7 @@ def institution():
 
 @pytest.fixture
 def client_user(institution):
-    return UserFactory(institution=institution)
+    return UserFactory(institution=institution, role='INSTITUTION_ADMIN')
 
 
 @pytest.fixture
@@ -52,20 +52,12 @@ def business(institution):
 @pytest.fixture
 def transport_request_data(business, vehicle):
     return {
-        "business": business.id,
-        "vehicle": vehicle.id,
-        "pickup_location": {
-            "type": "Point",
-            "coordinates": [39.27, -6.80]
-        },
-        "dropoff_location": {
-            "type": "Point",
-            "coordinates": [39.28, -6.81]
-        },
-        "scheduled_time": "2025-06-01T10:00:00Z",
-        "items_description": "Boxes of textbooks",
-        "estimated_distance_km": 12.5,
-        "estimated_cost": 35000,
+        "package_description": "Boxes of textbooks",
+        "weight_kg": 12.5,
+        "pickup_location": {"type": "Point", "coordinates": [39.27, -6.80]},
+        "dropoff_location": {"type": "Point", "coordinates": [39.28, -6.81]},
+        "pickup_address_text": "Dar es Salaam",
+        "dropoff_address_text": "Morogoro",
     }
 
 
@@ -74,7 +66,7 @@ def test_create_transport_request(auth_client, transport_request_data):
     response = auth_client.post(url, data=transport_request_data, format="json")
     assert response.status_code == status.HTTP_201_CREATED
     assert TransportRequest.objects.count() == 1
-    assert TransportRequest.objects.first().items_description == "Boxes of textbooks"
+    assert TransportRequest.objects.first().package_description == "Boxes of textbooks"
 
 
 def test_list_transport_requests(auth_client, transport_request_data):
@@ -95,7 +87,7 @@ def test_get_transport_request_detail(auth_client, transport_request_data):
     url = reverse("logistics:transportrequest-detail", args=[transport_id])
     response = auth_client.get(url)
     assert response.status_code == status.HTTP_200_OK
-    assert response.data["items_description"] == "Boxes of textbooks"
+    assert response.data["package_description"] == "Boxes of textbooks"
 
 
 def test_update_transport_request(auth_client, transport_request_data):
@@ -103,11 +95,11 @@ def test_update_transport_request(auth_client, transport_request_data):
     transport_id = res.data["id"]
 
     update_url = reverse("logistics:transportrequest-detail", args=[transport_id])
-    new_data = {"items_description": "Updated items"}
+    new_data = {"package_description": "Updated items"}
     response = auth_client.patch(update_url, new_data, format="json")
 
     assert response.status_code == status.HTTP_200_OK
-    assert response.data["items_description"] == "Updated items"
+    assert response.data["package_description"] == "Updated items"
 
 
 def test_delete_transport_request(auth_client, transport_request_data):
@@ -123,7 +115,7 @@ def test_delete_transport_request(auth_client, transport_request_data):
 def test_institution_data_is_isolated(auth_client, transport_request_data, institution):
     # Create from another institution
     other_institution = InstitutionFactory()
-    other_user = UserFactory(institution=other_institution)
+    other_user = UserFactory(institution=other_institution, role='INSTITUTION_ADMIN')
     other_client = APIClient()
     other_client.force_authenticate(user=other_user)
 
@@ -137,7 +129,7 @@ def test_institution_data_is_isolated(auth_client, transport_request_data, insti
 
 
 def test_invalid_transport_request_fails(auth_client, transport_request_data):
-    transport_request_data["estimated_distance_km"] = -5  # Invalid
+    del transport_request_data["pickup_location"]  # required field missing -> 400
     url = reverse("logistics:transportrequest-list")
     response = auth_client.post(url, data=transport_request_data, format="json")
     assert response.status_code == status.HTTP_400_BAD_REQUEST

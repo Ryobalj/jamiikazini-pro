@@ -1,4 +1,4 @@
-# jamiitasks/services/payment_gateway.py
+﻿# jamiitasks/services/payment_gateway.py
 
 import uuid
 import random
@@ -13,6 +13,13 @@ logger = logging.getLogger(__name__)
 
 def generate_reference():
     return uuid.uuid4().hex.upper()
+
+
+def base_metadata(**extra):
+    """Engine pre-processing requires source_txn_id and merchant_id."""
+    md = {"source_txn_id": generate_reference(), "merchant_id": "JAMIIKAZINI"}
+    md.update(extra)
+    return md
 
 
 def send_to_gateway(account, amount):
@@ -36,11 +43,13 @@ def initiate_topup(user, amount):
     wallet = Wallet.objects.get(user=user)
 
     txn = TransactionEngine.initiate(
-        wallet=wallet,
+        account_identifier=user.email,
         amount=amount,
-        transaction_type=Transaction.TransactionType.TOP_UP,
-        initiated_by=user,
+        txn_type=Transaction.TransactionType.TOP_UP,
+        metadata=base_metadata(),
     )
+    txn.wallet = wallet
+    txn.save(update_fields=["wallet"])
     logger.info(f"Topup initiated: user={user.id}, amount={amount}, txn_ref={txn.reference}")
     return txn
 
@@ -53,11 +62,10 @@ def initiate_withdrawal(user, amount, channel="MPESA"):
         raise ValidationError("Insufficient balance")
 
     txn = TransactionEngine.initiate(
-        wallet=wallet,
+        account_identifier=user.email,
         amount=amount,
-        transaction_type=Transaction.TransactionType.WITHDRAWAL,
-        initiated_by=user,
-        metadata={"channel": channel},
+        txn_type=Transaction.TransactionType.WITHDRAWAL,
+        metadata=base_metadata(channel=channel),
     )
 
     try:
@@ -87,17 +95,31 @@ def transfer_funds(from_user, to_user, amount):
         raise ValidationError("Insufficient funds")
 
     txn = TransactionEngine.initiate(
-        wallet=from_wallet,
+        account_identifier=from_user.email,
         amount=amount,
-        transaction_type=Transaction.TransactionType.TRANSFER,
-        initiated_by=from_user,
-        counterparty=to_user,
+        txn_type=Transaction.TransactionType.TRANSFER,
+        metadata=base_metadata(recipient_id=str(to_user.id)),
     )
+    txn.counterparty = to_user
+    txn.wallet = from_wallet
+    txn.save(update_fields=["counterparty", "wallet"])
 
     TransactionEngine.process(txn)
+    txn.refresh_from_db()
+
+    # Double-entry: mirror record on the recipient side
+    in_txn = Transaction.objects.create(
+        initiated_by=to_user,
+        wallet=to_wallet,
+        amount=amount,
+        transaction_type=Transaction.TransactionType.TRANSFER,
+        status=txn.status,
+        counterparty=from_user,
+        metadata=base_metadata(mirror_of=str(txn.id)),
+    )
 
     logger.info(f"Transfer completed: from_user={from_user.id}, to_user={to_user.id}, amount={amount}")
-    return txn
+    return txn, in_txn
 
 
 def make_payment(user, business_wallet, amount):
@@ -108,12 +130,13 @@ def make_payment(user, business_wallet, amount):
         raise ValidationError("Insufficient funds")
 
     txn = TransactionEngine.initiate(
-        wallet=wallet,
+        account_identifier=user.email,
         amount=amount,
-        transaction_type=Transaction.TransactionType.PAYMENT,
-        initiated_by=user,
-        counterparty=business_wallet.user,
+        txn_type=Transaction.TransactionType.PAYMENT,
+        metadata=base_metadata(merchant_id=str(business_wallet.user.id)),
     )
+    txn.counterparty = business_wallet.user
+    txn.save(update_fields=["counterparty"])
 
     TransactionEngine.process(txn)
 
@@ -131,13 +154,13 @@ def initiate_refund(original_txn: Transaction):
     refund_wallet = Wallet.objects.get(user=original_txn.counterparty)
 
     txn = TransactionEngine.initiate(
-        wallet=refund_wallet,
+        account_identifier=original_txn.initiated_by.email,
         amount=original_txn.amount,
-        transaction_type=Transaction.TransactionType.REFUND,
-        initiated_by=original_txn.counterparty,
-        counterparty=original_txn.initiated_by,
-        metadata={"reversed_transaction": original_txn.id},
+        txn_type=Transaction.TransactionType.REFUND,
+        metadata=base_metadata(reversed_transaction=str(original_txn.id), source_txn_id=str(original_txn.id)),
     )
+    txn.counterparty = original_txn.counterparty
+    txn.save(update_fields=["counterparty"])
 
     TransactionEngine.process(txn)
 

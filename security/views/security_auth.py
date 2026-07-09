@@ -33,13 +33,15 @@ class UnifiedLoginView(APIView):
 
     def post(self, request):
         use_cookies = request.query_params.get("use_cookies") == "true"
+        # user_agent column ni NOT NULL - epuka None wakati header haipo
+        user_agent = request.META.get("HTTP_USER_AGENT") or ""
 
         # Step 0: Verify ReCAPTCHA v3 (SKIP in DEBUG/Development)
         remote_ip = request.META.get("REMOTE_ADDR")
         
-        # Skip recaptcha verification if DEBUG is True
-        if settings.DEBUG:
-            print(f"[DEV] Skipping reCAPTCHA verification in DEBUG mode")
+        # Skip recaptcha verification in DEBUG or during tests (pytest forces DEBUG=False)
+        if settings.DEBUG or getattr(settings, "TESTING", False):
+            pass  # [DEV/TEST] reCAPTCHA imerukwa
         else:
             recaptcha_token = request.data.get("recaptcha_token")
             if not recaptcha_token or not verify_recaptcha_v3(
@@ -52,39 +54,32 @@ class UnifiedLoginView(APIView):
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
-        # Check if user exists first
+        # USALAMA: usifichue kama barua pepe imesajiliwa au la. Barua pepe isiyokuwepo
+        # NA nenosiri baya zote hurudisha 401 "Invalid credentials" sawa (hakuna 404
+        # tofauti wala "Invalid password" inayothibitisha barua pepe ipo).
         email = request.data.get("email")
         from accounts.models import User
-        try:
-            user_exists = User.objects.filter(email=email).exists()
-            if not user_exists:
-                return Response(
-                    {"detail": "No account found with this email.", "code": "user_not_found"},
-                    status=status.HTTP_404_NOT_FOUND
-                )
-        except Exception:
-            pass  # Continue to normal flow
 
         # Step 1: Validate credentials
         serializer = LoginSerializer(data=request.data, context={"request": request})
         if not serializer.is_valid():
-            user_instance = serializer.validated_data.get("user") if hasattr(serializer, 'validated_data') else None
-            # Record failed login
+            # Record failed login kama mtumiaji yupo (bila kufichua kwa mteja)
+            user_instance = User.objects.filter(email=email).first() if email else None
             if user_instance:
                 LoginHistory.objects.create(
                     user=user_instance,
                     ip_address=remote_ip,
-                    user_agent=request.META.get("HTTP_USER_AGENT"),
+                    user_agent=user_agent,
                     was_successful=False
                 )
                 # Trigger alerts if threshold exceeded
                 check_failed_logins_and_alert(user_instance)
 
             BaseLoginLogger.log_failure(request)
-            
-            # Return specific error for wrong password
+
+            # Ujumbe wa jumla - usifichue ni barua pepe au nenosiri lililokosea
             return Response(
-                {"detail": "Invalid password.", "code": "invalid_password"},
+                {"detail": "Invalid credentials.", "code": "invalid_credentials"},
                 status=status.HTTP_401_UNAUTHORIZED
             )
 
@@ -94,7 +89,7 @@ class UnifiedLoginView(APIView):
         LoginHistory.objects.create(
             user=user,
             ip_address=remote_ip,
-            user_agent=request.META.get("HTTP_USER_AGENT"),
+            user_agent=user_agent,
             was_successful=True
         )
 

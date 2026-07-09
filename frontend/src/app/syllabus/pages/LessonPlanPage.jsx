@@ -22,7 +22,6 @@ export default function LessonPlanPage() {
 
   // Custom hooks for state management
   const {
-    workstations,
     timetables,
     selectedTimetable,
     setSelectedTimetable,
@@ -32,12 +31,6 @@ export default function LessonPlanPage() {
     prefillData,
     currentSubjectInfo,
     canUsePage,
-    showWorkstationModal,
-    showTimetableModal,
-    workstationModalOpen,
-    setWorkstationModalOpen,
-    timetableModalOpen,
-    setTimetableModalOpen,
     error
   } = useLessonPlanData();
 

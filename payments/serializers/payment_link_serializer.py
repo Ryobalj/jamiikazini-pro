@@ -60,6 +60,7 @@ class PaymentLinkSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = [
             'status',
+            'created_by',  # huwekwa toka request kwenye create() - mteja asiweze ku-spoof muundaji
             'used_by',
             'used_at',
             'payment_reference',

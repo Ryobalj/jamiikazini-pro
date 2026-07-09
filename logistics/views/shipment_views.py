@@ -1,4 +1,4 @@
-# logistics/views/shipment_views.py
+﻿# logistics/views/shipment_views.py
 
 from rest_framework import viewsets, permissions, filters, status
 from django_filters.rest_framework import DjangoFilterBackend
@@ -53,8 +53,8 @@ class ShipmentViewSet(viewsets.ModelViewSet):
         shipment = self.get_object()
         sender = shipment.sender
         institution = getattr(sender, 'institution', None)
-        if institution and institution.slug:
-            url = generate_subdomain_url(institution.slug, f"/shipments/{shipment.id}/")
+        if institution and institution.domain:
+            url = generate_subdomain_url(institution.domain, f"/shipments/{shipment.id}/")
             return Response({'sender_url': url}, status=status.HTTP_200_OK)
         return Response({'detail': 'Sender institution slug not available'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -63,8 +63,8 @@ class ShipmentViewSet(viewsets.ModelViewSet):
         shipment = self.get_object()
         receiver = shipment.receiver
         institution = getattr(receiver, 'institution', None)
-        if institution and institution.slug:
-            url = generate_subdomain_url(institution.slug, f"/incoming/shipments/{shipment.id}/")
+        if institution and institution.domain:
+            url = generate_subdomain_url(institution.domain, f"/incoming/shipments/{shipment.id}/")
             return Response({'receiver_url': url}, status=status.HTTP_200_OK)
         return Response({'detail': 'Receiver institution slug not available'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -73,7 +73,8 @@ class ShipmentViewSet(viewsets.ModelViewSet):
         shipment = self.get_object()
         # Assuming shipment has a related transport_provider (single or first in m2m)
         provider = shipment.transport_providers.first()
-        if provider and hasattr(provider, 'slug'):
-            url = generate_subdomain_url(provider.slug, f"/dashboard/shipments/{shipment.id}/")
+        provider_institution = getattr(provider, 'institution', None) if provider else None
+        if provider_institution and provider_institution.domain:
+            url = generate_subdomain_url(provider_institution.domain, f"/dashboard/shipments/{shipment.id}/")
             return Response({'transport_provider_url': url}, status=status.HTTP_200_OK)
         return Response({'detail': 'Transport provider slug not available'}, status=status.HTTP_400_BAD_REQUEST)

@@ -23,7 +23,7 @@ export default function SchemeTable({ schemeData }) {
     try {
       await navigator.clipboard.writeText(text);
       toast.success(t("common.copied"), { position: "bottom-right" });
-    } catch (err) {
+    } catch {
       toast.error(t("common.copy_failed"), { position: "bottom-right" });
     }
   };

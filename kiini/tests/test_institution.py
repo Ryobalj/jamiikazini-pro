@@ -34,7 +34,7 @@ class InstitutionViewSetTest(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]["id"], self.inst1.id)
+        self.assertEqual(str(response.data[0]["id"]), str(self.inst1.id))
 
     def test_user_cannot_view_other_institutions(self):
         url = reverse("kiini:institution-list")
@@ -45,7 +45,7 @@ class InstitutionViewSetTest(APITestCase):
         response = self.client.get(url)
 
         self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]["id"], self.inst2.id)
+        self.assertEqual(str(response.data[0]["id"]), str(self.inst2.id))
 
     def test_unauthenticated_user_is_denied(self):
         self.client.credentials()  # Remove auth

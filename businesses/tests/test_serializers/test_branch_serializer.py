@@ -1,4 +1,4 @@
-import pytest
+﻿import pytest
 from django.contrib.gis.geos import Point
 from businesses.models.branch import Branch
 from businesses.models.service import Service
@@ -83,6 +83,6 @@ class TestBranchSerializer:
         }
         serializer = BranchSerializer(data=payload)
         assert serializer.is_valid(), serializer.errors
-        branch = serializer.save()
+        branch = serializer.save(business=branch_with_services.business)
         assert branch.name == "Tawi Jipya"
         assert branch.services.count() == 2

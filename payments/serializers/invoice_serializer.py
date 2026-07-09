@@ -12,6 +12,8 @@ class InvoiceSerializer(serializers.ModelSerializer):
     last_modified_by = SimpleUserSerializer(read_only=True)
     status_display = serializers.CharField(source='get_status_display', read_only=True)
     is_overdue = serializers.BooleanField(read_only=True)
+    # description ni property (encrypted _description) - bila hii DRF angeifanya read-only kimya
+    description = serializers.CharField(required=False, allow_blank=True, allow_null=True)
 
     # 🔹 Decimal fields kama strings
     amount = serializers.DecimalField(max_digits=14, decimal_places=2, coerce_to_string=True)

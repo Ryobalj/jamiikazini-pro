@@ -231,7 +231,9 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 class LoginHistorySerializer(serializers.ModelSerializer):
-    user = FlexibleIDField(read_only=True)
+    # source='user.id' - vinginevyo FlexibleIDField ingerudisha str(user_object)
+    # ("Jina (ROLE)") badala ya kitambulisho cha mtumiaji
+    user = FlexibleIDField(source="user.id", read_only=True)
 
     class Meta:
         model = LoginHistory

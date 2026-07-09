@@ -1,4 +1,4 @@
-# businesses/views/product_views.py
+﻿# businesses/views/product_views.py
 
 from rest_framework import viewsets, generics, permissions, status
 from rest_framework.response import Response
@@ -8,6 +8,7 @@ from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
+from django.conf import settings
 from django.utils.translation import get_language
 from django.db import models
 from django.utils.text import slugify
@@ -45,7 +46,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         branch_pk = self.kwargs.get("branch_pk")
 
         if branch_pk:
-            qs = qs.filter(branch__pk=branch_pk)
+            qs = qs.filter(business__branches__pk=branch_pk)
         elif business_pk:
             qs = qs.filter(business__pk=business_pk)
 
@@ -184,7 +185,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         instance.delete()
 
     @action(detail=False, methods=["get"])
-    def nearby(self, request):
+    def nearby(self, request, **kwargs):
         """
         List products sorted by proximity to user's location + supports filters.
         """
@@ -208,17 +209,20 @@ class ProductViewSet(viewsets.ModelViewSet):
         return self.get_paginated_response(serializer.data)
 
     @action(detail=False, methods=["get"])
-    def featured(self, request):
+    def featured(self, request, **kwargs):
         """
         List featured products (with optional filters).
         """
         qs = self.get_queryset().filter(is_featured=True)
         results = self.paginate_queryset(qs)
-        serializer = ProductListSerializer(results, many=True)
-        return self.get_paginated_response(serializer.data)
+        if results is not None:
+            serializer = ProductListSerializer(results, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = ProductListSerializer(qs, many=True)
+        return Response(serializer.data)
 
     @action(detail=False, methods=["get"])
-    def search(self, request):
+    def search(self, request, **kwargs):
         """
         Search for products by name or tags.
         Supports filters and pagination.
@@ -232,8 +236,11 @@ class ProductViewSet(viewsets.ModelViewSet):
         )
 
         results = self.paginate_queryset(qs)
-        serializer = ProductListSerializer(results, many=True)
-        return self.get_paginated_response(serializer.data)
+        if results is not None:
+            serializer = ProductListSerializer(results, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = ProductListSerializer(qs, many=True)
+        return Response(serializer.data)
 
 
 class ProductListByProximityView(generics.ListAPIView):
@@ -268,7 +275,9 @@ def generate_product_url(request, slug):
     """
     try:
         product = Product.objects.select_related("business", "business__institution").get(slug=slug)
-        domain = generate_subdomain_url(product.business.institution.domain, path=f"/products/{product.slug}/")
+        institution = getattr(product.business, "institution", None)
+        base_domain = getattr(institution, "domain", None) or "jamiikazini.com"
+        domain = generate_subdomain_url(base_domain, path=f"/products/{product.slug}/")
         return Response({"url": domain})
     except Product.DoesNotExist:
         return Response({"detail": "Product not found."}, status=404)

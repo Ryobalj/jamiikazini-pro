@@ -18,21 +18,13 @@ export default function Sidebar({ isOpen = false, onClose }) {
   const isGuest = !Array.isArray(userMenu) || userMenu.length === 0;
   const levelColors = ["#1976D2", "#F57C00", "#424242", "#2E7D32", "#8E24AA", "#C62828", "#00838F", "#6D4C41"];
 
-  // 🧠 Load common namespaces only once
+  // 🧠 Load common namespaces only once (single hook call - React rules of hooks)
   const nsList = ["dashboard", "businesses", "kiini", "common"];
-  const translations = nsList.reduce((acc, ns) => {
-    try {
-      acc[ns] = useTranslation(ns).t;
-    } catch {
-      acc[ns] = (k, opt) => k;
-    }
-    return acc;
-  }, {});
+  const { t } = useTranslation(nsList);
 
   const translateLabel = (key, fallback) => {
     for (const ns of nsList) {
-      const t = translations[ns];
-      const translated = t(key, { defaultValue: undefined });
+      const translated = t(key, { ns, defaultValue: undefined });
       if (translated && translated !== key) return translated;
     }
     return fallback || key;
@@ -144,8 +136,8 @@ export default function Sidebar({ isOpen = false, onClose }) {
         <nav className="flex flex-col space-y-2 p-2">
           {isGuest ? (
             <button
-              aria-label={translations.common?.("auth.login") || "Login"}
-              title={translations.common?.("auth.login") || "Login"}
+              aria-label={t("auth.login", { ns: "common", defaultValue: "Login" })}
+              title={t("auth.login", { ns: "common", defaultValue: "Login" })}
               onClick={() => setActiveMenu("auth")}
               className="flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-xl mx-auto hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300 text-gray-500 hover:text-blue-600"
             >
@@ -177,7 +169,7 @@ export default function Sidebar({ isOpen = false, onClose }) {
               <header className="mb-3 flex items-center space-x-2">
                 <ChevronRight className="text-blue-500" size={16} />
                 <h2 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                  {translations.common?.("auth.authenticate") || "Authenticate"}
+                  {t("auth.authenticate", { ns: "common", defaultValue: "Authenticate" })}
                 </h2>
               </header>
               <nav className="space-y-0.5">
@@ -196,7 +188,7 @@ export default function Sidebar({ isOpen = false, onClose }) {
                     />
                     <item.icon size={16} className="text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200" />
                     <span className="text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-gray-200">
-                      {translations.common?.(item.label) || item.label}
+                      {t(item.label, { ns: "common", defaultValue: item.label })}
                     </span>
                   </button>
                 ))}

@@ -1,4 +1,6 @@
 # syllabus/views/learning_activity_views.py
+import uuid
+
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 from django.core.cache import cache
@@ -10,6 +12,14 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from syllabus.models.learning_activity import LearningActivity
 from syllabus.serializers.learning_activity_serializer import LearningActivitySerializer
+
+
+def _is_valid_uuid(value):
+    try:
+        uuid.UUID(str(value))
+        return True
+    except (ValueError, TypeError):
+        return False
 
 
 class LearningActivityViewSet(viewsets.ModelViewSet):
@@ -33,10 +43,15 @@ class LearningActivityViewSet(viewsets.ModelViewSet):
         ).all()
 
         # Priority: Nested parameter first
+        # ID batili (si UUID) irudishe orodha tupu badala ya 500
         if specific_competence_id:
+            if not _is_valid_uuid(specific_competence_id):
+                return queryset.none()
             queryset = queryset.filter(specific_competence=specific_competence_id)
         # Then direct parameter
         elif subject_version_id:
+            if not _is_valid_uuid(subject_version_id):
+                return queryset.none()
             queryset = queryset.filter(
                 specific_competence__main_competence__subject_version=subject_version_id
             )

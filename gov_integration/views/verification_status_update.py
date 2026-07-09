@@ -1,6 +1,7 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from gov_integration.models import VerificationRequest
+from gov_integration.serializers.service_type import VerificationRequestSerializer
 from kiini.permissions.access import IsVerificationOwnerOrInstitutionAdmin
 
 
@@ -10,6 +11,9 @@ class VerificationStatusUpdateView(generics.UpdateAPIView):
     kwa admin wa taasisi au user aliyeianzisha.
     """
     queryset = VerificationRequest.objects.all()
+    # serializer_class inahitajika ili schema-generation (drf_yasg) isivunjike,
+    # japo partial_update hushughulikia status yenyewe
+    serializer_class = VerificationRequestSerializer
     permission_classes = [IsVerificationOwnerOrInstitutionAdmin]
     lookup_url_kwarg = 'request_id'
 

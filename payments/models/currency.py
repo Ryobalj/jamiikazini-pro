@@ -75,12 +75,18 @@ class Currency(models.Model):
 
     @classmethod
     def get_by_code(cls, code="TZS"):
-        """Return Currency instance by code, or create default TZS if not exists."""
+        """Return Currency instance by code; auto-create only the default TZS.
+
+        Code isiyojulikana inarudisha None - kamwe usibadilishe currency ya
+        mtumiaji kimya kimya (kuomba UGX kusirudishe TZS).
+        """
         try:
             return cls.objects.get(code=code)
         except cls.DoesNotExist:
-            tzs, created = cls.objects.get_or_create(
-                code="TZS",
-                defaults={"is_active": True}
-            )
-            return tzs
+            if code == "TZS":
+                tzs, _ = cls.objects.get_or_create(
+                    code="TZS",
+                    defaults={"is_active": True}
+                )
+                return tzs
+            return None

@@ -1,4 +1,4 @@
-# businesses/urls/nested_business_urls.py
+﻿# businesses/urls/nested_business_urls.py
 
 from django.urls import path
 from rest_framework_nested import routers
@@ -11,8 +11,9 @@ from businesses.views.product_views import (
     generate_product_url
 )
 from businesses.views.service_views import ServiceViewSet
-from businesses.views.review_views import ProductReviewViewSet, ServiceReviewViewSet
+from businesses.views.review_views import ReviewViewSet, ProductReviewViewSet, ServiceReviewViewSet
 from businesses.views.product_order_views import ProductOrderViewSet
+from businesses.views.order_views import OrderViewSet
 from businesses.views.service_booking_views import ServiceBookingViewSet
 from businesses.views.booking_views import BookingViewSet, BookingLogViewSet
 from businesses.views.category_views import BusinessCategoryViewSet
@@ -28,6 +29,11 @@ from businesses.views.nearby_views import NearbyEntitiesView
 router = routers.DefaultRouter()
 router.register(r"businesses", BusinessViewSet, basename="businesses")
 router.register(r"categories", BusinessCategoryViewSet, basename="business-categories")
+# Flat booking API (README-designed): /bookings/ na /booking-logs/
+router.register(r"bookings", BookingViewSet, basename="booking")
+router.register(r"booking-logs", BookingLogViewSet, basename="booking-log")
+router.register(r"reviews", ReviewViewSet, basename="review")
+router.register(r"orders", OrderViewSet, basename="order")
 
 
 # ================================

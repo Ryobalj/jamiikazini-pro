@@ -1,6 +1,6 @@
-# logistics/views/driver.py
+﻿# logistics/views/driver.py
 
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from logistics.permissions import IsProviderOwnerOrReadOnly
 from logistics.models.driver import Driver
 from logistics.serializers.driver_serializer import DriverSerializer
@@ -8,7 +8,7 @@ from logistics.serializers.driver_serializer import DriverSerializer
 
 class DriverViewSet(viewsets.ModelViewSet):
     serializer_class = DriverSerializer
-    permission_classes = [IsProviderOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsProviderOwnerOrReadOnly]
 
     def get_queryset(self):
         user = self.request.user
@@ -17,5 +17,5 @@ class DriverViewSet(viewsets.ModelViewSet):
         return Driver.objects.filter(transport_provider__user=user)
 
     def perform_create(self, serializer):
-        transport_provider = self.request.user.transportprovider
+        transport_provider = self.request.user.transport_providers.first()
         serializer.save(transport_provider=transport_provider)

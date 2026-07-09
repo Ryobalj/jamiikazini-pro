@@ -1,4 +1,4 @@
-# logistics/factories.py
+﻿# logistics/factories.py
 
 import factory
 from django.contrib.gis.geos import Point
@@ -15,6 +15,8 @@ from logistics.models.vehicle import Vehicle, VerificationStatus
 # Business-related (category and business)
 from businesses.models.category import BusinessCategory
 from businesses.models.business import Business
+from businesses.models.product import Product
+from logistics.models.shipment import Shipment
 
 
 # ---------- Institution Factories ----------
@@ -43,8 +45,10 @@ class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = User
 
-    username = factory.Sequence(lambda n: f"user{n}")
-    email = factory.LazyAttribute(lambda o: f"{o.username}@example.com")
+    # User model has no username (email is the USERNAME_FIELD)
+    email = factory.Sequence(lambda n: f"user{n}@example.com")
+    full_name = factory.Faker('name')
+    role = "CLIENT"
     institution = factory.SubFactory(InstitutionFactory)
     password = factory.PostGenerationMethodCall('set_password', 'password123')
     is_active = True
@@ -81,8 +85,29 @@ class TransportProviderFactory(factory.django.DjangoModelFactory):
     user = factory.SubFactory(UserFactory)
     institution = factory.SubFactory(InstitutionFactory)
     provider_type = TransportProvider.ProviderType.INDIVIDUAL
-    location = factory.LazyFunction(lambda: Point(39.27, -6.8))
     is_approved = False
+
+
+# ---------- Product & Shipment ----------
+class ProductFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Product
+
+    business = factory.SubFactory(BusinessFactory)
+    name = factory.Sequence(lambda n: f"Product {n}")
+    slug = factory.Sequence(lambda n: f"product-{n}")
+    price = 1000
+
+
+class ShipmentFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Shipment
+
+    product = factory.SubFactory(ProductFactory)
+    sender = factory.SubFactory(UserFactory)
+    receiver = factory.SubFactory(UserFactory)
+    route_details = factory.LazyFunction(lambda: {"start": [39.2, -6.8], "end": [39.3, -6.9]})
+    total_cost = 10000
 
 
 # ---------- Driver ----------
@@ -104,7 +129,7 @@ class VehicleFactory(factory.django.DjangoModelFactory):
         model = Vehicle
 
     provider = factory.SubFactory(TransportProviderFactory)
-    vehicle_type = "pickup"
+    vehicle_type="canter"
     registration_number = factory.Sequence(lambda n: f"T123{n}ABC")
     model_name = "Toyota Hilux"
     capacity_kg = 1000

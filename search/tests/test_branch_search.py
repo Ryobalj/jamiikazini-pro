@@ -1,12 +1,17 @@
-# search/tests/test_branch_search.py
+﻿# search/tests/test_branch_search.py
 
 import pytest
+from django.conf import settings
+
+# These tests index into a live Elasticsearch cluster; skip when ES is off (local dev).
+if not getattr(settings, "ELASTICSEARCH_ENABLED", False):
+    pytest.skip("Requires live Elasticsearch (ELASTICSEARCH_ENABLED=False)", allow_module_level=True)
 from django.urls import reverse
 from rest_framework.test import APIClient
 from businesses.models.branch import Branch
 from businesses.models.business import Business
 from accounts.models import User
-from service.models import Service
+from businesses.models.service import Service
 from search.documents.branch_document import BranchDocument
 from search.serializers.branch_search_serializer import BranchSearchSerializer
 

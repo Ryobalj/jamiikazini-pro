@@ -7,12 +7,22 @@ from .institution_type import InstitutionType
 from .base_entity import AbstractEntity
 
 class Institution(AbstractEntity):
+    # null (not "") when the institution has no domain yet: unique=True allows
+    # many NULLs but only ONE empty string - a second domainless institution
+    # would otherwise crash with IntegrityError.
     domain = models.CharField(
         max_length=255,
         unique=True,
+        null=True,
+        blank=True,
         verbose_name=_("Domain"),
         help_text=_("Mfano: institution_name.jamiikazini.com")
     )
+
+    def save(self, *args, **kwargs):
+        if self.domain == "":
+            self.domain = None
+        super().save(*args, **kwargs)
     
     tier = models.ForeignKey(
         InstitutionTier,

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { X } from "lucide-react";
+import { toast } from "react-toastify";
 import api from "@/lib/axios";
 
 export default function WorkstationEditModal({ open, onClose, workstation, onUpdate }) {

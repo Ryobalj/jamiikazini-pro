@@ -111,8 +111,19 @@ def test_notify_wallet_balance_change_logs_and_completes(caplog, user_with_walle
 
 # -------------------- Signal Tests -------------------- #
 
+@pytest.fixture
+def _reconnect_wallet_signal():
+    """Vipimo hivi vinapima signal ya auto-create wallet ambayo root conftest
+    huikata - iunganishe tena kwa vipimo hivi tu."""
+    from django.db.models.signals import post_save
+    from jamiiwallet.signals import create_or_reactivate_wallet
+    post_save.connect(create_or_reactivate_wallet, sender=User)
+    yield
+    post_save.disconnect(create_or_reactivate_wallet, sender=User)
+
+
 @pytest.mark.django_db
-def test_create_wallet_on_user_creation(user_factory):
+def test_create_wallet_on_user_creation(user_factory, _reconnect_wallet_signal):
     user = user_factory()
     wallet = Wallet.objects.filter(user=user).first()
     assert wallet is not None
@@ -120,7 +131,7 @@ def test_create_wallet_on_user_creation(user_factory):
 
 
 @pytest.mark.django_db
-def test_reactivate_wallet_on_user_save(user_factory):
+def test_reactivate_wallet_on_user_save(user_factory, _reconnect_wallet_signal):
     user = user_factory()
     wallet, created = Wallet.objects.get_or_create(user=user)
     wallet.is_active = False
@@ -134,7 +145,7 @@ def test_reactivate_wallet_on_user_save(user_factory):
 
 
 @pytest.mark.django_db
-def test_create_wallet_if_missing_on_user_save(user_factory):
+def test_create_wallet_if_missing_on_user_save(user_factory, _reconnect_wallet_signal):
     user = user_factory()
     Wallet.objects.filter(user=user).delete()
     user.full_name = "New Name"

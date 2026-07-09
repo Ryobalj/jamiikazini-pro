@@ -1,4 +1,4 @@
-# jamiikazini/syllabus/serializers/teacher_workstation_serializer.py
+﻿# jamiikazini/syllabus/serializers/teacher_workstation_serializer.py
 
 from rest_framework import serializers
 from django.utils.translation import gettext_lazy as _
@@ -12,7 +12,7 @@ class TeacherMiniSerializer(serializers.Serializer):
 
 
 class TeacherWorkStationSerializer(serializers.ModelSerializer):
-    # ✅ Teacher automatically from logged-in user
+    # âœ… Teacher automatically from logged-in user
     teacher = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
     )
@@ -50,9 +50,11 @@ class TeacherWorkStationSerializer(serializers.ModelSerializer):
     # Object-level validation
     # -------------------------
     def validate(self, attrs):
-        teacher = attrs["teacher"]
+        teacher = attrs.get("teacher") or (self.instance.teacher if self.instance else None)
+        if teacher is None:
+            raise serializers.ValidationError({"teacher": _("Teacher context is required.")})
 
-        # ❌ hairuhusiwi workstation zaidi ya moja kwa mwalimu
+        # âŒ hairuhusiwi workstation zaidi ya moja kwa mwalimu
         qs = TeacherWorkStation.objects.filter(teacher=teacher)
         if self.instance:
             qs = qs.exclude(pk=self.instance.pk)

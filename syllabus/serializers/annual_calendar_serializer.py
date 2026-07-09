@@ -29,7 +29,8 @@ class AnnualCalendarSerializer(serializers.ModelSerializer):
     # Convert incoming types
     # -------------------------
     def to_internal_value(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        data = dict(data)
+        # QueryDict ya form-data: .dict() inatoa scalars; dict(QueryDict) ingegeuza kila value kuwa list
+        data = data.dict() if hasattr(data, "dict") else dict(data)
         week_fields = [
             "term_start_week",
             "midterm_break_start_week",
@@ -110,9 +111,11 @@ class AnnualCalendarSerializer(serializers.ModelSerializer):
         ]
 
         # 3) Ensure provided dates belong to selected year
+        # Kagua tu tarehe zilizoletwa kwenye request hii (attrs), si za instance -
+        # vinginevyo PATCH ya field nyingine yoyote inakwama kwa default dates za instance
         if year is not None:
             for df in date_fields:
-                d = val(df)
+                d = attrs.get(df)
                 if d and getattr(d, "year", None) != year:
                     raise serializers.ValidationError({
                         df: f"{df} lazima iwe mwaka {year}."
@@ -148,6 +151,10 @@ class AnnualCalendarSerializer(serializers.ModelSerializer):
             ("annual_break_start_month", "annual_break_start_date", "annual_break_start_week"),
         ]
         for month_field, date_field, week_field in month_date_pairs:
+            # Kagua ulinganifu tu kama angalau field mojawapo imeletwa kwenye request hii -
+            # vinginevyo PATCH ndogo inakwama kwa defaults za instance zisizolingana
+            if not any(f in attrs for f in (month_field, date_field, week_field)):
+                continue
             m = val(month_field)
             d = val(date_field)
             w = val(week_field)

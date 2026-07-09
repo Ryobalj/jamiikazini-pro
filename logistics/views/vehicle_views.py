@@ -1,4 +1,4 @@
-# logistics/views/vehicle_views.py
+﻿# logistics/views/vehicle_views.py
 
 from rest_framework import viewsets, permissions
 from logistics.models import Vehicle
@@ -17,7 +17,7 @@ class VehicleViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         # Automatically assign current user's transport_provider
-        transport_provider = getattr(self.request.user, 'transport_provider', None)
+        transport_provider = self.request.user.transport_providers.first()
         serializer.save(provider=transport_provider)
 
     def perform_update(self, serializer):

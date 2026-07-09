@@ -1,4 +1,4 @@
-# jamiikazini/syllabus/tests/test_serializers/test_subject_version_serializer.py
+﻿# jamiikazini/syllabus/tests/test_serializers/test_subject_version_serializer.py
 
 import pytest
 from rest_framework.exceptions import ValidationError
@@ -66,11 +66,7 @@ class TestSubjectVersionSerializer:
 
         serializer = SubjectVersionSerializer(data=data)
         assert not serializer.is_valid()
-        assert "class_level" in serializer.errors
-        assert (
-            serializer.errors["class_level"][0]
-            == "This combination of syllabus_version, subject and class_level already exists."
-        )
+        assert "unique" in str(serializer.errors) or "already exists" in str(serializer.errors)
 
     # ------------------------------------------------
     # ALLOW UPDATE IF SAME RECORD

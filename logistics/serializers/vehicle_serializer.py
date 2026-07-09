@@ -1,4 +1,4 @@
-# logistics/serializers/vehicle_serializers.py
+﻿# logistics/serializers/vehicle_serializers.py
 
 from rest_framework import serializers
 from logistics.models import Vehicle, Driver, TransportProvider
@@ -10,12 +10,17 @@ class DriverSerializer(serializers.ModelSerializer):
     class Meta:
         model = Driver
         fields = ["id", "full_name", "phone_number", "license_number"]
+        # ref_name ya kipekee - inagongana na driver_serializer.DriverSerializer
+        ref_name = "VehicleDriver"
 
 
 class TransportProviderSerializer(serializers.ModelSerializer):
     class Meta:
         model = TransportProvider
-        fields = ["id", "name", "location", "contact_person", "phone_number"]
+        fields = ["id", "user", "institution", "provider_type", "is_approved"]
+        # ref_name ya kipekee - vinginevyo inagongana na transport_provider_serializer
+        # na shipment_serializer zenye TransportProviderSerializer kwenye drf_yasg schema
+        ref_name = "VehicleTransportProvider"
 
 
 class VehicleWriteSerializer(serializers.ModelSerializer):
@@ -34,6 +39,7 @@ class VehicleWriteSerializer(serializers.ModelSerializer):
             "driver_ids", "active_driver_id",
             "verification_statuses", "notes"
         ]
+        read_only_fields = ["id", "provider"]
 
     def create(self, validated_data):
         drivers = validated_data.pop('driver_ids', [])

@@ -25,7 +25,7 @@ const languages = [
 
 export default function LanguageSwitcher({ onClose }) {
   const { i18n } = useTranslation();
-  const [selectedLang, setSelectedLang] = useState(
+  const [, setSelectedLang] = useState(
     languages.find((lang) => lang.code === i18n.language) || languages[0]
   );
 

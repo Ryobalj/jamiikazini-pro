@@ -1,4 +1,4 @@
-# jamiiwallet/views/topup_views.py
+﻿# jamiiwallet/views/topup_views.py
 
 import logging
 
@@ -18,7 +18,7 @@ class TopUpView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        serializer = TopUpSerializer(data=request.data)
+        serializer = TopUpSerializer(data=request.data, context={'request': request})
         if not hasattr(request.user, 'wallet'):
             logger.error(f'User {request.user.id} has no wallet.')
             return Response({'detail': 'User wallet not found.'}, status=status.HTTP_400_BAD_REQUEST)
@@ -27,10 +27,9 @@ class TopUpView(APIView):
 
         try:
             if serializer.is_valid(raise_exception=True):
-                topup = serializer.save(wallet=user_wallet)
+                topup = serializer.save(user=request.user)
 
-                # Trigger async task to confirm the topup
-                confirm_topup_transaction.delay(topup.id)
+                # NB: TopUp.save() already queues confirm_topup_transaction
 
                 logger.info(f'Topup created with id {topup.id} for user {request.user.id}')
 

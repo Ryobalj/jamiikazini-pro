@@ -1,4 +1,4 @@
-# businesses/views/review_views.py
+﻿# businesses/views/review_views.py
 
 from rest_framework import viewsets, permissions
 from rest_framework.exceptions import PermissionDenied, ValidationError
@@ -96,18 +96,18 @@ class ProductReviewViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """Rudisha reviews za product husika tu ambazo zimepitishwa."""
-        return Review.objects.filter(product_id=self.kwargs["product_pk"], is_approved=True)
+        return Review.objects.filter(product__slug=self.kwargs.get("product_slug", self.kwargs.get("product_pk")), is_approved=True)
 
     def perform_create(self, serializer):
         """Mteja aongeze review mpya kwa product husika."""
         user = self.request.user
         if not user.is_authenticated:
             raise ValidationError("Lazima uingie kwanza.")
-        validate_unique_review(
-            user,
-            product_id=self.kwargs["product_pk"]
-        )
-        serializer.save(user=user, product_id=self.kwargs["product_pk"], is_approved=False)
+        from businesses.models.product import Product
+        product = Product.objects.get(slug=self.kwargs.get("product_slug", self.kwargs.get("product_pk")))
+        validate_unique_review(user, product=product)
+        product = Product.objects.get(slug=self.kwargs.get("product_slug", self.kwargs.get("product_pk")))
+        serializer.save(user=user, product=product, is_approved=False)
 
     def perform_update(self, serializer):
         """Ruhusu client pekee kuedit review yake."""

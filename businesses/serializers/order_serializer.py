@@ -1,4 +1,4 @@
-from decimal import Decimal
+﻿from decimal import Decimal
 from django.db import transaction
 from rest_framework import serializers
 from businesses.models.order import Order,OrderItem
@@ -39,12 +39,14 @@ class OrderSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
         ]
-        read_only_fields = ["id", "total_amount", "created_at", "updated_at"]
+        read_only_fields = ["id", "client", "total_amount", "created_at", "updated_at"]  # client = request.user (view)
 
     def validate(self, attrs):
-        items = self.initial_data.get("items", [])
-        if not items:
-            raise serializers.ValidationError("Order lazima iwe na angalau item moja.")
+        # Items ni lazima wakati wa CREATE tu; partial update (mf. notes) isidai items
+        if self.instance is None:
+            items = self.initial_data.get("items", [])
+            if not items:
+                raise serializers.ValidationError("Order lazima iwe na angalau item moja.")
         return attrs
 
     @transaction.atomic
@@ -62,11 +64,15 @@ class OrderSerializer(serializers.ModelSerializer):
 
     @transaction.atomic
     def update(self, instance, validated_data):
-        items_data = validated_data.pop("items")
+        # items ni hiari kwenye partial update - usifute items zilizopo bila mpya
+        items_data = validated_data.pop("items", None)
 
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
+
+        if items_data is None:
+            return instance
 
         # Delete old items and recreate
         instance.items.all().delete()

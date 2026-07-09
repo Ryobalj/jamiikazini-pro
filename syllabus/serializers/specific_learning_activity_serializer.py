@@ -1,4 +1,4 @@
-# jamiikazini/syllabus/serializers/specific_learning_activity_serializer.py
+﻿# jamiikazini/syllabus/serializers/specific_learning_activity_serializer.py
 
 from django.db.models import Max
 from rest_framework import serializers
@@ -91,8 +91,10 @@ class SpecificLearningActivitySerializer(serializers.ModelSerializer):
         # Clean optional text fields
         for field in ["assessment_criteria", "teaching_aids", "references"]:
             val = data.get(field)
-            if val:
+            if isinstance(val, str):
                 data[field] = val.strip()
+            elif isinstance(val, list):
+                data[field] = [str(v).strip() for v in val if str(v).strip()]
 
         return data
 
