@@ -1,0 +1,59 @@
+# ==========================================================
+# Render Blueprint — jamiikazini-pro
+# Mode: FREE / EAGER — tasks za Celery zinafanyika ndani ya web process
+# (hakuna worker ya kulipia wala Redis broker inayohitajika).
+#
+# Env vars za siri (POSTGRES_*, SECRET_KEY, ALLOWED_HOSTS) ziko kwenye env group
+# "jamiikazini-secrets" — weka thamani zake kwenye Render dashboard.
+# ==========================================================
+
+services:
+  # ---------- Web (gunicorn) ----------
+  - type: web
+    name: jamiikazini-pro
+    runtime: python
+    plan: free
+    buildCommand: bash build.sh
+    startCommand: gunicorn jamiikazini.wsgi:application
+    envVars:
+      - key: DJANGO_ENV
+        value: prod
+      - key: PYTHON_VERSION
+        value: "3.12.10"
+      # --- Celery: endesha tasks papo hapo (bila worker/Redis) ---
+      - key: CELERY_TASK_ALWAYS_EAGER
+        value: "true"
+      # --- Cache/sessions: LocMem/DB (bila Redis) ---
+      - key: USE_REDIS
+        value: "false"
+      - fromGroup: jamiikazini-secrets
+
+# ==========================================================
+# Env group: weka thamani halisi kwenye Render dashboard
+# (Environment > Environment Groups > jamiikazini-secrets)
+# ==========================================================
+envVarGroups:
+  - name: jamiikazini-secrets
+    envVars:
+      - key: SECRET_KEY
+        sync: false
+      - key: POSTGRES_DB
+        sync: false
+      - key: POSTGRES_USER
+        sync: false
+      - key: POSTGRES_PASSWORD
+        sync: false
+      - key: POSTGRES_HOST
+        sync: false
+      - key: POSTGRES_PORT
+        sync: false
+      - key: ALLOWED_HOSTS
+        sync: false            # mfano: jamiikazini-pro.onrender.com
+
+# ==========================================================
+# 📌 KUPANDISHA BAADAYE (ukiamua kulipia kazi za nyuma za kweli):
+# ongeza service ya "keyvalue" (Redis) + "worker" na StartCommand:
+#   celery -A jamiikazini worker --beat --loglevel=info
+# kisha weka REDIS_URL (fromService) + USE_REDIS=true, na ondoa
+# CELERY_TASK_ALWAYS_EAGER. Tazama historia ya git kwa mfano kamili.
+# ==========================================================

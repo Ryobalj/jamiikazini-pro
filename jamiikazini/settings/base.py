@@ -437,6 +437,16 @@ if TESTING:
     CELERY_BROKER_CONNECTION_RETRY = False
     CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = False
 
+# Production/free-tier: endesha tasks papo hapo (synchronous) ndani ya process
+# yenyewe pale CELERY_TASK_ALWAYS_EAGER=true. Hii huruhusu app ikimbie kikamilifu
+# kwenye Render bila worker ya kulipia wala Redis broker.
+elif config("CELERY_TASK_ALWAYS_EAGER", default=False, cast=bool):
+    CELERY_TASK_ALWAYS_EAGER = True
+    # EAGER_PROPAGATES=False: task ya nyuma ikishindwa haivunji request ya mtumiaji.
+    CELERY_TASK_EAGER_PROPAGATES = config("CELERY_TASK_EAGER_PROPAGATES", default=False, cast=bool)
+    CELERY_BROKER_CONNECTION_RETRY = False
+    CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = False
+
 from celery.schedules import crontab
 
 CELERY_BEAT_SCHEDULE = {
