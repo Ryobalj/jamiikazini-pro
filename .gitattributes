@@ -1,0 +1,6 @@
+# Lazimisha LF kwa scripts na config zinazokimbia Linux (Render)
+# ili CRLF za Windows zisivunje bash/gunicorn.
+*.sh   text eol=lf
+build.sh text eol=lf
+*.yaml text eol=lf
+*.yml  text eol=lf
