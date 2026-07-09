@@ -14,6 +14,22 @@ SECRET_KEY = config("SECRET_KEY")
 
 # Allowed Hosts
 ALLOWED_HOSTS = ["www.jamiikazini.com", ".jamiikazini.com", "jamiikazini.com"]
+# Render hutoa RENDER_EXTERNAL_HOSTNAME yenyewe (mfano jamiikazini-pro.onrender.com)
+RENDER_EXTERNAL_HOSTNAME = config("RENDER_EXTERNAL_HOSTNAME", default=None)
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+# Hosts za ziada kupitia env (comma-separated), mfano "app.onrender.com,example.com"
+_extra_hosts = config("ALLOWED_HOSTS", default="")
+if _extra_hosts:
+    ALLOWED_HOSTS += [h.strip() for h in _extra_hosts.split(",") if h.strip()]
+
+# CSRF: amini Render + domain rasmi (https)
+CSRF_TRUSTED_ORIGINS = ["https://*.jamiikazini.com", "https://jamiikazini.com"]
+if RENDER_EXTERNAL_HOSTNAME:
+    CSRF_TRUSTED_ORIGINS.append(f"https://{RENDER_EXTERNAL_HOSTNAME}")
+_extra_csrf = config("CSRF_TRUSTED_ORIGINS", default="")
+if _extra_csrf:
+    CSRF_TRUSTED_ORIGINS += [o.strip() for o in _extra_csrf.split(",") if o.strip()]
 
 # Database
 DATABASES = {
@@ -35,11 +51,12 @@ SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
-# Email settings
-EMAIL_BACKEND = config("EMAIL_BACKEND")
-EMAIL_HOST = config("EMAIL_HOST")
-EMAIL_PORT = config("EMAIL_PORT", cast=int)
-EMAIL_HOST_USER = config("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
-EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool)
-DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
+# Email settings — zina defaults salama ili app isianguke kama hazijawekwa bado.
+# Default = console backend (barua zinaonekana kwenye logs). Weka SMTP halisi ukiwa tayari.
+EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
+EMAIL_HOST = config("EMAIL_HOST", default="")
+EMAIL_PORT = config("EMAIL_PORT", default=587, cast=int)
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=True, cast=bool)
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="noreply@jamiikazini.com")

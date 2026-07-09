@@ -1,14 +1,23 @@
 # ==========================================================
-# Render Blueprint — jamiikazini-pro
-# Mode: FREE / EAGER — tasks za Celery zinafanyika ndani ya web process
-# (hakuna worker ya kulipia wala Redis broker inayohitajika).
+# Render Blueprint — jamiikazini-pro (STACK KAMILI)
+# Database (PostgreSQL+PostGIS) + Backend (Django) + Frontend (React/Vite)
+# Mode: FREE / EAGER (hakuna worker/Redis ya kulipia)
 #
-# Env vars za siri (POSTGRES_*, SECRET_KEY, ALLOWED_HOSTS) ziko kwenye env group
-# "jamiikazini-secrets" — weka thamani zake kwenye Render dashboard.
+# Namna ya kutumia:
+#   Render dashboard -> New -> Blueprint -> chagua repo hii -> Apply.
+# Render itatengeneza vitu vyote hapa chini na kuunganisha env vars yenyewe.
+# SECRET_KEY inatengenezwa kiotomatiki; DB creds zinaingizwa kiotomatiki.
 # ==========================================================
 
+databases:
+  - name: jamiikazini-db
+    databaseName: jamiikazini
+    user: jamiikazini
+    plan: free
+    postgresMajorVersion: "16"
+
 services:
-  # ---------- Web (gunicorn) ----------
+  # ---------- Backend (Django + gunicorn) ----------
   - type: web
     name: jamiikazini-pro
     runtime: python
@@ -18,42 +27,51 @@ services:
     envVars:
       - key: DJANGO_ENV
         value: prod
+      - key: DJANGO_SETTINGS_MODULE          # manage.py (build.sh) itumie prod
+        value: jamiikazini.settings.prod
       - key: PYTHON_VERSION
         value: "3.12.10"
-      # --- Celery: endesha tasks papo hapo (bila worker/Redis) ---
-      - key: CELERY_TASK_ALWAYS_EAGER
+      - key: CELERY_TASK_ALWAYS_EAGER        # tasks ndani ya web (bure)
         value: "true"
-      # --- Cache/sessions: LocMem/DB (bila Redis) ---
       - key: USE_REDIS
         value: "false"
-      - fromGroup: jamiikazini-secrets
-
-# ==========================================================
-# Env group: weka thamani halisi kwenye Render dashboard
-# (Environment > Environment Groups > jamiikazini-secrets)
-# ==========================================================
-envVarGroups:
-  - name: jamiikazini-secrets
-    envVars:
-      - key: SECRET_KEY
-        sync: false
+      - key: SECRET_KEY                       # Render inaitengeneza kiotomatiki
+        generateValue: true
+      - key: CORS_ALLOWED_ORIGINS             # ruhusu frontend
+        value: https://jamiikazini-frontend.onrender.com
+      # ---- Database creds (zinaingizwa kiotomatiki kutoka jamiikazini-db) ----
       - key: POSTGRES_DB
-        sync: false
+        fromDatabase:
+          name: jamiikazini-db
+          property: database
       - key: POSTGRES_USER
-        sync: false
+        fromDatabase:
+          name: jamiikazini-db
+          property: user
       - key: POSTGRES_PASSWORD
-        sync: false
+        fromDatabase:
+          name: jamiikazini-db
+          property: password
       - key: POSTGRES_HOST
-        sync: false
+        fromDatabase:
+          name: jamiikazini-db
+          property: host
       - key: POSTGRES_PORT
-        sync: false
-      - key: ALLOWED_HOSTS
-        sync: false            # mfano: jamiikazini-pro.onrender.com
+        fromDatabase:
+          name: jamiikazini-db
+          property: port
 
-# ==========================================================
-# 📌 KUPANDISHA BAADAYE (ukiamua kulipia kazi za nyuma za kweli):
-# ongeza service ya "keyvalue" (Redis) + "worker" na StartCommand:
-#   celery -A jamiikazini worker --beat --loglevel=info
-# kisha weka REDIS_URL (fromService) + USE_REDIS=true, na ondoa
-# CELERY_TASK_ALWAYS_EAGER. Tazama historia ya git kwa mfano kamili.
-# ==========================================================
+  # ---------- Frontend (React/Vite static site) ----------
+  - type: web
+    name: jamiikazini-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://jamiikazini-pro.onrender.com/api/v1
+    routes:
+      - type: rewrite                         # React Router (SPA)
+        source: /*
+        destination: /index.html
