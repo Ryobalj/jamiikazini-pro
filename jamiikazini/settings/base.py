@@ -374,10 +374,17 @@ SWAGGER_USE_COMPAT_RENDERERS = False
 
 
 # ===========================
-# GDAL
+# GDAL / GEOS (GeoDjango)
 # ===========================
-GDAL_LIBRARY_PATH = config('GDAL_LIBRARY_PATH', default=r'C:\OSGeo4W\bin\gdal312.dll')
-GEOS_LIBRARY_PATH = config('GEOS_LIBRARY_PATH', default=r'C:\OSGeo4W\bin\geos_c.dll')
+# Windows (local dev): tumia njia za OSGeo4W kwa default.
+# Linux/Render: acha None ili GeoDjango itafute libgdal.so / libgeos_c.so za mfumo
+# yenyewe (au weka env var GDAL_LIBRARY_PATH / GEOS_LIBRARY_PATH ikiwa njia ni maalum).
+if os.name == 'nt':
+    GDAL_LIBRARY_PATH = config('GDAL_LIBRARY_PATH', default=r'C:\OSGeo4W\bin\gdal312.dll')
+    GEOS_LIBRARY_PATH = config('GEOS_LIBRARY_PATH', default=r'C:\OSGeo4W\bin\geos_c.dll')
+else:
+    GDAL_LIBRARY_PATH = config('GDAL_LIBRARY_PATH', default=None)
+    GEOS_LIBRARY_PATH = config('GEOS_LIBRARY_PATH', default=None)
 
 
 # ===========================
