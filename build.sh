@@ -19,4 +19,7 @@ python manage.py collectstatic --no-input
 echo "==> Applying database migrations"
 python manage.py migrate --no-input
 
+echo "==> Ensuring superuser (from DJANGO_SUPERUSER_* env vars, if set)"
+python manage.py ensure_superuser || echo "ensure_superuser skipped"
+
 echo "==> Build complete"
