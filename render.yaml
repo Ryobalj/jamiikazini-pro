@@ -37,6 +37,8 @@ services:
         value: "false"
       - key: SECRET_KEY                       # Render inaitengeneza kiotomatiki
         generateValue: true
+      - key: FERNET_SECRET_KEY               # WEKA MWENYEWE: Fernet key halali (44-char base64)
+        sync: false                          # tengeneza kwa: Fernet.generate_key()
       # CORS: inashughulikiwa na CORS_ALLOWED_ORIGIN_REGEXES (*.onrender.com) kwenye prod.py
       # ---- Database creds (zinaingizwa kiotomatiki kutoka jamiikazini-db) ----
       - key: POSTGRES_DB
