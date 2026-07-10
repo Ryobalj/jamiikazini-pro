@@ -9,6 +9,13 @@ DEBUG = False
 IS_RENDER_APP = True
 TESTING = False
 
+# django-ratelimit inataka shared cache; kwenye free tier (worker 1) LocMemCache
+# inatosha, kwa hivyo tunanyamazisha check kama dev. Ikiwa USE_REDIS=true, ondoa.
+SILENCED_SYSTEM_CHECKS = [
+    "django_ratelimit.E003",
+    "django_ratelimit.W001",
+]
+
 # Secret Key
 SECRET_KEY = config("SECRET_KEY")
 

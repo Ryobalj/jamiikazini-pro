@@ -231,6 +231,8 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 FILE_UPLOAD_TEMP_DIR = os.path.join(BASE_DIR, "tmp")
+# Hakikisha dir ipo (Render/Linux haina 'tmp' ya project kwa default) -> zuia files.E001
+os.makedirs(FILE_UPLOAD_TEMP_DIR, exist_ok=True)
 
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
