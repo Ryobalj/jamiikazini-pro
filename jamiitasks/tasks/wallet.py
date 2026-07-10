@@ -3,6 +3,7 @@
 import logging
 import time
 from decimal import Decimal
+from django.conf import settings
 from django.utils import timezone
 from django.db import transaction as db_transaction
 from celery import shared_task
@@ -48,6 +49,66 @@ def confirm_with_gateway(topup: TopUp) -> bool:
         return False
 
 
+# ---- Wallet crediting (idempotent + atomic) — reused by webhook & reconciliation
+def credit_wallet_for_topup(topup: TopUp) -> Transaction:
+    """
+    Ongeza salio la wallet kwa TopUp iliyofaulu. IDEMPOTENT (idempotency_key ya kipekee
+    kwa reference) na ATOMIC (select_for_update). Hurudisha Transaction. Salama kuitwa
+    mara nyingi (webhook + reconciliation) bila kuongeza mara mbili.
+    """
+    idempotency_key = f"topup:{topup.reference}"
+    with db_transaction.atomic():
+        existing_txn = Transaction.objects.filter(idempotency_key=idempotency_key).first()
+        if existing_txn:
+            if topup.status != TopUp.TopUpStatus.CONFIRMED:
+                topup.mark_confirmed(existing_txn)
+            return existing_txn
+
+        wallet = Wallet.objects.select_for_update().get(user=topup.user)
+        wallet.balance += Decimal(topup.amount)
+        wallet.save(update_fields=["balance"])
+
+        metadata = topup.metadata if isinstance(topup.metadata, dict) else {}
+        txn = Transaction.objects.create(
+            wallet=wallet,
+            initiated_by=topup.user,
+            transaction_type=Transaction.TransactionType.TOP_UP,
+            status=Transaction.TransactionStatus.COMPLETED,
+            amount=topup.amount,
+            reference=topup.reference,
+            receipt=metadata,
+            idempotency_key=idempotency_key,
+        )
+        topup.mark_confirmed(txn)
+        return txn
+
+
+# ---- PawaPay deposit initiation (STK push)
+def initiate_pawapay_deposit(topup: TopUp) -> dict:
+    """
+    Anzisha deposit ya PawaPay (STK push kwa simu ya mlipaji). Huhifadhi depositId,
+    huweka status PROCESSING. Salio LA WALLET HALIONGEZWI hapa — huongezwa na webhook
+    (au reconciliation) baada ya callback ya SUCCESS.
+    """
+    gw = PawaPayGateway()
+    resp = gw.initiate_deposit(
+        amount=str(topup.amount),
+        currency=getattr(settings, "PAWAPAY_DEFAULT_CURRENCY", "TZS"),
+        phone=topup.phone,
+        provider=topup.provider,
+        client_reference_id=topup.reference,
+        metadata={"topup_id": str(topup.id), "user_id": str(topup.user_id)},
+    )
+    md = topup.metadata if isinstance(topup.metadata, dict) else {}
+    md["depositId"] = resp.get("depositId")
+    md["provider_status"] = resp.get("status")
+    topup.metadata = md
+    topup.status = TopUp.TopUpStatus.PROCESSING
+    topup.save(update_fields=["metadata", "status"])
+    logger.info(f"PawaPay deposit initiated for {topup.reference} (status={resp.get('status')})")
+    return resp
+
+
 # ---- Celery task
 @shared_task(
     bind=True,
@@ -80,54 +141,40 @@ def confirm_topup_transaction(self, topup_id):
         _log_task(task_name, task_id, "SKIPPED", msg, start_time)
         return msg
 
-    # 🔐 Generate idempotency key unique per TopUp reference
-    idempotency_key = f"topup:{topup.reference}"
+    channel = (topup.channel or "").lower()
 
     try:
-        # ✅ Confirm payment via gateway
-        payment_confirmed = confirm_with_gateway(topup)
+        # ---- PawaPay: mobile-money STK-push flow ----
+        if channel in ("pawapay", "pp"):
+            if topup.status == TopUp.TopUpStatus.INITIATED:
+                # Anzisha STK push. Salio la wallet huongezwa na WEBHOOK baada ya
+                # callback ya SUCCESS (si hapa) — kwa hivyo hatuongezi salio sasa.
+                initiate_pawapay_deposit(topup)
+                msg = f"TopUp {topup.reference}: PawaPay deposit initiated (awaiting callback)."
+                _log_task(task_name, task_id, "SUCCESS", msg, start_time)
+                logger.info(msg)
+                return msg
 
-        if not payment_confirmed:
+            # Status PROCESSING -> reconciliation: hakiki status kwa PawaPay
+            if confirm_with_gateway(topup):
+                credit_wallet_for_topup(topup)
+                msg = f"TopUp {topup.reference} confirmed (reconciliation)."
+                _log_task(task_name, task_id, "SUCCESS", msg, start_time)
+                logger.info(msg)
+                return msg
+            msg = f"TopUp {topup.reference} bado inasubiri uthibitisho (hakuna SUCCESS bado)."
+            _log_task(task_name, task_id, "PENDING", msg, start_time)
+            return msg
+
+        # ---- Hosted gateways (Flutterwave / Stripe): poll status then credit ----
+        if not confirm_with_gateway(topup):
             topup.mark_failed()
             msg = f"TopUp {topup.reference} failed to confirm."
             _log_task(task_name, task_id, "FAILED", msg, start_time)
             logger.warning(msg)
             return msg
 
-        with db_transaction.atomic():
-            # 🧩 Idempotency: check if transaction already exists
-            existing_txn = Transaction.objects.filter(idempotency_key=idempotency_key).first()
-            if existing_txn:
-                msg = f"[Idempotent Skip] Transaction already exists for {topup.reference}."
-                logger.info(msg)
-                _log_task(task_name, task_id, "SKIPPED", msg, start_time)
-                # Ensure TopUp is marked confirmed
-                if topup.status != TopUp.TopUpStatus.CONFIRMED:
-                    topup.mark_confirmed(existing_txn)
-                return msg
-
-            # 💰 Credit wallet balance atomically
-            wallet = Wallet.objects.select_for_update().get(user=topup.user)
-            wallet.balance += Decimal(topup.amount)
-            wallet.save(update_fields=["balance"])
-
-            metadata = topup.metadata if isinstance(topup.metadata, dict) else {}
-
-            # 🧾 Create Transaction with idempotency key
-            txn = Transaction.objects.create(
-                wallet=wallet,
-                initiated_by=topup.user,
-                transaction_type=Transaction.TransactionType.TOP_UP,
-                status=Transaction.TransactionStatus.COMPLETED,
-                amount=topup.amount,
-                reference=topup.reference,
-                receipt=metadata,
-                idempotency_key=idempotency_key,
-            )
-
-            # ✅ Mark top-up as confirmed
-            topup.mark_confirmed(txn)
-
+        credit_wallet_for_topup(topup)
         msg = f"TopUp {topup.reference} confirmed successfully."
         logger.info(msg)
         _log_task(task_name, task_id, "SUCCESS", msg, start_time)

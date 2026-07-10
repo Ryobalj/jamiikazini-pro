@@ -97,6 +97,16 @@ class PaymentWebhookView(APIView):
                  gateway, event.id, event.status, event.provider_id)
 
         # -----------------------
+        # 3.5️⃣ Wallet TopUp (deposit) crediting
+        # -----------------------
+        # PawaPay deposit callbacks reference our TopUp (clientReferenceId). Kama
+        # event.reference inalingana na TopUp, shughulikia hapa (credit wallet).
+        if event.reference:
+            topup = self._match_topup(event.reference)
+            if topup:
+                return self._handle_topup_event(gw, topup, event, user, client_ip)
+
+        # -----------------------
         # 4️⃣ Idempotency check
         # -----------------------
         if event.id and Transaction.objects.filter(last_event_id=event.id).exists():
@@ -138,6 +148,61 @@ class PaymentWebhookView(APIView):
                          ip=client_ip, txn_id=txn.id, old_status=old_status, new_status=txn.status)
 
         return Response({"ok": True})
+
+    # -----------------------
+    # TopUp helpers
+    # -----------------------
+    def _match_topup(self, reference):
+        from jamiiwallet.models.topup import TopUp
+        return TopUp.objects.filter(reference=reference).select_related("user").first()
+
+    def _handle_topup_event(self, gw, topup, event, user, client_ip):
+        """
+        Ongeza salio la wallet kwa TopUp iliyofaulu.
+        USALAMA: hatuamini status/amount ya callback pekee — tunathibitisha status
+        moja kwa moja kutoka PawaPay API (uthibitisho ulioidhinishwa kwa API key yetu),
+        na tunaongeza KIASI TULICHOHIFADHI (topup.amount), si cha callback.
+        """
+        from decimal import Decimal
+        from jamiiwallet.models.topup import TopUp
+        from jamiitasks.tasks.wallet import credit_wallet_for_topup
+
+        # Idempotency: tayari imekamilika
+        if topup.status in (TopUp.TopUpStatus.CONFIRMED, TopUp.TopUpStatus.FAILED):
+            return Response({"status": "already_processed"}, status=200)
+
+        # Uthibitisho wa kuaminika kutoka PawaPay API
+        try:
+            api_status = str(gw.check_transaction_status(topup.reference).get("status") or "").upper()
+        except Exception as e:
+            log.warning("TopUp status re-check failed ref=%s: %s", topup.reference, e)
+            api_status = (event.status or "").upper()
+
+        if api_status in ("COMPLETED", "SUCCESS", "SUCCESSFUL"):
+            # Amount safety: linganisha callback amount na kiasi tulichohifadhi
+            if event.amount:
+                try:
+                    if Decimal(str(event.amount)) != Decimal(str(topup.amount)):
+                        send_slack_alert(
+                            f"[PawaPay] TopUp amount mismatch ref={topup.reference} "
+                            f"expected={topup.amount} got={event.amount}"
+                        )
+                        return Response({"detail": "Amount mismatch"}, status=status.HTTP_400_BAD_REQUEST)
+                except Exception:
+                    pass
+            credit_wallet_for_topup(topup)
+            try:
+                AuditLog.log("WEBHOOK_TOPUP_CREDITED", user, f"ref={topup.reference}", ip=client_ip)
+            except Exception:
+                pass
+            log.info("TopUp credited via webhook: ref=%s amount=%s", topup.reference, topup.amount)
+            return Response({"ok": True})
+
+        if api_status in ("FAILED", "REJECTED", "DECLINED", "CANCELLED"):
+            topup.mark_failed()
+            return Response({"ok": True, "status": "failed"})
+
+        return Response({"status": "pending"}, status=200)
 
     def get_client_ip(self, request):
         xff = request.META.get("HTTP_X_FORWARDED_FOR")

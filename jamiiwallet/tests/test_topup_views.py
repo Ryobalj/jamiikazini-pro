@@ -31,9 +31,12 @@ def test_topup_view_creates_topup_and_calls_task(mocker):
         return_value=None
     )
 
-    # 3. Data ya topup
+    # 3. Data ya topup (PawaPay inahitaji mno + phone)
     data = {
         'amount': '150.00',
+        'channel': 'pawapay',
+        'mno': 'airtel',
+        'phone': '+255783456789',
         'metadata': {
             'payment_method': 'm-pesa',
             'reference': 'MPESA123456'
@@ -55,6 +58,9 @@ def test_topup_view_creates_topup_and_calls_task(mocker):
     topup = TopUp.objects.get(id=response_data['id'])
     assert topup.amount == Decimal('150.00')
     assert topup.user == user
+    assert topup.channel == 'pawapay'
+    assert topup.provider == 'AIRTEL_TZA'   # mno 'airtel' -> PawaPay code
+    assert topup.phone == '255783456789'    # normalized MSISDN (no +)
 
     # 7. Assert celery task ilitumwa
     mock_task.assert_called_once_with(str(topup.id))

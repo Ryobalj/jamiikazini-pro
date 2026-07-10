@@ -48,6 +48,20 @@ class TopUp(UUIDModel, TimeStampedModel):
         help_text=_('Payment channel or method')
     )
 
+    phone = models.CharField(
+        max_length=20,
+        blank=True,
+        default='',
+        help_text=_('Payer mobile money phone number (for PawaPay deposits)')
+    )
+
+    provider = models.CharField(
+        max_length=50,
+        blank=True,
+        default='',
+        help_text=_('Mobile money provider / MNO code, e.g. TIGO_TZA (PawaPay)')
+    )
+
     reference = models.CharField(
         max_length=64,
         unique=True,

@@ -59,7 +59,9 @@ export default function JamiiWalletPage() {
   const [refreshing, setRefreshing] = useState(false);
   const [topupAmount, setTopupAmount] = useState("");
   const [showTopupModal, setShowTopupModal] = useState(false);
-  const [selectedChannel, setSelectedChannel] = useState("");
+  const [selectedChannel, setSelectedChannel] = useState("pawapay");
+  const [selectedMno, setSelectedMno] = useState("");
+  const [phone, setPhone] = useState("");
   const [monthlyStats, setMonthlyStats] = useState({ income: 0, expenses: 0 });
 
   useEffect(() => {
@@ -131,24 +133,45 @@ export default function JamiiWalletPage() {
       return;
     }
 
+    const channel = selectedChannel || "pawapay";
+    // PawaPay (mobile money) inahitaji mtandao (MNO) + namba ya simu
+    if (channel === "pawapay") {
+      if (!selectedMno) {
+        toast.error(t("select_mno") || "Chagua mtandao (MNO).");
+        return;
+      }
+      if (!phone || phone.trim().length < 9) {
+        toast.error(t("invalid_phone") || "Weka namba sahihi ya simu.");
+        return;
+      }
+    }
+
     try {
-      await api.post("/jamiiwallet/topup/", {
-        amount: parseFloat(topupAmount),
-        channel: selectedChannel || "pawapay",
-      });
-      
+      const payload = { amount: parseFloat(topupAmount), channel };
+      if (channel === "pawapay") {
+        payload.mno = selectedMno;
+        payload.phone = phone.trim();
+      }
+      await api.post("/jamiiwallet/topup/", payload);
+
       toast.success(t("topup_initiated"));
       setShowTopupModal(false);
       setTopupAmount("");
-      setSelectedChannel("");
-      
+      setSelectedChannel("pawapay");
+      setSelectedMno("");
+      setPhone("");
+
       setTimeout(() => {
         fetchWalletData();
         fetchTransactions();
       }, 2000);
     } catch (error) {
       console.error("Topup failed:", error);
-      toast.error(t("topup_failed"));
+      const detail =
+        error?.response?.data?.detail ||
+        error?.response?.data?.mno ||
+        error?.response?.data?.phone;
+      toast.error(detail || t("topup_failed"));
     }
   };
 
@@ -520,6 +543,52 @@ export default function JamiiWalletPage() {
                   </div>
                 </div>
 
+                {(selectedChannel || "pawapay") === "pawapay" && (
+                  <>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        {t("mobile_network") || "Mtandao (MNO)"}
+                      </label>
+                      <div className="grid grid-cols-3 gap-2">
+                        {[
+                          { id: "yas", name: "Yas (Tigo)" },
+                          { id: "airtel", name: "Airtel" },
+                          { id: "halotel", name: "Halotel" },
+                        ].map((mno) => (
+                          <button
+                            key={mno.id}
+                            type="button"
+                            onClick={() => setSelectedMno(mno.id)}
+                            className={`p-3 rounded-lg border text-center transition-all ${
+                              selectedMno === mno.id
+                                ? "border-purple-500 bg-purple-50 dark:bg-purple-900/30"
+                                : "border-gray-200 dark:border-gray-700 hover:border-gray-300"
+                            }`}
+                          >
+                            <span className="text-xs">{mno.name}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        {t("phone_number") || "Namba ya simu"}
+                      </label>
+                      <div className="relative">
+                        <Smartphone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <input
+                          type="tel"
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                          placeholder="+255 7XX XXX XXX"
+                          className="w-full pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
+
                 <div className="flex gap-2 pt-4">
                   <Button
                     variant="outline"
@@ -527,7 +596,9 @@ export default function JamiiWalletPage() {
                     onClick={() => {
                       setShowTopupModal(false);
                       setTopupAmount("");
-                      setSelectedChannel("");
+                      setSelectedChannel("pawapay");
+                      setSelectedMno("");
+                      setPhone("");
                     }}
                   >
                     {t("cancel")}

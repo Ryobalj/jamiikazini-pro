@@ -549,6 +549,18 @@ PAWAPAY = {
     "WEBHOOK_SECRET": config("PAWAPAY_WEBHOOK_SECRET", default=""),
 }
 
+# Ramani ya MNO (mtandao) -> PawaPay provider code (Tanzania). Thibitisha dhidi ya
+# PawaPay active-configuration ya akaunti yako ikibidi.
+PAWAPAY_PROVIDERS = {
+    "tigo": "TIGO_TZA",
+    "yas": "TIGO_TZA",        # Yas = jina jipya la Tigo
+    "airtel": "AIRTEL_TZA",
+    "halotel": "HALOTEL_TZA",
+    "vodacom": "VODACOM_TZA",  # M-Pesa (ikiwezeshwa baadaye)
+}
+# Sarafu chaguo-msingi kwa malipo ya mobile money (Tanzania)
+PAWAPAY_DEFAULT_CURRENCY = config("PAWAPAY_DEFAULT_CURRENCY", default="TZS")
+
 # Flutterwave
 FLUTTERWAVE = {
     "SANDBOX_URL": "https://api.sandbox.flutterwave.com/v3",
