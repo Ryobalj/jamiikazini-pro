@@ -535,10 +535,15 @@ CELERY_BEAT_SCHEDULE = {
 # Payment Gateway Configuration
 # ===========================
 # PawaPay
+# NB: PawaPayGateway client hutafuta settings.PAWAPAY_SANDBOX_API_KEY /
+# PAWAPAY_LIVE_API_KEY moja kwa moja — kwa hivyo tunazifafanua hapa kutoka .env.
+PAWAPAY_SANDBOX_API_KEY = config("PAWAPAY_SANDBOX_API_KEY", default="")
+PAWAPAY_LIVE_API_KEY = config("PAWAPAY_LIVE_API_KEY", default="")
+
 PAWAPAY = {
     "SANDBOX_URL": "https://sandbox.pawapay.cloud",
     "LIVE_URL": "https://api.pawapay.cloud",
-    "API_KEY": config("PAWAPAY_API_KEY", default=""),
+    "API_KEY": config("PAWAPAY_API_KEY", default="") or PAWAPAY_SANDBOX_API_KEY,
     "CALLBACK_URL": config("PAWAPAY_CALLBACK_URL", default=""),
     "USE_SANDBOX": config("PAWAPAY_USE_SANDBOX", cast=bool, default=True),
     "WEBHOOK_SECRET": config("PAWAPAY_WEBHOOK_SECRET", default=""),
