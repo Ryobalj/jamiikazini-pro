@@ -31,6 +31,13 @@ _extra_csrf = config("CSRF_TRUSTED_ORIGINS", default="")
 if _extra_csrf:
     CSRF_TRUSTED_ORIGINS += [o.strip() for o in _extra_csrf.split(",") if o.strip()]
 
+# CORS: ruhusu frontend yoyote ya *.onrender.com (dev) + domain rasmi — hivyo
+# jina la frontend (hata likiwa na kiambishi kama -1wyv) haliitaji CORS ya mkono.
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.onrender\.com$",
+    r"^https://.*\.jamiikazini\.com$",
+]
+
 # Database
 DATABASES = {
     "default": {

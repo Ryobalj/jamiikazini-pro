@@ -37,8 +37,7 @@ services:
         value: "false"
       - key: SECRET_KEY                       # Render inaitengeneza kiotomatiki
         generateValue: true
-      - key: CORS_ALLOWED_ORIGINS             # ruhusu frontend
-        value: https://jamiikazini-frontend.onrender.com
+      # CORS: inashughulikiwa na CORS_ALLOWED_ORIGIN_REGEXES (*.onrender.com) kwenye prod.py
       # ---- Database creds (zinaingizwa kiotomatiki kutoka jamiikazini-db) ----
       - key: POSTGRES_DB
         fromDatabase:
