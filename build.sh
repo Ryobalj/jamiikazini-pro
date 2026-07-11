@@ -22,4 +22,7 @@ python manage.py migrate --no-input
 echo "==> Ensuring superuser (from DJANGO_SUPERUSER_* env vars, if set)"
 python manage.py ensure_superuser || echo "ensure_superuser skipped"
 
+echo "==> Seeding currencies + initial exchange rates (idempotent)"
+python manage.py seed_currencies || echo "seed_currencies skipped"
+
 echo "==> Build complete"
