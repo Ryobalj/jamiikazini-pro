@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 @throttled_task(limit=5, period=60)
 def update_exchange_rates_task(self, base_code="TZS", target_code=None):
     """
-    Update exchange rates with failover from BOT → OXR.
+    Update exchange rates with failover: ERAPI → BOT → OXR.
     Runs daily via Celery beat or manual trigger.
     Throttled to prevent over-fetching from APIs.
     """
@@ -45,16 +45,26 @@ def update_exchange_rates_task(self, base_code="TZS", target_code=None):
 
         rates, source_used = {}, None
 
-        # Priority 1: BOT
+        # Priority 1: ERAPI (exchangerate-api.com — free, no key, rates halisi za soko)
         try:
-            rates = fetch_from_bot(base_code, target_code)
+            rates = fetch_from_erapi(base_code, target_code)
             if rates:
-                source_used = "BOT"
-                logger.info(f"[ExchangeRate:{task_id}] Data fetched from BOT ({len(rates)} rates).")
+                source_used = "ERAPI"
+                logger.info(f"[ExchangeRate:{task_id}] Data fetched from ERAPI ({len(rates)} rates).")
         except Exception as e:
-            logger.warning(f"[ExchangeRate:{task_id}] BOT fetch failed: {e}")
+            logger.warning(f"[ExchangeRate:{task_id}] ERAPI fetch failed: {e}")
 
-        # Priority 2: OXR (fallback)
+        # Priority 2: BOT (fallback)
+        if not rates:
+            try:
+                rates = fetch_from_bot(base_code, target_code)
+                if rates:
+                    source_used = "BOT"
+                    logger.info(f"[ExchangeRate:{task_id}] Data fetched from BOT ({len(rates)} rates).")
+            except Exception as e:
+                logger.warning(f"[ExchangeRate:{task_id}] BOT fetch failed: {e}")
+
+        # Priority 3: OXR (last resort)
         if not rates:
             try:
                 rates = fetch_from_oxr(base_code, target_code)
@@ -62,7 +72,7 @@ def update_exchange_rates_task(self, base_code="TZS", target_code=None):
                     source_used = "OXR"
                     logger.info(f"[ExchangeRate:{task_id}] Data fetched from OXR ({len(rates)} rates).")
             except Exception as e2:
-                raise RuntimeError(f"OXR fetch failed: {e2}")
+                raise RuntimeError(f"All sources failed. OXR: {e2}")
 
         if not rates:
             raise RuntimeError("No rates retrieved from any source.")
@@ -113,6 +123,27 @@ def update_exchange_rates_task(self, base_code="TZS", target_code=None):
 
     finally:
         log_entry.finalize()
+
+
+def fetch_from_erapi(base_code, target_code=None):
+    """
+    exchangerate-api.com "open" endpoint — free, no API key, rates halisi
+    za soko (zinasasishwa kila siku). https://www.exchangerate-api.com/docs/free
+    """
+    url = f"https://open.er-api.com/v6/latest/{base_code}"
+    response = requests.get(url, timeout=10)
+    response.raise_for_status()
+    data = response.json()
+
+    if data.get("result") != "success":
+        raise ValueError(f"ERAPI error: {data.get('error-type', 'unknown')}")
+
+    rates = {}
+    for code, value in data.get("rates", {}).items():
+        if target_code and code != target_code:
+            continue
+        rates[code] = value
+    return rates
 
 
 def fetch_from_bot(base_code, target_code=None):

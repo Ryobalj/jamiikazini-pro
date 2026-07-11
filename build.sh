@@ -25,4 +25,7 @@ python manage.py ensure_superuser || echo "ensure_superuser skipped"
 echo "==> Seeding currencies + initial exchange rates (idempotent)"
 python manage.py seed_currencies || echo "seed_currencies skipped"
 
+echo "==> Fetching real market exchange rates (ERAPI)"
+python manage.py update_exchange_rates --source ERAPI || echo "update_exchange_rates skipped (using seeded rates)"
+
 echo "==> Build complete"

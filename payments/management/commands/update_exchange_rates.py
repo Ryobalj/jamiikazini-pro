@@ -26,9 +26,10 @@ class Command(BaseCommand):
         parser.add_argument(
             "--source",
             type=str,
-            default="BOT",
-            choices=["BOT", "OXR"],
-            help="Source API: BOT (Bank of Tanzania) or OXR (OpenExchangeRates).",
+            default="ERAPI",
+            choices=["ERAPI", "BOT", "OXR"],
+            help="Source API: ERAPI (exchangerate-api.com, free/no key), "
+                 "BOT (Bank of Tanzania) or OXR (OpenExchangeRates).",
         )
 
     def handle(self, *args, **options):
@@ -43,7 +44,9 @@ class Command(BaseCommand):
         self.stdout.write(self.style.NOTICE(f"Updating exchange rates from {source}..."))
 
         try:
-            if source == "BOT":
+            if source == "ERAPI":
+                rates = self.fetch_from_erapi(base_code, target_code)
+            elif source == "BOT":
                 rates = self.fetch_from_bot(base_code, target_code)
             else:
                 rates = self.fetch_from_oxr(base_code, target_code)
@@ -71,6 +74,26 @@ class Command(BaseCommand):
             updated_count += 1
 
         self.stdout.write(self.style.SUCCESS(f"Updated {updated_count} exchange rates."))
+
+    def fetch_from_erapi(self, base_code, target_code=None):
+        """
+        exchangerate-api.com "open" endpoint — free, no API key, rates halisi
+        za soko (zinasasishwa kila siku). https://www.exchangerate-api.com/docs/free
+        """
+        url = f"https://open.er-api.com/v6/latest/{base_code}"
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+
+        if data.get("result") != "success":
+            raise CommandError(f"ERAPI error: {data.get('error-type', 'unknown')}")
+
+        rates = {}
+        for code, value in data.get("rates", {}).items():
+            if target_code and code != target_code:
+                continue
+            rates[code] = value
+        return rates
 
     def fetch_from_bot(self, base_code, target_code=None):
         """

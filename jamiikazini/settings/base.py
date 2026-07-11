@@ -458,7 +458,7 @@ CELERY_BEAT_SCHEDULE = {
     "update-exchange-rates-daily": {
         "task": "jamiitasks.tasks.exchange_rate_tasks.update_exchange_rates_task",
         "schedule": crontab(hour=12, minute=0),
-        "args": ("BOT", "TZS", None),
+        "args": ("TZS", None),
     },
 
     # === PAYMENT AUTOMATION ===
