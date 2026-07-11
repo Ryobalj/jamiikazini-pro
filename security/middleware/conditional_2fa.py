@@ -15,6 +15,13 @@ PROTECTED_PATHS = getattr(settings, "SECURITY_2FA_PROTECTED_PATHS", [
     r"^/api/v1/institutions/.*/sensitive-action/?$",
 ])
 
+# Njia zilizosamehewa 2FA (hata zikilingana na PROTECTED_PATHS). Muhimu kwa callbacks
+# za mashine (webhooks za PawaPay/Stripe/Flutterwave) ambazo HAZINA auth ya mtumiaji —
+# vinginevyo middleware huzuia kwa 401 kabla ya gateway kuthibitisha saini.
+EXEMPT_PATHS = getattr(settings, "SECURITY_2FA_EXEMPT_PATHS", [
+    r"^/api/v1/payments/webhooks/.*$",
+])
+
 import re
 
 class Conditional2FAMiddleware:
@@ -30,8 +37,13 @@ class Conditional2FAMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
         self.protected_patterns = [re.compile(p) for p in PROTECTED_PATHS]
+        self.exempt_patterns = [re.compile(p) for p in EXEMPT_PATHS]
 
     def _is_protected(self, path: str) -> bool:
+        # Njia zilizosamehewa (webhooks n.k.) hazilindwi kamwe
+        for pat in self.exempt_patterns:
+            if pat.search(path):
+                return False
         for pat in self.protected_patterns:
             if pat.search(path):
                 return True
