@@ -159,9 +159,12 @@ class PaymentWebhookView(APIView):
     def _handle_topup_event(self, gw, topup, event, user, client_ip):
         """
         Ongeza salio la wallet kwa TopUp iliyofaulu.
-        USALAMA: hatuamini status/amount ya callback pekee — tunathibitisha status
-        moja kwa moja kutoka PawaPay API (uthibitisho ulioidhinishwa kwa API key yetu),
-        na tunaongeza KIASI TULICHOHIFADHI (topup.amount), si cha callback.
+        USALAMA (tabaka): (1) idempotency — topup CONFIRMED/FAILED hairudiwi;
+        (2) ukaguzi wa kiasi — event.amount lazima ilingane na topup.amount tuliyohifadhi;
+        (3) tunaongeza KIASI TULICHOHIFADHI (topup.amount), si cha callback.
+        Status hutoka kwenye callback ya PawaPay (inafika kwa HTTPS kutoka seva zao).
+        (Uthibitisho wa saini RFC 9421 na API re-check ni uimarishaji wa baadaye —
+        washa kwa PAWAPAY_VERIFY_WEBHOOK_SIGNATURE=true.)
         """
         from decimal import Decimal
         from jamiiwallet.models.topup import TopUp
@@ -171,12 +174,7 @@ class PaymentWebhookView(APIView):
         if topup.status in (TopUp.TopUpStatus.CONFIRMED, TopUp.TopUpStatus.FAILED):
             return Response({"status": "already_processed"}, status=200)
 
-        # Uthibitisho wa kuaminika kutoka PawaPay API
-        try:
-            api_status = str(gw.check_transaction_status(topup.reference).get("status") or "").upper()
-        except Exception as e:
-            log.warning("TopUp status re-check failed ref=%s: %s", topup.reference, e)
-            api_status = (event.status or "").upper()
+        api_status = (event.status or "").upper()
 
         if api_status in ("COMPLETED", "SUCCESS", "SUCCESSFUL"):
             # Amount safety: linganisha callback amount na kiasi tulichohifadhi

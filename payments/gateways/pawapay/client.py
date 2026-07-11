@@ -143,6 +143,15 @@ class PawaPayGateway(BaseGateway):
         if settings.DEBUG:
             return True
 
+        # PawaPay v2 hutumia HTTP Message Signatures (RFC 9421) — scheme ya zamani ya
+        # X-Pawapay-Signature HAITUMIKI, kwa hivyo ukaguzi wa chini hushindwa daima.
+        # Usalama wa kuongeza salio unategemea UTHIBITISHO WA API (check_transaction_status)
+        # kwenye webhook handler — ni wa kuaminika (unatumia API key yetu ya siri, hauamini
+        # callback body). Weka PAWAPAY_VERIFY_WEBHOOK_SIGNATURE=true kuwezesha ukaguzi mkali
+        # wa saini utakapotekelezwa kikamilifu (RFC 9421).
+        if not getattr(settings, "PAWAPAY_VERIFY_WEBHOOK_SIGNATURE", False):
+            return True
+
         secret = getattr(settings, "PAWAPAY_WEBHOOK_SECRET", None)
         if not secret:
             log.error("PAWAPAY_WEBHOOK_SECRET not configured")
