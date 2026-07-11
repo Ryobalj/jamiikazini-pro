@@ -64,7 +64,7 @@ class PawaPayGateway(BaseGateway):
         client_reference_id: str, metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         payload = {
-            "depositId": uuid.uuid4().hex,
+            "depositId": str(uuid.uuid4()),
             "payer": {"type": "MMO", "accountDetails": {"phoneNumber": phone, "provider": provider}},
             "clientReferenceId": client_reference_id,
             "customerMessage": "Payment",
@@ -80,7 +80,7 @@ class PawaPayGateway(BaseGateway):
         client_reference_id: str, metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         payload = {
-            "payoutId": uuid.uuid4().hex,
+            "payoutId": str(uuid.uuid4()),
             "recipient": {"type": "MMO", "accountDetails": {"phoneNumber": phone, "provider": provider}},
             "customerMessage": "Payout",
             "amount": str(amount),
@@ -95,7 +95,7 @@ class PawaPayGateway(BaseGateway):
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         payload = {
-            "refundId": uuid.uuid4().hex,
+            "refundId": str(uuid.uuid4()),
             "depositId": deposit_id,
             "amount": str(amount),
             "currency": currency,
