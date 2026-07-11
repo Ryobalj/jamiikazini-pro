@@ -73,7 +73,8 @@ class PawaPayGateway(BaseGateway):
             "metadata": [{"k": k, "v": v} for k, v in (metadata or {}).items()],
         }
         resp = self._post("/v2/deposits", payload)
-        return self.validate_payload(resp, required_keys=["depositId", "status"])
+        self.validate_payload(resp, required_keys=["depositId", "status"])
+        return resp  # rudisha jibu KAMILI (ikiwa na rejectionReason/failureReason n.k.)
 
     def initiate_payout(
         self, *, amount: str, currency: str, phone: str, provider: str,
@@ -88,7 +89,8 @@ class PawaPayGateway(BaseGateway):
             "metadata": [{"k": k, "v": v} for k, v in (metadata or {}).items()],
         }
         resp = self._post("/v2/payouts", payload)
-        return self.validate_payload(resp, required_keys=["payoutId", "status"])
+        self.validate_payload(resp, required_keys=["payoutId", "status"])
+        return resp  # rudisha jibu KAMILI (ikiwa na rejectionReason n.k.)
 
     def refund(
         self, *, deposit_id: str, amount: str, currency: str,
@@ -102,7 +104,8 @@ class PawaPayGateway(BaseGateway):
             "metadata": [{"k": k, "v": v} for k, v in (metadata or {}).items()],
         }
         resp = self._post("/v2/refunds", payload)
-        return self.validate_payload(resp, required_keys=["refundId", "status"])
+        self.validate_payload(resp, required_keys=["refundId", "status"])
+        return resp  # rudisha jibu KAMILI (ikiwa na rejectionReason n.k.)
 
     def check_transaction_status(self, client_reference_id: str) -> Dict[str, Any]:
         """
