@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import logging
 import uuid
+from decimal import Decimal
 import hmac
 import hashlib
 import base64
@@ -58,6 +59,14 @@ class PawaPayGateway(BaseGateway):
         resp.raise_for_status()
         return data
 
+    @staticmethod
+    def _fmt_amount(amount) -> str:
+        """
+        PawaPay MNO za Afrika Mashariki (TZS/KES/UGX...) hazikubali desimali —
+        '100.00' hukataliwa (INVALID_AMOUNT). Rudisha namba nzima kama string ('100').
+        """
+        return str(int(Decimal(str(amount))))
+
     # -------- contract
     def initiate_deposit(
         self, *, amount: str, currency: str, phone: str, provider: str,
@@ -68,7 +77,7 @@ class PawaPayGateway(BaseGateway):
             "payer": {"type": "MMO", "accountDetails": {"phoneNumber": phone, "provider": provider}},
             "clientReferenceId": client_reference_id,
             "customerMessage": "Payment",
-            "amount": str(amount),
+            "amount": self._fmt_amount(amount),
             "currency": currency,
             "metadata": [{str(k): str(v)} for k, v in (metadata or {}).items()],
         }
@@ -84,7 +93,7 @@ class PawaPayGateway(BaseGateway):
             "payoutId": str(uuid.uuid4()),
             "recipient": {"type": "MMO", "accountDetails": {"phoneNumber": phone, "provider": provider}},
             "customerMessage": "Payout",
-            "amount": str(amount),
+            "amount": self._fmt_amount(amount),
             "currency": currency,
             "metadata": [{str(k): str(v)} for k, v in (metadata or {}).items()],
         }
@@ -99,7 +108,7 @@ class PawaPayGateway(BaseGateway):
         payload = {
             "refundId": str(uuid.uuid4()),
             "depositId": deposit_id,
-            "amount": str(amount),
+            "amount": self._fmt_amount(amount),
             "currency": currency,
             "metadata": [{str(k): str(v)} for k, v in (metadata or {}).items()],
         }
