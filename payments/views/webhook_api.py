@@ -93,18 +93,17 @@ class PaymentWebhookView(APIView):
             log.warning("Stale webhook ignored: gateway=%s event_id=%s", gateway, event.id)
             return Response({"detail": "Stale webhook"}, status=status.HTTP_400_BAD_REQUEST)
 
-        log.info("Webhook received: gateway=%s event_id=%s status=%s txn_ref=%s",
-                 gateway, event.id, event.status, event.provider_id)
+        log.info("Webhook received: gateway=%s event_id=%s status=%s provider_id=%s reference=%s amount=%s",
+                 gateway, event.id, event.status, event.provider_id, event.reference, event.amount)
 
         # -----------------------
         # 3.5️⃣ Wallet TopUp (deposit) crediting
         # -----------------------
-        # PawaPay deposit callbacks reference our TopUp (clientReferenceId). Kama
-        # event.reference inalingana na TopUp, shughulikia hapa (credit wallet).
-        if event.reference:
-            topup = self._match_topup(event.reference)
-            if topup:
-                return self._handle_topup_event(gw, topup, event, user, client_ip)
+        # PawaPay deposit callbacks hurejea TopUp yetu kwa clientReferenceId (reference)
+        # AU depositId (provider_id). Tafuta kwa vyote viwili.
+        topup = self._match_topup(event)
+        if topup:
+            return self._handle_topup_event(gw, topup, event, user, client_ip)
 
         # -----------------------
         # 4️⃣ Idempotency check
@@ -152,9 +151,18 @@ class PaymentWebhookView(APIView):
     # -----------------------
     # TopUp helpers
     # -----------------------
-    def _match_topup(self, reference):
+    def _match_topup(self, event):
+        """Tafuta TopUp kwa clientReferenceId (reference) AU depositId (provider_id)."""
         from jamiiwallet.models.topup import TopUp
-        return TopUp.objects.filter(reference=reference).select_related("user").first()
+        if event.reference:
+            t = TopUp.objects.filter(reference=event.reference).select_related("user").first()
+            if t:
+                return t
+        if event.provider_id:
+            t = TopUp.objects.filter(metadata__depositId=event.provider_id).select_related("user").first()
+            if t:
+                return t
+        return None
 
     def _handle_topup_event(self, gw, topup, event, user, client_ip):
         """
