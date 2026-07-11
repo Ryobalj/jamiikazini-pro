@@ -83,29 +83,69 @@ def credit_wallet_for_topup(topup: TopUp) -> Transaction:
         return txn
 
 
+# PawaPay initiate-deposit statuses zinazomaanisha ombi limekubaliwa (STK push imetumwa)
+_PAWAPAY_ACCEPTED = {"ACCEPTED", "SUBMITTED", "ENQUEUED", "PENDING", "PROCESSING"}
+
+
 # ---- PawaPay deposit initiation (STK push)
 def initiate_pawapay_deposit(topup: TopUp) -> dict:
     """
-    Anzisha deposit ya PawaPay (STK push kwa simu ya mlipaji). Huhifadhi depositId,
-    huweka status PROCESSING. Salio LA WALLET HALIONGEZWI hapa — huongezwa na webhook
-    (au reconciliation) baada ya callback ya SUCCESS.
+    Anzisha deposit ya PawaPay (STK push kwa simu ya mlipaji). Huhifadhi depositId +
+    status + sababu ya kosa (kama ipo) kwenye metadata, na huandika logs za wazi.
+    Salio LA WALLET HALIONGEZWI hapa — huongezwa na webhook baada ya callback ya SUCCESS.
     """
+    import requests
+
     gw = PawaPayGateway()
-    resp = gw.initiate_deposit(
-        amount=str(topup.amount),
-        currency=getattr(settings, "PAWAPAY_DEFAULT_CURRENCY", "TZS"),
-        phone=topup.phone,
-        provider=topup.provider,
-        client_reference_id=topup.reference,
-        metadata={"topup_id": str(topup.id), "user_id": str(topup.user_id)},
-    )
     md = topup.metadata if isinstance(topup.metadata, dict) else {}
+
+    try:
+        resp = gw.initiate_deposit(
+            amount=str(topup.amount),
+            currency=getattr(settings, "PAWAPAY_DEFAULT_CURRENCY", "TZS"),
+            phone=topup.phone,
+            provider=topup.provider,
+            client_reference_id=topup.reference,
+            metadata={"topup_id": str(topup.id), "user_id": str(topup.user_id)},
+        )
+    except requests.exceptions.HTTPError as e:
+        # PawaPay imekataa ombi (4xx) — kamata sababu, failisha topup (USIRUDIE)
+        reason = {}
+        try:
+            reason = e.response.json()
+        except Exception:
+            reason = {"error": str(e)}
+        md["provider_error"] = reason
+        topup.metadata = md
+        topup.save(update_fields=["metadata"])
+        topup.mark_failed()
+        logger.error(
+            "PawaPay deposit REJECTED (HTTP) ref=%s provider=%s phone=%s amount=%s reason=%s",
+            topup.reference, topup.provider, topup.phone, topup.amount, reason,
+        )
+        return {"status": "REJECTED", "error": reason}
+
+    status = str(resp.get("status") or "").upper()
     md["depositId"] = resp.get("depositId")
-    md["provider_status"] = resp.get("status")
+    md["provider_status"] = status
+    md["provider_response"] = resp
     topup.metadata = md
-    topup.status = TopUp.TopUpStatus.PROCESSING
-    topup.save(update_fields=["metadata", "status"])
-    logger.info(f"PawaPay deposit initiated for {topup.reference} (status={resp.get('status')})")
+
+    if status in _PAWAPAY_ACCEPTED:
+        topup.status = TopUp.TopUpStatus.PROCESSING
+        topup.save(update_fields=["metadata", "status"])
+        logger.info(
+            "PawaPay deposit ACCEPTED ref=%s status=%s depositId=%s (STK push imetumwa kwa %s)",
+            topup.reference, status, resp.get("depositId"), topup.phone,
+        )
+    else:
+        # REJECTED / DUPLICATE_IGNORED / FAILED — soft-reject ndani ya 200
+        topup.save(update_fields=["metadata"])
+        topup.mark_failed()
+        logger.error(
+            "PawaPay deposit NOT accepted ref=%s status=%s provider=%s phone=%s resp=%s",
+            topup.reference, status, topup.provider, topup.phone, resp,
+        )
     return resp
 
 
