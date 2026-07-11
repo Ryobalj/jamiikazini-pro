@@ -70,32 +70,43 @@ export default function JamiiWalletPage() {
     fetchTransactions();
   }, []);
 
+  // Auto-refresh: sasisha salio + miamala kila sekunde 12 (bila usumbufu) ili
+  // ongezeko la salio (mfano baada ya deposit ya PawaPay kufaulu) lionekane lenyewe.
+  useEffect(() => {
+    const id = setInterval(() => {
+      fetchWalletData({ silent: true });
+      fetchTransactions({ silent: true });
+    }, 12000);
+    return () => clearInterval(id);
+  }, []);
+
   useEffect(() => {
     if (transactions.length > 0) {
       calculateMonthlyStats();
     }
   }, [transactions]);
 
-  const fetchWalletData = async () => {
+  const fetchWalletData = async ({ silent = false } = {}) => {
     try {
       const res = await api.get("/jamiiwallet/wallet/");
       setWalletData(res.data);
     } catch (error) {
       console.error("Failed to fetch wallet:", error);
-      toast.error(t("errors.failed_to_load_wallet"));
+      if (!silent) toast.error(t("errors.failed_to_load_wallet"));
     } finally {
       setLoading(false);
     }
   };
 
-  const fetchTransactions = async () => {
+  const fetchTransactions = async ({ silent = false } = {}) => {
     try {
       const res = await api.get("/jamiiwallet/transactions/");
       const txList = Array.isArray(res.data) ? res.data : res.data.results || [];
       setTransactions(txList);
     } catch (error) {
       console.error("Failed to fetch transactions:", error);
-      setTransactions([]);
+      // Wakati wa polling, usifute orodha iliyopo kwa kosa la muda mfupi
+      if (!silent) setTransactions([]);
     }
   };
 
