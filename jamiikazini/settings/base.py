@@ -290,9 +290,10 @@ REST_FRAMEWORK = {
 # JWT Settings
 # ===========================
 SIMPLE_JWT = {
-    # Muda mrefu wa kuepuka usumbufu (refresh za mara kwa mara). Env-configurable.
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=config("ACCESS_TOKEN_MINUTES", default=120, cast=int)),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=config("REFRESH_TOKEN_DAYS", default=30, cast=int)),
+    # Access token FUPI (usalama wa wallet); refresh ndefu ili user asi-login mara kwa mara.
+    # Frontend hufanya silent refresh, kwa hivyo dakika 30 hazileti usumbufu. Env-configurable.
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=config("ACCESS_TOKEN_MINUTES", default=30, cast=int)),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=config("REFRESH_TOKEN_DAYS", default=14, cast=int)),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
     'AUTH_HEADER_TYPES': ('Bearer',),

@@ -76,7 +76,7 @@ class PawaPayGateway(BaseGateway):
             "depositId": str(uuid.uuid4()),
             "payer": {"type": "MMO", "accountDetails": {"phoneNumber": phone, "provider": provider}},
             "clientReferenceId": client_reference_id,
-            "customerMessage": "Payment",
+            "customerMessage": getattr(settings, "PAWAPAY_CUSTOMER_MESSAGE", "Jamiikazini"),
             "amount": self._fmt_amount(amount),
             "currency": currency,
             "metadata": [{str(k): str(v)} for k, v in (metadata or {}).items()],
@@ -92,7 +92,7 @@ class PawaPayGateway(BaseGateway):
         payload = {
             "payoutId": str(uuid.uuid4()),
             "recipient": {"type": "MMO", "accountDetails": {"phoneNumber": phone, "provider": provider}},
-            "customerMessage": "Payout",
+            "customerMessage": getattr(settings, "PAWAPAY_CUSTOMER_MESSAGE", "Jamiikazini"),
             "amount": self._fmt_amount(amount),
             "currency": currency,
             "metadata": [{str(k): str(v)} for k, v in (metadata or {}).items()],
