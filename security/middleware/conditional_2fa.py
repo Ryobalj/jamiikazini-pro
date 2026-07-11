@@ -20,6 +20,9 @@ PROTECTED_PATHS = getattr(settings, "SECURITY_2FA_PROTECTED_PATHS", [
 # vinginevyo middleware huzuia kwa 401 kabla ya gateway kuthibitisha saini.
 EXEMPT_PATHS = getattr(settings, "SECURITY_2FA_EXEMPT_PATHS", [
     r"^/api/v1/payments/webhooks/.*$",
+    # Bei za kubadilisha sarafu ni za kusoma tu (hazihitaji 2FA); zikizuiwa,
+    # frontend haiwezi kuconvert figures wakati mtumiaji anabadilisha sarafu.
+    r"^/api/v1/payments/exchange-rates/?$",
 ])
 
 import re
