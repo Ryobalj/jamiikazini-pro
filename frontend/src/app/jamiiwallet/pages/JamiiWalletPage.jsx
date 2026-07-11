@@ -61,6 +61,7 @@ export default function JamiiWalletPage() {
   const [showTopupModal, setShowTopupModal] = useState(false);
   const [selectedChannel, setSelectedChannel] = useState("pawapay");
   const [selectedMno, setSelectedMno] = useState("");
+  const [countryCode, setCountryCode] = useState("255");
   const [phone, setPhone] = useState("");
   const [monthlyStats, setMonthlyStats] = useState({ income: 0, expenses: 0 });
 
@@ -134,13 +135,15 @@ export default function JamiiWalletPage() {
     }
 
     const channel = selectedChannel || "pawapay";
+    // Namba ya kitaifa: ondoa herufi zisizo namba + 0 ya mwanzo
+    const nationalNumber = phone.replace(/\D/g, "").replace(/^0+/, "");
     // PawaPay (mobile money) inahitaji mtandao (MNO) + namba ya simu
     if (channel === "pawapay") {
       if (!selectedMno) {
         toast.error(t("select_mno") || "Chagua mtandao (MNO).");
         return;
       }
-      if (!phone || phone.trim().length < 9) {
+      if (nationalNumber.length < 9) {
         toast.error(t("invalid_phone") || "Weka namba sahihi ya simu.");
         return;
       }
@@ -150,7 +153,8 @@ export default function JamiiWalletPage() {
       const payload = { amount: parseFloat(topupAmount), channel };
       if (channel === "pawapay") {
         payload.mno = selectedMno;
-        payload.phone = phone.trim();
+        // Unganisha country code iliyochaguliwa + namba ya kitaifa -> MSISDN kamili
+        payload.phone = countryCode + nationalNumber;
       }
       await api.post("/jamiiwallet/topup/", payload);
 
@@ -159,6 +163,7 @@ export default function JamiiWalletPage() {
       setTopupAmount("");
       setSelectedChannel("pawapay");
       setSelectedMno("");
+      setCountryCode("255");
       setPhone("");
 
       setTimeout(() => {
@@ -575,15 +580,28 @@ export default function JamiiWalletPage() {
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         {t("phone_number") || "Namba ya simu"}
                       </label>
-                      <div className="relative">
-                        <Smartphone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                        <input
-                          type="tel"
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
-                          placeholder="+255 7XX XXX XXX"
-                          className="w-full pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        />
+                      <div className="flex gap-2">
+                        <select
+                          value={countryCode}
+                          onChange={(e) => setCountryCode(e.target.value)}
+                          className="py-2 px-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        >
+                          <option value="255">🇹🇿 +255</option>
+                          <option value="254">🇰🇪 +254</option>
+                          <option value="256">🇺🇬 +256</option>
+                          <option value="250">🇷🇼 +250</option>
+                          <option value="257">🇧🇮 +257</option>
+                        </select>
+                        <div className="relative flex-1">
+                          <Smartphone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                          <input
+                            type="tel"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            placeholder="7XX XXX XXX"
+                            className="w-full pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                          />
+                        </div>
                       </div>
                     </div>
                   </>
@@ -598,6 +616,7 @@ export default function JamiiWalletPage() {
                       setTopupAmount("");
                       setSelectedChannel("pawapay");
                       setSelectedMno("");
+                      setCountryCode("255");
                       setPhone("");
                     }}
                   >
