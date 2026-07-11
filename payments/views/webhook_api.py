@@ -88,13 +88,17 @@ class PaymentWebhookView(APIView):
             log.error("Failed to parse webhook: gateway=%s error=%s", gateway, e, exc_info=True)
             return Response({"detail": "Invalid payload"}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Replay check (timestamp max_age=300s)
-        if event.timestamp and (time.time() - event.timestamp > 300):
-            log.warning("Stale webhook ignored: gateway=%s event_id=%s", gateway, event.id)
+        # GatewayEvent haina lazima timestamp/id — tumia getattr salama.
+        _event_ts = getattr(event, "timestamp", None)
+        _event_id = getattr(event, "id", None) or event.provider_id
+
+        # Replay check (timestamp max_age=300s) — ikiwa timestamp ipo
+        if _event_ts and (time.time() - _event_ts > 300):
+            log.warning("Stale webhook ignored: gateway=%s event_id=%s", gateway, _event_id)
             return Response({"detail": "Stale webhook"}, status=status.HTTP_400_BAD_REQUEST)
 
         log.info("Webhook received: gateway=%s event_id=%s status=%s provider_id=%s reference=%s amount=%s",
-                 gateway, event.id, event.status, event.provider_id, event.reference, event.amount)
+                 gateway, _event_id, event.status, event.provider_id, event.reference, event.amount)
 
         # -----------------------
         # 3.5️⃣ Wallet TopUp (deposit) crediting
@@ -108,8 +112,8 @@ class PaymentWebhookView(APIView):
         # -----------------------
         # 4️⃣ Idempotency check
         # -----------------------
-        if event.id and Transaction.objects.filter(last_event_id=event.id).exists():
-            log.info("Duplicate webhook ignored: event_id=%s", event.id)
+        if _event_id and Transaction.objects.filter(last_event_id=_event_id).exists():
+            log.info("Duplicate webhook ignored: event_id=%s", _event_id)
             return Response({"status": "duplicate"}, status=200)
 
         # -----------------------
@@ -139,11 +143,11 @@ class PaymentWebhookView(APIView):
             receipt = txn.receipt or {}
             receipt["last_webhook"] = event.raw
             txn.receipt = receipt
-            txn.last_event_id = event.id
+            txn.last_event_id = _event_id
             txn.save(update_fields=["status", "receipt", "updated_at", "last_event_id"])
 
             # Audit log
-            AuditLog.log("WEBHOOK_PROCESSED", user, f"Gateway={gateway}, Event={event.id}",
+            AuditLog.log("WEBHOOK_PROCESSED", user, f"Gateway={gateway}, Event={_event_id}",
                          ip=client_ip, txn_id=txn.id, old_status=old_status, new_status=txn.status)
 
         return Response({"ok": True})
