@@ -70,7 +70,7 @@ class PawaPayGateway(BaseGateway):
             "customerMessage": "Payment",
             "amount": str(amount),
             "currency": currency,
-            "metadata": [{"k": k, "v": v} for k, v in (metadata or {}).items()],
+            "metadata": [{str(k): str(v)} for k, v in (metadata or {}).items()],
         }
         resp = self._post("/v2/deposits", payload)
         self.validate_payload(resp, required_keys=["depositId", "status"])
@@ -86,7 +86,7 @@ class PawaPayGateway(BaseGateway):
             "customerMessage": "Payout",
             "amount": str(amount),
             "currency": currency,
-            "metadata": [{"k": k, "v": v} for k, v in (metadata or {}).items()],
+            "metadata": [{str(k): str(v)} for k, v in (metadata or {}).items()],
         }
         resp = self._post("/v2/payouts", payload)
         self.validate_payload(resp, required_keys=["payoutId", "status"])
@@ -101,7 +101,7 @@ class PawaPayGateway(BaseGateway):
             "depositId": deposit_id,
             "amount": str(amount),
             "currency": currency,
-            "metadata": [{"k": k, "v": v} for k, v in (metadata or {}).items()],
+            "metadata": [{str(k): str(v)} for k, v in (metadata or {}).items()],
         }
         resp = self._post("/v2/refunds", payload)
         self.validate_payload(resp, required_keys=["refundId", "status"])
