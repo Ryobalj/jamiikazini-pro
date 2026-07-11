@@ -109,6 +109,11 @@ class PaymentWebhookView(APIView):
         if topup:
             return self._handle_topup_event(gw, topup, event, user, client_ip)
 
+        # ---- Withdrawal (payout) callbacks ----
+        withdrawal = self._match_withdrawal(event)
+        if withdrawal:
+            return self._handle_withdrawal_event(withdrawal, event, user, client_ip)
+
         # -----------------------
         # 4️⃣ Idempotency check
         # -----------------------
@@ -211,6 +216,54 @@ class PaymentWebhookView(APIView):
         if api_status in ("FAILED", "REJECTED", "DECLINED", "CANCELLED"):
             topup.mark_failed()
             return Response({"ok": True, "status": "failed"})
+
+        return Response({"status": "pending"}, status=200)
+
+    # -----------------------
+    # Withdrawal (payout) helpers
+    # -----------------------
+    def _match_withdrawal(self, event):
+        """Tafuta Withdrawal kwa clientReferenceId (reference) AU payoutId (provider_id)."""
+        from jamiiwallet.models.withdrawal import Withdrawal
+        if event.reference:
+            w = Withdrawal.objects.filter(reference=event.reference).select_related("user").first()
+            if w:
+                return w
+        if event.provider_id:
+            w = Withdrawal.objects.filter(metadata__payoutId=event.provider_id).select_related("user").first()
+            if w:
+                return w
+        return None
+
+    def _handle_withdrawal_event(self, withdrawal, event, user, client_ip):
+        """
+        Payout callback: SUCCESS -> thibitisha (salio tayari limepunguzwa); FAILED ->
+        REJESHA salio (re-credit). Idempotent (status ya mwisho hairudiwi).
+        """
+        from jamiiwallet.models.withdrawal import Withdrawal
+        from jamiitasks.tasks.wallet import reverse_withdrawal
+
+        if withdrawal.status in (
+            Withdrawal.WithdrawalStatus.COMPLETED,
+            Withdrawal.WithdrawalStatus.REVERSED,
+            Withdrawal.WithdrawalStatus.FAILED,
+        ):
+            return Response({"status": "already_processed"}, status=200)
+
+        st = (event.status or "").upper()
+        if st in ("COMPLETED", "SUCCESS", "SUCCESSFUL"):
+            withdrawal.mark_completed()
+            try:
+                AuditLog.log("WEBHOOK_WITHDRAWAL_COMPLETED", user, f"ref={withdrawal.reference}", ip=client_ip)
+            except Exception:
+                pass
+            log.info("Withdrawal completed via webhook: ref=%s amount=%s", withdrawal.reference, withdrawal.amount)
+            return Response({"ok": True})
+
+        if st in ("FAILED", "REJECTED", "DECLINED", "CANCELLED"):
+            reverse_withdrawal(withdrawal)
+            log.info("Withdrawal reversed (payout failed): ref=%s amount=%s", withdrawal.reference, withdrawal.amount)
+            return Response({"ok": True, "status": "reversed"})
 
         return Response({"status": "pending"}, status=200)
 

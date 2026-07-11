@@ -63,6 +63,11 @@ export default function JamiiWalletPage() {
   const [selectedMno, setSelectedMno] = useState("");
   const [countryCode, setCountryCode] = useState("255");
   const [phone, setPhone] = useState("");
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+  const [withdrawAmount, setWithdrawAmount] = useState("");
+  const [withdrawMno, setWithdrawMno] = useState("");
+  const [withdrawCountryCode, setWithdrawCountryCode] = useState("255");
+  const [withdrawPhone, setWithdrawPhone] = useState("");
   const [monthlyStats, setMonthlyStats] = useState({ income: 0, expenses: 0 });
 
   useEffect(() => {
@@ -188,6 +193,51 @@ export default function JamiiWalletPage() {
         error?.response?.data?.mno ||
         error?.response?.data?.phone;
       toast.error(detail || t("topup_failed"));
+    }
+  };
+
+  const handleWithdraw = async () => {
+    if (!withdrawAmount || parseFloat(withdrawAmount) <= 0) {
+      toast.error(t("invalid_amount"));
+      return;
+    }
+    const nationalNumber = withdrawPhone.replace(/\D/g, "").replace(/^0+/, "");
+    if (!withdrawMno) {
+      toast.error(t("select_mno") || "Chagua mtandao (MNO).");
+      return;
+    }
+    if (nationalNumber.length < 9) {
+      toast.error(t("invalid_phone") || "Weka namba sahihi ya simu.");
+      return;
+    }
+
+    try {
+      await api.post("/jamiiwallet/withdraw/", {
+        amount: parseFloat(withdrawAmount),
+        channel: "pawapay",
+        mno: withdrawMno,
+        phone: withdrawCountryCode + nationalNumber,
+      });
+
+      toast.success(t("withdraw_initiated") || "Ombi la kutoa limetumwa.");
+      setShowWithdrawModal(false);
+      setWithdrawAmount("");
+      setWithdrawMno("");
+      setWithdrawCountryCode("255");
+      setWithdrawPhone("");
+
+      setTimeout(() => {
+        fetchWalletData();
+        fetchTransactions();
+      }, 2000);
+    } catch (error) {
+      console.error("Withdraw failed:", error);
+      const detail =
+        error?.response?.data?.detail ||
+        error?.response?.data?.amount ||
+        error?.response?.data?.mno ||
+        error?.response?.data?.phone;
+      toast.error(detail || t("withdraw_failed") || "Kutoa kumeshindwa.");
     }
   };
 
@@ -369,6 +419,15 @@ export default function JamiiWalletPage() {
                 >
                   <ArrowDown className="w-4 h-4 mr-1" />
                   {t("request")}
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => setShowWithdrawModal(true)}
+                >
+                  <Smartphone className="w-4 h-4 mr-1" />
+                  {t("withdraw") || "Toa"}
                 </Button>
               </div>
             </CardContent>
@@ -635,6 +694,107 @@ export default function JamiiWalletPage() {
                   </Button>
                   <Button className="flex-1 bg-purple-600 hover:bg-purple-700" onClick={handleTopup}>
                     {t("confirm_topup")}
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {showWithdrawModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
+          <Card className="max-w-md w-full">
+            <CardHeader title={t("withdraw_wallet") || "Toa Salio"} icon={<Smartphone className="w-5 h-5" />} divider />
+            <CardContent>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    {t("amount")} ({currency})
+                  </label>
+                  <div className="relative">
+                    <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <input
+                      type="number"
+                      value={withdrawAmount}
+                      onChange={(e) => setWithdrawAmount(e.target.value)}
+                      placeholder="0.00"
+                      className="w-full pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    {t("mobile_network") || "Mtandao (MNO)"}
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { id: "yas", name: "Yas (Tigo)" },
+                      { id: "airtel", name: "Airtel" },
+                      { id: "halotel", name: "Halotel" },
+                    ].map((mno) => (
+                      <button
+                        key={mno.id}
+                        type="button"
+                        onClick={() => setWithdrawMno(mno.id)}
+                        className={`p-3 rounded-lg border text-center transition-all ${
+                          withdrawMno === mno.id
+                            ? "border-purple-500 bg-purple-50 dark:bg-purple-900/30"
+                            : "border-gray-200 dark:border-gray-700 hover:border-gray-300"
+                        }`}
+                      >
+                        <span className="text-xs">{mno.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    {t("phone_number") || "Namba ya simu"}
+                  </label>
+                  <div className="flex gap-2">
+                    <select
+                      value={withdrawCountryCode}
+                      onChange={(e) => setWithdrawCountryCode(e.target.value)}
+                      className="py-2 px-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    >
+                      <option value="255">🇹🇿 +255</option>
+                      <option value="254">🇰🇪 +254</option>
+                      <option value="256">🇺🇬 +256</option>
+                      <option value="250">🇷🇼 +250</option>
+                      <option value="257">🇧🇮 +257</option>
+                    </select>
+                    <div className="relative flex-1">
+                      <Smartphone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <input
+                        type="tel"
+                        value={withdrawPhone}
+                        onChange={(e) => setWithdrawPhone(e.target.value)}
+                        placeholder="7XX XXX XXX"
+                        className="w-full pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex gap-2 pt-4">
+                  <Button
+                    variant="outline"
+                    className="flex-1"
+                    onClick={() => {
+                      setShowWithdrawModal(false);
+                      setWithdrawAmount("");
+                      setWithdrawMno("");
+                      setWithdrawCountryCode("255");
+                      setWithdrawPhone("");
+                    }}
+                  >
+                    {t("cancel")}
+                  </Button>
+                  <Button className="flex-1 bg-purple-600 hover:bg-purple-700" onClick={handleWithdraw}>
+                    {t("confirm_withdraw") || "Thibitisha"}
                   </Button>
                 </div>
               </div>
