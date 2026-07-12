@@ -9,14 +9,34 @@ from jamiiwallet.models.wallet import Wallet
 
 
 class TransactionSerializer(serializers.ModelSerializer):
+    counterparty_name = serializers.SerializerMethodField()
+    direction = serializers.SerializerMethodField()
+
     class Meta:
         model = Transaction
         # NB: Transaction haina field 'description' - tumia 'metadata' kwa data ya ziada
         fields = [
-            'id', 'wallet', 'counterparty', 'transaction_type', 'amount',
-            'metadata', 'status', 'reference', 'created_at', 'updated_at'
+            'id', 'wallet', 'counterparty', 'counterparty_name', 'direction',
+            'transaction_type', 'amount', 'metadata', 'status', 'reference',
+            'created_at', 'updated_at'
         ]
         read_only_fields = ['id', 'status', 'reference', 'created_at', 'updated_at']
+
+    def get_counterparty_name(self, obj):
+        return obj.counterparty.full_name if obj.counterparty_id else None
+
+    def get_direction(self, obj):
+        """'in' kama wallet ya mtumiaji huyu imeongezeka, 'out' ikipungua.
+        Kwa TRANSFER, rekodi ya mtumaji ina initiated_by == mmiliki wa wallet
+        (ni 'out'); rekodi ya mpokeaji ina initiated_by == mtumaji, si mmiliki
+        wa wallet hiyo (ni 'in') - hii ni sahihi bila kutegemea request.user."""
+        if obj.transaction_type in [Transaction.TransactionType.TOP_UP, Transaction.TransactionType.REFUND]:
+            return "in"
+        if obj.transaction_type == Transaction.TransactionType.WITHDRAWAL:
+            return "out"
+        if obj.transaction_type == Transaction.TransactionType.TRANSFER and obj.wallet_id:
+            return "out" if obj.initiated_by_id == obj.wallet.user_id else "in"
+        return None
 
     def validate(self, attrs):
         transaction_type = attrs.get('transaction_type')

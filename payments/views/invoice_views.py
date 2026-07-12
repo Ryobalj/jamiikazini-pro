@@ -18,6 +18,10 @@ class InvoiceViewSet(BaseCRUDViewSet):
     """
     queryset = Invoice.objects.select_related("user", "created_by", "last_modified_by")
     serializer_class = InvoiceSerializer
+    # Invoice ina field 'user' (si 'owner' - default ya BaseCRUDViewSet), hivyo
+    # bila hii auto-scoping ya BaseCRUDViewSet.get_queryset() haiwezi kutambua
+    # field sahihi na ingerudisha invoices ZA WATUMIAJI WOTE kwa mtu yeyote.
+    owner_field = "user"
     ordering = ["-created_at"]
 
     def perform_create(self, serializer):

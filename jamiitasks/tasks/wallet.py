@@ -317,6 +317,107 @@ def reverse_withdrawal(withdrawal) -> None:
         w.save(update_fields=["status"])
 
 
+# ============================================================
+# TRANSFER (P2P, ndani ya mfumo) — hakuna gateway ya nje, synchronous
+# ============================================================
+
+def execute_transfer(transfer) -> None:
+    """
+    Hamisha salio kutoka wallet ya sender kwenda wallet ya recipient. ATOMIC +
+    IDEMPOTENT (idempotency_key ya kipekee kwa reference). Hulinda dhidi ya
+    deadlock kwa ku-lock wallet zote mbili kwa mpangilio thabiti (kwa wallet id,
+    si kwa sender/recipient) - hii ni muhimu kwani A->B na B->A zinaweza kutokea
+    kwa wakati mmoja.
+    """
+    idempotency_key = f"transfer:{transfer.reference}"
+    with db_transaction.atomic():
+        if Transaction.objects.filter(idempotency_key=idempotency_key).exists():
+            return
+
+        wallets = list(
+            Wallet.objects.select_for_update()
+            .filter(user_id__in=[transfer.sender_id, transfer.recipient_id])
+            .order_by("id")
+        )
+        wallets_by_user = {w.user_id: w for w in wallets}
+        sender_wallet = wallets_by_user.get(transfer.sender_id)
+        recipient_wallet = wallets_by_user.get(transfer.recipient_id)
+
+        if not sender_wallet or not recipient_wallet:
+            transfer.mark_failed("Wallet haijapatikana kwa mtumaji au mpokeaji.")
+            return
+
+        if sender_wallet.balance < Decimal(transfer.amount):
+            transfer.mark_failed("Salio halitoshi.")
+            return
+
+        sender_wallet.balance -= Decimal(transfer.amount)
+        recipient_wallet.balance += Decimal(transfer.amount)
+        sender_wallet.save(update_fields=["balance"])
+        recipient_wallet.save(update_fields=["balance"])
+
+        sender_txn = Transaction.objects.create(
+            wallet=sender_wallet,
+            initiated_by=transfer.sender,
+            counterparty=transfer.recipient,
+            transaction_type=Transaction.TransactionType.TRANSFER,
+            status=Transaction.TransactionStatus.COMPLETED,
+            amount=transfer.amount,
+            reference=f"{transfer.reference}-OUT",
+            metadata={"note": transfer.note, "direction": "sent"},
+            idempotency_key=idempotency_key,
+        )
+        recipient_txn = Transaction.objects.create(
+            wallet=recipient_wallet,
+            initiated_by=transfer.sender,
+            counterparty=transfer.sender,
+            transaction_type=Transaction.TransactionType.TRANSFER,
+            status=Transaction.TransactionStatus.COMPLETED,
+            amount=transfer.amount,
+            reference=f"{transfer.reference}-IN",
+            metadata={"note": transfer.note, "direction": "received"},
+            idempotency_key=f"{idempotency_key}:in",
+        )
+        transfer.mark_completed(sender_txn, recipient_txn)
+        logger.info(
+            "Transfer completed ref=%s sender=%s recipient=%s amount=%s",
+            transfer.reference, transfer.sender_id, transfer.recipient_id, transfer.amount,
+        )
+
+
+@shared_task(bind=True, max_retries=2, default_retry_delay=10)
+def process_transfer_transaction(self, transfer_id):
+    """Celery task inayotekeleza Transfer. Ni synchronous kimantiki (hakuna gateway
+    ya nje ya kusubiri) - hufanya kazi kwa uhakika hata EAGER mode."""
+    from jamiiwallet.models.transfer import Transfer
+    start_time = time.time()
+    task_name = "process_transfer_transaction"
+    task_id = str(self.request.id)
+
+    try:
+        transfer = Transfer.objects.select_related("sender", "recipient").get(id=transfer_id)
+    except Transfer.DoesNotExist:
+        _log_task(task_name, task_id, "FAILED", f"Transfer {transfer_id} not found", start_time)
+        return f"Transfer {transfer_id} not found."
+
+    if transfer.status != Transfer.TransferStatus.INITIATED:
+        msg = f"Transfer {transfer.reference} already processed (status={transfer.status})."
+        _log_task(task_name, task_id, "SKIPPED", msg, start_time)
+        return msg
+
+    try:
+        execute_transfer(transfer)
+        msg = f"Transfer {transfer.reference} processed (status={transfer.status})."
+        _log_task(task_name, task_id, "SUCCESS", msg, start_time)
+        logger.info(msg)
+        return msg
+    except Exception as e:
+        err_msg = f"Error processing Transfer {transfer.reference}: {str(e)}"
+        logger.error(err_msg, exc_info=True)
+        _log_task(task_name, task_id, "FAILED", err_msg, start_time)
+        raise self.retry(exc=e, countdown=10)
+
+
 def initiate_pawapay_payout(withdrawal) -> dict:
     """Anzisha PawaPay payout kwenda simu ya mteja. Huhifadhi payoutId + status + kosa."""
     import requests

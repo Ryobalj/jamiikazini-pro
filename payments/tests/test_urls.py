@@ -67,6 +67,23 @@ class TestPaymentsRoutes:
         resp = api_client.post(url_mark)
         assert resp.status_code in [status.HTTP_200_OK, status.HTTP_400_BAD_REQUEST]
 
+    def test_invoice_list_is_scoped_to_owner(self, api_client, user_factory, invoice_factory):
+        """Regression: InvoiceViewSet must not leak other users' invoices."""
+        owner = user_factory()
+        other_user = user_factory()
+        own_invoice = invoice_factory(user=owner, amount="100.00", tax="10.00", invoice_number="INV-OWNER-1")
+        invoice_factory(user=other_user, amount="999.00", tax="0.00", invoice_number="INV-OTHER-1")
+
+        api_client.force_authenticate(user=owner)
+        resp = api_client.get(reverse("payments:invoice-list"))
+        assert resp.status_code == status.HTTP_200_OK
+
+        body = resp.json()
+        results = body.get("results", body) if isinstance(body, dict) else body
+        ids = {str(i["id"]) for i in results}
+        assert str(own_invoice.id) in ids
+        assert len(ids) == 1
+
     def test_payment_failure_routes(self, api_client, user_factory, payment_failure_factory):
         user = user_factory()
         api_client.force_authenticate(user=user)

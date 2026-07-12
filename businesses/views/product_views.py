@@ -1,5 +1,7 @@
 ﻿# businesses/views/product_views.py
 
+import logging
+
 from rest_framework import viewsets, generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.decorators import action, api_view
@@ -21,6 +23,8 @@ from businesses.serializers.product_serializer import (
     ProductSerializer,
 )
 from kiini.helpers.domain import generate_subdomain_url
+
+logger = logging.getLogger(__name__)
 
 
 class ProductViewSet(viewsets.ModelViewSet):
@@ -183,6 +187,38 @@ class ProductViewSet(viewsets.ModelViewSet):
                 logger.warning(f"Failed to delete product from Elasticsearch: {e}")
         
         instance.delete()
+
+    @action(detail=True, methods=["post"])
+    def restock(self, request, slug=None, **kwargs):
+        """
+        Ongeza stock ya bidhaa (mmiliki wa biashara pekee). Hii ndiyo njia rasmi
+        ya kuongeza quantity_in_stock - si kuhariri field moja kwa moja kupitia
+        update ya jumla - ili kuwa na audit trail wazi ya kila ongezeko.
+        """
+        product = self.get_object()
+        if product.business.owner != request.user:
+            raise PermissionDenied("You don't have permission to restock this product")
+
+        try:
+            quantity = int(request.data.get("quantity"))
+        except (TypeError, ValueError):
+            raise ValidationError({"quantity": "Weka namba sahihi ya kuongeza."})
+        if quantity <= 0:
+            raise ValidationError({"quantity": "Kiasi cha kuongeza lazima kiwe zaidi ya sifuri."})
+
+        product.quantity_in_stock = models.F("quantity_in_stock") + quantity
+        product.save(update_fields=["quantity_in_stock"])
+        product.refresh_from_db(fields=["quantity_in_stock"])
+
+        logger.info(
+            "Product restocked: product=%s business=%s by=%s +%s -> %s",
+            product.id, product.business_id, request.user.id, quantity, product.quantity_in_stock,
+        )
+
+        return Response({
+            "id": str(product.id),
+            "quantity_in_stock": product.quantity_in_stock,
+        })
 
     @action(detail=False, methods=["get"])
     def nearby(self, request, **kwargs):

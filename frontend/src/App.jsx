@@ -21,6 +21,13 @@ import WalletPage from "@/app/accounts/pages/WalletPage";
 
 // Institution Pages
 import InstitutionProfile from "@/app/kiini/pages/InstitutionProfile";
+import InstitutionFormPage from "@/app/kiini/pages/InstitutionFormPage";
+import InstitutionSettingsPage from "@/app/kiini/pages/InstitutionSettingsPage";
+
+// Payments admin pages
+import InvoicesPage from "@/app/payments/pages/InvoicesPage";
+import PaymentMethodsPage from "@/app/payments/pages/PaymentMethodsPage";
+import PaymentReportsPage from "@/app/payments/pages/PaymentReportsPage";
 
 // Business Pages
 import BusinessRegistrationPage from "@/app/businesses/pages/BusinessRegistrationPage";
@@ -31,6 +38,14 @@ import JamiichatPage from "@/app/jamiichat/pages/JamiichatPage";
 
 // Jamiiwallet pages
 import JamiiWalletPage from "@/app/jamiiwallet/pages/JamiiWalletPage";
+import SendMoneyPage from "@/app/jamiiwallet/pages/SendMoneyPage";
+import RequestMoneyPage from "@/app/jamiiwallet/pages/RequestMoneyPage";
+import TransactionsListPage from "@/app/jamiiwallet/pages/TransactionsListPage";
+import TransactionDetailPage from "@/app/jamiiwallet/pages/TransactionDetailPage";
+import AccountsPage from "@/app/jamiiwallet/pages/AccountsPage";
+import AddCardPage from "@/app/jamiiwallet/pages/AddCardPage";
+import AddBeneficiaryPage from "@/app/jamiiwallet/pages/AddBeneficiaryPage";
+import Setup2FAPage from "@/app/security/pages/Setup2FAPage";
 
 import MainLayout from "@/layouts/MainLayout";
 import ProtectedRoute from "@/components/ProtectedRoute";
@@ -63,42 +78,39 @@ export default function App() {
         <Route path="/accounts/change-password" element={<ProtectedRoute><MainLayout><div>Change Password</div></MainLayout></ProtectedRoute>} />
 
         {/* Institution Routes */}
-        <Route path="/institutions/create" element={<ProtectedRoute><MainLayout><div>Create Institution</div></MainLayout></ProtectedRoute>} />
+        <Route path="/institutions/create" element={<ProtectedRoute><MainLayout><InstitutionFormPage /></MainLayout></ProtectedRoute>} />
         <Route path="/kiini/institutions/:id" element={<ProtectedRoute><MainLayout><InstitutionProfile /></MainLayout></ProtectedRoute>} />
-        <Route path="/kiini/institutions/:id/settings" element={<ProtectedRoute><MainLayout><div>Institution Settings</div></MainLayout></ProtectedRoute>} />
-        <Route path="/kiini/institutions/:id/edit" element={<ProtectedRoute><MainLayout><div>Edit Institution</div></MainLayout></ProtectedRoute>} />
-        <Route path="/kiini/dashboard" element={<ProtectedRoute><MainLayout><div>Kiini Dashboard</div></MainLayout></ProtectedRoute>} />
-        <Route path="/kiini/dashboard/institutions" element={<ProtectedRoute><MainLayout><div>Institutions</div></MainLayout></ProtectedRoute>} />
-        <Route path="/kiini/dashboard/departments" element={<ProtectedRoute><MainLayout><div>Departments</div></MainLayout></ProtectedRoute>} />
-        <Route path="/kiini/dashboard/staff-profiles" element={<ProtectedRoute><MainLayout><div>Staff Profiles</div></MainLayout></ProtectedRoute>} />
-        <Route path="/kiini/dashboard/institution-tiers" element={<ProtectedRoute><MainLayout><div>Institution Tiers</div></MainLayout></ProtectedRoute>} />
-        <Route path="/kiini/dashboard/institution-types" element={<ProtectedRoute><MainLayout><div>Institution Types</div></MainLayout></ProtectedRoute>} />
+        <Route path="/kiini/institutions/:id/settings" element={<ProtectedRoute><MainLayout><InstitutionSettingsPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/kiini/institutions/:id/edit" element={<ProtectedRoute><MainLayout><InstitutionFormPage /></MainLayout></ProtectedRoute>} />
+        {/* /kiini/dashboard* zinashughulikiwa na generateDynamicRoutes() (modulePages.kiini)
+            chini - ziliondolewa hapa ili zisigongane na routes hizo hizo. */}
 
         {/* Business Routes */}
         <Route path="/businesses/register/" element={<ProtectedRoute><MainLayout><BusinessRegistrationPage /></MainLayout></ProtectedRoute>} />
 
         {/* Payments Routes */}
         <Route path="/payments/audit-logs/" element={<ProtectedRoute><MainLayout><div>Audit Logs</div></MainLayout></ProtectedRoute>} />
-        <Route path="/payments/invoices/" element={<ProtectedRoute><MainLayout><div>Invoices</div></MainLayout></ProtectedRoute>} />
-        <Route path="/payments/payment-methods/" element={<ProtectedRoute><MainLayout><div>Payment Methods</div></MainLayout></ProtectedRoute>} />
-        <Route path="/payments/payment-reports/" element={<ProtectedRoute><MainLayout><div>Payment Reports</div></MainLayout></ProtectedRoute>} />
+        <Route path="/payments/invoices/" element={<ProtectedRoute><MainLayout><InvoicesPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/payments/payment-methods/" element={<ProtectedRoute><MainLayout><PaymentMethodsPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/payments/payment-reports/" element={<ProtectedRoute><MainLayout><PaymentReportsPage /></MainLayout></ProtectedRoute>} />
 
         {/* Chat Routes */}
         <Route path="/jamiichat" element={<ProtectedRoute><MainLayout><JamiichatPage /></MainLayout></ProtectedRoute>} />
         <Route path="/jamiichat/:id" element={<ProtectedRoute><MainLayout><JamiichatPage /></MainLayout></ProtectedRoute>} />
 
         {/* Security Routes */}
-        <Route path="/security/2fa/setup" element={<ProtectedRoute><MainLayout><div>2FA Setup</div></MainLayout></ProtectedRoute>} />
+        <Route path="/security/2fa/setup" element={<ProtectedRoute><MainLayout><Setup2FAPage /></MainLayout></ProtectedRoute>} />
 
 
         {/* Jamiiwallet Routes */}
         <Route path="/jamiiwallet" element={<ProtectedRoute><MainLayout><JamiiWalletPage /></MainLayout></ProtectedRoute>} />
-        <Route path="/jamiiwallet/send" element={<ProtectedRoute><MainLayout><div>Send Money</div></MainLayout></ProtectedRoute>} />
-        <Route path="/jamiiwallet/request" element={<ProtectedRoute><MainLayout><div>Request Money</div></MainLayout></ProtectedRoute>} />
-        <Route path="/jamiiwallet/transactions" element={<ProtectedRoute><MainLayout><div>All Transactions</div></MainLayout></ProtectedRoute>} />
-        <Route path="/jamiiwallet/transactions/:id" element={<ProtectedRoute><MainLayout><div>Transaction Details</div></MainLayout></ProtectedRoute>} />
-        <Route path="/jamiiwallet/add-card" element={<ProtectedRoute><MainLayout><div>Add Card</div></MainLayout></ProtectedRoute>} />
-        <Route path="/jamiiwallet/add-beneficiary" element={<ProtectedRoute><MainLayout><div>Add Beneficiary</div></MainLayout></ProtectedRoute>} />
+        <Route path="/jamiiwallet/send" element={<ProtectedRoute><MainLayout><SendMoneyPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/jamiiwallet/request" element={<ProtectedRoute><MainLayout><RequestMoneyPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/jamiiwallet/accounts" element={<ProtectedRoute><MainLayout><AccountsPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/jamiiwallet/transactions" element={<ProtectedRoute><MainLayout><TransactionsListPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/jamiiwallet/transactions/:id" element={<ProtectedRoute><MainLayout><TransactionDetailPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/jamiiwallet/add-card" element={<ProtectedRoute><MainLayout><AddCardPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/jamiiwallet/add-beneficiary" element={<ProtectedRoute><MainLayout><AddBeneficiaryPage /></MainLayout></ProtectedRoute>} />
 
         {/* Dynamic module routes (includes business dashboard) */}
         {generateDynamicRoutes()}

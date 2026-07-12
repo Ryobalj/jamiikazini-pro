@@ -7,7 +7,7 @@ import Branches from "@/app/businesses/pages/Branches";
 import Settings from "@/app/businesses/pages/Settings";
 
 import KiiniDashboard from "@/app/kiini/pages/KiiniDashboard";
-import InstitutionProfile from "@/app/kiini/pages/InstitutionProfile";
+import InstitutionsListPage from "@/app/kiini/pages/InstitutionsListPage";
 import DepartmentManagement from "@/app/kiini/pages/DepartmentManagement";
 import StaffProfiles from "@/app/kiini/pages/StaffProfiles";
 import InstitutionTiers from "@/app/kiini/pages/InstitutionTiers";
@@ -45,7 +45,7 @@ export const modulePages = {
     path: "/kiini/dashboard",
     pages: [
       { index: true, element: <KiiniDashboard /> },
-      { path: "institutions", element: <InstitutionProfile /> },
+      { path: "institutions", element: <InstitutionsListPage /> },
       { path: "departments", element: <DepartmentManagement /> },
       { path: "staff-profiles", element: <StaffProfiles /> },
       { path: "institution-tiers", element: <InstitutionTiers /> },

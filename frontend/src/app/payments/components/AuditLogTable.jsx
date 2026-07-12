@@ -23,7 +23,7 @@ export default function AuditLogTable() {
     setError(null);
     try {
       const headers = otpToken ? { Authorization: `Bearer ${otpToken}` } : {};
-      const res = await api.get("/payments/audit_logs/", { params: { page }, headers });
+      const res = await api.get("/payments/audit-logs/", { params: { page }, headers });
 
       const results = res.data.results || [];
       const count = res.data.count || 0;
