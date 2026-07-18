@@ -21,6 +21,13 @@ urlpatterns = [
     path('search/', include(('search.urls', 'search'), namespace='search')),
     path('health/', health_check, name='health_check'),
     path('payments/', include(('payments.urls', 'payments'), namespace='payments')),
+    path('homepage/', include(('homepage.urls', 'homepage'), namespace='homepage')),
+    path('jamiichat/', include(('jamiichat.urls', 'jamiichat'), namespace='jamiichat')),
+    path('billpay/', include(('billpay.urls', 'billpay'), namespace='billpay')),
+    path('realestate/', include(('realestate.urls', 'realestate'), namespace='realestate')),
+    path('agriculture/', include(('agriculture.urls', 'agriculture'), namespace='agriculture')),
+    path('construction/', include(('construction.urls', 'construction'), namespace='construction')),
+    path('savings/', include(('savings.urls', 'savings'), namespace='savings')),
 
     # ================================
     # Syllabus API (Base + Nested Routers)

@@ -1,0 +1,70 @@
+{
+  "profile": {
+    "title": "Bye Nze",
+    "description": "Laba era ofuge ebikwata ku akaawunti yo"
+  },
+  "edit_profile": {
+    "title": "Kyusa Bye Nze",
+    "description": "Kyusa ebikwata ku bubwe wo"
+  },
+  "settings": {
+    "title": "Ensobozesa",
+    "description": "Teekateeka by'oyagala mu akaawunti yo"
+  },
+  "wallet": {
+    "title": "Wallet Yange",
+    "description": "Laba ssente n'emiwendo"
+  },
+  "personal_info": "Ebikwata ku Bubwe",
+  "full_name": "Erinnya Ery'omulimu",
+  "email": "Endagiriro ya Email",
+  "phone": "Nampa ya Ssimu",
+  "national_id": "Endagiriro y'Eggwanga",
+  "member_since": "Membala Okuva",
+  "account_status": "Embeera y'Akaawunti",
+  "email_verified": "Email Ekakasiddwa",
+  "phone_verified": "Ssimu Ekakasiddwa",
+  "2fa_enabled": "Okukakasa mu Migendo Ebiri",
+  "account_active": "Akaawunti Ekola",
+  "manage_security": "Ddukanya Obukuumi",
+  "primary_institution": "Ekitongole Ekikulu",
+  "view_institution": "Laba Ekitongole",
+  "two_factor_authentication": "Okukakasa mu Migendo Ebiri",
+  "2fa_status": "Embeera ya 2FA",
+  "2fa_enabled_desc": "Akaawunti yo ekuumiddwa n'okukakasa mu migendo ebiri",
+  "2fa_disabled_desc": "Wongera olutindo lw'obukuumi ku akaawunti yo",
+  "enable_2fa": "Teekawo 2FA",
+  "disable_2fa": "Zikiza 2FA",
+  "change_password": "Kyusa Ekigambo Ekyekusifu",
+  "update_password": "Sasa Ekigambo Ekyekusifu",
+  "danger_zone": "Ekitundu Eky'akabi",
+  "logout": "Fuluma",
+  "logout_success": "Ofulumye bulungi",
+  "your_institutions": "Ebitongole Byo",
+  "no_institutions_yet": "Tonnatonda kitongole kyonna.",
+  "create_institution": "Tonda Ekitongole",
+  "your_businesses": "Bizinensi Zo",
+  "no_businesses_yet": "Tonnatonda bizinensi yonna.",
+  "create_business": "Tonda Bizinensi",
+  "recent_activity": "Ebikolwa Ebisembye",
+  "no_recent_activity": "Tewali bikolwa bisembye kulaga.",
+  "recent_conversations": "Emboozi Ezisembye",
+  "no_conversations_yet": "Tewannabaawo mboozi.",
+  "open_chat": "Ggulawo Chat",
+  "start_chat": "Tandika Emboozi",
+  "user": "Omukozesa",
+  "edit": "Kyusa",
+  "create": "Tonda",
+  "copied": "kikopeddwa",
+  "errors": {
+    "failed_to_load_profile": "Okufulumya data za bye nze kulemereddwa"
+  },
+  "tabs": {
+    "overview": "Ebikwata ku Nsonga",
+    "institutions": "Ebitongole",
+    "businesses": "Bizinensi",
+    "chat": "Emboozi",
+    "activity": "Ebikolwa",
+    "security": "Obukuumi"
+  }
+}

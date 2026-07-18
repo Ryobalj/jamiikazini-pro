@@ -1,5 +1,6 @@
 # search/documents/review_document.py
 
+from django.conf import settings
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 from businesses.models.review import Review
@@ -42,3 +43,14 @@ class ReviewDocument(Document):
             'is_approved',
             'created_at',
         ]
+
+    @classmethod
+    def search(cls, using=None, index=None, **kwargs):
+        if settings.DEBUG or not getattr(settings, 'ELASTICSEARCH_ENABLED', False):
+            from search.utils.db_fallback import DBFallbackSearch
+            return DBFallbackSearch(
+                cls,
+                Review.objects.filter(is_approved=True).select_related("user", "business", "product", "service"),
+                search_fields=("content",),
+            )
+        return super().search(using=using, index=index, **kwargs)

@@ -21,7 +21,14 @@ class TransportProviderViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return self.queryset.filter(institution=self.request.user.institution)
+        from django.db.models import Q
+        user = self.request.user
+        if user.is_staff or user.is_superuser:
+            return self.queryset
+        filters = Q(user=user)
+        if getattr(user, "institution_id", None):
+            filters |= Q(institution_id=user.institution_id)
+        return self.queryset.filter(filters)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user, institution=self.request.user.institution)

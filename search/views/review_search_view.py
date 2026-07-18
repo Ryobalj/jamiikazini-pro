@@ -3,13 +3,16 @@
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 from elasticsearch_dsl.query import Q
 from search.documents.review_document import ReviewDocument
 from search.serializers.review_search_serializer import ReviewSearchSerializer
 
 
 class ReviewSearchView(APIView):
+    # Public catalog data - reviews are shown to any shopper on a storefront.
+    permission_classes = [permissions.AllowAny]
+
     def get(self, request):
         query = request.GET.get('q', '')
 

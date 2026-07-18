@@ -5,6 +5,8 @@ from businesses.models.order import Order, OrderItem, OrderStatus
 from businesses.models.product import Product
 from businesses.models.booking import Booking
 from businesses.models.booking import Booking, BookingLog
+from businesses.models.featured_listing import FeaturedListing
+from payments.models.invoice import Invoice, InvoiceStatus
 
 
 @receiver(post_save, sender=OrderItem)
@@ -57,4 +59,11 @@ def restore_stock_on_cancel_or_refund(sender, instance, created, **kwargs):
             Product.objects.filter(pk=item.product_id).update(
                 quantity_in_stock=F("quantity_in_stock") + item.quantity
             )
+
+
+@receiver(post_save, sender=Invoice)
+def activate_featured_listing_on_invoice_paid(sender, instance, **kwargs):
+    """Fanya FeaturedListing kuwa hai (is_active=True) mara tu invoice yake ikilipwa."""
+    if instance.status == InvoiceStatus.PAID:
+        FeaturedListing.objects.filter(invoice=instance, is_active=False).update(is_active=True)
 

@@ -62,6 +62,9 @@ class PaymentMethodAdmin(admin.ModelAdmin):
     # ---------------------------
     def masked_identifier(self, obj):
         """Show last 4 digits only for security"""
+        if obj.method_type == "CREDIT_CARD":
+            last4 = (obj.details or {}).get("last4")
+            return f"****{last4}" if last4 else "-"
         if not obj.account_identifier:
             return "-"
         return f"****{obj.account_identifier[-4:]}"

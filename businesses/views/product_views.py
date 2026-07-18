@@ -1,6 +1,7 @@
 ﻿# businesses/views/product_views.py
 
 import logging
+from decimal import Decimal, InvalidOperation
 
 from rest_framework import viewsets, generics, permissions, status
 from rest_framework.response import Response
@@ -63,10 +64,15 @@ class ProductViewSet(viewsets.ModelViewSet):
             elif val in ["false", "0"]:
                 qs = qs.filter(is_available=False)
 
-        # Filter: Search by tags
+        # Filter: by ProductCategory slug
         category = self.request.query_params.get("category")
         if category:
-            qs = qs.filter(tags__contains=[category])
+            qs = qs.filter(category__slug=category)
+
+        # Filter: legacy free-text tag search
+        tag = self.request.query_params.get("tag")
+        if tag:
+            qs = qs.filter(tags__contains=[tag])
 
         # Filter: is_featured
         is_featured = self.request.query_params.get("is_featured")
@@ -91,7 +97,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         if max_price:
             qs = qs.filter(price__lte=max_price)
 
-        return qs.select_related("business", "business__institution")
+        return qs.select_related("business", "business__institution", "category")
 
     def get_serializer_class(self):
         if self.action == "retrieve":
@@ -200,8 +206,8 @@ class ProductViewSet(viewsets.ModelViewSet):
             raise PermissionDenied("You don't have permission to restock this product")
 
         try:
-            quantity = int(request.data.get("quantity"))
-        except (TypeError, ValueError):
+            quantity = Decimal(str(request.data.get("quantity")))
+        except (TypeError, ValueError, InvalidOperation):
             raise ValidationError({"quantity": "Weka namba sahihi ya kuongeza."})
         if quantity <= 0:
             raise ValidationError({"quantity": "Kiasi cha kuongeza lazima kiwe zaidi ya sifuri."})
@@ -290,7 +296,7 @@ class ProductListByProximityView(generics.ListAPIView):
     def get_queryset(self):
         lang = get_language()
         qs = Product.objects.filter(is_available=True, language_code=lang).select_related(
-            "business", "business__institution"
+            "business", "business__institution", "category"
         )
 
         try:

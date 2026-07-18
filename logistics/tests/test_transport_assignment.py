@@ -9,6 +9,7 @@ from django.contrib.gis.geos import Point
 from logistics.models.transport_assignment import TransportAssignment
 from logistics.models.transport_request import TransportRequest
 from logistics.models.transport_provider import TransportProvider
+from logistics.models.transport_provider_verification import TransportProviderVerification
 from logistics.models.vehicle import Vehicle
 
 
@@ -19,8 +20,16 @@ class TransportAssignmentTests(APITestCase):
         self.client = APIClient()
 
         # Create user and authenticate
-        self.user = User.objects.create_user(email="provider1@example.com", password="testpass", full_name="Provider One", role="TRANSPORTER")
+        from kiini.models.institution import Institution
+        institution, _ = Institution.objects.get_or_create(name="Test Logistics Co")
+        self.user = User.objects.create_user(
+            email="provider1@example.com", password="testpass", full_name="Provider One",
+            role="TRANSPORTER", institution=institution,
+        )
         self.client.force_authenticate(user=self.user)
+        TransportProviderVerification.objects.create(
+            user=self.user, institution=institution, overall_status="VERIFIED"
+        )
 
         self.provider = TransportProvider.objects.create(user=self.user)
         self.vehicle = Vehicle.objects.create(

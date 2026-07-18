@@ -13,6 +13,10 @@ from gov_integration.views.transport_verification_views import (
     BusinessLicenseVerificationView,
     LatraLicenseVerificationView
 )
+from gov_integration.views.business_verification_views import (
+    BusinessVerificationRequestView,
+    BusinessVerificationStatusView,
+)
 
 
 urlpatterns = [
@@ -29,6 +33,9 @@ urlpatterns = [
     path('verify/driver_license/', DriverLicenseVerificationView.as_view(), name='verify_driver_license'),
     path('verify/business_license/', BusinessLicenseVerificationView.as_view(), name='verify_business_license'),
     path('verify/latra_license/', LatraLicenseVerificationView.as_view(), name='verify_latra_license'),
+
+    path('verify/business/<uuid:business_id>/license/', BusinessVerificationRequestView.as_view(), name='verify-business-license-request'),
+    path('verify/business/<uuid:business_id>/status/', BusinessVerificationStatusView.as_view(), name='verify-business-status'),
 
     path('countries/', CountryListView.as_view(), name='country-list'),
     path('services/', ServiceTypeListView.as_view(), name='service-list'),

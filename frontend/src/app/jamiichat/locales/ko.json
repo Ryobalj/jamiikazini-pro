@@ -1,0 +1,70 @@
+{
+  "profile": {
+    "title": "내 프로필",
+    "description": "계정 정보를 보고 관리하세요"
+  },
+  "edit_profile": {
+    "title": "프로필 편집",
+    "description": "개인 정보를 업데이트하세요"
+  },
+  "settings": {
+    "title": "설정",
+    "description": "계정 환경설정을 구성하세요"
+  },
+  "wallet": {
+    "title": "내 지갑",
+    "description": "잔액 및 거래 내역 보기"
+  },
+  "personal_info": "개인 정보",
+  "full_name": "전체 이름",
+  "email": "이메일 주소",
+  "phone": "전화번호",
+  "national_id": "주민등록번호",
+  "member_since": "가입일",
+  "account_status": "계정 상태",
+  "email_verified": "이메일 인증됨",
+  "phone_verified": "전화 인증됨",
+  "2fa_enabled": "이중 인증",
+  "account_active": "계정 활성화됨",
+  "manage_security": "보안 관리",
+  "primary_institution": "주요 기관",
+  "view_institution": "기관 보기",
+  "two_factor_authentication": "이중 인증",
+  "2fa_status": "2FA 상태",
+  "2fa_enabled_desc": "귀하의 계정은 이중 인증으로 보호되고 있습니다",
+  "2fa_disabled_desc": "계정에 추가 보안 계층을 추가하세요",
+  "enable_2fa": "2FA 활성화",
+  "disable_2fa": "2FA 비활성화",
+  "change_password": "비밀번호 변경",
+  "update_password": "비밀번호 업데이트",
+  "danger_zone": "위험 구역",
+  "logout": "로그아웃",
+  "logout_success": "로그아웃되었습니다",
+  "your_institutions": "내 기관",
+  "no_institutions_yet": "아직 기관을 생성하지 않았습니다.",
+  "create_institution": "기관 생성",
+  "your_businesses": "내 비즈니스",
+  "no_businesses_yet": "아직 비즈니스를 생성하지 않았습니다.",
+  "create_business": "비즈니스 생성",
+  "recent_activity": "최근 활동",
+  "no_recent_activity": "표시할 최근 활동이 없습니다.",
+  "recent_conversations": "최근 대화",
+  "no_conversations_yet": "아직 대화가 없습니다.",
+  "open_chat": "채팅 열기",
+  "start_chat": "대화 시작",
+  "user": "사용자",
+  "edit": "편집",
+  "create": "생성",
+  "copied": "클립보드에 복사됨",
+  "errors": {
+    "failed_to_load_profile": "프로필 데이터를 불러오지 못했습니다"
+  },
+  "tabs": {
+    "overview": "개요",
+    "institutions": "기관",
+    "businesses": "비즈니스",
+    "chat": "채팅",
+    "activity": "활동",
+    "security": "보안"
+  }
+}

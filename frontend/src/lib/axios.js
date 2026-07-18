@@ -273,7 +273,10 @@ api.interceptors.response.use(
         
         const newAccessToken = refreshResponse.data.access;
         localStorage.setItem("access_token", newAccessToken);
-        
+        if (refreshResponse.data.refresh) {
+          localStorage.setItem("refresh_token", refreshResponse.data.refresh);
+        }
+
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return api(originalRequest);
       } catch (refreshError) {

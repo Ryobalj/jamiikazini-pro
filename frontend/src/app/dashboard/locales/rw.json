@@ -1,0 +1,63 @@
+{
+  "wallet": {
+    "title": "JamiiWallet"
+  },
+  "cart": {
+    "title": "Igikapu"
+  },
+  "orders": {
+    "title": "Amakurikira Yanjye"
+  },
+  "chat": {
+    "title": "Ubutumwa"
+  },
+  "verification": {
+    "required": "Uzuza Kwemeza"
+  },
+  "request_service": {
+    "title": "Saba Ubwoherezi"
+  },
+  "driver": {
+    "dashboard": "Ikibaho cy'Umushoferi",
+    "jobs": "Akazi Kariho",
+    "deliveries": "Ubwoherezi Bwanjye",
+    "verify": "Kwemeza Umushoferi",
+    "register": "Kuba Umushoferi"
+  },
+  "home": {
+    "welcome": "Ikaze ongera",
+    "subtitle": "Ibyo ukeneye byose, ahantu hamwe.",
+    "quick_actions": "Ibikorwa Byihuse",
+    "action_wallet_desc": "Reba amafaranga, ohereza, kuraho amafaranga",
+    "action_cart_desc": "Reba ibicuruzwa mbere yo kwishyura",
+    "action_orders_desc": "Kurikirana ibyo waguze",
+    "action_nearby_desc": "Shakisha ubucuruzi buri hafi yawe",
+    "action_chat_desc": "Vugana n'abagurisha n'abaguzi",
+    "action_request_service_desc": "Bona boda-boda cyangwa kamyoni, nta kugura bikenewe",
+    "verification_title": "Emeza Umwirondoro Wawe",
+    "verification_desc": "Ugomba kuzuza kwemeza umwirondoro mbere yo kugura cyangwa kugurisha.",
+    "verification_cta": "Emeza Nonaha",
+    "business_title": "Ubucuruzi Bwanjye",
+    "business_cta": "Jya ku Kibaho",
+    "driver_title": "Umushoferi",
+    "driver_status_verified": "Wemejwe - witeguye akazi",
+    "driver_status_pending": "Kwemeza birategerejwe",
+    "driver_status_failed": "Kwemeza byanze",
+    "driver_cta": "Reba Akazi"
+  },
+  "billpay": {
+    "title": "Kwishyura Fagitire"
+  },
+  "realestate": {
+    "title": "Imitungo Itimukanwa"
+  },
+  "agriculture": {
+    "title": "Amasezerano y'Ejo Hazaza y'Umusaruro"
+  },
+  "construction": {
+    "title": "Umushinga w'Ubwubatsi/Amasezerano"
+  },
+  "savings": {
+    "title": "Amatsinda y'Ubwizigame VICOBA/SACCOS"
+  }
+}

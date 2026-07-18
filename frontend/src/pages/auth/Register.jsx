@@ -50,6 +50,12 @@ export default function Register() {
       return;
     }
 
+    if (!formData.phone_number.trim()) {
+      setErrors({ phone_number: t("auth_register.errors.phone_required") });
+      setSubmitting(false);
+      return;
+    }
+
     if (!formData.nenosiri || formData.nenosiri.length < 6) {
       setErrors({ nenosiri: t("auth_register.errors.password_length") });
       setSubmitting(false);

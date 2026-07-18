@@ -36,13 +36,16 @@ def test_paymentmethodserializer_serialization(user_factory):
 @pytest.mark.django_db
 def test_get_last4_credit_card(user_factory):
     owner = user_factory()
+    # PCI-DSS: account_identifier ni gateway token, si PAN. last4 inatoka details
+    # (iliyotolewa na gateway tokenization response), si kwa kukata identifier.
     pm = PaymentMethod.objects.create(
         owner=owner,
         method_type=PaymentMethodType.CREDIT_CARD,
         mno=MNOType.AIRTEL,
         country_code=CountryCode.KE,
         phone="+254701234567",
-        account_identifier="4111111111111111",
+        account_identifier="pm_1111111111111111",
+        details={"last4": "1111", "brand": "visa"},
     )
     serializer = PaymentMethodSerializer(pm)
     assert serializer.data["last4"] == "1111"
@@ -83,7 +86,7 @@ def test_validate_phone_calls_model_validator(mocker, user_factory):
         "phone": "+255688000111",
         "country_code": "TZ",
         "method_type": "CREDIT_CARD",
-        "account_identifier": "1234",
+        "account_identifier": "pm_1234",
     }
 
     serializer = PaymentMethodSerializer(data=data)
@@ -111,7 +114,23 @@ def test_validate_requires_account_identifier_for_credit_card():
 
 def test_validate_ok_for_other_methods():
     serializer = PaymentMethodSerializer()
-    # Tumia account_identifier sahihi ili isishindwe na validation
-    attrs = {"method_type": PaymentMethodType.CREDIT_CARD, "account_identifier": "1234"}
+    # Tumia account_identifier sahihi (gateway token) ili isishindwe na validation
+    attrs = {"method_type": PaymentMethodType.CREDIT_CARD, "account_identifier": "pm_1234"}
     validated = serializer.validate(attrs)
-    assert validated["account_identifier"] == "1234"
+    assert validated["account_identifier"] == "pm_1234"
+
+
+def test_validate_rejects_raw_pan_for_credit_card():
+    serializer = PaymentMethodSerializer()
+    attrs = {"method_type": PaymentMethodType.CREDIT_CARD, "account_identifier": "4111111111111111"}
+    with pytest.raises(ValidationError) as exc:
+        serializer.validate(attrs)
+    assert "account_identifier" in str(exc.value)
+
+
+def test_validate_rejects_non_token_identifier_for_credit_card():
+    serializer = PaymentMethodSerializer()
+    attrs = {"method_type": PaymentMethodType.CREDIT_CARD, "account_identifier": "not-a-gateway-token"}
+    with pytest.raises(ValidationError) as exc:
+        serializer.validate(attrs)
+    assert "account_identifier" in str(exc.value)

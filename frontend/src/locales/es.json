@@ -2,9 +2,12 @@
   "home": {
     "welcome": "Bienvenido a Jamiikazini.",
     "description": "Esta es una plataforma digital para instituciones, empresas, profesionales e individuos en toda África Oriental. Su objetivo es ser un centro de servicios esenciales como educación, salud, transporte y pagos — impulsado por tecnología moderna que respeta el idioma, la localidad y las necesidades de la comunidad.",
-    "login_cta": "Inicia sesión para continuar"
+    "login_cta": "Inicia sesión para continuar",
+    "sponsored_heading": "Anuncios Patrocinados",
+    "sponsored_tag": "Anuncio",
+    "trending_heading": "Productos Tendencia",
+    "trending_empty": "Aún no hay productos para mostrar."
   },
-
   "topbar": {
     "back": "Atrás",
     "forward": "Adelante",
@@ -13,7 +16,6 @@
     "notifications": "Notificaciones",
     "search": "Buscar"
   },
-
   "user": {
     "menu": "Menú de usuario",
     "profile": "Perfil",
@@ -23,45 +25,39 @@
     "logout": "Cerrar sesión",
     "login": "Iniciar sesión"
   },
-
   "cart": {
     "title": "Mi carrito",
     "empty": "Tu carrito está vacío.",
     "edit": "Editar",
     "checkout": "Pagar"
   },
-
   "notifications": {
-    "requests": "Solicitudes",
-    "chats": "Conversaciones",
-    "accept": "Aceptar",
-    "decline": "Rechazar",
-    "view": "Ver",
-    "open_chat": "Abrir conversación"
+    "title": "Notificaciones",
+    "mark_all_read": "Marcar Todo como Leído",
+    "empty": "Aún no hay notificaciones.",
+    "just_now": "Justo ahora",
+    "minutes_ago": "hace {{count}} min",
+    "hours_ago": "hace {{count}} h",
+    "days_ago": "hace {{count}} d"
   },
-
   "search": {
     "placeholder": "Buscar...",
     "empty": "Los resultados de búsqueda aparecerán aquí..."
   },
-
   "actions": {
     "save": "Guardar",
     "cancel": "Cancelar"
   },
-
   "dashboard": {
     "welcome": "Bienvenido a tu tablero",
     "description": "Aquí puedes ver un resumen de tus actividades"
   },
-
   "consent": {
     "title": "¿Sigues aquí?",
     "description": "Por la seguridad de tu cuenta, confirma si aún estás activo. De lo contrario, cerraremos tu sesión de forma respetuosa.",
     "cancel": "No",
     "confirm": "Sí, estoy aquí"
   },
-
   "auth": {
     "password": "Contraseña",
     "password_placeholder": "Ingresa la contraseña",
@@ -73,7 +69,6 @@
     "login": "Iniciar sesión",
     "register": "Registrarse"
   },
-
   "password": {
     "label": "Seguridad de la contraseña:",
     "strength": {
@@ -84,11 +79,9 @@
       "very_strong": "Muy fuerte"
     }
   },
-
   "sidebar": {
     "app_dashboard": "Panel de la aplicación"
   },
-
   "tabs": {
     "jamiikazini": "Jamiikazini",
     "settings": "Configuración",
@@ -99,13 +92,14 @@
     "register": "Registrarse",
     "login": "Iniciar sesión"
   },
-
   "user_home": {
     "welcome": "Bienvenido a tu Panel",
     "description": "Aquí aparecerá tu información personal, reservas, notificaciones, etc."
   },
-
   "auth_login": {
+    "no_account": "¿No tienes una cuenta? Regístrate",
+    "no_token": "No se recibió token del servidor",
+    "invalid_credentials": "Correo electrónico o contraseña inválidos. Inténtalo de nuevo.",
     "title": "Iniciar sesión",
     "email_label": "Correo electrónico",
     "email_placeholder": "ej. nombre@ejemplo.com",
@@ -117,7 +111,6 @@
     "login_failed": "Error al iniciar sesión.",
     "network_error": "Error de red o de reCAPTCHA."
   },
-
   "auth_register": {
     "title": "Registrarse",
     "email_label": "Correo electrónico",
@@ -133,10 +126,10 @@
       "password_mismatch": "Las contraseñas no coinciden.",
       "recaptcha_required": "Por favor verifica que no eres un robot.",
       "password_length": "La contraseña debe tener al menos 6 caracteres.",
-      "network": "Error de red. Inténtalo de nuevo."
+      "network": "Error de red. Inténtalo de nuevo.",
+      "phone_required": "Se requiere el número de teléfono."
     }
   },
-
   "auth_verify_email": {
     "title": "Verificación de correo",
     "verifying": "Verificando tu correo...",
@@ -145,16 +138,13 @@
     "loading": "Cargando...",
     "to_login": "Ir a iniciar sesión"
   },
-
   "userandmenu": {
     "load_failed": "No se pudo cargar la información del usuario o del menú."
   },
-
   "jamiiauth": {
     "login_failed": "Error al iniciar sesión. Verifica tus credenciales.",
     "register_failed": "Error al registrarse. Por favor, inténtalo de nuevo."
   },
-
   "business_dashboard": {
     "loading": "Cargando el panel...",
     "empty": "No hay datos disponibles para este negocio en este momento.",

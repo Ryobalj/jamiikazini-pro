@@ -1,0 +1,31 @@
+{
+  "title": "Bill Payments",
+  "available_balance": "Available balance",
+  "description": "Pay electricity (LUKU), airtime, DSTV, and other bills directly from your JamiiWallet.",
+  "category_label": "Choose Service Type",
+  "category_electricity": "Electricity",
+  "category_airtime": "Airtime",
+  "category_tv": "TV Subscription",
+  "category_water": "Water",
+  "biller_label": "Service Provider",
+  "biller_placeholder": "Choose...",
+  "account_label": "Meter/Phone/Account Number",
+  "account_placeholder": "Enter number...",
+  "amount_label": "Amount",
+  "submitting": "Paying...",
+  "submit": "Pay Now",
+  "back": "Back",
+  "success": "Payment completed!",
+  "paid_to": "You paid",
+  "token_label": "Token Number",
+  "reference_label": "Reference",
+  "pay_another": "Pay Another Bill",
+  "back_to_wallet": "Back to Wallet",
+  "copied": "Copied.",
+  "errors": {
+    "biller_required": "Choose the service you want to pay.",
+    "account_required": "Enter the meter/phone/account number.",
+    "amount_required": "Enter a valid amount.",
+    "failed": "Payment failed. Try again."
+  }
+}

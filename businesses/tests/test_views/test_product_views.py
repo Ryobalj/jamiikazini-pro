@@ -5,6 +5,7 @@ from django.contrib.gis.geos import Point
 from django.urls import reverse
 from businesses.models.product import Product
 from businesses.models.business import Business
+from businesses.models.product_category import ProductCategory
 from kiini.models.institution import Institution
 from accounts.models import User
 
@@ -128,3 +129,31 @@ class TestProductViews:
         url = reverse("businesses:generate-product-url", kwargs={"slug": "non-existent"})
         response = client.get(url)
         assert response.status_code == status.HTTP_404_NOT_FOUND
+
+    def test_filter_products_by_category(self, setup_products):
+        electronics = ProductCategory.objects.create(name="Elektroniki", slug="elektroniki")
+        setup_products["product1"].category = electronics
+        setup_products["product1"].save(update_fields=["category"])
+
+        client = APIClient()
+        url = f"/api/v1/businesses/{setup_products['business'].pk}/products/?category=elektroniki"
+        response = client.get(url)
+        assert response.status_code == status.HTTP_200_OK
+        assert len(response.data) == 1
+        assert response.data[0]["name"] == "Laptop ABC"
+        assert response.data[0]["category_name"] == "Elektroniki"
+
+    def test_filter_products_by_unknown_category_returns_empty(self, setup_products):
+        client = APIClient()
+        url = f"/api/v1/businesses/{setup_products['business'].pk}/products/?category=does-not-exist"
+        response = client.get(url)
+        assert response.status_code == status.HTTP_200_OK
+        assert len(response.data) == 0
+
+    def test_category_name_is_none_when_uncategorized(self, setup_products):
+        client = APIClient()
+        url = f"/api/v1/businesses/{setup_products['business'].pk}/products/{setup_products['product2'].slug}/"
+        response = client.get(url)
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["category"] is None
+        assert response.data["category_name"] is None

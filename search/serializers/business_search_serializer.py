@@ -10,8 +10,8 @@ class BusinessSearchSerializer(serializers.Serializer):
     email = serializers.EmailField()
     website = serializers.URLField()
     is_active = serializers.BooleanField()
-    institution_id = serializers.IntegerField()
-    owner_id = serializers.IntegerField()
+    institution_id = serializers.CharField(allow_null=True, required=False)
+    owner_id = serializers.IntegerField(allow_null=True, required=False)
 
     category = serializers.DictField()
     location = serializers.DictField()  # GeoPoint: {'lat': ..., 'lon': ...}

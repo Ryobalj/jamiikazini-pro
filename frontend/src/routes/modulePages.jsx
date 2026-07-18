@@ -5,6 +5,12 @@ import Products from "@/app/businesses/pages/Products";
 import Services from "@/app/businesses/pages/Services";
 import Branches from "@/app/businesses/pages/Branches";
 import Settings from "@/app/businesses/pages/Settings";
+import Advertise from "@/app/businesses/pages/Advertise";
+import IncomingRequests from "@/app/businesses/pages/IncomingRequests";
+import IncomingOffers from "@/app/businesses/pages/IncomingOffers";
+import IncomingImportRequests from "@/app/businesses/pages/IncomingImportRequests";
+import IncomingHarvestContracts from "@/app/agriculture/pages/IncomingHarvestContracts";
+import AvailableTendersPage from "@/app/construction/pages/AvailableTendersPage";
 
 import KiiniDashboard from "@/app/kiini/pages/KiiniDashboard";
 import InstitutionsListPage from "@/app/kiini/pages/InstitutionsListPage";
@@ -35,6 +41,12 @@ export const modulePages = {
       { path: "products", element: <Products /> },
       { path: "services", element: <Services /> },
       { path: "branches", element: <Branches /> },
+      { path: "advertise", element: <Advertise /> },
+      { path: "requests", element: <IncomingRequests /> },
+      { path: "offers", element: <IncomingOffers /> },
+      { path: "imports", element: <IncomingImportRequests /> },
+      { path: "harvest", element: <IncomingHarvestContracts /> },
+      { path: "tenders", element: <AvailableTendersPage /> },
       { path: "settings", element: <Settings /> },
     ],
   },

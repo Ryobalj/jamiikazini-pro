@@ -527,24 +527,15 @@ class PaymentService:
 
                 payer_wallet = Wallet.objects.select_for_update().get(user=user)
                 recipient_user = recipient_wallet.user
-                # Engine signature: initiate(account_identifier, amount, txn_type, metadata).
-                # Preprocessor inahitaji source_txn_id + merchant_id; TRANSFER inahitaji recipient_id.
-                # counterparty (User FK) na wallet huwekwa baada ya initiate.
-                txn_metadata = {
-                    "source_txn_id": idempotency_key or uuid.uuid4().hex,
-                    "merchant_id": "JAMIIKAZINI",
-                    "recipient_id": str(recipient_user.id),
-                    **(metadata or {}),
-                }
                 txn = TransactionEngine.initiate(
-                    account_identifier=user.email,
+                    wallet=payer_wallet,
                     amount=amount_dec,
-                    txn_type=Transaction.TransactionType.TRANSFER,
-                    metadata=txn_metadata,
+                    transaction_type=Transaction.TransactionType.TRANSFER,
+                    initiated_by=user,
+                    counterparty=recipient_user,
+                    idempotency_key=idempotency_key or uuid.uuid4().hex,
+                    metadata=metadata or {},
                 )
-                txn.counterparty = recipient_user
-                txn.wallet = payer_wallet
-                txn.save(update_fields=["counterparty", "wallet"])
                 txn = TransactionEngine.process(txn)
 
                 if invoice and txn.status == Transaction.TransactionStatus.COMPLETED:

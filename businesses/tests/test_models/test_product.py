@@ -85,3 +85,16 @@ class TestProductModel:
         )
         assert product.is_service() is True
         assert product.is_digital() is False
+
+    def test_quantity_in_stock_supports_fractional_kg_amounts(self):
+        product = Product.objects.create(
+            business=self.business,
+            name="Sukari",
+            slug="sukari",
+            price=2000,
+            unit="kg",
+            quantity_in_stock=Decimal("2.5"),
+        )
+        product.refresh_from_db()
+        assert product.quantity_in_stock == Decimal("2.500")
+        assert product.has_stock() is True

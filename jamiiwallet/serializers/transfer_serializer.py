@@ -71,7 +71,7 @@ class TransferSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"detail": "Wallet haijapatikana."})
 
         amount = data.get("amount") or Decimal("0")
-        if wallet.balance < amount:
+        if wallet.available_balance < amount:
             raise serializers.ValidationError({"amount": "Salio halitoshi kwa kiasi hiki."})
 
         data["recipient"] = recipient

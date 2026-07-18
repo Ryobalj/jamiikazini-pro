@@ -14,6 +14,7 @@ class InvoiceSerializer(serializers.ModelSerializer):
     is_overdue = serializers.BooleanField(read_only=True)
     # description ni property (encrypted _description) - bila hii DRF angeifanya read-only kimya
     description = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    b2b_order = serializers.SerializerMethodField()
 
     # 🔹 Decimal fields kama strings
     amount = serializers.DecimalField(max_digits=14, decimal_places=2, coerce_to_string=True)
@@ -27,12 +28,23 @@ class InvoiceSerializer(serializers.ModelSerializer):
             'total_amount', 'status', 'status_display',
             'due_date', 'paid_at', 'description',
             'created_by', 'last_modified_by',
-            'is_overdue', 'created_at', 'updated_at',
+            'is_overdue', 'created_at', 'updated_at', 'b2b_order',
         ]
         read_only_fields = [
             'id', 'invoice_number', 'total_amount', 'status_display',
-            'created_at', 'updated_at', 'is_overdue'
+            'created_at', 'updated_at', 'is_overdue', 'b2b_order',
         ]
+
+    def get_b2b_order(self, obj):
+        order = getattr(obj, 'b2b_order', None)
+        if order is None:
+            return None
+        return {
+            'id': str(order.id),
+            'business_name': order.business.name,
+            'purchasing_business_id': str(order.purchasing_business_id) if order.purchasing_business_id else None,
+            'payment_terms': order.payment_terms,
+        }
 
     def validate_due_date(self, value):
         from django.utils import timezone

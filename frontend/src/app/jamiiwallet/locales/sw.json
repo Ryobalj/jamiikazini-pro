@@ -49,5 +49,30 @@
   },
   "errors": {
     "failed_to_load_wallet": "Imeshindwa kupakia data za pochi"
+  },
+  "cashout": {
+    "title": "Toa Fedha Taslimu",
+    "description": "Tembelea biashara yoyote iliyothibitishwa ndani ya JamiiKazini upewe fedha taslimu - hakuna ada kwa sasa.",
+    "business_label": "Tafuta Biashara",
+    "business_placeholder": "Andika jina la biashara...",
+    "searching": "Inatafuta...",
+    "change": "Badilisha",
+    "submit": "Toa Fedha",
+    "submitting": "Inatuma...",
+    "success": "Umetoa fedha kupitia {{name}} kikamilifu.",
+    "errors": {
+      "business_required": "Chagua biashara utakayotolea fedha.",
+      "failed": "Imeshindwa kutoa fedha. Jaribu tena."
+    }
+  },
+  "billpay": {
+    "title": "Malipo ya Huduma"
+  },
+  "savings": {
+    "title": "VICOBA/SACCOS - Vikundi vya Akiba"
+  },
+  "withdraw": "Toa",
+  "accounts": {
+    "title": "Hesabu"
   }
 }

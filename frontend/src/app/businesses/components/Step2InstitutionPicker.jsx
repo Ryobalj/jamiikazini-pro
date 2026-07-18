@@ -155,8 +155,7 @@ export default function Step2InstitutionPicker({
 
       console.log("Creating institution:", institutionData);
 
-      // SAHIHI URL
-      const res = await api.post("/institutions/", institutionData);
+      const res = await api.post("/kiini/institutions/", institutionData);
       
       console.log("Institution created:", res.data);
       

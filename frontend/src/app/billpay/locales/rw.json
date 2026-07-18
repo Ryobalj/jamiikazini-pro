@@ -1,0 +1,31 @@
+{
+  "title": "Kwishyura Fagitire",
+  "available_balance": "Amafaranga ahari",
+  "description": "Ishyura amashanyarazi (LUKU), umuvuduko wo kuvugana, DSTV, n'andi mafagitire uciye muri JamiiWallet yawe.",
+  "category_label": "Hitamo Ubwoko bw'Ubuherekeza",
+  "category_electricity": "Amashanyarazi",
+  "category_airtime": "Umuvuduko wo Kuvugana",
+  "category_tv": "Kwiyandikisha kuri TV",
+  "category_water": "Amazi",
+  "biller_label": "Utanga Serivisi",
+  "biller_placeholder": "Hitamo...",
+  "account_label": "Nomero ya Mudasobwa/Telefoni/Konti",
+  "account_placeholder": "Andika nomero...",
+  "amount_label": "Amafaranga",
+  "submitting": "Kwishyura...",
+  "submit": "Ishyura Nonaha",
+  "back": "Subira Inyuma",
+  "success": "Kwishyura byarangiye!",
+  "paid_to": "Wishyuye",
+  "token_label": "Nomero ya Token",
+  "reference_label": "Icyerekezo",
+  "pay_another": "Ishyura Ifagitire Indi",
+  "back_to_wallet": "Subira kuri Wallet",
+  "copied": "Byakoporowe.",
+  "errors": {
+    "biller_required": "Hitamo serivisi ushaka kwishyura.",
+    "account_required": "Andika nomero ya mudasobwa/telefoni/konti.",
+    "amount_required": "Andika amafaranga yemewe.",
+    "failed": "Kwishyura byanze. Ongera ugerageze."
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "wallet": {
+    "title": "JamiiWallet"
+  },
+  "cart": {
+    "title": "Kikapu"
+  },
+  "orders": {
+    "title": "Oda Zangu"
+  },
+  "chat": {
+    "title": "Mazungumzo"
+  },
+  "verification": {
+    "required": "Kamilisha Uthibitisho"
+  },
+  "request_service": {
+    "title": "Omba Usafiri"
+  },
+  "driver": {
+    "dashboard": "Dashibodi ya Dereva",
+    "jobs": "Kazi Zilizo Wazi",
+    "deliveries": "Usafirishaji Wangu",
+    "verify": "Uthibitisho wa Dereva",
+    "register": "Kuwa Dereva"
+  },
+  "home": {
+    "welcome": "Karibu tena",
+    "subtitle": "Kila kitu unachohitaji, mahali pamoja.",
+    "quick_actions": "Vitendo vya Haraka",
+    "action_wallet_desc": "Angalia salio, tuma pesa, toa fedha",
+    "action_cart_desc": "Angalia bidhaa kabla ya kulipa",
+    "action_orders_desc": "Fuatilia manunuzi yako",
+    "action_nearby_desc": "Tafuta biashara zilizo karibu nawe",
+    "action_chat_desc": "Wasiliana na wauzaji na wanunuzi",
+    "action_request_service_desc": "Pata boda-boda au lori, bila ununuzi",
+    "verification_title": "Thibitisha Kitambulisho Chako",
+    "verification_desc": "Lazima ukamilishe uthibitisho wa kitambulisho kabla ya kununua au kuuza.",
+    "verification_cta": "Thibitisha Sasa",
+    "business_title": "Biashara Yangu",
+    "business_cta": "Nenda Dashibodi",
+    "driver_title": "Dereva",
+    "driver_status_verified": "Umethibitishwa - tayari kwa kazi",
+    "driver_status_pending": "Uthibitisho unasubiri",
+    "driver_status_failed": "Uthibitisho umeshindwa",
+    "driver_cta": "Angalia Kazi"
+  },
+  "billpay": {
+    "title": "Malipo ya Huduma"
+  },
+  "realestate": {
+    "title": "Mali Isiyohamishika"
+  },
+  "agriculture": {
+    "title": "Mkataba wa Awali wa Mazao"
+  },
+  "construction": {
+    "title": "Mradi wa Ujenzi/Kandarasi"
+  },
+  "savings": {
+    "title": "VICOBA/SACCOS - Vikundi vya Akiba"
+  }
+}

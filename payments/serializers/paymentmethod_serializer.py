@@ -1,5 +1,6 @@
 # payments/serializers/paymentmethod_serializer.py
 
+import re
 from django.core.exceptions import ValidationError as DjangoValidationError
 from rest_framework import serializers
 from django.utils.translation import gettext_lazy as _
@@ -8,6 +9,8 @@ from payments.models.paymentmethod import (
     PaymentMethodType,
     MNOType,
     CountryCode,
+    RAW_PAN_PATTERN,
+    GATEWAY_TOKEN_PREFIXES,
 )
 from accounts.serializers import UserSerializer  # assuming una serializer ya User
 
@@ -53,9 +56,11 @@ class PaymentMethodSerializer(serializers.ModelSerializer):
         return obj.get_country_code_display() if obj.country_code else None
 
     def get_last4(self, obj):
-        if obj.method_type == PaymentMethodType.CREDIT_CARD and obj.account_identifier:
-            return obj.account_identifier[-4:]
-        return None
+        # PCI-DSS: kamwe tusidecrypt/kata account_identifier hapa - last4 inatoka
+        # kwenye details (iliyowekwa na gateway tokenization response), si kwenye PAN.
+        if obj.method_type != PaymentMethodType.CREDIT_CARD:
+            return None
+        return (obj.details or {}).get("last4")
 
     def validate_phone(self, value):
         if value:
@@ -74,6 +79,20 @@ class PaymentMethodSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 {"account_identifier": _("Haitakiwi kuwa tupu kwa Wallet au Credit Card")}
             )
+
+        if method_type == PaymentMethodType.CREDIT_CARD and account_id:
+            if RAW_PAN_PATTERN.match(account_id):
+                raise serializers.ValidationError(
+                    {"account_identifier": _(
+                        "Haturuhusiwi kutuma namba halisi ya kadi (PAN) moja kwa moja kwa seva. "
+                        "Tumia gateway token inayotolewa na Stripe/Flutterwave baada ya "
+                        "tokenization salama upande wa client."
+                    )}
+                )
+            if not account_id.startswith(GATEWAY_TOKEN_PREFIXES):
+                raise serializers.ValidationError(
+                    {"account_identifier": _("account_identifier ya CREDIT_CARD lazima iwe gateway token halali.")}
+                )
         return attrs
 
 class PaymentMethodSummarySerializer(serializers.ModelSerializer):
@@ -98,6 +117,6 @@ class PaymentMethodSummarySerializer(serializers.ModelSerializer):
         return obj.get_mno_display() if obj.mno else None
 
     def get_last4(self, obj):
-        if obj.method_type == PaymentMethodType.CREDIT_CARD and obj.account_identifier:
-            return obj.account_identifier[-4:]
-        return None
+        if obj.method_type != PaymentMethodType.CREDIT_CARD:
+            return None
+        return (obj.details or {}).get("last4")

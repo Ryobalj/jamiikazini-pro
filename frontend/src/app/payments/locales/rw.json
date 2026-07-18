@@ -1,0 +1,38 @@
+{
+  "payments": {
+    "dashboard": "Kwishyura",
+    "audit_logs": "Raporo z'Igenzura",
+    "invoices": "Fagitire",
+    "payment_methods": "Uburyo bwo Kwishyura",
+    "payment_reports": "Raporo z'Ubwishyu",
+    "pay_invoice": "Ishyura Fagitire",
+    "table": {
+      "user": "Ukoresha",
+      "action": "Igikorwa",
+      "target": "Intego",
+      "description": "Ibisobanuro",
+      "metadata": "Metadata",
+      "ip_address": "Aderesi ya IP",
+      "timestamp": "Igihe"
+    },
+    "messages": {
+      "loading": "Kwishyura birimo gupakira...",
+      "no_data": "Nta makuru y'ubwishyu",
+      "error": "Habaye ikosa mu gupakira ubwishyu"
+    }
+  },
+  "credit_account": {
+    "title": "Konti y'Inguzanyo",
+    "summary": "Incamake y'Inguzanyo",
+    "limit": "Urwego rw'Inguzanyo",
+    "outstanding": "Umwenda Usigaye",
+    "available": "Inguzanyo Iboneka",
+    "invoices": "Fagitire z'Inguzanyo",
+    "no_invoices": "Nta fagitire y'inguzanyo iraboneka.",
+    "due": "Itariki ntarengwa",
+    "pay_now": "Kwishyura Ubu",
+    "paid": "Fagitire yishyuwe neza.",
+    "pay_failed": "Kwishyura fagitire byanze.",
+    "no_business": "Ntufite ubucuruzi bwemejwe bufite konti y'inguzanyo."
+  }
+}

@@ -13,6 +13,9 @@ export function ProductFilters({
   onSortChange,
   viewMode,
   onViewModeChange,
+  categoryFilter,
+  onCategoryFilterChange,
+  categoryOptions = [],
 }) {
   const { t } = useTranslation("businesses");
 
@@ -39,6 +42,19 @@ export function ProductFilters({
           <option value="available">{t("products.filter_available")}</option>
           <option value="unavailable">{t("products.filter_unavailable")}</option>
         </select>
+
+        {categoryOptions.length > 0 && (
+          <select
+            value={categoryFilter}
+            onChange={(e) => onCategoryFilterChange(e.target.value)}
+            className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm"
+          >
+            <option value="all">{t("products.all_categories")}</option>
+            {categoryOptions.map((name) => (
+              <option key={name} value={name}>{name}</option>
+            ))}
+          </select>
+        )}
 
         <select
           value={sortBy}

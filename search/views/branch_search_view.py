@@ -3,13 +3,16 @@
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 from elasticsearch_dsl.query import Q
 from search.documents.branch_document import BranchDocument
 from search.serializers.branch_search_serializer import BranchSearchSerializer
 
 
 class BranchSearchView(APIView):
+    # Public catalog data - matches businesses/views/branch_views.py's public listing.
+    permission_classes = [permissions.AllowAny]
+
     def get(self, request):
         query = request.GET.get('q', '')
         lat = request.GET.get('lat')

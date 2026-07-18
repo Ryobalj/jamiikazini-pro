@@ -1,0 +1,70 @@
+{
+  "profile": {
+    "title": "Мой Профиль",
+    "description": "Просмотр и управление информацией вашего аккаунта"
+  },
+  "edit_profile": {
+    "title": "Редактировать Профиль",
+    "description": "Обновите свою личную информацию"
+  },
+  "settings": {
+    "title": "Настройки",
+    "description": "Настройте параметры вашего аккаунта"
+  },
+  "wallet": {
+    "title": "Мой Кошелёк",
+    "description": "Просмотр баланса и транзакций"
+  },
+  "personal_info": "Личная Информация",
+  "full_name": "Полное Имя",
+  "email": "Адрес Эл. Почты",
+  "phone": "Номер Телефона",
+  "national_id": "Национальное Удостоверение",
+  "member_since": "Участник С",
+  "account_status": "Статус Аккаунта",
+  "email_verified": "Эл. Почта Подтверждена",
+  "phone_verified": "Телефон Подтверждён",
+  "2fa_enabled": "Двухфакторная Аутентификация",
+  "account_active": "Аккаунт Активен",
+  "manage_security": "Управление Безопасностью",
+  "primary_institution": "Основная Организация",
+  "view_institution": "Просмотреть Организацию",
+  "two_factor_authentication": "Двухфакторная Аутентификация",
+  "2fa_status": "Статус 2FA",
+  "2fa_enabled_desc": "Ваш аккаунт защищён двухфакторной аутентификацией",
+  "2fa_disabled_desc": "Добавьте дополнительный уровень защиты вашему аккаунту",
+  "enable_2fa": "Включить 2FA",
+  "disable_2fa": "Отключить 2FA",
+  "change_password": "Изменить Пароль",
+  "update_password": "Обновить Пароль",
+  "danger_zone": "Опасная Зона",
+  "logout": "Выйти",
+  "logout_success": "Выход выполнен успешно",
+  "your_institutions": "Ваши Организации",
+  "no_institutions_yet": "Вы ещё не создали ни одной организации.",
+  "create_institution": "Создать Организацию",
+  "your_businesses": "Ваши Компании",
+  "no_businesses_yet": "Вы ещё не создали ни одной компании.",
+  "create_business": "Создать Компанию",
+  "recent_activity": "Недавняя Активность",
+  "no_recent_activity": "Нет недавней активности для отображения.",
+  "recent_conversations": "Недавние Беседы",
+  "no_conversations_yet": "Пока нет бесед.",
+  "open_chat": "Открыть Чат",
+  "start_chat": "Начать Беседу",
+  "user": "Пользователь",
+  "edit": "Редактировать",
+  "create": "Создать",
+  "copied": "скопировано в буфер обмена",
+  "errors": {
+    "failed_to_load_profile": "Не удалось загрузить данные профиля"
+  },
+  "tabs": {
+    "overview": "Обзор",
+    "institutions": "Организации",
+    "businesses": "Компании",
+    "chat": "Чат",
+    "activity": "Активность",
+    "security": "Безопасность"
+  }
+}

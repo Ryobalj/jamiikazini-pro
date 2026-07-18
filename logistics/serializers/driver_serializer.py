@@ -14,7 +14,7 @@ class DriverSerializer(serializers.ModelSerializer):
             'phone_number', 'profile_image', 'is_verified',
             'is_active', 'created_at', 'updated_at', 'provider_url'
         ]
-        read_only_fields = ['id', 'transport_provider', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'transport_provider', 'is_verified', 'created_at', 'updated_at']
 
     def validate_license_number(self, value):
         if self.instance:

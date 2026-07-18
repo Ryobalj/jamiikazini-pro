@@ -21,6 +21,15 @@ from search.documents.transport_provider_verification_document import TransportP
 
 
 class UnifiedSearchViewSet(ViewSet):
+    """
+    NOTE: not wired to any URL (search/urls/__init__.py never references this
+    module) - unreachable dead code as of this audit. Left unwired since
+    exposing a new public cross-entity search endpoint is a feature decision,
+    not a bugfix; the int()-on-UUID and per-entity ES-shape bugs below were
+    still fixed so this is safe to wire up later without landmines.
+    """
+
+
     def list(self, request):
         query = request.query_params.get('q')
         lat = request.query_params.get('lat')
@@ -66,9 +75,10 @@ class UnifiedSearchViewSet(ViewSet):
         selected_types = [t for t in allowed_types if t in (type_filter or ','.join(allowed_types)).split(',')]
 
         if category_ids:
-            category_ids = [int(cid.strip()) for cid in category_ids.split(',')]
+            # Category/Business are UUID-keyed - keep as strings, don't int() them.
+            category_ids = [cid.strip() for cid in category_ids.split(',')]
         if business_ids:
-            business_ids = [int(bid.strip()) for bid in business_ids.split(',')]
+            business_ids = [bid.strip() for bid in business_ids.split(',')]
 
         def get_sort_order():
             if sort == 'proximity' and lat and lon:
@@ -98,8 +108,8 @@ class UnifiedSearchViewSet(ViewSet):
             if institution_id and hasattr(document_cls, 'institution_id'):
                 s = s.filter('term', institution_id=institution_id)
 
-            if user_role == 'institution_admin':
-                s = s.filter('term', institution_id=user.institution_id)
+            if user_role == 'institution_admin' and hasattr(document_cls, 'institution_id'):
+                s = s.filter('term', institution_id=str(user.institution_id))
 
             if category_ids and hasattr(document_cls, 'category'):
                 s = s.filter('terms', category__id=category_ids)

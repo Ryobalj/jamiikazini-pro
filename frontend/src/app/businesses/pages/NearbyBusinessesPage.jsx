@@ -16,9 +16,11 @@ import {
   ChevronRight,
   X,
   SlidersHorizontal,
+  MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { toast } from "react-toastify";
 
 // Helper function to calculate distance between two coordinates (Haversine formula)
 function calculateDistance(lat1, lon1, lat2, lon2) {
@@ -48,6 +50,23 @@ export default function NearbyBusinessesPage() {
   const [categories, setCategories] = useState([]);
   const [showFilters, setShowFilters] = useState(false);
   const [locationError, setLocationError] = useState(null);
+  const [messagingId, setMessagingId] = useState(null);
+
+  const handleMessageBusiness = async (e, business) => {
+    e.stopPropagation();
+    setMessagingId(business.id);
+    try {
+      const res = await api.post("/jamiichat/conversations/start-with-business/", {
+        business_id: business.id,
+        message: "Habari, ningependa kupata maelezo zaidi.",
+      });
+      navigate(`/jamiichat/${res.data.id}`);
+    } catch (err) {
+      toast.error(err.response?.data?.business_id?.[0] || "Imeshindwa kuanzisha mazungumzo.");
+    } finally {
+      setMessagingId(null);
+    }
+  };
 
   useEffect(() => {
     getUserLocation();
@@ -372,7 +391,7 @@ export default function NearbyBusinessesPage() {
               <Card 
                 key={business.id}
                 className="hover:shadow-md transition-shadow cursor-pointer"
-                onClick={() => navigate(`/businesses/dashboard/${business.id}/overview`)}
+                onClick={() => navigate(`/store/${business.id}`)}
               >
                 <CardContent className="p-0">
                   <div className="p-4">
@@ -434,6 +453,20 @@ export default function NearbyBusinessesPage() {
                             </span>
                           </div>
                         )}
+
+                        <Button
+                          size="sm"
+                          className="mt-3 bg-purple-600 hover:bg-purple-700"
+                          disabled={messagingId === business.id}
+                          onClick={(e) => handleMessageBusiness(e, business)}
+                        >
+                          {messagingId === business.id ? (
+                            <Loader2 className="w-4 h-4 mr-1 animate-spin" />
+                          ) : (
+                            <MessageCircle className="w-4 h-4 mr-1" />
+                          )}
+                          Wasiliana na Muuzaji
+                        </Button>
                       </div>
                     </div>
                   </div>

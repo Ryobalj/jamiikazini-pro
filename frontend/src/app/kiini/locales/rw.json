@@ -1,0 +1,64 @@
+{
+  "dashboard": {
+    "title": "Dashboard y'Ikigo",
+    "welcomeMessage": "Ikaze kuri dashboard nyamukuru ya Kiini - uburyo bwo gucunga ibigo, amashami, n'abakozi.",
+    "institutions": "Ibigo",
+    "departments": "Amashami",
+    "staff-profiles": "Imyirondoro y'Abakozi",
+    "institution-tiers": "Ibyiciro by'Ikigo",
+    "institution-types": "Ubwoko bw'Ibigo"
+  },
+  "institution": {
+    "title": "Umwirondoro w'Ikigo",
+    "description": "Reba kandi ucunge amakuru y'ikigo cyawe",
+    "not_found": "Ikigo ntikiboneste",
+    "create": "Shiraho Ikigo",
+    "back_to_profile": "Subira ku Mwirondoro",
+    "settings": "Igenamiterere",
+    "edit": "Hindura",
+    "info": {
+      "title": "Amakuru y'Ikigo",
+      "established": "Cyashinzwe",
+      "tier": "Icyiciro",
+      "type": "Ubwoko",
+      "businesses": "Ubucuruzi"
+    },
+    "members": {
+      "title": "Abanyamuryango",
+      "none": "Nta munyamuryango uraboneka",
+      "invite": "Tumira Abanyamuryango"
+    },
+    "businesses_section": {
+      "title": "Ubucuruzi bw'Ikigo",
+      "create": "Shiraho Ubucuruzi",
+      "none": "Nta bucuruzi buracyaboneka muri iki kigo",
+      "create_first": "Shiraho Ubucuruzi bwa Mbere"
+    },
+    "errors": {
+      "failed_to_load": "Gupakira amakuru y'ikigo byanze"
+    }
+  },
+  "departments": {
+    "title": "Gucunga Amashami",
+    "description": "Shiraho, hindura, kandi usibe amashami mu kigo cyawe."
+  },
+  "staff": {
+    "title": "Abakozi",
+    "description": "Reba kandi ucunge amakuru y'abakozi b'ikigo."
+  },
+  "tiers": {
+    "title": "Ibyiciro by'Ikigo",
+    "description": "Urutonde rw'ibyiciro biboneka ku bigo nka Gito, Hagati, Kinini."
+  },
+  "types": {
+    "title": "Ubwoko bw'Ibigo",
+    "description": "Reba cyangwa uhitemo ubwoko bw'ikigo nk'isosiyete yigenga, umuryango utari uwa Leta, cyangwa ikigo cya Leta."
+  },
+  "institution_storefront": {
+    "not_found": "Ikigo nticyabonetse",
+    "tenants_heading": "Amaduka ari muri iyi nyubako",
+    "empty": "Nta iduka riraboneka hano.",
+    "tenant_count_one": "Iduka {{count}}",
+    "tenant_count_other": "Amaduka {{count}}"
+  }
+}

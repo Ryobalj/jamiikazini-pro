@@ -1,0 +1,38 @@
+{
+  "payments": {
+    "dashboard": "Paiements",
+    "audit_logs": "Journaux d'Audit",
+    "invoices": "Factures",
+    "payment_methods": "Moyens de Paiement",
+    "payment_reports": "Rapports de Paiement",
+    "pay_invoice": "Payer la Facture",
+    "table": {
+      "user": "Utilisateur",
+      "action": "Action",
+      "target": "Cible",
+      "description": "Description",
+      "metadata": "Métadonnées",
+      "ip_address": "Adresse IP",
+      "timestamp": "Heure"
+    },
+    "messages": {
+      "loading": "Chargement des paiements...",
+      "no_data": "Aucune donnée de paiement",
+      "error": "Une erreur s'est produite lors du chargement des paiements"
+    }
+  },
+  "credit_account": {
+    "title": "Compte de Crédit",
+    "summary": "Résumé du Crédit",
+    "limit": "Limite de Crédit",
+    "outstanding": "Solde Impayé",
+    "available": "Crédit Disponible",
+    "invoices": "Factures de Crédit",
+    "no_invoices": "Aucune facture de crédit pour le moment.",
+    "due": "Échéance",
+    "pay_now": "Payer Maintenant",
+    "paid": "Facture payée avec succès.",
+    "pay_failed": "Échec du paiement de la facture.",
+    "no_business": "Vous n'avez pas d'entreprise vérifiée avec un compte de crédit."
+  }
+}

@@ -2,9 +2,12 @@
   "home": {
     "welcome": "Welkom by Jamiikazini.",
     "description": "Dit is 'n digitale platform vir instansies, besighede, professionele persone en individue regoor Oos-Afrika. Dit poog om 'n spilpunt te wees vir noodsaaklike dienste soos onderwys, gesondheid, vervoer en betalings — aangedryf deur moderne tegnologie wat taal, ligging en gemeenskapsbehoeftes respekteer.",
-    "login_cta": "Teken aan om voort te gaan"
+    "login_cta": "Teken aan om voort te gaan",
+    "sponsored_heading": "Geborgde Advertensies",
+    "sponsored_tag": "Advertensie",
+    "trending_heading": "Gewilde Produkte",
+    "trending_empty": "Nog geen produkte om te wys nie."
   },
-
   "topbar": {
     "back": "Terug",
     "forward": "Vorentoe",
@@ -13,7 +16,6 @@
     "notifications": "Kennisgewings",
     "search": "Soek"
   },
-
   "user": {
     "menu": "Gebruikerskieslys",
     "profile": "Profiel",
@@ -23,45 +25,39 @@
     "logout": "Teken uit",
     "login": "Teken aan"
   },
-
   "cart": {
     "title": "My Mandjie",
     "empty": "Jou mandjie is leeg.",
     "edit": "Wysig",
     "checkout": "Betaal"
   },
-
   "notifications": {
-    "requests": "Versoeke",
-    "chats": "Gesprekke",
-    "accept": "Aanvaar",
-    "decline": "Weier",
-    "view": "Beskou",
-    "open_chat": "Maak Gesprek Oop"
+    "title": "Kennisgewings",
+    "mark_all_read": "Merk Alles Gelees",
+    "empty": "Nog geen kennisgewings nie.",
+    "just_now": "Nou net",
+    "minutes_ago": "{{count}} min gelede",
+    "hours_ago": "{{count}} h gelede",
+    "days_ago": "{{count}}d gelede"
   },
-
   "search": {
     "placeholder": "Soek...",
     "empty": "Soekresultate sal hier verskyn..."
   },
-
   "actions": {
     "save": "Stoor",
     "cancel": "Kanselleer"
   },
-
   "dashboard": {
     "welcome": "Welkom by jou beheerpaneel",
     "description": "Hier kan jy 'n opsomming van jou aktiwiteite sien"
   },
-
   "consent": {
     "title": "Is jy nog hier?",
     "description": "Vir jou rekening se sekuriteit, bevestig asseblief dat jy nog aktief is. Andersins sal ons jou beleefd afmeld.",
     "cancel": "Nee",
     "confirm": "Ja, ek is hier"
   },
-
   "auth": {
     "password": "Wagwoord",
     "password_placeholder": "Voer wagwoord in",
@@ -73,7 +69,6 @@
     "login": "Teken aan",
     "register": "Registreer"
   },
-
   "password": {
     "label": "Wagwoordsterkte:",
     "strength": {
@@ -84,11 +79,9 @@
       "very_strong": "Baie Sterk"
     }
   },
-
   "sidebar": {
     "app_dashboard": "Toep Beheerpaneel"
   },
-
   "tabs": {
     "jamiikazini": "Jamiikazini",
     "settings": "Instellings",
@@ -99,13 +92,14 @@
     "register": "Registreer",
     "login": "Teken aan"
   },
-
   "user_home": {
     "welcome": "Welkom by jou Beheerpaneel",
     "description": "Hier sal jou persoonlike inligting, besprekings, kennisgewings, ens. verskyn."
   },
-
   "auth_login": {
+    "no_account": "Het jy nie 'n rekening nie? Registreer",
+    "no_token": "Geen token van bediener ontvang nie",
+    "invalid_credentials": "Ongeldige e-pos of wagwoord. Probeer asseblief weer.",
     "title": "Teken aan",
     "email_label": "E-pos",
     "email_placeholder": "bv. naam@voorbeeld.com",
@@ -117,7 +111,6 @@
     "login_failed": "Aanmelding het misluk.",
     "network_error": "Netwerk- of reCAPTCHA-fout."
   },
-
   "auth_register": {
     "title": "Registreer",
     "email_label": "E-pos",
@@ -133,10 +126,10 @@
       "password_mismatch": "Wagwoorde stem nie ooreen nie.",
       "recaptcha_required": "Bevestig asseblief dat jy nie 'n robot is nie.",
       "password_length": "Wagwoord moet minstens 6 karakters lank wees.",
-      "network": "Netwerkfout. Probeer asseblief weer."
+      "network": "Netwerkfout. Probeer asseblief weer.",
+      "phone_required": "Telefoonnommer word vereis."
     }
   },
-
   "auth_verify_email": {
     "title": "E-pos Verifikasie",
     "verifying": "Bevestig jou e-pos...",
@@ -145,16 +138,13 @@
     "loading": "Laai...",
     "to_login": "Gaan na Aanmelding"
   },
-
   "userandmenu": {
     "load_failed": "Kon nie gebruiker- of kieslys-inligting laai nie."
   },
-
   "jamiiauth": {
     "login_failed": "Aanmelding het misluk. Gaan asseblief jou besonderhede na.",
     "register_failed": "Registrasie het misluk. Probeer asseblief weer."
   },
-
   "business_dashboard": {
     "loading": "Beheerpaneel word gelaai...",
     "empty": "Geen data beskikbaar vir hierdie besigheid op die oomblik nie.",

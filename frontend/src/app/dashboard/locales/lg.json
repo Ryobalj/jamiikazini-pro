@@ -1,0 +1,63 @@
+{
+  "wallet": {
+    "title": "JamiiWallet"
+  },
+  "cart": {
+    "title": "Ekibega"
+  },
+  "orders": {
+    "title": "Oda Zange"
+  },
+  "chat": {
+    "title": "Emboozi"
+  },
+  "verification": {
+    "required": "Maliriza Okukakasa"
+  },
+  "request_service": {
+    "title": "Saba Okutuusa"
+  },
+  "driver": {
+    "dashboard": "Ekyayi kya Dereeva",
+    "jobs": "Emirimu Egiriwo",
+    "deliveries": "Okutuusa Kwange",
+    "verify": "Okukakasa Dereeva",
+    "register": "Okuba Dereeva"
+  },
+  "home": {
+    "welcome": "Tukwanirizza nate",
+    "subtitle": "Byonna by'oyetaaga, mu kifo kimu.",
+    "quick_actions": "Ebikolwa by'Amangu",
+    "action_wallet_desc": "Kebera ssente, sindika, ggyamu ssente",
+    "action_cart_desc": "Kebera ebintu nga tonnasasula",
+    "action_orders_desc": "Goberera ebyo bye wagula",
+    "action_nearby_desc": "Noonya bizinensi ezikumpi naawe",
+    "action_chat_desc": "Yogera n'abatunzi n'abaguzi",
+    "action_request_service_desc": "Funa boda-boda oba loole, tewali kugula kwetaagisa",
+    "verification_title": "Kakasa Endagamuntu Yo",
+    "verification_desc": "Olina okumaliriza okukakasa endagamuntu nga tonnagula oba okutunda.",
+    "verification_cta": "Kakasa Kati",
+    "business_title": "Bizinensi Yange",
+    "business_cta": "Genda ku Kyayi",
+    "driver_title": "Dereeva",
+    "driver_status_verified": "Kakasiddwa - mwetegefu ku mirimu",
+    "driver_status_pending": "Okukakasa kulindirira",
+    "driver_status_failed": "Okukakasa kulemereddwa",
+    "driver_cta": "Laba Emirimu"
+  },
+  "billpay": {
+    "title": "Okusasula Bbiirasi"
+  },
+  "realestate": {
+    "title": "Ebintu Ebitasuulibwa"
+  },
+  "agriculture": {
+    "title": "Endagaano y'Ebibala mu Maaso"
+  },
+  "construction": {
+    "title": "Omulimu gw'Okuzimba/Endagaano"
+  },
+  "savings": {
+    "title": "Ebibiina by'Okutereka VICOBA/SACCOS"
+  }
+}

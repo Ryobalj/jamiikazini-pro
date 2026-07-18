@@ -3,7 +3,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
-from rest_framework import status
+from rest_framework import status, permissions
 from elasticsearch_dsl.query import Q
 from search.documents.product_document import ProductDocument
 from search.serializers.product_search_serializer import ProductSearchSerializer
@@ -15,6 +15,9 @@ class ProductSearchPagination(PageNumberPagination):
 
 
 class ProductSearchView(APIView):
+    # Public catalog data - matches businesses/views/product_views.py's AllowAny listing.
+    permission_classes = [permissions.AllowAny]
+
     def get(self, request):
         query = request.query_params.get('q', '')
         lat = request.query_params.get('lat')

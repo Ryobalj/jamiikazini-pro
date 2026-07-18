@@ -1,0 +1,31 @@
+{
+  "title": "Pago de Facturas",
+  "available_balance": "Saldo disponible",
+  "description": "Pague electricidad (LUKU), saldo telefónico, DSTV y otras facturas directamente desde su JamiiWallet.",
+  "category_label": "Elegir tipo de servicio",
+  "category_electricity": "Electricidad",
+  "category_airtime": "Saldo telefónico",
+  "category_tv": "Suscripción TV",
+  "category_water": "Agua",
+  "biller_label": "Proveedor de servicio",
+  "biller_placeholder": "Elegir...",
+  "account_label": "Número de medidor/teléfono/cuenta",
+  "account_placeholder": "Ingrese el número...",
+  "amount_label": "Monto",
+  "submitting": "Pagando...",
+  "submit": "Pagar ahora",
+  "back": "Atrás",
+  "success": "¡Pago completado!",
+  "paid_to": "Ha pagado",
+  "token_label": "Número de token",
+  "reference_label": "Referencia",
+  "pay_another": "Pagar otra factura",
+  "back_to_wallet": "Volver a la billetera",
+  "copied": "Copiado.",
+  "errors": {
+    "biller_required": "Elija el servicio que desea pagar.",
+    "account_required": "Ingrese el número de medidor/teléfono/cuenta.",
+    "amount_required": "Ingrese un monto válido.",
+    "failed": "Error en el pago. Inténtelo de nuevo."
+  }
+}

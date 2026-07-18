@@ -243,6 +243,31 @@ def user_profile(request):
 class MeView(APIView):
     permission_classes = [IsAuthenticated]
 
+    # Sehemu chache tu mtumiaji anaweza kujibadilishia mwenyewe - MeSerializer
+    # ina read_only_fields = fields (yote), hivyo haitumiki kwa uandishi hapa;
+    # tunathibitisha moja kwa moja na kuweka field kwenye request.user.
+    PATCHABLE_FIELDS = {"preferred_otp_method", "full_name"}
+    VALID_OTP_METHODS = {"SMS", "EMAIL", "TOTP"}
+
     def get(self, request):
         serializer = MeSerializer(request.user)
         return Response(serializer.data)
+
+    def patch(self, request):
+        data = {k: v for k, v in request.data.items() if k in self.PATCHABLE_FIELDS}
+        if not data:
+            return Response({"detail": "Hakuna sehemu halali ya kubadilisha."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if "preferred_otp_method" in data and data["preferred_otp_method"] not in self.VALID_OTP_METHODS:
+            return Response(
+                {"preferred_otp_method": "Chagua SMS, EMAIL au TOTP."}, status=status.HTTP_400_BAD_REQUEST,
+            )
+        if "full_name" in data and not str(data["full_name"]).strip():
+            return Response({"full_name": "Jina haliwezi kuwa tupu."}, status=status.HTTP_400_BAD_REQUEST)
+
+        user = request.user
+        for field, value in data.items():
+            setattr(user, field, value)
+        user.save(update_fields=list(data.keys()))
+
+        return Response(MeSerializer(user).data)

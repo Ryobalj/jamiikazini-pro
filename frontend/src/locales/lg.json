@@ -2,9 +2,12 @@
   "home": {
     "welcome": "Tukusanyukidde ku Jamiikazini.",
     "description": "Kino kye kisakate kya tekinologiya ekikozesebwa abakozi, amasomero, bizinensi, n’abantu ababulijjo mu Buvanjuba bwa Afirika. Kikolebwa okuba ekitundu kya buweereza ng’okusomesa, eddagala, entambula n’okusasula — nga kyakolebwa mu tekinologiya y’emulembe ey'obwenkanya ku lulimi, ekifo, n'ebyo abantu byetaaga.",
-    "login_cta": "Yingira okusobola okwongera"
+    "login_cta": "Yingira okusobola okwongera",
+    "sponsored_heading": "Ebirango Ebyesigamiziddwa",
+    "sponsored_tag": "Ekirango",
+    "trending_heading": "Ebintu Ebyettondebwa",
+    "trending_empty": "Tewali bintu kulaga kati."
   },
-
   "topbar": {
     "back": "Dda",
     "forward": "Mumaaso",
@@ -13,7 +16,6 @@
     "notifications": "Obubaka",
     "search": "Noonya"
   },
-
   "user": {
     "menu": "Menyu y'Omukozesa",
     "profile": "Ebibaluwa",
@@ -23,45 +25,39 @@
     "logout": "Fuluma",
     "login": "Yingira"
   },
-
   "cart": {
     "title": "Kapu Yange",
     "empty": "Kapu yo terimu bikozesebwa.",
     "edit": "Kyuusa",
     "checkout": "Sasula"
   },
-
   "notifications": {
-    "requests": "Ebisaba",
-    "chats": "Okubuuza",
-    "accept": "Kkiriza",
-    "decline": "Gana",
-    "view": "Laba",
-    "open_chat": "Bulaako Okubuuza"
+    "title": "Amatontome",
+    "mark_all_read": "Byonna Bisomeddwa",
+    "empty": "Tewali kutontoma kaakano.",
+    "just_now": "Kaakati",
+    "minutes_ago": "eddakiika {{count}} eziyise",
+    "hours_ago": "essaawa {{count}} eziyise",
+    "days_ago": "ennaku {{count}} eziyise"
   },
-
   "search": {
     "placeholder": "Noonya...",
     "empty": "Ebivudde mu kunoonyereza birabikira wano..."
   },
-
   "actions": {
     "save": "Teekako",
     "cancel": "Sazaamu"
   },
-
   "dashboard": {
     "welcome": "Tukusanyukidde ku mukutu gwo",
     "description": "Wano osobola okulaba ebyokukola byo"
   },
-
   "consent": {
     "title": "Okyali wano?",
     "description": "Okukuuma akawunti yo, tukusaba okakasa nga okyakola. Obanga si bwekityo, tujja kukugobera mu ngeri ey’ekitiibwa.",
     "cancel": "Nedda",
     "confirm": "Yee, nkyali wano"
   },
-
   "auth": {
     "password": "Paasa wadi",
     "password_placeholder": "Teekamu paasa wadi",
@@ -73,7 +69,6 @@
     "login": "Yingira",
     "register": "Wandiika"
   },
-
   "password": {
     "label": "Amaanyi g’obusumuluzo:",
     "strength": {
@@ -84,11 +79,9 @@
       "very_strong": "Bugumu nnyo"
     }
   },
-
   "sidebar": {
     "app_dashboard": "Mukutu Gwa App"
   },
-
   "tabs": {
     "jamiikazini": "Jamiikazini",
     "settings": "Ebikozesebwa",
@@ -99,13 +92,14 @@
     "register": "Wandiika",
     "login": "Yingira"
   },
-
   "user_home": {
     "welcome": "Tukusanyukidde ku Mukutu gwo",
     "description": "Wano mwe mulabikira ebikwata ku ggwe, ebiteekebwateekebwa, obubaka, n'ebirala."
   },
-
   "auth_login": {
+    "no_account": "Tolina akaawunti? Wewandiise",
+    "no_token": "Tewali token efunye okuva ku seva",
+    "invalid_credentials": "Email oba ekigambo ekyekusifu si kituufu. Ddamu ogezeeko.",
     "title": "Yingira",
     "email_label": "Imeyiro",
     "email_placeholder": "nga: erinnya@kikugu.com",
@@ -117,7 +111,6 @@
     "login_failed": "Okuyingira kulemereddwa.",
     "network_error": "Obuzibu ku muyunga oba reCAPTCHA."
   },
-
   "auth_register": {
     "title": "Wandiika",
     "email_label": "Imeyiro",
@@ -133,10 +126,10 @@
       "password_mismatch": "Paasa wadi tezikwatagana.",
       "recaptcha_required": "Kakasa nti si roboti.",
       "password_length": "Paasa wadi erina okuba wansi wa busa wansi bwa 6.",
-      "network": "Obuzibu ku muyunga. Gezaako nate."
+      "network": "Obuzibu ku muyunga. Gezaako nate.",
+      "phone_required": "Namba ya essimu yeetaagisa."
     }
   },
-
   "auth_verify_email": {
     "title": "Okukakasa Imeyiro",
     "verifying": "Okukakasa imeyiro yo...",
@@ -145,16 +138,13 @@
     "loading": "Kutikkula...",
     "to_login": "Genda ku Yingira"
   },
-
   "userandmenu": {
     "load_failed": "Kulemereddwa okutikkula eby'omukozesa oba menyu."
   },
-
   "jamiiauth": {
     "login_failed": "Okuyingira kulemereddwa. Kakasizaako obulungi.",
     "register_failed": "Okwewandiisa kulemereddwa. Gezaako nate."
   },
-
   "business_dashboard": {
     "loading": "Kutikkula eby'okukola...",
     "empty": "Tewali bibonerezo ku bizinensi eno mu kiseera kino.",

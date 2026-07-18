@@ -6,7 +6,6 @@
     "payment_methods": "Njia za Malipo",
     "payment_reports": "Ripoti za Malipo",
     "pay_invoice": "Lipa Ankara",
-    
     "table": {
       "user": "Mtumiaji",
       "action": "Kitendo",
@@ -16,11 +15,24 @@
       "ip_address": "IP Address",
       "timestamp": "Muda"
     },
-    
     "messages": {
       "loading": "Inapakia malipo...",
       "no_data": "Hakuna data ya malipo",
       "error": "Hitilafu imetokea wakati wa kupakia malipo"
     }
+  },
+  "credit_account": {
+    "title": "Akaunti ya Mkopo",
+    "summary": "Muhtasari wa Mkopo",
+    "limit": "Kikomo cha Mkopo",
+    "outstanding": "Deni Lililopo",
+    "available": "Mkopo Uliobaki",
+    "invoices": "Invoice za Mkopo",
+    "no_invoices": "Hakuna invoice za mkopo bado.",
+    "due": "Mwisho",
+    "pay_now": "Lipa Sasa",
+    "paid": "Invoice imelipwa kikamilifu.",
+    "pay_failed": "Imeshindwa kulipa invoice.",
+    "no_business": "Huna biashara iliyothibitishwa yenye akaunti ya mkopo."
   }
 }

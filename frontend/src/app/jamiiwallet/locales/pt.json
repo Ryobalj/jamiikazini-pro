@@ -1,0 +1,78 @@
+{
+  "title": "Minha Carteira",
+  "available_balance": "Saldo Disponível",
+  "this_month": "Este Mês",
+  "income": "Receita",
+  "expenses": "Despesas",
+  "quick_actions": "Ações Rápidas",
+  "topup": "Recarregar",
+  "send": "Enviar",
+  "request": "Solicitar",
+  "refresh": "Atualizar",
+  "refreshing": "Atualizando...",
+  "refreshed": "Carteira atualizada",
+  "recent_transactions": "Transações Recentes",
+  "view_all": "Ver Tudo",
+  "no_transactions": "Ainda não há transações",
+  "payment_methods": "Métodos de Pagamento",
+  "no_cards": "Ainda não há cartões de pagamento adicionados",
+  "add_card": "Adicionar Cartão",
+  "saved_beneficiaries": "Beneficiários Salvos",
+  "no_beneficiaries": "Ainda não há beneficiários salvos",
+  "add_beneficiary": "Adicionar Beneficiário",
+  "topup_wallet": "Recarregar Carteira",
+  "amount": "Valor",
+  "payment_channel": "Canal de Pagamento",
+  "cancel": "Cancelar",
+  "confirm_topup": "Confirmar Recarga",
+  "invalid_amount": "Por favor, insira um valor válido",
+  "topup_initiated": "Recarga iniciada com sucesso",
+  "topup_failed": "Falha na recarga. Tente novamente.",
+  "copied": "Copiado para a área de transferência",
+  "tabs": {
+    "transactions": "Transações",
+    "cards": "Cartões",
+    "beneficiaries": "Beneficiários"
+  },
+  "transaction_types": {
+    "top_up": "Recarga",
+    "withdrawal": "Saque",
+    "transfer": "Transferência",
+    "payment": "Pagamento",
+    "refund": "Reembolso"
+  },
+  "status": {
+    "pending": "Pendente",
+    "completed": "Concluído",
+    "failed": "Falhou",
+    "reversed": "Revertido"
+  },
+  "errors": {
+    "failed_to_load_wallet": "Falha ao carregar os dados da carteira"
+  },
+  "cashout": {
+    "title": "Sacar Dinheiro",
+    "description": "Visite qualquer empresa verificada dentro do JamiiKazini para receber dinheiro - sem taxa por enquanto.",
+    "business_label": "Procurar uma Empresa",
+    "business_placeholder": "Digite o nome de uma empresa...",
+    "searching": "Procurando...",
+    "change": "Alterar",
+    "submit": "Sacar Dinheiro",
+    "submitting": "Enviando...",
+    "success": "Você sacou dinheiro com sucesso através de {{name}}.",
+    "errors": {
+      "business_required": "Escolha uma empresa para sacar dinheiro.",
+      "failed": "Falha ao sacar dinheiro. Tente novamente."
+    }
+  },
+  "billpay": {
+    "title": "Pagamento de Contas"
+  },
+  "savings": {
+    "title": "Grupos de Poupança VICOBA/SACCOS"
+  },
+  "withdraw": "Sacar",
+  "accounts": {
+    "title": "Contas"
+  }
+}

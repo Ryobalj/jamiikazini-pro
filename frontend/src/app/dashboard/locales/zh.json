@@ -1,0 +1,63 @@
+{
+  "wallet": {
+    "title": "JamiiWallet"
+  },
+  "cart": {
+    "title": "购物车"
+  },
+  "orders": {
+    "title": "我的订单"
+  },
+  "chat": {
+    "title": "聊天"
+  },
+  "verification": {
+    "required": "完成验证"
+  },
+  "request_service": {
+    "title": "请求配送"
+  },
+  "driver": {
+    "dashboard": "司机仪表盘",
+    "jobs": "可接订单",
+    "deliveries": "我的配送",
+    "verify": "司机验证",
+    "register": "成为司机"
+  },
+  "home": {
+    "welcome": "欢迎回来",
+    "subtitle": "您需要的一切，尽在一处。",
+    "quick_actions": "快捷操作",
+    "action_wallet_desc": "查看余额、转账、提现",
+    "action_cart_desc": "结账前查看商品",
+    "action_orders_desc": "追踪您的购买记录",
+    "action_nearby_desc": "查找您附近的商家",
+    "action_chat_desc": "与卖家和买家聊天",
+    "action_request_service_desc": "叫摩的或货车，无需购物",
+    "verification_title": "验证您的身份",
+    "verification_desc": "您必须完成身份验证才能购买或销售。",
+    "verification_cta": "立即验证",
+    "business_title": "我的商家",
+    "business_cta": "前往仪表盘",
+    "driver_title": "司机",
+    "driver_status_verified": "已验证 - 可以接单",
+    "driver_status_pending": "验证审核中",
+    "driver_status_failed": "验证失败",
+    "driver_cta": "查看订单"
+  },
+  "billpay": {
+    "title": "账单支付"
+  },
+  "realestate": {
+    "title": "房地产"
+  },
+  "agriculture": {
+    "title": "农产品远期合同"
+  },
+  "construction": {
+    "title": "建筑/承包项目"
+  },
+  "savings": {
+    "title": "VICOBA/SACCOS 储蓄小组"
+  }
+}

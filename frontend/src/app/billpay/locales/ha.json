@@ -1,0 +1,31 @@
+{
+  "title": "Biyan Kudin Sabis",
+  "available_balance": "Ma'aunin da ake da shi",
+  "description": "Biya kudin wutar lantarki (LUKU), lokacin magana, DSTV, da sauran kudade kai tsaye daga JamiiWallet ɗinka.",
+  "category_label": "Zaɓi Nau'in Sabis",
+  "category_electricity": "Wutar Lantarki",
+  "category_airtime": "Lokacin Magana",
+  "category_tv": "Biyan Talabijin",
+  "category_water": "Ruwa",
+  "biller_label": "Mai Bayar da Sabis",
+  "biller_placeholder": "Zaɓa...",
+  "account_label": "Lambar Mita/Waya/Asusun",
+  "account_placeholder": "Shigar da lamba...",
+  "amount_label": "Adadi",
+  "submitting": "Ana biya...",
+  "submit": "Biya Yanzu",
+  "back": "Baya",
+  "success": "An kammala biyan kuɗi!",
+  "paid_to": "Ka biya",
+  "token_label": "Lambar Token",
+  "reference_label": "Ma'anar Bayani",
+  "pay_another": "Biya Wani Kudin",
+  "back_to_wallet": "Koma zuwa Wallet",
+  "copied": "An kwafa.",
+  "errors": {
+    "biller_required": "Zaɓi sabis ɗin da kake son biya.",
+    "account_required": "Shigar da lambar mita/waya/asusun.",
+    "amount_required": "Shigar da adadi mai kyau.",
+    "failed": "Biyan ya kasa. Sake gwadawa."
+  }
+}

@@ -104,3 +104,13 @@ class TestDriverAPI:
         url = reverse('logistics:driver-detail', args=[driver.id])
         response = client.get(url)
         assert response.status_code in [401, 403]
+
+    def test_driver_cannot_self_verify_via_patch(self, auth_client, driver):
+        """is_verified must be read-only - a provider must not be able to mark
+        their own driver as verified by simply PATCHing the field."""
+        assert driver.is_verified is False
+        url = reverse('logistics:driver-detail', args=[driver.id])
+        response = auth_client.patch(url, {"is_verified": True}, format='json')
+        assert response.status_code == status.HTTP_200_OK
+        driver.refresh_from_db()
+        assert driver.is_verified is False

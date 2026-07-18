@@ -5,12 +5,14 @@ from logistics.models.transport_assignment import TransportAssignment
 from logistics.models.transport_request import TransportRequest
 from logistics.models.transport_provider import TransportProvider
 from logistics.models.vehicle import Vehicle
+from logistics.serializers.geo_fields import PointJSONField
 
 
 class TransportAssignmentSerializer(serializers.ModelSerializer):
     transport_request = serializers.PrimaryKeyRelatedField(read_only=True)
     assigned_to = serializers.StringRelatedField()
     vehicle = serializers.StringRelatedField()
+    current_location = PointJSONField(read_only=True)
 
     class Meta:
         model = TransportAssignment
@@ -23,11 +25,15 @@ class TransportAssignmentSerializer(serializers.ModelSerializer):
             "pickup_time",
             "delivery_time",
             "current_location",
+            "agreed_fare",
+            "client_confirmed_at",
             "updated_at"
         ]
 
 
 class TransportAssignmentWriteSerializer(serializers.ModelSerializer):
+    current_location = PointJSONField(required=False, allow_null=True)
+
     class Meta:
         model = TransportAssignment
         fields = [

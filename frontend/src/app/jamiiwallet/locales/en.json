@@ -49,5 +49,30 @@
   },
   "errors": {
     "failed_to_load_wallet": "Failed to load wallet data"
+  },
+  "cashout": {
+    "title": "Cash Out",
+    "description": "Visit any verified business within JamiiKazini to get cash - no fee for now.",
+    "business_label": "Search for a Business",
+    "business_placeholder": "Type a business name...",
+    "searching": "Searching...",
+    "change": "Change",
+    "submit": "Cash Out",
+    "submitting": "Sending...",
+    "success": "You've successfully cashed out through {{name}}.",
+    "errors": {
+      "business_required": "Choose a business to cash out through.",
+      "failed": "Failed to cash out. Please try again."
+    }
+  },
+  "billpay": {
+    "title": "Bill Payments"
+  },
+  "savings": {
+    "title": "VICOBA/SACCOS Savings Groups"
+  },
+  "withdraw": "Withdraw",
+  "accounts": {
+    "title": "Accounts"
   }
 }

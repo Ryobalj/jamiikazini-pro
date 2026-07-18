@@ -13,13 +13,24 @@ from businesses.views.product_views import (
 from businesses.views.service_views import ServiceViewSet
 from businesses.views.review_views import ReviewViewSet, ProductReviewViewSet, ServiceReviewViewSet
 from businesses.views.product_order_views import ProductOrderViewSet
-from businesses.views.order_views import OrderViewSet
+from businesses.views.order_views import OrderViewSet, BulkOrderCreateView
 from businesses.views.service_booking_views import ServiceBookingViewSet
 from businesses.views.booking_views import BookingViewSet, BookingLogViewSet
 from businesses.views.category_views import BusinessCategoryViewSet
+from businesses.views.product_category_views import ProductCategoryViewSet
 from businesses.views.utils import check_domain_availability
-from businesses.views.public_views import PublicBusinessDetailView
+from businesses.views.public_views import (
+    PublicBusinessDetailView, BusinessStorefrontView, BusinessResolveDomainView, TrendingProductsView,
+)
+from businesses.views.featured_listing_views import (
+    FeaturedListingRequestView,
+    MyFeaturedListingsView,
+    ActiveFeaturedListingsView,
+)
 from businesses.views.nearby_views import NearbyEntitiesView
+from businesses.views.item_request_views import ItemRequestViewSet
+from businesses.views.product_offer_views import ProductOfferViewSet
+from businesses.views.import_request_views import ImportRequestViewSet
 
 
 # =========================
@@ -29,11 +40,15 @@ from businesses.views.nearby_views import NearbyEntitiesView
 router = routers.DefaultRouter()
 router.register(r"businesses", BusinessViewSet, basename="businesses")
 router.register(r"categories", BusinessCategoryViewSet, basename="business-categories")
+router.register(r"product-categories", ProductCategoryViewSet, basename="product-categories")
 # Flat booking API (README-designed): /bookings/ na /booking-logs/
 router.register(r"bookings", BookingViewSet, basename="booking")
 router.register(r"booking-logs", BookingLogViewSet, basename="booking-log")
 router.register(r"reviews", ReviewViewSet, basename="review")
 router.register(r"orders", OrderViewSet, basename="order")
+router.register(r"item-requests", ItemRequestViewSet, basename="item-request")
+router.register(r"product-offers", ProductOfferViewSet, basename="product-offer")
+router.register(r"import-requests", ImportRequestViewSet, basename="import-request")
 
 
 # ================================
@@ -122,10 +137,19 @@ router_urlpatterns = (
 # ============================
 
 custom_urlpatterns = [
+    # Must be listed before router_urlpatterns below - otherwise the OrderViewSet
+    # detail route (orders/<pk>/) would greedily match "bulk" as a pk first.
+    path("orders/bulk/", BulkOrderCreateView.as_view(), name="order-bulk-create"),
     path("check-domain/", check_domain_availability, name="check-domain"),
     path("nearby-list/", ProductListByProximityView.as_view(), name="product-nearby-list"),
     path("<slug:slug>/url/", generate_product_url, name="generate-product-url"),
     path("public/business/<uuid:pk>/", PublicBusinessDetailView.as_view(), name="public-business-detail"),
+    path("store/<uuid:pk>/", BusinessStorefrontView.as_view(), name="business-storefront"),
+    path("resolve-domain/", BusinessResolveDomainView.as_view(), name="business-resolve-domain"),
+    path("products/trending/", TrendingProductsView.as_view(), name="trending-products"),
+    path("featured-listings/request/", FeaturedListingRequestView.as_view(), name="featured-listing-request"),
+    path("featured-listings/mine/", MyFeaturedListingsView.as_view(), name="featured-listing-mine"),
+    path("featured-listings/active/", ActiveFeaturedListingsView.as_view(), name="featured-listing-active"),
     path("nearby/", NearbyEntitiesView.as_view(), name="nearby-entities"),
 
 ]
@@ -135,4 +159,4 @@ custom_urlpatterns = [
 # Final urlpatterns
 # ============================
 
-urlpatterns = router_urlpatterns + custom_urlpatterns
+urlpatterns = custom_urlpatterns + router_urlpatterns

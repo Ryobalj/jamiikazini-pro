@@ -1,0 +1,31 @@
+{
+  "title": "账单支付",
+  "available_balance": "可用余额",
+  "description": "直接从您的JamiiWallet支付电费(LUKU)、话费、DSTV和其他账单。",
+  "category_label": "选择服务类型",
+  "category_electricity": "电费",
+  "category_airtime": "话费",
+  "category_tv": "电视订阅",
+  "category_water": "水费",
+  "biller_label": "服务提供商",
+  "biller_placeholder": "选择...",
+  "account_label": "电表/电话/账户号码",
+  "account_placeholder": "输入号码...",
+  "amount_label": "金额",
+  "submitting": "支付中...",
+  "submit": "立即支付",
+  "back": "返回",
+  "success": "支付成功！",
+  "paid_to": "您已支付",
+  "token_label": "代币号码",
+  "reference_label": "参考号",
+  "pay_another": "支付其他账单",
+  "back_to_wallet": "返回钱包",
+  "copied": "已复制。",
+  "errors": {
+    "biller_required": "请选择您要支付的服务。",
+    "account_required": "请输入电表/电话/账户号码。",
+    "amount_required": "请输入有效金额。",
+    "failed": "支付失败，请重试。"
+  }
+}

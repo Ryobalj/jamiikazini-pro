@@ -1,0 +1,31 @@
+{
+  "title": "Okusasula Bbiirasi",
+  "available_balance": "Ssente eziriwo",
+  "description": "Sasula amasannyalaze (LUKU), ssente z'okukuba essimu, DSTV, ne bbiirasi endala nga oyita mu JamiiWallet yo.",
+  "category_label": "Londa Ekika ky'Obuweereza",
+  "category_electricity": "Amasannyalaze",
+  "category_airtime": "Ssente z'Okukuba Essimu",
+  "category_tv": "Okwewandiisa TV",
+  "category_water": "Amazzi",
+  "biller_label": "Awabuweereza",
+  "biller_placeholder": "Londa...",
+  "account_label": "Nampa ya Mita/Ssimu/Akaawunti",
+  "account_placeholder": "Wandiika ennamba...",
+  "amount_label": "Omuwendo",
+  "submitting": "Asasula...",
+  "submit": "Sasula Kaakano",
+  "back": "Ddayo",
+  "success": "Okusasula kuwedde!",
+  "paid_to": "Osasudde",
+  "token_label": "Ennamba ya Token",
+  "reference_label": "Kyakulondoolerwa",
+  "pay_another": "Sasula Ekitabo Ekirala",
+  "back_to_wallet": "Ddayo ku Wallet",
+  "copied": "Kikopeddwa.",
+  "errors": {
+    "biller_required": "Londa obuweereza bw'oyagala okusasula.",
+    "account_required": "Wandiika ennamba ya mita/ssimu/akaawunti.",
+    "amount_required": "Wandiika omuwendo omutuufu.",
+    "failed": "Okusasula kulemedde. Ddamu ogezeeko."
+  }
+}

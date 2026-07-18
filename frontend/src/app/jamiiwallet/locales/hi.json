@@ -1,0 +1,78 @@
+{
+  "title": "मेरा वॉलेट",
+  "available_balance": "उपलब्ध शेष राशि",
+  "this_month": "इस महीने",
+  "income": "आय",
+  "expenses": "खर्च",
+  "quick_actions": "त्वरित कार्रवाई",
+  "topup": "टॉप अप करें",
+  "send": "भेजें",
+  "request": "अनुरोध करें",
+  "refresh": "रीफ़्रेश करें",
+  "refreshing": "रीफ़्रेश हो रहा है...",
+  "refreshed": "वॉलेट रीफ़्रेश हो गया",
+  "recent_transactions": "हालिया लेनदेन",
+  "view_all": "सभी देखें",
+  "no_transactions": "अभी तक कोई लेनदेन नहीं",
+  "payment_methods": "भुगतान के तरीके",
+  "no_cards": "अभी तक कोई भुगतान कार्ड नहीं जोड़ा गया",
+  "add_card": "कार्ड जोड़ें",
+  "saved_beneficiaries": "सहेजे गए लाभार्थी",
+  "no_beneficiaries": "अभी तक कोई सहेजा गया लाभार्थी नहीं",
+  "add_beneficiary": "लाभार्थी जोड़ें",
+  "topup_wallet": "वॉलेट टॉप अप करें",
+  "amount": "राशि",
+  "payment_channel": "भुगतान चैनल",
+  "cancel": "रद्द करें",
+  "confirm_topup": "टॉप अप की पुष्टि करें",
+  "invalid_amount": "कृपया एक मान्य राशि दर्ज करें",
+  "topup_initiated": "टॉप अप सफलतापूर्वक शुरू हुआ",
+  "topup_failed": "टॉप अप विफल। कृपया पुनः प्रयास करें।",
+  "copied": "क्लिपबोर्ड पर कॉपी किया गया",
+  "tabs": {
+    "transactions": "लेनदेन",
+    "cards": "कार्ड",
+    "beneficiaries": "लाभार्थी"
+  },
+  "transaction_types": {
+    "top_up": "टॉप अप",
+    "withdrawal": "निकासी",
+    "transfer": "स्थानांतरण",
+    "payment": "भुगतान",
+    "refund": "धनवापसी"
+  },
+  "status": {
+    "pending": "लंबित",
+    "completed": "पूर्ण",
+    "failed": "विफल",
+    "reversed": "उलटा गया"
+  },
+  "errors": {
+    "failed_to_load_wallet": "वॉलेट डेटा लोड करने में विफल"
+  },
+  "cashout": {
+    "title": "नकद निकालें",
+    "description": "नकद पाने के लिए JamiiKazini के भीतर किसी भी सत्यापित व्यवसाय पर जाएं - अभी कोई शुल्क नहीं।",
+    "business_label": "व्यवसाय खोजें",
+    "business_placeholder": "व्यवसाय का नाम लिखें...",
+    "searching": "खोज रहे हैं...",
+    "change": "बदलें",
+    "submit": "नकद निकालें",
+    "submitting": "भेजा जा रहा है...",
+    "success": "आपने {{name}} के माध्यम से सफलतापूर्वक नकद निकाला है।",
+    "errors": {
+      "business_required": "नकद निकालने के लिए एक व्यवसाय चुनें।",
+      "failed": "नकद निकालने में विफल। कृपया पुनः प्रयास करें।"
+    }
+  },
+  "billpay": {
+    "title": "बिल भुगतान"
+  },
+  "savings": {
+    "title": "VICOBA/SACCOS बचत समूह"
+  },
+  "withdraw": "निकासी",
+  "accounts": {
+    "title": "खाते"
+  }
+}

@@ -44,6 +44,6 @@ class WalletBridge:
             amount=amount,
             transaction_type=Transaction.TransactionType.TRANSFER,
             initiated_by=sender,
-            counterparty=recipient_wallet,
+            counterparty=recipient_wallet.user,
         )
         return TransactionEngine.process(transaction)

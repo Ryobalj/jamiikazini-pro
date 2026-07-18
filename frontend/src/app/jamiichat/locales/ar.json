@@ -1,0 +1,70 @@
+{
+  "profile": {
+    "title": "ملفي الشخصي",
+    "description": "عرض وإدارة معلومات حسابك"
+  },
+  "edit_profile": {
+    "title": "تعديل الملف الشخصي",
+    "description": "تحديث معلوماتك الشخصية"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "description": "قم بتهيئة تفضيلات حسابك"
+  },
+  "wallet": {
+    "title": "محفظتي",
+    "description": "عرض الرصيد والمعاملات"
+  },
+  "personal_info": "المعلومات الشخصية",
+  "full_name": "الاسم الكامل",
+  "email": "البريد الإلكتروني",
+  "phone": "رقم الهاتف",
+  "national_id": "الهوية الوطنية",
+  "member_since": "عضو منذ",
+  "account_status": "حالة الحساب",
+  "email_verified": "تم التحقق من البريد الإلكتروني",
+  "phone_verified": "تم التحقق من الهاتف",
+  "2fa_enabled": "المصادقة الثنائية",
+  "account_active": "الحساب نشط",
+  "manage_security": "إدارة الأمان",
+  "primary_institution": "المؤسسة الرئيسية",
+  "view_institution": "عرض المؤسسة",
+  "two_factor_authentication": "المصادقة الثنائية",
+  "2fa_status": "حالة المصادقة الثنائية",
+  "2fa_enabled_desc": "حسابك محمي بالمصادقة الثنائية",
+  "2fa_disabled_desc": "أضف طبقة أمان إضافية لحسابك",
+  "enable_2fa": "تفعيل المصادقة الثنائية",
+  "disable_2fa": "تعطيل المصادقة الثنائية",
+  "change_password": "تغيير كلمة المرور",
+  "update_password": "تحديث كلمة المرور",
+  "danger_zone": "منطقة الخطر",
+  "logout": "تسجيل الخروج",
+  "logout_success": "تم تسجيل الخروج بنجاح",
+  "your_institutions": "مؤسساتك",
+  "no_institutions_yet": "لم تقم بإنشاء أي مؤسسة بعد.",
+  "create_institution": "إنشاء مؤسسة",
+  "your_businesses": "شركاتك",
+  "no_businesses_yet": "لم تقم بإنشاء أي شركة بعد.",
+  "create_business": "إنشاء شركة",
+  "recent_activity": "النشاط الأخير",
+  "no_recent_activity": "لا يوجد نشاط حديث لعرضه.",
+  "recent_conversations": "المحادثات الأخيرة",
+  "no_conversations_yet": "لا توجد محادثات بعد.",
+  "open_chat": "فتح المحادثة",
+  "start_chat": "بدء محادثة",
+  "user": "المستخدم",
+  "edit": "تعديل",
+  "create": "إنشاء",
+  "copied": "تم النسخ إلى الحافظة",
+  "errors": {
+    "failed_to_load_profile": "فشل تحميل بيانات الملف الشخصي"
+  },
+  "tabs": {
+    "overview": "نظرة عامة",
+    "institutions": "المؤسسات",
+    "businesses": "الشركات",
+    "chat": "المحادثة",
+    "activity": "النشاط",
+    "security": "الأمان"
+  }
+}

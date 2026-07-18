@@ -65,7 +65,7 @@ class TransactionSerializer(serializers.ModelSerializer):
             Transaction.TransactionType.TRANSFER,
             Transaction.TransactionType.WITHDRAWAL
         ]:
-            if wallet.balance < amount:
+            if wallet.available_balance < amount:
                 raise serializers.ValidationError(_('Insufficient wallet balance.'))
 
         return attrs

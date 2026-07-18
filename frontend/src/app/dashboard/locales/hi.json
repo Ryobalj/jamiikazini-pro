@@ -1,0 +1,63 @@
+{
+  "wallet": {
+    "title": "JamiiWallet"
+  },
+  "cart": {
+    "title": "कार्ट"
+  },
+  "orders": {
+    "title": "मेरे ऑर्डर"
+  },
+  "chat": {
+    "title": "चैट"
+  },
+  "verification": {
+    "required": "सत्यापन पूरा करें"
+  },
+  "request_service": {
+    "title": "डिलीवरी का अनुरोध करें"
+  },
+  "driver": {
+    "dashboard": "ड्राइवर डैशबोर्ड",
+    "jobs": "उपलब्ध कार्य",
+    "deliveries": "मेरी डिलीवरी",
+    "verify": "ड्राइवर सत्यापन",
+    "register": "ड्राइवर बनें"
+  },
+  "home": {
+    "welcome": "वापसी पर स्वागत है",
+    "subtitle": "आपकी हर ज़रूरत, एक ही जगह पर।",
+    "quick_actions": "त्वरित कार्रवाई",
+    "action_wallet_desc": "शेष राशि देखें, पैसे भेजें, नकद निकालें",
+    "action_cart_desc": "भुगतान से पहले वस्तुएं जांचें",
+    "action_orders_desc": "अपनी खरीदारी ट्रैक करें",
+    "action_nearby_desc": "अपने आस-पास के व्यवसाय खोजें",
+    "action_chat_desc": "विक्रेताओं और खरीदारों से चैट करें",
+    "action_request_service_desc": "बोडा-बोडा या लॉरी पाएं, खरीदारी की ज़रूरत नहीं",
+    "verification_title": "अपनी पहचान सत्यापित करें",
+    "verification_desc": "खरीदने या बेचने से पहले आपको पहचान सत्यापन पूरा करना होगा।",
+    "verification_cta": "अभी सत्यापित करें",
+    "business_title": "मेरा व्यवसाय",
+    "business_cta": "डैशबोर्ड पर जाएं",
+    "driver_title": "ड्राइवर",
+    "driver_status_verified": "सत्यापित - कार्य के लिए तैयार",
+    "driver_status_pending": "सत्यापन लंबित",
+    "driver_status_failed": "सत्यापन विफल",
+    "driver_cta": "कार्य देखें"
+  },
+  "billpay": {
+    "title": "बिल भुगतान"
+  },
+  "realestate": {
+    "title": "अचल संपत्ति"
+  },
+  "agriculture": {
+    "title": "फसल फॉरवर्ड अनुबंध"
+  },
+  "construction": {
+    "title": "निर्माण/ठेका परियोजना"
+  },
+  "savings": {
+    "title": "VICOBA/SACCOS बचत समूह"
+  }
+}

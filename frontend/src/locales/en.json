@@ -2,9 +2,12 @@
   "home": {
     "welcome": "Welcome to Jamiikazini.",
     "description": "This is a digital platform for institutions, businesses, professionals, and individuals across East Africa. It aims to be a hub for essential services like education, healthcare, transport, and payments — powered by modern technology that respects language, locality, and community needs.",
-    "login_cta": "Login to continue"
+    "login_cta": "Login to continue",
+    "sponsored_heading": "Sponsored Ads",
+    "sponsored_tag": "Ad",
+    "trending_heading": "Trending Products",
+    "trending_empty": "No products to show yet."
   },
-
   "topbar": {
     "back": "Back",
     "forward": "Forward",
@@ -13,7 +16,6 @@
     "notifications": "Notifications",
     "search": "Search"
   },
-
   "user": {
     "menu": "User Menu",
     "profile": "Profile",
@@ -23,41 +25,36 @@
     "logout": "Logout",
     "login": "Login"
   },
-
   "cart": {
     "title": "My Cart",
     "empty": "Your cart is empty.",
     "edit": "Edit",
     "checkout": "Checkout"
   },
-
   "notifications": {
-    "requests": "Requests",
-    "chats": "Discussions",
-    "accept": "Accept",
-    "decline": "Decline",
-    "view": "View",
-    "open_chat": "Open Discussion"
+    "title": "Notifications",
+    "mark_all_read": "Mark All Read",
+    "empty": "No notifications yet.",
+    "just_now": "Just now",
+    "minutes_ago": "{{count}} min ago",
+    "hours_ago": "{{count}} h ago",
+    "days_ago": "{{count}}d ago"
   },
-
   "search": {
     "placeholder": "Search...",
     "empty": "Search results will appear here..."
   },
-
   "actions": {
     "save": "Save",
     "cancel": "Cancel"
   },
-
   "dashboard": {
     "welcome": "Welcome to your dashboard",
     "description": "Here you can view a summary of your activities"
   },
-
   "user_home": {
-    "welcome": "Welcome to Jamiikazini",
-    "description": "Choose a service to continue"
+    "welcome": "Welcome to your Dashboard",
+    "description": "This is where your personal information, bookings, notifications, etc. will appear."
   },
   "services": {
     "teaching": "Teaching Services",
@@ -65,14 +62,12 @@
     "health": "Health Services",
     "payments": "Payments"
   },
-
   "consent": {
     "title": "Are you still here?",
     "description": "For your account's security, please confirm you're still active. Otherwise, we'll log you out respectfully.",
     "cancel": "No",
     "confirm": "Yes, I'm here"
   },
-
   "auth": {
     "password": "Password",
     "password_placeholder": "Enter password",
@@ -84,7 +79,6 @@
     "login": "Login",
     "register": "Register"
   },
-
   "password": {
     "label": "Password strength:",
     "strength": {
@@ -95,11 +89,9 @@
       "very_strong": "Very Strong"
     }
   },
-
   "sidebar": {
     "app_dashboard": "App Dashboard"
   },
-
   "tabs": {
     "jamiikazini": "Jamiikazini",
     "settings": "Settings",
@@ -109,7 +101,6 @@
     "home": "Home",
     "register": "Register",
     "login": "Login",
-  
     "kiini_dashboard": "Jamii",
     "business_dashboard": "Business",
     "education_dashboard": "Learning",
@@ -122,14 +113,7 @@
     "search_dashboard": "Search",
     "portfolio_dashboard": "Portfolio",
     "teaching": "Teaching Services"
-
   },
-
-  "user_home": {
-    "welcome": "Welcome to your Dashboard",
-    "description": "This is where your personal information, bookings, notifications, etc. will appear."
-  },
-
   "auth_login": {
     "no_account": "Don't have an account? Register",
     "no_token": "No token received from server",
@@ -145,7 +129,6 @@
     "login_failed": "Login failed.",
     "network_error": "Network or reCAPTCHA error."
   },
-
   "auth_register": {
     "title": "Register",
     "email_label": "Email",
@@ -161,10 +144,10 @@
       "password_mismatch": "Passwords do not match.",
       "recaptcha_required": "Please verify that you are not a robot.",
       "password_length": "Password must be at least 6 characters.",
-      "network": "Network error. Please try again."
+      "network": "Network error. Please try again.",
+      "phone_required": "Phone number is required."
     }
   },
-
   "auth_verify_email": {
     "title": "Email Verification",
     "verifying": "Verifying your email...",
@@ -173,16 +156,13 @@
     "loading": "Loading...",
     "to_login": "Go to Login"
   },
-
   "userandmenu": {
     "load_failed": "Failed to load user or menu information."
   },
-
   "jamiiauth": {
     "login_failed": "Login failed. Please check your credentials.",
     "register_failed": "Registration failed. Please try again."
   },
-
   "business_dashboard": {
     "loading": "Loading dashboard...",
     "empty": "No data available for this business at the moment.",
@@ -219,16 +199,6 @@
       "used": "{{count}} used"
     }
   },
-
-  "invite": {
-    "title": "Invite Your Friends",
-    "share_whatsapp": "Share via WhatsApp",
-    "share_facebook": "Share via Facebook",
-    "copy_link": "Copy Link",
-    "link_copied": "Link Copied!",
-    "share_text": "Join Jamiikazini – the best service platform in East Africa! 🌍"
-  },
-
   "invite": {
     "title": "Invite Your Friends",
     "share_text": "Join Jamiikazini – the best service platform in East Africa! 🌍",
@@ -236,7 +206,6 @@
     "copy_link": "Copy Link",
     "link_copied": "Link Copied!"
   },
-
   "currencies": {
     "tzs": "Tanzanian Shilling",
     "kes": "Kenyan Shilling",
@@ -278,5 +247,4 @@
       "auto_refresh_disabled": "Auto-refresh disabled"
     }
   }
-
 }

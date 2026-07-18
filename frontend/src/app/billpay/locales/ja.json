@@ -1,0 +1,31 @@
+{
+  "title": "料金支払い",
+  "available_balance": "利用可能残高",
+  "description": "電気(LUKU)、通話料、DSTV、その他の料金をJamiiWalletから直接支払います。",
+  "category_label": "サービスの種類を選択",
+  "category_electricity": "電気",
+  "category_airtime": "通話料",
+  "category_tv": "テレビ契約",
+  "category_water": "水道",
+  "biller_label": "サービス提供者",
+  "biller_placeholder": "選択...",
+  "account_label": "メーター/電話/口座番号",
+  "account_placeholder": "番号を入力...",
+  "amount_label": "金額",
+  "submitting": "支払い中...",
+  "submit": "今すぐ支払う",
+  "back": "戻る",
+  "success": "支払いが完了しました！",
+  "paid_to": "支払いました",
+  "token_label": "トークン番号",
+  "reference_label": "参照番号",
+  "pay_another": "他の料金を支払う",
+  "back_to_wallet": "ウォレットに戻る",
+  "copied": "コピーしました。",
+  "errors": {
+    "biller_required": "支払いたいサービスを選択してください。",
+    "account_required": "メーター/電話/口座番号を入力してください。",
+    "amount_required": "正しい金額を入力してください。",
+    "failed": "支払いに失敗しました。もう一度お試しください。"
+  }
+}

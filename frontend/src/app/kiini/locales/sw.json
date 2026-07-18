@@ -53,5 +53,12 @@
   "types": {
     "title": "Aina za Taasisi",
     "description": "Angalia au chagua aina ya taasisi kama kampuni binafsi, NGO, au taasisi ya serikali."
+  },
+  "institution_storefront": {
+    "not_found": "Jengo/taasisi hii haipatikani.",
+    "tenants_heading": "Maduka Ndani ya Jengo Hili",
+    "empty": "Hakuna duka lililosajiliwa hapa bado.",
+    "tenant_count_one": "Duka {{count}}",
+    "tenant_count_other": "Maduka {{count}}"
   }
 }

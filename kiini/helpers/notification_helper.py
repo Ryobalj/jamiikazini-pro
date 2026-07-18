@@ -1,7 +1,8 @@
-# kiini/helpers/notification_helper.py
+from kiini.models.notification import Notification, NotificationType
 
-from kiini.models.notification import Notification
 
-def notify_user(user, message):
+def notify_user(user, message, notification_type=NotificationType.SYSTEM, link=None):
     if user:
-        Notification.objects.create(user=user, message=message)
+        Notification.objects.create(
+            user=user, message=message, notification_type=notification_type, link=link,
+        )

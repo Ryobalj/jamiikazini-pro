@@ -1,0 +1,78 @@
+{
+  "title": "My Beursie",
+  "available_balance": "Beskikbare Saldo",
+  "this_month": "Hierdie Maand",
+  "income": "Inkomste",
+  "expenses": "Uitgawes",
+  "quick_actions": "Vinnige Aksies",
+  "topup": "Herlaai",
+  "send": "Stuur",
+  "request": "Versoek",
+  "refresh": "Verfris",
+  "refreshing": "Verfris tans...",
+  "refreshed": "Beursie verfris",
+  "recent_transactions": "Onlangse Transaksies",
+  "view_all": "Bekyk Almal",
+  "no_transactions": "Nog geen transaksies nie",
+  "payment_methods": "Betaalmetodes",
+  "no_cards": "Nog geen betaalkaarte bygevoeg nie",
+  "add_card": "Voeg Kaart By",
+  "saved_beneficiaries": "Gestoorde Begunstigdes",
+  "no_beneficiaries": "Nog geen gestoorde begunstigdes nie",
+  "add_beneficiary": "Voeg Begunstigde By",
+  "topup_wallet": "Herlaai Beursie",
+  "amount": "Bedrag",
+  "payment_channel": "Betaalkanaal",
+  "cancel": "Kanselleer",
+  "confirm_topup": "Bevestig Herlaai",
+  "invalid_amount": "Voer asseblief 'n geldige bedrag in",
+  "topup_initiated": "Herlaai suksesvol begin",
+  "topup_failed": "Herlaai het misluk. Probeer asseblief weer.",
+  "copied": "Na knipbord gekopieer",
+  "tabs": {
+    "transactions": "Transaksies",
+    "cards": "Kaarte",
+    "beneficiaries": "Begunstigdes"
+  },
+  "transaction_types": {
+    "top_up": "Herlaai",
+    "withdrawal": "Onttrekking",
+    "transfer": "Oorplasing",
+    "payment": "Betaling",
+    "refund": "Terugbetaling"
+  },
+  "status": {
+    "pending": "Hangende",
+    "completed": "Voltooi",
+    "failed": "Misluk",
+    "reversed": "Omgekeer"
+  },
+  "errors": {
+    "failed_to_load_wallet": "Kon nie beursiedata laai nie"
+  },
+  "cashout": {
+    "title": "Trek Kontant Uit",
+    "description": "Besoek enige geverifieerde besigheid binne JamiiKazini om kontant te kry - geen fooi tans nie.",
+    "business_label": "Soek 'n Besigheid",
+    "business_placeholder": "Tik 'n besigheidsnaam...",
+    "searching": "Soek tans...",
+    "change": "Verander",
+    "submit": "Trek Kontant Uit",
+    "submitting": "Stuur tans...",
+    "success": "Jy het suksesvol kontant getrek deur {{name}}.",
+    "errors": {
+      "business_required": "Kies 'n besigheid om kontant deur uit te trek.",
+      "failed": "Kon nie kontant uittrek nie. Probeer weer."
+    }
+  },
+  "billpay": {
+    "title": "Rekeningbetalings"
+  },
+  "savings": {
+    "title": "VICOBA/SACCOS Spaargroepe"
+  },
+  "withdraw": "Onttrek",
+  "accounts": {
+    "title": "Rekeninge"
+  }
+}

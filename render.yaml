@@ -72,6 +72,14 @@ services:
     envVars:
       - key: VITE_API_BASE_URL
         value: https://jamiikazini-pro.onrender.com/api/v1
+      # Domain kuu ya jukwaa - hutumika kutambua kama mtumiaji amefika kupitia
+      # subdomain ya duka/taasisi (<domain>.jamiikazini.com) badala ya
+      # jamiikazini.com yenyewe (angalia src/main.jsx). Kuwezesha subdomain
+      # halisi hadharani kunahitaji DNS ya wildcard (*.jamiikazini.com) na
+      # "Wildcard Custom Domain" iwekwe kwenye huduma hii kwenye Render
+      # dashboard - hatua za nje ya msimbo huu, lazima zifanywe na mmiliki.
+      - key: VITE_CENTRAL_DOMAIN
+        value: jamiikazini.com
     routes:
       - type: rewrite                         # React Router (SPA)
         source: /*

@@ -1,13 +1,13 @@
 # gov_integration/serializers/verification_serializers.py
 
 import logging
-import requests
 from django.conf import settings
+from django.db import IntegrityError
 from rest_framework import serializers
 from gov_integration.models.verification_request import VerificationRequest
 from kiini.models.institution import Institution
 from accounts.models import User
-from security.helpers.encryption import encrypt_data
+from security.helpers.encryption import encrypt_data, hash_data
 from gov_integration.models.service_type import ServiceType
 from gov_integration.models.country_config import CountryConfig
 
@@ -44,7 +44,9 @@ class NationalIDVerificationSerializer(serializers.Serializer):
         ('TZ', 'Tanzania'),
         ('KE', 'Kenya'),
         ('UG', 'Uganda'),
-        ('RW', 'Rwanda')
+        ('RW', 'Rwanda'),
+        ('BI', 'Burundi'),
+        ('SS', 'South Sudan'),
     ])
     national_id = serializers.CharField()
 
@@ -67,12 +69,31 @@ class NationalIDVerificationSerializer(serializers.Serializer):
             if not value.isdigit() or len(value) != 16:
                 raise serializers.ValidationError("Rwandan ID must be 16 digits.")
 
+        elif country in ("BI", "SS"):
+            # Format rasmi ya CNI ya Burundi / NIN ya South Sudan bado
+            # hazijathibitishwa na mamlaka husika (ONI / NIA) - tunakubali
+            # alphanumeric 6-20 kwa ulegevu mpaka spec rasmi ipatikane.
+            if not value.isalnum() or not (6 <= len(value) <= 20):
+                raise serializers.ValidationError("National ID must be 6-20 alphanumeric characters.")
+
         return value
 
     def validate(self, attrs):
         user = self.context['request'].user
-        if user.is_verified:
+        # is_verified inawekwa pia na uthibitisho wa barua pepe tu - hivyo si
+        # kigezo sahihi cha kuzuia kurudia hapa. is_identity_verified ndiyo
+        # inayowekwa na NIDA/national-ID pekee.
+        if user.is_identity_verified:
             raise serializers.ValidationError("User is already verified.")
+
+        # NIDA/NIN moja = akaunti moja: hash ya kudumu inalinganishwa kwa sababu
+        # Fernet ciphertext haiwezi ku-queriwa kwa usawa.
+        nid_hash = hash_data(attrs['national_id'])
+        if User.objects.exclude(pk=user.pk).filter(national_id_hash=nid_hash).exists():
+            raise serializers.ValidationError(
+                {"national_id": "Kitambulisho hiki tayari kimetumika kwenye akaunti nyingine. "
+                                "Kila NIDA/NIN inaruhusiwa kwenye akaunti moja tu."}
+            )
         return attrs
 
     def create(self, validated_data):
@@ -116,49 +137,42 @@ class NationalIDVerificationSerializer(serializers.Serializer):
         )
 
         if status == "VERIFIED":
-            user.national_id = national_id  # auto-encrypted by model
+            user.national_id = national_id  # auto-encrypted + hashed by model
             user.is_verified = True
-            user.save()
+            user.is_identity_verified = True
+            try:
+                user.save()
+            except IntegrityError:
+                # Race guard: akaunti nyingine imemaliza uthibitisho na NIN
+                # hii kati ya validate() na save() - unique constraint ya
+                # national_id_hash ndiyo mstari wa mwisho wa ulinzi.
+                raise serializers.ValidationError(
+                    {"national_id": "Kitambulisho hiki tayari kimetumika kwenye akaunti nyingine. "
+                                    "Kila NIDA/NIN inaruhusiwa kwenye akaunti moja tu."}
+                )
             return {"message": "User successfully verified."}
 
         raise serializers.ValidationError("National ID could not be verified.")
 
     def perform_verification(self, country, national_id):
-        env = getattr(settings, "DJANGO_ENV", "development").lower()
+        """
+        Inatumia registry ileile ya mamlaka (gov_api_config + verify_entity)
+        inayotumika na uthibitisho wa madereva/biashara/usafirishaji - env vars
+        (mf. TZ_NIDA_API_URL/API_KEY) ndizo zinazowasha API halisi kwa kila
+        nchi. Production ni fail-closed ndani ya verify_entity; development
+        inatumia mock (format tayari imekaguliwa na validate_national_id).
+        """
+        from gov_integration.helpers.verification import verify_entity, national_id_authority_for
 
-        def simulate(success=True):
-            logger.warning(f"Simulated verification for {country}")
-            return {"verified": success}
+        result = verify_entity(
+            country_code=country.lower(),
+            authority_code=national_id_authority_for(country),
+            payload={
+                "national_id_number": national_id,
+                "national_id": national_id,
+            },
+            user=self.context["request"].user,
+        )
 
-        try:
-            if country == "TZ":
-                if env == "production" and settings.TZ_NIDA_API_KEY:
-                    return self.call_api(settings.TZ_NIDA_API_URL, settings.TZ_NIDA_API_KEY, {"national_id": national_id})
-                return simulate(success=national_id.isdigit() and len(national_id) == 20)
-
-            elif country == "KE":
-                if env == "production" and settings.KE_NRB_API_KEY:
-                    return self.call_api(settings.KE_NRB_API_URL, settings.KE_NRB_API_KEY, {"national_id": national_id})
-                return simulate(success=national_id.isdigit() and len(national_id) in [8, 9])
-
-            elif country == "UG":
-                if env == "production" and settings.UG_NIRA_API_KEY:
-                    return self.call_api(settings.UG_NIRA_API_URL, settings.UG_NIRA_API_KEY, {"nin": national_id})
-                return simulate(success=national_id[:2].isalpha() and national_id[2:].isdigit() and len(national_id) == 13)
-
-            elif country == "RW":
-                if env == "production" and settings.RW_NIDA_API_KEY:
-                    return self.call_api(settings.RW_NIDA_API_URL, settings.RW_NIDA_API_KEY, {"national_id": national_id})
-                return simulate(success=national_id.isdigit() and len(national_id) == 16)
-
-            raise ValueError("Unsupported country.")
-
-        except Exception as e:
-            logger.error(f"Verification failed for {country}: {e}")
-            return {"verified": False, "error": str(e)}
-
-    def call_api(self, url, api_key, payload):
-        headers = {"Authorization": f"Bearer {api_key}"}
-        response = requests.post(url, json=payload, headers=headers, timeout=10)
-        response.raise_for_status()
-        return response.json()
+        verified = bool(result.get("verified")) or result.get("status") == "success"
+        return {"verified": verified, **{k: v for k, v in result.items() if k != "verified"}}

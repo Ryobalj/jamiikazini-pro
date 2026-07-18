@@ -2,9 +2,12 @@
   "home": {
     "welcome": "ジャミーカジニへようこそ。",
     "description": "これは、東アフリカ全域の機関、企業、専門家、個人のためのデジタルプラットフォームです。教育、医療、交通、決済などの重要なサービスの中心となることを目指しており、言語、地域性、コミュニティのニーズを尊重する最新技術によって支えられています。",
-    "login_cta": "続行するにはログインしてください"
+    "login_cta": "続行するにはログインしてください",
+    "sponsored_heading": "スポンサー広告",
+    "sponsored_tag": "広告",
+    "trending_heading": "トレンド商品",
+    "trending_empty": "表示できる商品はまだありません。"
   },
-
   "topbar": {
     "back": "戻る",
     "forward": "進む",
@@ -13,7 +16,6 @@
     "notifications": "通知",
     "search": "検索"
   },
-
   "user": {
     "menu": "ユーザーメニュー",
     "profile": "プロフィール",
@@ -23,45 +25,39 @@
     "logout": "ログアウト",
     "login": "ログイン"
   },
-
   "cart": {
     "title": "マイカート",
     "empty": "カートに商品がありません。",
     "edit": "編集",
     "checkout": "チェックアウト"
   },
-
   "notifications": {
-    "requests": "リクエスト",
-    "chats": "チャット",
-    "accept": "承認",
-    "decline": "拒否",
-    "view": "表示",
-    "open_chat": "チャットを開く"
+    "title": "通知",
+    "mark_all_read": "すべて既読にする",
+    "empty": "まだ通知はありません。",
+    "just_now": "たった今",
+    "minutes_ago": "{{count}}分前",
+    "hours_ago": "{{count}}時間前",
+    "days_ago": "{{count}}日前"
   },
-
   "search": {
     "placeholder": "検索...",
     "empty": "検索結果はここに表示されます..."
   },
-
   "actions": {
     "save": "保存",
     "cancel": "キャンセル"
   },
-
   "dashboard": {
     "welcome": "あなたのダッシュボードへようこそ",
     "description": "ここでは自分の活動概要を確認できます"
   },
-
   "consent": {
     "title": "まだご在席ですか？",
     "description": "アカウントのセキュリティのため、まだ操作中かご確認ください。操作がない場合はログアウトされます。",
     "cancel": "いいえ",
     "confirm": "はい、います"
   },
-
   "auth": {
     "password": "パスワード",
     "password_placeholder": "パスワードを入力",
@@ -73,7 +69,6 @@
     "login": "ログイン",
     "register": "登録"
   },
-
   "password": {
     "label": "パスワード強度:",
     "strength": {
@@ -84,11 +79,9 @@
       "very_strong": "非常に強い"
     }
   },
-
   "sidebar": {
     "app_dashboard": "アプリダッシュボード"
   },
-
   "tabs": {
     "jamiikazini": "ジャミーカジニ",
     "settings": "設定",
@@ -99,13 +92,14 @@
     "register": "登録",
     "login": "ログイン"
   },
-
   "user_home": {
     "welcome": "あなたのダッシュボードへようこそ",
     "description": "ここに個人情報、予約、通知などが表示されます。"
   },
-
   "auth_login": {
+    "no_account": "アカウントをお持ちでないですか？登録する",
+    "no_token": "サーバーからトークンを受信できませんでした",
+    "invalid_credentials": "メールアドレスまたはパスワードが無効です。もう一度お試しください。",
     "title": "ログイン",
     "email_label": "メールアドレス",
     "email_placeholder": "例: name@example.com",
@@ -117,7 +111,6 @@
     "login_failed": "ログインに失敗しました。",
     "network_error": "ネットワークまたはreCAPTCHAのエラーです。"
   },
-
   "auth_register": {
     "title": "登録",
     "email_label": "メールアドレス",
@@ -133,10 +126,10 @@
       "password_mismatch": "パスワードが一致しません。",
       "recaptcha_required": "ロボットではないことを確認してください。",
       "password_length": "パスワードは6文字以上である必要があります。",
-      "network": "ネットワークエラー。もう一度お試しください。"
+      "network": "ネットワークエラー。もう一度お試しください。",
+      "phone_required": "電話番号は必須です。"
     }
   },
-
   "auth_verify_email": {
     "title": "メール認証",
     "verifying": "メールを確認中...",
@@ -145,16 +138,13 @@
     "loading": "読み込み中...",
     "to_login": "ログイン画面へ"
   },
-
   "userandmenu": {
     "load_failed": "ユーザーまたはメニュー情報の読み込みに失敗しました。"
   },
-
   "jamiiauth": {
     "login_failed": "ログインに失敗しました。認証情報を確認してください。",
     "register_failed": "登録に失敗しました。もう一度お試しください。"
   },
-
   "business_dashboard": {
     "loading": "ダッシュボードを読み込んでいます...",
     "empty": "現在、このビジネスに関連するデータはありません。",

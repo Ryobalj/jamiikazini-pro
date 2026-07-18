@@ -1,0 +1,78 @@
+{
+  "title": "Mon Portefeuille",
+  "available_balance": "Solde Disponible",
+  "this_month": "Ce Mois-ci",
+  "income": "Revenus",
+  "expenses": "Dépenses",
+  "quick_actions": "Actions Rapides",
+  "topup": "Recharger",
+  "send": "Envoyer",
+  "request": "Demander",
+  "refresh": "Actualiser",
+  "refreshing": "Actualisation...",
+  "refreshed": "Portefeuille actualisé",
+  "recent_transactions": "Transactions Récentes",
+  "view_all": "Tout Voir",
+  "no_transactions": "Aucune transaction pour le moment",
+  "payment_methods": "Moyens de Paiement",
+  "no_cards": "Aucune carte de paiement ajoutée",
+  "add_card": "Ajouter une Carte",
+  "saved_beneficiaries": "Bénéficiaires Enregistrés",
+  "no_beneficiaries": "Aucun bénéficiaire enregistré",
+  "add_beneficiary": "Ajouter un Bénéficiaire",
+  "topup_wallet": "Recharger le Portefeuille",
+  "amount": "Montant",
+  "payment_channel": "Canal de Paiement",
+  "cancel": "Annuler",
+  "confirm_topup": "Confirmer la Recharge",
+  "invalid_amount": "Veuillez entrer un montant valide",
+  "topup_initiated": "Recharge initiée avec succès",
+  "topup_failed": "Échec de la recharge. Veuillez réessayer.",
+  "copied": "Copié dans le presse-papiers",
+  "tabs": {
+    "transactions": "Transactions",
+    "cards": "Cartes",
+    "beneficiaries": "Bénéficiaires"
+  },
+  "transaction_types": {
+    "top_up": "Recharge",
+    "withdrawal": "Retrait",
+    "transfer": "Virement",
+    "payment": "Paiement",
+    "refund": "Remboursement"
+  },
+  "status": {
+    "pending": "En Attente",
+    "completed": "Terminé",
+    "failed": "Échoué",
+    "reversed": "Annulé"
+  },
+  "errors": {
+    "failed_to_load_wallet": "Échec du chargement des données du portefeuille"
+  },
+  "cashout": {
+    "title": "Retirer de l'Argent",
+    "description": "Visitez n'importe quelle entreprise vérifiée sur JamiiKazini pour obtenir de l'argent liquide - aucuns frais pour le moment.",
+    "business_label": "Rechercher une Entreprise",
+    "business_placeholder": "Tapez le nom d'une entreprise...",
+    "searching": "Recherche...",
+    "change": "Changer",
+    "submit": "Retirer",
+    "submitting": "Envoi en cours...",
+    "success": "Vous avez retiré de l'argent avec succès via {{name}}.",
+    "errors": {
+      "business_required": "Choisissez une entreprise pour retirer de l'argent.",
+      "failed": "Échec du retrait. Veuillez réessayer."
+    }
+  },
+  "billpay": {
+    "title": "Paiement de Factures"
+  },
+  "savings": {
+    "title": "Groupes d'Épargne VICOBA/SACCOS"
+  },
+  "withdraw": "Retirer",
+  "accounts": {
+    "title": "Comptes"
+  }
+}

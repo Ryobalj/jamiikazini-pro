@@ -6,29 +6,9 @@
 # (Location FKs, preferred_vehicle_type, cargo_weight_kg...) and raised
 # ImproperlyConfigured on every request.
 
-from django.contrib.gis.geos import Point
 from rest_framework import serializers
 from logistics.models import TransportRequest, Vehicle
-
-
-class PointJSONField(serializers.Field):
-    """GeoJSON Point <-> GEOS Point."""
-
-    def to_internal_value(self, data):
-        try:
-            if isinstance(data, dict) and "coordinates" in data:
-                lon, lat = data["coordinates"]
-                return Point(float(lon), float(lat), srid=4326)
-        except (TypeError, ValueError, IndexError):
-            pass
-        raise serializers.ValidationError(
-            'Expected GeoJSON Point: {"type": "Point", "coordinates": [lon, lat]}'
-        )
-
-    def to_representation(self, value):
-        if value is None:
-            return None
-        return {"type": "Point", "coordinates": [value.x, value.y]}
+from logistics.serializers.geo_fields import PointJSONField
 
 
 class TransportRequestWriteSerializer(serializers.ModelSerializer):
@@ -68,9 +48,20 @@ class TransportRequestWriteSerializer(serializers.ModelSerializer):
         read_only_fields = ["id"]
 
 
+class TransportRequestAssignmentSerializer(serializers.Serializer):
+    id = serializers.UUIDField()
+    assignment_status = serializers.CharField()
+    agreed_fare = serializers.DecimalField(max_digits=10, decimal_places=2, allow_null=True)
+    client_confirmed_at = serializers.DateTimeField(allow_null=True)
+    vehicle = serializers.CharField(source="vehicle.registration_number", default=None)
+    provider_name = serializers.CharField(source="assigned_to.user.full_name", default=None)
+    current_location = PointJSONField(read_only=True, default=None)
+
+
 class TransportRequestSerializer(serializers.ModelSerializer):
     pickup_location = PointJSONField(read_only=True)
     dropoff_location = PointJSONField(read_only=True)
+    assignment = serializers.SerializerMethodField()
 
     class Meta:
         model = TransportRequest
@@ -79,6 +70,7 @@ class TransportRequestSerializer(serializers.ModelSerializer):
             "requestor_type",
             "business",
             "institution",
+            "requested_by",
             "package_description",
             "weight_kg",
             "volume_cbm",
@@ -92,10 +84,19 @@ class TransportRequestSerializer(serializers.ModelSerializer):
             "destination_country",
             "status",
             "is_accepted",
+            "order",
+            "estimated_fare",
             "requested_at",
             "expires_at",
+            "assignment",
         ]
         read_only_fields = fields
+
+    def get_assignment(self, obj):
+        assignment = getattr(obj, "transportassignment", None)
+        if assignment is None:
+            return None
+        return TransportRequestAssignmentSerializer(assignment).data
 
 
 class RecommendedVehicleSerializer(serializers.ModelSerializer):

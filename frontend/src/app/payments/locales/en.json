@@ -1,0 +1,38 @@
+{
+  "payments": {
+    "dashboard": "Payments",
+    "audit_logs": "Audit Logs",
+    "invoices": "Invoices",
+    "payment_methods": "Payment Methods",
+    "payment_reports": "Payment Reports",
+    "pay_invoice": "Pay Invoice",
+    "table": {
+      "user": "User",
+      "action": "Action",
+      "target": "Target",
+      "description": "Description",
+      "metadata": "Metadata",
+      "ip_address": "IP Address",
+      "timestamp": "Time"
+    },
+    "messages": {
+      "loading": "Loading payments...",
+      "no_data": "No payment data",
+      "error": "An error occurred while loading payments"
+    }
+  },
+  "credit_account": {
+    "title": "Credit Account",
+    "summary": "Credit Summary",
+    "limit": "Credit Limit",
+    "outstanding": "Outstanding Balance",
+    "available": "Available Credit",
+    "invoices": "Credit Invoices",
+    "no_invoices": "No credit invoices yet.",
+    "due": "Due",
+    "pay_now": "Pay Now",
+    "paid": "Invoice paid successfully.",
+    "pay_failed": "Failed to pay invoice.",
+    "no_business": "You don't have a verified business with a credit account."
+  }
+}

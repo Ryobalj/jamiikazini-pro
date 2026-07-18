@@ -2,7 +2,7 @@
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 from elasticsearch_dsl.query import Q
 
 from search.documents.business_document import BusinessDocument
@@ -10,6 +10,9 @@ from search.serializers.business_search_serializer import BusinessSearchSerializ
 
 
 class BusinessSearchView(APIView):
+    # Public catalog data - matches businesses/views/nearby_views.py's AllowAny listing.
+    permission_classes = [permissions.AllowAny]
+
     def get(self, request):
         query = request.GET.get('q', '')
         lat = request.GET.get('lat')

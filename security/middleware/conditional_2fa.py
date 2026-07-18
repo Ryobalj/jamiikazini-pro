@@ -5,6 +5,8 @@ from django.conf import settings
 from django.http import JsonResponse
 from security.utils.otp_helpers import parse_otp_token
 from django.core.signing import BadSignature, SignatureExpired
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 
 logger = logging.getLogger(__name__)
 
@@ -23,6 +25,10 @@ EXEMPT_PATHS = getattr(settings, "SECURITY_2FA_EXEMPT_PATHS", [
     # Bei za kubadilisha sarafu ni za kusoma tu (hazihitaji 2FA); zikizuiwa,
     # frontend haiwezi kuconvert figures wakati mtumiaji anabadilisha sarafu.
     r"^/api/v1/payments/exchange-rates/?$",
+    # Orodha ya sarafu zinazotumika ni data ya umma (AllowAny kwenye CurrencyViewSet
+    # yenyewe) - kila ukurasa unaotumia useCurrencies() (mf. Products) huihitaji mara
+    # moja inapopakia; kuizuia hapa kunasababisha 401 na "logout" ya ghafla.
+    r"^/api/v1/payments/currencies/?$",
 ])
 
 import re
@@ -42,6 +48,25 @@ class Conditional2FAMiddleware:
         self.protected_patterns = [re.compile(p) for p in PROTECTED_PATHS]
         self.exempt_patterns = [re.compile(p) for p in EXEMPT_PATHS]
 
+    def _resolve_user(self, request):
+        """
+        request.user (kutoka AuthenticationMiddleware) ni session-based pekee - hii
+        haitambui watumiaji wa JWT Bearer token (jinsi frontend halisi inavyoauth),
+        hivyo bila hii kila mtumiaji wa JWT angeonekana "hajaingia" hapa na kupata 401
+        kwenye njia zote za /payments/* - hata akiwa na token halali kabisa.
+        """
+        user = getattr(request, "user", None)
+        if user and getattr(user, "is_authenticated", False):
+            return user
+        try:
+            auth_result = JWTAuthentication().authenticate(request)
+        except (InvalidToken, TokenError):
+            return None
+        if auth_result is None:
+            return None
+        jwt_user, _ = auth_result
+        return jwt_user
+
     def _is_protected(self, path: str) -> bool:
         # Njia zilizosamehewa (webhooks n.k.) hazilindwi kamwe
         for pat in self.exempt_patterns:
@@ -59,7 +84,7 @@ class Conditional2FAMiddleware:
 
         path = request.path
         if self._is_protected(path):
-            user = getattr(request, "user", None)
+            user = self._resolve_user(request)
             # require authenticated user
             if not user or not getattr(user, "is_authenticated", False):
                 return JsonResponse({"detail": "Authentication credentials were not provided."}, status=401)

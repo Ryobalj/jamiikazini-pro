@@ -1,0 +1,63 @@
+{
+  "wallet": {
+    "title": "JamiiWallet"
+  },
+  "cart": {
+    "title": "장바구니"
+  },
+  "orders": {
+    "title": "내 주문"
+  },
+  "chat": {
+    "title": "채팅"
+  },
+  "verification": {
+    "required": "인증 완료하기"
+  },
+  "request_service": {
+    "title": "배송 요청하기"
+  },
+  "driver": {
+    "dashboard": "기사 대시보드",
+    "jobs": "이용 가능한 배송",
+    "deliveries": "내 배송",
+    "verify": "기사 인증",
+    "register": "기사 등록하기"
+  },
+  "home": {
+    "welcome": "다시 오신 것을 환영합니다",
+    "subtitle": "필요한 모든 것을 한 곳에서.",
+    "quick_actions": "빠른 작업",
+    "action_wallet_desc": "잔액 확인, 송금, 출금",
+    "action_cart_desc": "결제 전 상품 확인",
+    "action_orders_desc": "구매 내역 추적",
+    "action_nearby_desc": "주변 상점 찾기",
+    "action_chat_desc": "판매자 및 구매자와 채팅",
+    "action_request_service_desc": "오토바이 택시나 트럭 부르기, 구매 필요 없음",
+    "verification_title": "신원 확인",
+    "verification_desc": "구매 또는 판매하려면 신원 확인을 완료해야 합니다.",
+    "verification_cta": "지금 확인",
+    "business_title": "내 비즈니스",
+    "business_cta": "대시보드로 이동",
+    "driver_title": "기사",
+    "driver_status_verified": "인증됨 - 배송 준비 완료",
+    "driver_status_pending": "인증 대기 중",
+    "driver_status_failed": "인증 실패",
+    "driver_cta": "배송 보기"
+  },
+  "billpay": {
+    "title": "요금 결제"
+  },
+  "realestate": {
+    "title": "부동산"
+  },
+  "agriculture": {
+    "title": "농산물 선도 계약"
+  },
+  "construction": {
+    "title": "건설/도급 프로젝트"
+  },
+  "savings": {
+    "title": "VICOBA/SACCOS 저축 그룹"
+  }
+}

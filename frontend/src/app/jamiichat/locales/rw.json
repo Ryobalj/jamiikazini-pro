@@ -1,0 +1,70 @@
+{
+  "profile": {
+    "title": "Umwirondoro Wanjye",
+    "description": "Reba kandi ucunge amakuru ya konti yawe"
+  },
+  "edit_profile": {
+    "title": "Hindura Umwirondoro",
+    "description": "Vugurura amakuru yawe bwite"
+  },
+  "settings": {
+    "title": "Igenamiterere",
+    "description": "Shiraho ibyo ukunda kuri konti yawe"
+  },
+  "wallet": {
+    "title": "Wallet Yanjye",
+    "description": "Reba amafaranga n'ibikorwa"
+  },
+  "personal_info": "Amakuru Bwite",
+  "full_name": "Amazina Yombi",
+  "email": "Aderesi ya Imeyili",
+  "phone": "Nimero ya Telefoni",
+  "national_id": "Indangamuntu",
+  "member_since": "Umunyamuryango Kuva",
+  "account_status": "Uko Konti Imeze",
+  "email_verified": "Imeyili Yemejwe",
+  "phone_verified": "Telefoni Yemejwe",
+  "2fa_enabled": "Kwemeza mu Buryo Bubiri",
+  "account_active": "Konti Irakora",
+  "manage_security": "Gucunga Umutekano",
+  "primary_institution": "Ikigo Nyamukuru",
+  "view_institution": "Reba Ikigo",
+  "two_factor_authentication": "Kwemeza mu Buryo Bubiri",
+  "2fa_status": "Uko 2FA Imeze",
+  "2fa_enabled_desc": "Konti yawe irinzwe n'ubwemezi bubiri",
+  "2fa_disabled_desc": "Ongeraho urwego rw'umutekano ku konti yawe",
+  "enable_2fa": "Fungura 2FA",
+  "disable_2fa": "Funga 2FA",
+  "change_password": "Hindura Ijambo ry'Ibanga",
+  "update_password": "Vugurura Ijambo ry'Ibanga",
+  "danger_zone": "Agace k'Akaga",
+  "logout": "Sohoka",
+  "logout_success": "Wasohotse neza",
+  "your_institutions": "Ibigo Byawe",
+  "no_institutions_yet": "Ntabwo warashinze ikigo na kimwe.",
+  "create_institution": "Shiraho Ikigo",
+  "your_businesses": "Ubucuruzi Bwawe",
+  "no_businesses_yet": "Ntabwo warashinze ubucuruzi na bumwe.",
+  "create_business": "Shiraho Ubucuruzi",
+  "recent_activity": "Ibikorwa Biheruka",
+  "no_recent_activity": "Nta bikorwa biheruka biboneka.",
+  "recent_conversations": "Ibiganiro Biheruka",
+  "no_conversations_yet": "Nta biganiro birahari.",
+  "open_chat": "Fungura Ikiganiro",
+  "start_chat": "Tangira Ikiganiro",
+  "user": "Ukoresha",
+  "edit": "Hindura",
+  "create": "Shiraho",
+  "copied": "byakopowe",
+  "errors": {
+    "failed_to_load_profile": "Gupakira amakuru y'umwirondoro byanze"
+  },
+  "tabs": {
+    "overview": "Incamake",
+    "institutions": "Ibigo",
+    "businesses": "Ubucuruzi",
+    "chat": "Ikiganiro",
+    "activity": "Ibikorwa",
+    "security": "Umutekano"
+  }
+}

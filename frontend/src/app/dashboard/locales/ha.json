@@ -1,0 +1,63 @@
+{
+  "wallet": {
+    "title": "JamiiWallet"
+  },
+  "cart": {
+    "title": "Kwando"
+  },
+  "orders": {
+    "title": "Ododina"
+  },
+  "chat": {
+    "title": "Hira"
+  },
+  "verification": {
+    "required": "Kammala Tabbatarwa"
+  },
+  "request_service": {
+    "title": "Nemi Kawowa"
+  },
+  "driver": {
+    "dashboard": "Dashboard na Direba",
+    "jobs": "Ayyukan da ke Akwai",
+    "deliveries": "Kawowa Na",
+    "verify": "Tabbatar da Direba",
+    "register": "Zama Direba"
+  },
+  "home": {
+    "welcome": "Maraba da dawowa",
+    "subtitle": "Duk abin da kake bukata, a wuri guda.",
+    "quick_actions": "Ayyuka Masu Sauri",
+    "action_wallet_desc": "Duba ma'auni, aika kudi, cire kudi",
+    "action_cart_desc": "Duba kayayyaki kafin biya",
+    "action_orders_desc": "Bibiyi abin da ka saya",
+    "action_nearby_desc": "Nemo kasuwanci kusa da kai",
+    "action_chat_desc": "Yi magana da masu sayarwa da masu saye",
+    "action_request_service_desc": "Sami boda-boda ko manyan mota, ba tare da sayayya ba",
+    "verification_title": "Tabbatar da Shaidarka",
+    "verification_desc": "Dole ne ka kammala tabbatar da shaida kafin ka saya ko sayarwa.",
+    "verification_cta": "Tabbatar Yanzu",
+    "business_title": "Kasuwancina",
+    "business_cta": "Je Dashboard",
+    "driver_title": "Direba",
+    "driver_status_verified": "An tabbatar - a shirye don aiki",
+    "driver_status_pending": "Ana jiran tabbatarwa",
+    "driver_status_failed": "Tabbatarwa ta kasa",
+    "driver_cta": "Duba Ayyuka"
+  },
+  "billpay": {
+    "title": "Biyan Kudin Sabis"
+  },
+  "realestate": {
+    "title": "Gidaje da Filaye"
+  },
+  "agriculture": {
+    "title": "Yarjejeniyar Girbi ta Gaba"
+  },
+  "construction": {
+    "title": "Aikin Gini/Kwangila"
+  },
+  "savings": {
+    "title": "Kungiyoyin Ajiya VICOBA/SACCOS"
+  }
+}

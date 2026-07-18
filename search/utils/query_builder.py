@@ -13,7 +13,6 @@ def build_syllabus_query(
                 "query": keyword,
                 "fields": [
                     "name^5",
-                    "name.autocomplete^6",
                     "learning_activity.name^4",
                     "specific_competence.name^4",
                     "main_competence.name^3",

@@ -2,7 +2,7 @@
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 from elasticsearch_dsl.query import Q
 
 from search.documents.service_document import ServiceDocument
@@ -10,6 +10,9 @@ from search.serializers.service_search_serializer import ServiceSearchSerializer
 
 
 class ServiceSearchView(APIView):
+    # Public catalog data - matches businesses/views/service_views.py's AllowAny nearby action.
+    permission_classes = [permissions.AllowAny]
+
     def get(self, request):
         query = request.query_params.get("q", "")
         lat = request.query_params.get("lat")

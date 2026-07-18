@@ -16,6 +16,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import ThemeSwitch from "./ThemeSwitch";
 import { useAppContext } from "@/context/AppContext";
+import { useCart } from "@/context/CartContext";
 import CartMenu from "./topbar/CartMenu";
 import UserDropMenu from "./topbar/UserDropMenu";
 import NotificationMenu from "./topbar/NotificationMenu";
@@ -25,26 +26,23 @@ import CurrencyDropdown from "@/components/CurrencySelector"; // ✅ Umeongeza h
 
 const TopBar = forwardRef(function TopBar(
   {
-    cartItems = [],
-    notifications = { requests: [], chats: [] },
+    cartItems: cartItemsProp,
     onSearch,
-    onAcceptRequest,
-    onDeclineRequest,
     onLogoClick,
   },
   ref
 ) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useAppContext();
+  const { user, unreadCount } = useAppContext();
+  const { items: cartContextItems } = useCart() || {};
+  const cartItems = cartItemsProp ?? cartContextItems ?? [];
   const { t } = useTranslation();
 
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
   const containerRef = useRef(null);
-  const totalRequests = notifications.requests.length;
-  const totalChats = notifications.chats.length;
 
   const closeAllDropdowns = useCallback(() => setActiveDropdown(null), []);
   useImperativeHandle(ref, () => ({ closeAllDropdowns }));
@@ -118,9 +116,9 @@ const TopBar = forwardRef(function TopBar(
           </button>
           <button onClick={toggleDropdown("notifications")} className="relative p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700" title={t("topbar.notifications")}>
             <Bell size={14} />
-            {(totalRequests + totalChats > 0) && (
+            {unreadCount > 0 && (
               <span className="absolute -top-1 -right-1 w-3 h-3 text-[9px] flex items-center justify-center bg-red-500 text-white rounded-full">
-                {totalRequests + totalChats}
+                {unreadCount}
               </span>
             )}
           </button>
@@ -156,12 +154,7 @@ const TopBar = forwardRef(function TopBar(
       )}
       {activeDropdown === "notifications" && (
         <div className="absolute right-0 top-full mt-1 z-50">
-          <NotificationMenu
-            notifications={notifications}
-            onAcceptRequest={onAcceptRequest}
-            onDeclineRequest={onDeclineRequest}
-            onClose={closeAllDropdowns}
-          />
+          <NotificationMenu onClose={closeAllDropdowns} />
         </div>
       )}
       {activeDropdown === "cart" && (

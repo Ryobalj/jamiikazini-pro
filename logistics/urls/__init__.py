@@ -11,5 +11,7 @@ urlpatterns = [
     path('', include('logistics.urls.transport_request_urls')),
     path('', include('logistics.urls.transport_urls')),
     path('', include('logistics.urls.vehicle_urls')),
-  
+    path('', include('logistics.urls.fare_proposal_urls')),
+    path('', include('logistics.urls.delivery_quote_urls')),
+
 ]

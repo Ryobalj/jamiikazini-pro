@@ -5,7 +5,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 
-from gov_integration.helpers.verification import verify_entity
+from gov_integration.helpers.verification import (
+    verify_entity,
+    business_license_authority_for,
+    national_id_authority_for,
+    driver_license_authority_for,
+    transport_license_authority_for,
+)
 from gov_integration.serializers.transport_verification_serializers import (
     NIDAVerificationSerializer,
     DriverLicenseVerificationSerializer,
@@ -21,9 +27,10 @@ class NIDAVerificationView(APIView):
         serializer = NIDAVerificationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
+        country_code = serializer.validated_data.get('country_code') or 'tz'
         result = verify_entity(
-            country_code="tz",
-            authority_code="nida",
+            country_code=country_code,
+            authority_code=national_id_authority_for(country_code),
             payload={"national_id_number": serializer.validated_data['national_id_number']},
             user=request.user
         )
@@ -37,9 +44,10 @@ class DriverLicenseVerificationView(APIView):
         serializer = DriverLicenseVerificationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
+        country_code = serializer.validated_data.get('country_code') or 'tz'
         result = verify_entity(
-            country_code="tz",
-            authority_code="tra_driver",
+            country_code=country_code,
+            authority_code=driver_license_authority_for(country_code),
             payload={"license_number": serializer.validated_data['license_number']},
             user=request.user
         )
@@ -53,9 +61,10 @@ class BusinessLicenseVerificationView(APIView):
         serializer = BusinessLicenseVerificationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
+        country_code = serializer.validated_data.get('country_code') or 'tz'
         result = verify_entity(
-            country_code="tz",
-            authority_code="brela",
+            country_code=country_code,
+            authority_code=business_license_authority_for(country_code),
             payload={"business_license_number": serializer.validated_data['business_license_number']},
             user=request.user
         )
@@ -69,9 +78,10 @@ class LatraLicenseVerificationView(APIView):
         serializer = LatraLicenseVerificationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
+        country_code = serializer.validated_data.get('country_code') or 'tz'
         result = verify_entity(
-            country_code="tz",
-            authority_code="latra",
+            country_code=country_code,
+            authority_code=transport_license_authority_for(country_code),
             payload={"latra_license_number": serializer.validated_data['latra_license_number']},
             user=request.user
         )

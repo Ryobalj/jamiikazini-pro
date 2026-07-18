@@ -70,7 +70,7 @@ class TestNationalIDVerificationView:
 
     @override_settings(DJANGO_ENV="development")
     def test_already_verified_user(self):
-        self.user.is_verified = True
+        self.user.is_identity_verified = True
         self.user.save()
         self.client.force_authenticate(user=self.user)
         data = {

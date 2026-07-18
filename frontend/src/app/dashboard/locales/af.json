@@ -1,0 +1,63 @@
+{
+  "wallet": {
+    "title": "JamiiWallet"
+  },
+  "cart": {
+    "title": "Mandjie"
+  },
+  "orders": {
+    "title": "My Bestellings"
+  },
+  "chat": {
+    "title": "Klets"
+  },
+  "verification": {
+    "required": "Voltooi Verifikasie"
+  },
+  "request_service": {
+    "title": "Versoek 'n Aflewering"
+  },
+  "driver": {
+    "dashboard": "Bestuurder Dashboard",
+    "jobs": "Beskikbare Werke",
+    "deliveries": "My Afleweringe",
+    "verify": "Bestuurderverifikasie",
+    "register": "Word 'n Bestuurder"
+  },
+  "home": {
+    "welcome": "Welkom terug",
+    "subtitle": "Alles wat jy nodig het, op een plek.",
+    "quick_actions": "Vinnige Aksies",
+    "action_wallet_desc": "Kyk saldo, stuur geld, trek geld uit",
+    "action_cart_desc": "Gaan items na voor jy uitkas",
+    "action_orders_desc": "Volg jou aankope",
+    "action_nearby_desc": "Vind besighede naby jou",
+    "action_chat_desc": "Gesels met verkopers en kopers",
+    "action_request_service_desc": "Kry 'n motorfietstaxi of vragmotor, geen aankoop nodig nie",
+    "verification_title": "Verifieer Jou Identiteit",
+    "verification_desc": "Jy moet identiteitsverifikasie voltooi voordat jy kan koop of verkoop.",
+    "verification_cta": "Verifieer Nou",
+    "business_title": "My Besigheid",
+    "business_cta": "Gaan na Dashboard",
+    "driver_title": "Bestuurder",
+    "driver_status_verified": "Geverifieer - gereed vir werk",
+    "driver_status_pending": "Verifikasie hangende",
+    "driver_status_failed": "Verifikasie het misluk",
+    "driver_cta": "Bekyk Werke"
+  },
+  "billpay": {
+    "title": "Rekeningbetalings"
+  },
+  "realestate": {
+    "title": "Vaste Eiendom"
+  },
+  "agriculture": {
+    "title": "Oes Termynkontrak"
+  },
+  "construction": {
+    "title": "Konstruksie/Kontrakteringsprojek"
+  },
+  "savings": {
+    "title": "VICOBA/SACCOS Spaargroepe"
+  }
+}

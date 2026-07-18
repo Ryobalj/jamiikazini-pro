@@ -1,0 +1,64 @@
+{
+  "dashboard": {
+    "title": "Dashboard na Cibiya",
+    "welcomeMessage": "Barka da zuwa babban dashboard na Kiini - tsarin sarrafa cibiyoyi, sassa, da ma'aikata.",
+    "institutions": "Cibiyoyi",
+    "departments": "Sassa",
+    "staff-profiles": "Bayanan Ma'aikata",
+    "institution-tiers": "Matakan Cibiya",
+    "institution-types": "Nau'ukan Cibiya"
+  },
+  "institution": {
+    "title": "Bayanan Cibiya",
+    "description": "Duba da sarrafa bayanan cibiyar ka",
+    "not_found": "Ba a sami cibiya ba",
+    "create": "Kirkiri Cibiya",
+    "back_to_profile": "Koma Bayani",
+    "settings": "Saituna",
+    "edit": "Gyara",
+    "info": {
+      "title": "Bayanan Cibiya",
+      "established": "An Kafa",
+      "tier": "Mataki",
+      "type": "Nau'i",
+      "businesses": "Kasuwanci"
+    },
+    "members": {
+      "title": "Mambobi",
+      "none": "Babu mambobi tukuna",
+      "invite": "Gayyaci Mambobi"
+    },
+    "businesses_section": {
+      "title": "Kasuwancin Cibiya",
+      "create": "Kirkiri Kasuwanci",
+      "none": "Babu kasuwanci a wannan cibiya tukuna",
+      "create_first": "Kirkiri Kasuwanci na Farko"
+    },
+    "errors": {
+      "failed_to_load": "An kasa loda bayanan cibiya"
+    }
+  },
+  "departments": {
+    "title": "Sarrafa Sassa",
+    "description": "Kirkira, gyara, kuma share sassa a cikin cibiyar ka."
+  },
+  "staff": {
+    "title": "Ma'aikata",
+    "description": "Duba da sarrafa bayanan ma'aikatan cibiya."
+  },
+  "tiers": {
+    "title": "Matakan Cibiya",
+    "description": "Jerin matakan da ake da su ga cibiyoyi kamar Karama, Matsakaici, Babba."
+  },
+  "types": {
+    "title": "Nau'ukan Cibiya",
+    "description": "Duba ko zaɓi nau'in cibiya kamar kamfani mai zaman kansa, NGO, ko cibiyar gwamnati."
+  },
+  "institution_storefront": {
+    "not_found": "Ba a sami cibiyar ba",
+    "tenants_heading": "Shaguna a Cikin Wannan Ginin",
+    "empty": "Babu shago da aka yi rajista a nan tukuna.",
+    "tenant_count_one": "Shago {{count}}",
+    "tenant_count_other": "Shaguna {{count}}"
+  }
+}

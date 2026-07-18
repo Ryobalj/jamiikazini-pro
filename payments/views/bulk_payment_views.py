@@ -85,7 +85,7 @@ class BulkPaymentExecutionViewSet(viewsets.ModelViewSet):
             raise ValidationError(_("Kiasi cha jumla lazima kiwe kikubwa kuliko sifuri"))
 
         # 2️⃣ Hakikisha ana salio la kutosha
-        if sender_wallet.balance < total_amount:
+        if sender_wallet.available_balance < total_amount:
             raise ValidationError(_("Salio halitoshi kufanya malipo yote ya batch"))
 
         results = []

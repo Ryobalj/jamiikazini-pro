@@ -30,24 +30,31 @@ export default function Products() {
   const [viewMode, setViewMode] = useState("grid");
   const [filterAvailable, setFilterAvailable] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
+  const [categoryFilter, setCategoryFilter] = useState("all");
   
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  const categoryOptions = [...new Set(products.map(p => p.category_name).filter(Boolean))].sort();
+
   useEffect(() => {
     let filtered = [...products];
-    
+
     if (filterAvailable === "available") {
       filtered = filtered.filter(p => p.is_available && p.quantity_in_stock > 0);
     } else if (filterAvailable === "unavailable") {
       filtered = filtered.filter(p => !p.is_available || p.quantity_in_stock === 0);
     }
-    
+
+    if (categoryFilter !== "all") {
+      filtered = filtered.filter(p => p.category_name === categoryFilter);
+    }
+
     const sorted = filterAndSortProducts(filtered, searchQuery, sortBy);
     setFilteredProducts(sorted);
-  }, [products, searchQuery, sortBy, filterAvailable]);
+  }, [products, searchQuery, sortBy, filterAvailable, categoryFilter]);
 
   const handleProductCreated = () => {
     setShowAddModal(false);
@@ -114,6 +121,9 @@ export default function Products() {
         onSortChange={setSortBy}
         viewMode={viewMode}
         onViewModeChange={setViewMode}
+        categoryFilter={categoryFilter}
+        onCategoryFilterChange={setCategoryFilter}
+        categoryOptions={categoryOptions}
       />
 
       {filteredProducts.length > 0 ? (

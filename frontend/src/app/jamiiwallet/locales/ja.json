@@ -1,0 +1,78 @@
+{
+  "title": "マイウォレット",
+  "available_balance": "利用可能残高",
+  "this_month": "今月",
+  "income": "収入",
+  "expenses": "支出",
+  "quick_actions": "クイックアクション",
+  "topup": "チャージ",
+  "send": "送金",
+  "request": "リクエスト",
+  "refresh": "更新",
+  "refreshing": "更新中...",
+  "refreshed": "ウォレットが更新されました",
+  "recent_transactions": "最近の取引",
+  "view_all": "すべて表示",
+  "no_transactions": "まだ取引がありません",
+  "payment_methods": "支払い方法",
+  "no_cards": "まだ支払いカードが追加されていません",
+  "add_card": "カードを追加",
+  "saved_beneficiaries": "保存済みの受取人",
+  "no_beneficiaries": "まだ保存済みの受取人がいません",
+  "add_beneficiary": "受取人を追加",
+  "topup_wallet": "ウォレットにチャージ",
+  "amount": "金額",
+  "payment_channel": "支払いチャネル",
+  "cancel": "キャンセル",
+  "confirm_topup": "チャージを確認",
+  "invalid_amount": "有効な金額を入力してください",
+  "topup_initiated": "チャージが正常に開始されました",
+  "topup_failed": "チャージに失敗しました。もう一度お試しください。",
+  "copied": "クリップボードにコピーしました",
+  "tabs": {
+    "transactions": "取引",
+    "cards": "カード",
+    "beneficiaries": "受取人"
+  },
+  "transaction_types": {
+    "top_up": "チャージ",
+    "withdrawal": "出金",
+    "transfer": "送金",
+    "payment": "支払い",
+    "refund": "返金"
+  },
+  "status": {
+    "pending": "保留中",
+    "completed": "完了",
+    "failed": "失敗",
+    "reversed": "取り消し済み"
+  },
+  "errors": {
+    "failed_to_load_wallet": "ウォレットデータの読み込みに失敗しました"
+  },
+  "cashout": {
+    "title": "現金を引き出す",
+    "description": "JamiiKazini内の確認済みの店舗で現金を受け取れます - 現在手数料はかかりません。",
+    "business_label": "店舗を検索",
+    "business_placeholder": "店舗名を入力...",
+    "searching": "検索中...",
+    "change": "変更",
+    "submit": "現金を引き出す",
+    "submitting": "送信中...",
+    "success": "{{name}}を通じて現金の引き出しが完了しました。",
+    "errors": {
+      "business_required": "引き出し先の店舗を選択してください。",
+      "failed": "現金の引き出しに失敗しました。もう一度お試しください。"
+    }
+  },
+  "billpay": {
+    "title": "料金支払い"
+  },
+  "savings": {
+    "title": "VICOBA/SACCOS 貯蓄グループ"
+  },
+  "withdraw": "引き出し",
+  "accounts": {
+    "title": "アカウント"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "title": "बिल भुगतान",
+  "available_balance": "उपलब्ध शेष राशि",
+  "description": "अपने JamiiWallet से सीधे बिजली (LUKU), टॉकटाइम, DSTV और अन्य बिलों का भुगतान करें।",
+  "category_label": "सेवा प्रकार चुनें",
+  "category_electricity": "बिजली",
+  "category_airtime": "टॉकटाइम",
+  "category_tv": "टीवी सदस्यता",
+  "category_water": "पानी",
+  "biller_label": "सेवा प्रदाता",
+  "biller_placeholder": "चुनें...",
+  "account_label": "मीटर/फोन/खाता संख्या",
+  "account_placeholder": "संख्या दर्ज करें...",
+  "amount_label": "राशि",
+  "submitting": "भुगतान हो रहा है...",
+  "submit": "अभी भुगतान करें",
+  "back": "वापस",
+  "success": "भुगतान पूरा हुआ!",
+  "paid_to": "आपने भुगतान किया",
+  "token_label": "टोकन संख्या",
+  "reference_label": "संदर्भ",
+  "pay_another": "एक और बिल भुगतान करें",
+  "back_to_wallet": "वॉलेट पर वापस जाएं",
+  "copied": "कॉपी किया गया।",
+  "errors": {
+    "biller_required": "जिस सेवा का भुगतान करना चाहते हैं उसे चुनें।",
+    "account_required": "मीटर/फोन/खाता संख्या दर्ज करें।",
+    "amount_required": "एक वैध राशि दर्ज करें।",
+    "failed": "भुगतान विफल। पुनः प्रयास करें।"
+  }
+}

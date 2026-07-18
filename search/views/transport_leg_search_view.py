@@ -2,7 +2,7 @@
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 from elasticsearch_dsl.query import Q
 
 from search.documents.transport_leg_document import TransportLegDocument
@@ -10,6 +10,8 @@ from search.serializers.transport_leg_search_serializer import TransportLegSearc
 
 
 class TransportLegSearchView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
     def get(self, request):
         serializer = TransportLegSearchSerializer(data=request.query_params)
         serializer.is_valid(raise_exception=True)

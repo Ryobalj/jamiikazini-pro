@@ -1,0 +1,38 @@
+{
+  "payments": {
+    "dashboard": "Biya-biya",
+    "audit_logs": "Bayanan Dubawa",
+    "invoices": "Takardun Kudi",
+    "payment_methods": "Hanyoyin Biya",
+    "payment_reports": "Rahotannin Biya",
+    "pay_invoice": "Biya Takardar Kudi",
+    "table": {
+      "user": "Mai Amfani",
+      "action": "Aiki",
+      "target": "Manufa",
+      "description": "Bayani",
+      "metadata": "Metadata",
+      "ip_address": "Adireshin IP",
+      "timestamp": "Lokaci"
+    },
+    "messages": {
+      "loading": "Ana loda biyan kudi...",
+      "no_data": "Babu bayanan biya",
+      "error": "An sami kuskure yayin loda biyan kudi"
+    }
+  },
+  "credit_account": {
+    "title": "Asusun Bashi",
+    "summary": "Takaitaccen Bashi",
+    "limit": "Iyakar Bashi",
+    "outstanding": "Bashin da Ya Rage",
+    "available": "Bashin da Ake da shi",
+    "invoices": "Takardun Bashi",
+    "no_invoices": "Babu takardar bashi tukuna.",
+    "due": "Wa'adi",
+    "pay_now": "Biya Yanzu",
+    "paid": "An biya takardar kudi cikin nasara.",
+    "pay_failed": "An kasa biyan takardar kudi.",
+    "no_business": "Ba ka da kasuwanci da aka tabbatar mai asusun bashi."
+  }
+}

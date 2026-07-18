@@ -1,0 +1,70 @@
+{
+  "profile": {
+    "title": "Bayanan Ni",
+    "description": "Duba da sarrafa bayanan asusun ka"
+  },
+  "edit_profile": {
+    "title": "Gyara Bayanai",
+    "description": "Sabunta bayanan ka na kai"
+  },
+  "settings": {
+    "title": "Saituna",
+    "description": "Daidaita zaɓuɓɓukan asusun ka"
+  },
+  "wallet": {
+    "title": "Walat Na",
+    "description": "Duba ma'auni da mu'amaloli"
+  },
+  "personal_info": "Bayanan Kai",
+  "full_name": "Cikakken Suna",
+  "email": "Adireshin Imel",
+  "phone": "Lambar Waya",
+  "national_id": "Katin Shaidar Kasa",
+  "member_since": "Memba Tun",
+  "account_status": "Matsayin Asusu",
+  "email_verified": "An Tabbatar da Imel",
+  "phone_verified": "An Tabbatar da Waya",
+  "2fa_enabled": "Tabbatar da Matakai Biyu",
+  "account_active": "Asusu Yana Aiki",
+  "manage_security": "Sarrafa Tsaro",
+  "primary_institution": "Babbar Cibiya",
+  "view_institution": "Duba Cibiya",
+  "two_factor_authentication": "Tabbatar da Matakai Biyu",
+  "2fa_status": "Matsayin 2FA",
+  "2fa_enabled_desc": "Asusun ka yana da kariyar tabbatarwa ta matakai biyu",
+  "2fa_disabled_desc": "Ƙara wani mataki na tsaro ga asusun ka",
+  "enable_2fa": "Kunna 2FA",
+  "disable_2fa": "Kashe 2FA",
+  "change_password": "Canja Kalmar Sirri",
+  "update_password": "Sabunta Kalmar Sirri",
+  "danger_zone": "Yankin Hatsari",
+  "logout": "Fita",
+  "logout_success": "An fita cikin nasara",
+  "your_institutions": "Cibiyoyin Ka",
+  "no_institutions_yet": "Har yanzu ba ka kirkiri wata cibiya ba.",
+  "create_institution": "Kirkiri Cibiya",
+  "your_businesses": "Kasuwancin Ka",
+  "no_businesses_yet": "Har yanzu ba ka kirkiri wani kasuwanci ba.",
+  "create_business": "Kirkiri Kasuwanci",
+  "recent_activity": "Sabbin Ayyuka",
+  "no_recent_activity": "Babu sabbin ayyuka don nunawa.",
+  "recent_conversations": "Sabbin Tattaunawa",
+  "no_conversations_yet": "Har yanzu babu tattaunawa.",
+  "open_chat": "Buɗe Hira",
+  "start_chat": "Fara Tattaunawa",
+  "user": "Mai Amfani",
+  "edit": "Gyara",
+  "create": "Kirkira",
+  "copied": "an kwafa zuwa allo",
+  "errors": {
+    "failed_to_load_profile": "An kasa loda bayanan bayani"
+  },
+  "tabs": {
+    "overview": "Bayyani",
+    "institutions": "Cibiyoyi",
+    "businesses": "Kasuwanci",
+    "chat": "Hira",
+    "activity": "Ayyuka",
+    "security": "Tsaro"
+  }
+}

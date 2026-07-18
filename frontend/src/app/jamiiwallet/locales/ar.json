@@ -1,0 +1,78 @@
+{
+  "title": "محفظتي",
+  "available_balance": "الرصيد المتاح",
+  "this_month": "هذا الشهر",
+  "income": "الدخل",
+  "expenses": "المصروفات",
+  "quick_actions": "إجراءات سريعة",
+  "topup": "شحن الرصيد",
+  "send": "إرسال",
+  "request": "طلب",
+  "refresh": "تحديث",
+  "refreshing": "جارٍ التحديث...",
+  "refreshed": "تم تحديث المحفظة",
+  "recent_transactions": "المعاملات الأخيرة",
+  "view_all": "عرض الكل",
+  "no_transactions": "لا توجد معاملات بعد",
+  "payment_methods": "طرق الدفع",
+  "no_cards": "لم تتم إضافة أي بطاقات دفع بعد",
+  "add_card": "إضافة بطاقة",
+  "saved_beneficiaries": "المستفيدون المحفوظون",
+  "no_beneficiaries": "لا يوجد مستفيدون محفوظون بعد",
+  "add_beneficiary": "إضافة مستفيد",
+  "topup_wallet": "شحن المحفظة",
+  "amount": "المبلغ",
+  "payment_channel": "قناة الدفع",
+  "cancel": "إلغاء",
+  "confirm_topup": "تأكيد الشحن",
+  "invalid_amount": "الرجاء إدخال مبلغ صحيح",
+  "topup_initiated": "تم بدء عملية الشحن بنجاح",
+  "topup_failed": "فشل الشحن. حاول مرة أخرى.",
+  "copied": "تم النسخ إلى الحافظة",
+  "tabs": {
+    "transactions": "المعاملات",
+    "cards": "البطاقات",
+    "beneficiaries": "المستفيدون"
+  },
+  "transaction_types": {
+    "top_up": "شحن",
+    "withdrawal": "سحب",
+    "transfer": "تحويل",
+    "payment": "دفع",
+    "refund": "استرداد"
+  },
+  "status": {
+    "pending": "قيد الانتظار",
+    "completed": "مكتمل",
+    "failed": "فشل",
+    "reversed": "معكوس"
+  },
+  "errors": {
+    "failed_to_load_wallet": "فشل تحميل بيانات المحفظة"
+  },
+  "cashout": {
+    "title": "سحب نقدي",
+    "description": "قم بزيارة أي شركة موثقة داخل JamiiKazini للحصول على نقود - بدون رسوم حاليًا.",
+    "business_label": "ابحث عن شركة",
+    "business_placeholder": "اكتب اسم الشركة...",
+    "searching": "جارٍ البحث...",
+    "change": "تغيير",
+    "submit": "سحب نقدي",
+    "submitting": "جارٍ الإرسال...",
+    "success": "لقد سحبت النقود بنجاح عبر {{name}}.",
+    "errors": {
+      "business_required": "اختر شركة للسحب من خلالها.",
+      "failed": "فشل السحب النقدي. حاول مرة أخرى."
+    }
+  },
+  "billpay": {
+    "title": "مدفوعات الفواتير"
+  },
+  "savings": {
+    "title": "مجموعات ادخار فيكوبا/ساكوس"
+  },
+  "withdraw": "سحب",
+  "accounts": {
+    "title": "الحسابات"
+  }
+}

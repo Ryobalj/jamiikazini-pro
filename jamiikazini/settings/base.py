@@ -106,6 +106,10 @@ if TESTING:
 # Application Definition
 # ===========================
 INSTALLED_APPS = [
+    # 'daphne' inapaswa kuwa YA KWANZA (kabla ya staticfiles) - Django Channels
+    # inaifanya `runserver` iwe ASGI (inaunga mkono WebSocket) kiotomatiki.
+    "daphne",
+
     # Django core
     "django.contrib.admin",
     "django.contrib.auth",
@@ -117,6 +121,7 @@ INSTALLED_APPS = [
     "django.contrib.gis",
 
     # Third-party apps
+    "channels",
     "rest_framework",
     "rest_framework_simplejwt.token_blacklist",
     "drf_yasg",
@@ -149,6 +154,12 @@ INSTALLED_APPS = [
     "jamiitasks.apps.JamiitasksConfig",
     "syllabus.apps.SyllabusConfig",
     "portifolio.apps.PortifolioConfig",
+    "homepage.apps.HomepageConfig",
+    "billpay.apps.BillpayConfig",
+    "realestate.apps.RealestateConfig",
+    "agriculture.apps.AgricultureConfig",
+    "construction.apps.ConstructionConfig",
+    "savings.apps.SavingsConfig",
 ]
 
 
@@ -426,6 +437,26 @@ else:
 
 
 # ===========================
+# Channels (jamiichat real-time)
+# ===========================
+ASGI_APPLICATION = "jamiikazini.asgi.application"
+
+if USE_REDIS:
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            "CONFIG": {"hosts": [REDIS_URL]},
+        }
+    }
+else:
+    # Bila Redis: chat inaendelea kufanya kazi ndani ya process moja tu
+    # (haitumiki vizuri na workers/servers wengi, lakini inatosha dev/tests).
+    CHANNEL_LAYERS = {
+        "default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}
+    }
+
+
+# ===========================
 # Celery Configuration
 # ===========================
 CELERY_BROKER_URL = config("REDIS_URL", default="redis://localhost:6379/0")
@@ -614,6 +645,11 @@ else:
 SECURITY_2FA_PROTECTED_PATHS = [
     r"^/api/v1/payments/.*$",
     r"^/api/v1/businesses/.*/settings/?$",
+    r"^/api/v1/billpay/payments/.*$",
+    r"^/api/v1/realestate/inquiries/.*/(reserve|confirm-handover)/?$",
+    r"^/api/v1/agriculture/contracts/.*/(claim|confirm-delivery)/?$",
+    r"^/api/v1/construction/projects/.*/(select-bid|approve-milestone)/?$",
+    r"^/api/v1/savings/groups/.*/(contribute|request-withdrawal|vote-withdrawal)/?$",
 ]
 
 SECURITY_OTP_TOKEN_MAX_AGE = 60 * 15   # 15 minutes

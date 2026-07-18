@@ -44,3 +44,19 @@ class IsSameUserOrAdmin(BasePermission):
     """
     def has_object_permission(self, request, view, obj):
         return request.user.is_authenticated and (obj == request.user or request.user.role == 'ADMIN')
+
+class IsIdentityVerified(BasePermission):
+    """
+    Buyer-side transact-gate: user must have completed BOTH NIDA/national-ID
+    verification (is_identity_verified) AND SMS phone-number verification
+    (is_phone_verified) - not just email verification (is_verified). Anyone
+    can browse; this only gates buying/requesting.
+    """
+    message = "Lazima uthibitishe kitambulisho chako (NIDA) na namba yako ya simu kabla ya kununua au kuomba bidhaa."
+
+    def has_permission(self, request, view):
+        return (
+            request.user.is_authenticated
+            and request.user.is_identity_verified
+            and request.user.is_phone_verified
+        )

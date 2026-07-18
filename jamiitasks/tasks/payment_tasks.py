@@ -306,7 +306,7 @@ def process_payment(self, user_id, amount, reference, payment_type="standard"):
             if not isinstance(amount, Decimal):
                 amount = Decimal(str(amount))
 
-            if wallet.balance < amount:
+            if wallet.available_balance < amount:
                 logger.warning(f"[Payment] Insufficient balance for user {user_id} reference {reference}")
                 raise self.retry(
                     exc=ValueError("Insufficient balance"),

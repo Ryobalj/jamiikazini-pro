@@ -1,0 +1,78 @@
+{
+  "title": "Mi Billetera",
+  "available_balance": "Saldo Disponible",
+  "this_month": "Este Mes",
+  "income": "Ingresos",
+  "expenses": "Gastos",
+  "quick_actions": "Acciones Rápidas",
+  "topup": "Recargar",
+  "send": "Enviar",
+  "request": "Solicitar",
+  "refresh": "Actualizar",
+  "refreshing": "Actualizando...",
+  "refreshed": "Billetera actualizada",
+  "recent_transactions": "Transacciones Recientes",
+  "view_all": "Ver Todo",
+  "no_transactions": "Aún no hay transacciones",
+  "payment_methods": "Métodos de Pago",
+  "no_cards": "Aún no se han añadido tarjetas de pago",
+  "add_card": "Añadir Tarjeta",
+  "saved_beneficiaries": "Beneficiarios Guardados",
+  "no_beneficiaries": "Aún no hay beneficiarios guardados",
+  "add_beneficiary": "Añadir Beneficiario",
+  "topup_wallet": "Recargar Billetera",
+  "amount": "Monto",
+  "payment_channel": "Canal de Pago",
+  "cancel": "Cancelar",
+  "confirm_topup": "Confirmar Recarga",
+  "invalid_amount": "Por favor ingrese un monto válido",
+  "topup_initiated": "Recarga iniciada con éxito",
+  "topup_failed": "Error en la recarga. Inténtalo de nuevo.",
+  "copied": "Copiado al portapapeles",
+  "tabs": {
+    "transactions": "Transacciones",
+    "cards": "Tarjetas",
+    "beneficiaries": "Beneficiarios"
+  },
+  "transaction_types": {
+    "top_up": "Recarga",
+    "withdrawal": "Retiro",
+    "transfer": "Transferencia",
+    "payment": "Pago",
+    "refund": "Reembolso"
+  },
+  "status": {
+    "pending": "Pendiente",
+    "completed": "Completado",
+    "failed": "Fallido",
+    "reversed": "Revertido"
+  },
+  "errors": {
+    "failed_to_load_wallet": "Error al cargar los datos de la billetera"
+  },
+  "cashout": {
+    "title": "Retirar Efectivo",
+    "description": "Visita cualquier negocio verificado dentro de JamiiKazini para recibir efectivo - sin comisión por ahora.",
+    "business_label": "Buscar un Negocio",
+    "business_placeholder": "Escribe el nombre de un negocio...",
+    "searching": "Buscando...",
+    "change": "Cambiar",
+    "submit": "Retirar Efectivo",
+    "submitting": "Enviando...",
+    "success": "Has retirado efectivo con éxito a través de {{name}}.",
+    "errors": {
+      "business_required": "Elige un negocio para retirar efectivo.",
+      "failed": "Error al retirar efectivo. Inténtalo de nuevo."
+    }
+  },
+  "billpay": {
+    "title": "Pago de Facturas"
+  },
+  "savings": {
+    "title": "Grupos de Ahorro VICOBA/SACCOS"
+  },
+  "withdraw": "Retirar",
+  "accounts": {
+    "title": "Cuentas"
+  }
+}

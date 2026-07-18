@@ -1,0 +1,78 @@
+{
+  "title": "Walat Na",
+  "available_balance": "Ma'aunin da Ake da Shi",
+  "this_month": "Wannan Wata",
+  "income": "Kudin Shiga",
+  "expenses": "Kashewa",
+  "quick_actions": "Ayyuka Masu Sauri",
+  "topup": "Cika Walat",
+  "send": "Aika",
+  "request": "Nema",
+  "refresh": "Sabunta",
+  "refreshing": "Ana sabuntawa...",
+  "refreshed": "An sabunta walat",
+  "recent_transactions": "Sabbin Mu'amaloli",
+  "view_all": "Duba Duka",
+  "no_transactions": "Babu mu'amaloli tukuna",
+  "payment_methods": "Hanyoyin Biya",
+  "no_cards": "Babu katin biya da aka kara tukuna",
+  "add_card": "Kara Kati",
+  "saved_beneficiaries": "Masu Karba da Aka Ajiye",
+  "no_beneficiaries": "Babu masu karba da aka ajiye tukuna",
+  "add_beneficiary": "Kara Mai Karba",
+  "topup_wallet": "Cika Walat",
+  "amount": "Adadin Kudi",
+  "payment_channel": "Hanyar Biya",
+  "cancel": "Soke",
+  "confirm_topup": "Tabbatar da Cika Walat",
+  "invalid_amount": "Da fatan za a shigar da adadi mai inganci",
+  "topup_initiated": "An fara cika walat cikin nasara",
+  "topup_failed": "Cika walat ya kasa. Sake gwadawa.",
+  "copied": "An kwafa zuwa allo",
+  "tabs": {
+    "transactions": "Mu'amaloli",
+    "cards": "Katunan",
+    "beneficiaries": "Masu Karba"
+  },
+  "transaction_types": {
+    "top_up": "Cika Walat",
+    "withdrawal": "Fitar da Kudi",
+    "transfer": "Canja Wuri",
+    "payment": "Biya",
+    "refund": "Mayarwa"
+  },
+  "status": {
+    "pending": "Ana Jira",
+    "completed": "An Kammala",
+    "failed": "Ya Kasa",
+    "reversed": "An Soke"
+  },
+  "errors": {
+    "failed_to_load_wallet": "An kasa loda bayanan walat"
+  },
+  "cashout": {
+    "title": "Fitar da Kudi",
+    "description": "Ziyarci kowane kasuwanci da aka tabbatar a cikin JamiiKazini don samun kudi - babu kudin sabis a yanzu.",
+    "business_label": "Nemo Kasuwanci",
+    "business_placeholder": "Rubuta sunan kasuwanci...",
+    "searching": "Ana bincike...",
+    "change": "Canza",
+    "submit": "Fitar da Kudi",
+    "submitting": "Ana turawa...",
+    "success": "Ka fitar da kudi cikin nasara ta {{name}}.",
+    "errors": {
+      "business_required": "Zaɓi kasuwanci don fitar da kudi ta wurinsa.",
+      "failed": "An kasa fitar da kudi. Sake gwadawa."
+    }
+  },
+  "billpay": {
+    "title": "Biyan Kudin Sabis"
+  },
+  "savings": {
+    "title": "Kungiyoyin Ajiya VICOBA/SACCOS"
+  },
+  "withdraw": "Cirewa",
+  "accounts": {
+    "title": "Asusu"
+  }
+}

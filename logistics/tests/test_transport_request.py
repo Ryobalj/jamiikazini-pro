@@ -133,3 +133,41 @@ def test_invalid_transport_request_fails(auth_client, transport_request_data):
     url = reverse("logistics:transportrequest-list")
     response = auth_client.post(url, data=transport_request_data, format="json")
     assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+class TestSuggestTransportType:
+    """suggest_transport_type() delegates to weight_bands.suitable_vehicle_types(),
+    so these are really regression tests for that delegation staying wired up
+    correctly - the band rules themselves are tested in test_delivery_quote_view.py."""
+
+    @staticmethod
+    def _unsaved_request(weight_kg, pickup, dropoff, **extra):
+        from django.contrib.gis.geos import Point
+        return TransportRequest(
+            package_description="test",
+            weight_kg=weight_kg,
+            pickup_location=Point(*pickup, srid=4326),
+            dropoff_location=Point(*dropoff, srid=4326),
+            pickup_address_text="A",
+            dropoff_address_text="B",
+            **extra,
+        )
+
+    def test_light_local_parcel_suggests_boda_boda(self):
+        tr = self._unsaved_request(5, (39.28, -6.80), (39.29, -6.79))
+        assert tr.suggest_transport_type() == "boda_boda"
+
+    def test_1000kg_local_parcel_suggests_tuk_tuk(self):
+        tr = self._unsaved_request(900, (39.28, -6.80), (39.29, -6.79))
+        assert tr.suggest_transport_type() == "tuk_tuk"
+
+    def test_heavy_shipment_suggests_scania(self):
+        tr = self._unsaved_request(10000, (39.28, -6.80), (39.29, -6.79))
+        assert tr.suggest_transport_type() == "scania"
+
+    def test_international_heavy_shipment_prefers_ship(self):
+        tr = self._unsaved_request(
+            10000, (39.28, -6.80), (36.80, -3.38),
+            origin_country="Tanzania", destination_country="Kenya",
+        )
+        assert tr.suggest_transport_type() == "ship"

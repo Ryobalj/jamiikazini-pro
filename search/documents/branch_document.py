@@ -1,5 +1,6 @@
 # search/documents/branch_document.py
 
+from django.conf import settings
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 from businesses.models.branch import Branch
@@ -36,3 +37,22 @@ class BranchDocument(Document):
             'is_active',
             'created_at',
         ]
+
+    def prepare_location(self, instance):
+        if instance.location:
+            return {
+                "lat": instance.location.y,
+                "lon": instance.location.x,
+            }
+        return None
+
+    @classmethod
+    def search(cls, using=None, index=None, **kwargs):
+        if settings.DEBUG or not getattr(settings, 'ELASTICSEARCH_ENABLED', False):
+            from search.utils.db_fallback import DBFallbackSearch
+            return DBFallbackSearch(
+                cls,
+                Branch.objects.filter(is_active=True).select_related("business"),
+                search_fields=("name", "description"),
+            )
+        return super().search(using=using, index=index, **kwargs)

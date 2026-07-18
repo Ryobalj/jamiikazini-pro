@@ -2,6 +2,7 @@
 
 from rest_framework import serializers
 from businesses.models.product import Product, ProductType, UnitChoices, LanguageChoices
+from businesses.models.product_category import ProductCategory
 from businesses.serializers.business_serializer import BusinessDetailSerializer
 from payments.models.currency import Currency
 
@@ -43,10 +44,20 @@ class ProductSerializer(serializers.ModelSerializer):
     )
     currency_symbol = serializers.CharField(source='currency.symbol', read_only=True)
     currency_code = serializers.CharField(source='currency.code', read_only=True)
-    
-    quantity_in_stock = serializers.IntegerField(
+
+    category = serializers.PrimaryKeyRelatedField(
+        queryset=ProductCategory.objects.filter(is_active=True),
+        required=False,
+        allow_null=True,
+        help_text="Aina/kabati la bidhaa hii (mf. Vyakula, Vinywaji, Nguo)."
+    )
+    category_name = serializers.CharField(source='category.name', read_only=True, default=None)
+
+    quantity_in_stock = serializers.DecimalField(
+        max_digits=12,
+        decimal_places=3,
         default=0,
-        help_text="Idadi ya bidhaa zilizopo stoo."
+        help_text="Idadi ya bidhaa zilizopo stoo (inaweza kuwa na desimali kwa vipimo kama kg, l, m)."
     )
     
     # ✅ UNIT - ChoiceField
@@ -121,6 +132,7 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = [
             "id", "business", "name", "slug", "description", "type",
             "price", "discount_price", "currency", "currency_symbol", "currency_code",
+            "category", "category_name",
             "quantity_in_stock", "unit", "unit_display",
             "is_available", "is_featured", "image", "additional_images", "tags",
             "tax_inclusive", "tax_rate", "external_link", "digital_file",
@@ -128,8 +140,8 @@ class ProductSerializer(serializers.ModelSerializer):
             "created_at", "updated_at",
         ]
         read_only_fields = [
-            "id", "business", "slug", "created_at", "updated_at", 
-            "currency_symbol", "currency_code", "unit_display", "language_display"
+            "id", "business", "slug", "created_at", "updated_at",
+            "currency_symbol", "currency_code", "unit_display", "language_display", "category_name"
         ]
 
     def validate(self, data):
@@ -156,6 +168,7 @@ class ProductListSerializer(serializers.ModelSerializer):
     final_price = serializers.SerializerMethodField()
     currency_symbol = serializers.CharField(source='currency.symbol', read_only=True)
     currency_code = serializers.CharField(source='currency.code', read_only=True)
+    category_name = serializers.CharField(source='category.name', read_only=True, default=None)
     unit_display = serializers.SerializerMethodField(read_only=True)
     language_display = serializers.SerializerMethodField(read_only=True)
 
@@ -164,6 +177,7 @@ class ProductListSerializer(serializers.ModelSerializer):
         fields = [
             "id", "name", "slug", "price", "discount_price", "final_price",
             "currency", "currency_symbol", "currency_code",
+            "category", "category_name",
             "quantity_in_stock", "unit", "unit_display",
             "image", "additional_images", "is_featured", "is_available", "tags",
             "language_code", "language_display",
@@ -180,6 +194,28 @@ class ProductListSerializer(serializers.ModelSerializer):
         return obj.get_language_display_name() if hasattr(obj, 'get_language_display_name') else obj.language_code
 
 
+class TrendingProductSerializer(serializers.ModelSerializer):
+    final_price = serializers.SerializerMethodField()
+    currency_symbol = serializers.CharField(source='currency.symbol', read_only=True)
+    business_id = serializers.UUIDField(source='business.id', read_only=True)
+    business_name = serializers.CharField(source='business.name', read_only=True)
+    order_count = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Product
+        fields = [
+            "id", "name", "slug", "price", "discount_price", "final_price",
+            "currency_symbol", "image", "is_featured",
+            "business_id", "business_name", "order_count",
+        ]
+
+    def get_final_price(self, obj):
+        return obj.final_price()
+
+    def get_language_display(self, obj):
+        return obj.get_language_display_name() if hasattr(obj, 'get_language_display_name') else obj.language_code
+
+
 class ProductDetailSerializer(serializers.ModelSerializer):
     business = BusinessDetailSerializer(read_only=True)
     final_price = serializers.SerializerMethodField()
@@ -188,6 +224,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     is_service = serializers.SerializerMethodField()
     currency_symbol = serializers.CharField(source='currency.symbol', read_only=True)
     currency_code = serializers.CharField(source='currency.code', read_only=True)
+    category_name = serializers.CharField(source='category.name', read_only=True, default=None)
     unit_display = serializers.SerializerMethodField(read_only=True)
     language_display = serializers.SerializerMethodField(read_only=True)
 
@@ -196,6 +233,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
         fields = [
             "id", "business", "name", "slug", "description", "type",
             "price", "discount_price", "currency", "currency_symbol", "currency_code",
+            "category", "category_name",
             "quantity_in_stock", "unit", "unit_display",
             "is_available", "is_featured", "image", "additional_images", "tags",
             "tax_inclusive", "tax_rate", "external_link", "digital_file",

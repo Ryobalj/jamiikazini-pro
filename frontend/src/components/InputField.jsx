@@ -20,6 +20,8 @@ export default function InputField({
   containerClassName = "",
   inputClassName = "",
   rows = 4, // for textarea
+  step,
+  min,
 }) {
   const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
@@ -116,6 +118,8 @@ export default function InputField({
             className={baseInputStyles}
             disabled={disabled}
             readOnly={readOnly}
+            step={step}
+            min={min}
           />
         )}
 

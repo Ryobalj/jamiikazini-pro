@@ -62,3 +62,45 @@ class InstitutionSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         self.set_location_from_latlon(validated_data)
         return super().update(instance, validated_data)
+
+
+class PublicInstitutionSerializer(serializers.ModelSerializer):
+    """
+    Ukurasa wa umma wa taasisi (mf. jengo la maduka kama mall) - kwa wateja,
+    si mmiliki. Inaonyesha maduka (Business) yote hai chini ya taasisi hii ili
+    mteja aweze kuvinjari kama "jengo" moja lenye maduka mengi, si kila duka
+    peke yake tu.
+    """
+    tier_name = serializers.CharField(source="tier.name", read_only=True, default=None)
+    type_name = serializers.CharField(source="institution_type.name", read_only=True, default=None)
+    location = serializers.SerializerMethodField()
+    businesses = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Institution
+        fields = [
+            "id", "name", "address", "phone", "email", "domain",
+            "tier_name", "type_name", "location", "businesses",
+        ]
+
+    def get_location(self, obj):
+        if obj.location:
+            return {"latitude": obj.location.y, "longitude": obj.location.x}
+        return None
+
+    def get_businesses(self, obj):
+        qs = obj.businesses.filter(is_active=True).select_related("category")
+        return [
+            {
+                "id": str(b.id),
+                "name": b.name,
+                "slug": b.slug,
+                "description": b.description,
+                "category_name": b.category.name if b.category else None,
+                "is_verified": b.is_verified,
+                "phone": str(b.phone) if b.phone else None,
+                "product_count": b.products.filter(is_available=True).count(),
+                "service_count": b.services.count(),
+            }
+            for b in qs
+        ]

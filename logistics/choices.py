@@ -6,8 +6,11 @@ from django.db import models
 
 class TransportTypeChoices(models.TextChoices):
     BODA_BODA = "boda_boda", _("Boda Boda")
-    TUK_TUK = "tuk_tuk", _("Tuk Tuk / Bajaji")
-    PUBLIC_TRANSPORT = "public_transport", _("Public Transport / Taxi / Suzuki")
+    BAJAJI = "bajaji", _("Bajaji")
+    SUZUKI_CARRY = "suzuki_carry", _("Suzuki Carry")
+    TUK_TUK = "tuk_tuk", _("Tuk Tuk (Tricycle Cargo)")
+    PUBLIC_TRANSPORT = "public_transport", _("Daladala")
+    BUS = "bus", _("Bus")
     CANTER = "canter", _("Canter")
     FUSO = "fuso", _("Fuso")
     SCANIA = "scania", _("Scania")

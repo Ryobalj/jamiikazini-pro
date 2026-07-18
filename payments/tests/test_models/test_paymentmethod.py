@@ -37,10 +37,13 @@ class TestPaymentMethodModel:
 
     def test_str_credit_card_with_and_without_account_identifier(self, user_factory):
         user = user_factory(full_name="Amina")
+        # PCI-DSS: account_identifier ni gateway token, si PAN halisi. last4 inatoka
+        # details (kama ingetolewa na gateway tokenization response).
         pm1 = PaymentMethod.objects.create(
             owner=user,
             method_type=PaymentMethodType.CREDIT_CARD,
-            account_identifier="1234567812345678",
+            account_identifier="pm_1234567812345678",
+            details={"last4": "5678", "brand": "visa"},
         )
         assert "5678" in str(pm1)
 
@@ -50,6 +53,34 @@ class TestPaymentMethodModel:
             account_identifier=None,
         )
         assert "****" in str(pm2)
+
+    def test_credit_card_rejects_raw_pan(self, user_factory):
+        pm = PaymentMethod(
+            owner=user_factory(),
+            method_type=PaymentMethodType.CREDIT_CARD,
+            account_identifier="4242424242424242",
+        )
+        with pytest.raises(ValidationError):
+            pm.save()
+
+    def test_credit_card_rejects_non_gateway_token_identifier(self, user_factory):
+        pm = PaymentMethod(
+            owner=user_factory(),
+            method_type=PaymentMethodType.CREDIT_CARD,
+            account_identifier="not-a-real-token",
+        )
+        with pytest.raises(ValidationError):
+            pm.save()
+
+    def test_credit_card_accepts_gateway_token(self, user_factory):
+        pm = PaymentMethod.objects.create(
+            owner=user_factory(),
+            method_type=PaymentMethodType.CREDIT_CARD,
+            account_identifier="pm_abcdef123456",
+            details={"last4": "4242", "brand": "visa"},
+        )
+        pm.refresh_from_db()
+        assert pm.details["identifier_type"] == "GATEWAY_TOKEN"
 
     def test_str_default_fallback(self):
         pm = PaymentMethod.objects.create(

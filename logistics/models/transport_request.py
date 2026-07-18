@@ -7,6 +7,7 @@ from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.measure import Distance as D
 from django.contrib.gis.db.models.functions import Distance
 
+from django.conf import settings
 from kiini.models.base import UUIDModel, TimeStampedModel
 from businesses.models.business import Business
 from kiini.models.institution import Institution
@@ -18,6 +19,7 @@ class TransportRequest(UUIDModel, TimeStampedModel):
     REQUESTOR_TYPE_CHOICES = (
         ("business", _("Business")),
         ("institution", _("Institution")),
+        ("individual", _("Individual")),
     )
 
     requestor_type = models.CharField(
@@ -30,6 +32,12 @@ class TransportRequest(UUIDModel, TimeStampedModel):
     institution = models.ForeignKey(
         Institution, null=True, blank=True, on_delete=models.SET_NULL,
         related_name="transport_requests", verbose_name=_("Institution")
+    )
+    requested_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL,
+        related_name="standalone_transport_requests", verbose_name=_("Requested By"),
+        help_text=_("Mtu binafsi aliyeomba huduma hii ya usafiri moja kwa moja - "
+                     "bila kuhusiana na ununuzi wa bidhaa (requestor_type='individual')."),
     )
 
     package_description = models.TextField(verbose_name=_("Package Description"))
@@ -59,6 +67,23 @@ class TransportRequest(UUIDModel, TimeStampedModel):
     requested_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Requested At"))
     expires_at = models.DateTimeField(null=True, blank=True, verbose_name=_("Expires At"))
 
+    order = models.OneToOneField(
+        "businesses.Order",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="transport_request",
+        verbose_name=_("Order"),
+        help_text=_("Order husika ikiwa ombi hili la usafiri limetokana na ununuzi wa bidhaa."),
+    )
+    estimated_fare = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        verbose_name=_("Estimated Fare"),
+    )
+
     class Meta:
         verbose_name = _("Transport Request")
         verbose_name_plural = _("Transport Requests")
@@ -78,31 +103,44 @@ class TransportRequest(UUIDModel, TimeStampedModel):
 
     def suggest_transport_type(self):
         """
-        Suggest transport type based on weight, volume, distance, and international factors.
+        Suggest transport type based on weight, volume, distance, and international
+        factors. Delegates the actual suitability rules to
+        logistics.services.weight_bands so this can never drift from the rules
+        the delivery-quote endpoint and order-creation validation enforce.
         """
-        weight = self.weight_kg
-        volume = self.volume_cbm or 0
-        distance_km = self.calculate_distance_km()
+        from logistics.services.weight_bands import suitable_vehicle_types
 
-        if weight <= 100 and volume <= 0.3 and distance_km <= 15:
-            return TransportTypeChoices.BODA_BODA
-        elif weight <= 200 and volume <= 1.0 and distance_km <= 30:
-            return TransportTypeChoices.TUK_TUK
-        elif weight <= 500 and volume <= 2.5 and distance_km <= 80:
-            return TransportTypeChoices.PUBLIC_TRANSPORT
-        elif weight <= 3000 or volume <= 5.0:
-            return TransportTypeChoices.CANTER
-        elif weight <= 7000 or volume <= 10.0:
-            return TransportTypeChoices.FUSO
-        elif weight <= 30000 or volume <= 40.0:
-            return TransportTypeChoices.SCANIA
-        else:
-            if self.origin_country and self.destination_country and self.origin_country != self.destination_country:
-                return TransportTypeChoices.SHIP
-            elif distance_km >= 500:
-                return TransportTypeChoices.TRAIN
-            else:
-                return TransportTypeChoices.AIR
+        weight = self.weight_kg
+        volume = self.volume_cbm
+        distance_km = self.calculate_distance_km()
+        suitable = suitable_vehicle_types(weight, distance_km, volume)
+
+        if (
+            self.origin_country
+            and self.destination_country
+            and self.origin_country != self.destination_country
+            and TransportTypeChoices.SHIP in suitable
+        ):
+            return TransportTypeChoices.SHIP
+
+        priority = [
+            TransportTypeChoices.BODA_BODA,
+            TransportTypeChoices.BAJAJI,
+            TransportTypeChoices.SUZUKI_CARRY,
+            TransportTypeChoices.TUK_TUK,
+            TransportTypeChoices.PUBLIC_TRANSPORT,
+            TransportTypeChoices.BUS,
+            TransportTypeChoices.CANTER,
+            TransportTypeChoices.FUSO,
+            TransportTypeChoices.SCANIA,
+            TransportTypeChoices.TRAIN,
+            TransportTypeChoices.SHIP,
+            TransportTypeChoices.AIR,
+        ]
+        for vehicle_type in priority:
+            if vehicle_type in suitable:
+                return vehicle_type
+        return TransportTypeChoices.AIR
 
     def get_recommended_vehicles(self, max_distance_km=50):
         from logistics.models import Vehicle

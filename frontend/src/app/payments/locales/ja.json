@@ -1,0 +1,38 @@
+{
+  "payments": {
+    "dashboard": "支払い",
+    "audit_logs": "監査ログ",
+    "invoices": "請求書",
+    "payment_methods": "支払い方法",
+    "payment_reports": "支払いレポート",
+    "pay_invoice": "請求書を支払う",
+    "table": {
+      "user": "ユーザー",
+      "action": "アクション",
+      "target": "対象",
+      "description": "説明",
+      "metadata": "メタデータ",
+      "ip_address": "IPアドレス",
+      "timestamp": "日時"
+    },
+    "messages": {
+      "loading": "支払い情報を読み込み中...",
+      "no_data": "支払いデータがありません",
+      "error": "支払い情報の読み込み中にエラーが発生しました"
+    }
+  },
+  "credit_account": {
+    "title": "クレジットアカウント",
+    "summary": "クレジット概要",
+    "limit": "クレジット限度額",
+    "outstanding": "未払い残高",
+    "available": "利用可能なクレジット",
+    "invoices": "クレジット請求書",
+    "no_invoices": "クレジット請求書はまだありません。",
+    "due": "支払期限",
+    "pay_now": "今すぐ支払う",
+    "paid": "請求書の支払いが完了しました。",
+    "pay_failed": "請求書の支払いに失敗しました。",
+    "no_business": "クレジットアカウントを持つ認証済みビジネスがありません。"
+  }
+}

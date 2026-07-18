@@ -1,0 +1,70 @@
+{
+  "profile": {
+    "title": "Mi Perfil",
+    "description": "Ver y gestionar la información de tu cuenta"
+  },
+  "edit_profile": {
+    "title": "Editar Perfil",
+    "description": "Actualiza tu información personal"
+  },
+  "settings": {
+    "title": "Configuración",
+    "description": "Configura las preferencias de tu cuenta"
+  },
+  "wallet": {
+    "title": "Mi Billetera",
+    "description": "Ver saldo y transacciones"
+  },
+  "personal_info": "Información Personal",
+  "full_name": "Nombre Completo",
+  "email": "Correo Electrónico",
+  "phone": "Número de Teléfono",
+  "national_id": "Documento de Identidad",
+  "member_since": "Miembro Desde",
+  "account_status": "Estado de la Cuenta",
+  "email_verified": "Correo Verificado",
+  "phone_verified": "Teléfono Verificado",
+  "2fa_enabled": "Autenticación de Dos Factores",
+  "account_active": "Cuenta Activa",
+  "manage_security": "Gestionar Seguridad",
+  "primary_institution": "Institución Principal",
+  "view_institution": "Ver Institución",
+  "two_factor_authentication": "Autenticación de Dos Factores",
+  "2fa_status": "Estado de 2FA",
+  "2fa_enabled_desc": "Tu cuenta está protegida con autenticación de dos factores",
+  "2fa_disabled_desc": "Añade una capa extra de seguridad a tu cuenta",
+  "enable_2fa": "Activar 2FA",
+  "disable_2fa": "Desactivar 2FA",
+  "change_password": "Cambiar Contraseña",
+  "update_password": "Actualizar Contraseña",
+  "danger_zone": "Zona de Peligro",
+  "logout": "Cerrar Sesión",
+  "logout_success": "Sesión cerrada con éxito",
+  "your_institutions": "Tus Instituciones",
+  "no_institutions_yet": "Aún no has creado ninguna institución.",
+  "create_institution": "Crear Institución",
+  "your_businesses": "Tus Empresas",
+  "no_businesses_yet": "Aún no has creado ninguna empresa.",
+  "create_business": "Crear Empresa",
+  "recent_activity": "Actividad Reciente",
+  "no_recent_activity": "No hay actividad reciente para mostrar.",
+  "recent_conversations": "Conversaciones Recientes",
+  "no_conversations_yet": "Aún no hay conversaciones.",
+  "open_chat": "Abrir Chat",
+  "start_chat": "Iniciar Conversación",
+  "user": "Usuario",
+  "edit": "Editar",
+  "create": "Crear",
+  "copied": "copiado al portapapeles",
+  "errors": {
+    "failed_to_load_profile": "Error al cargar los datos del perfil"
+  },
+  "tabs": {
+    "overview": "Resumen",
+    "institutions": "Instituciones",
+    "businesses": "Empresas",
+    "chat": "Chat",
+    "activity": "Actividad",
+    "security": "Seguridad"
+  }
+}

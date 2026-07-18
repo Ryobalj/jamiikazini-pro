@@ -16,8 +16,7 @@ def generate_reference():
 
 
 def base_metadata(**extra):
-    """Engine pre-processing requires source_txn_id and merchant_id."""
-    md = {"source_txn_id": generate_reference(), "merchant_id": "JAMIIKAZINI"}
+    md = {"source_txn_id": generate_reference()}
     md.update(extra)
     return md
 
@@ -43,13 +42,12 @@ def initiate_topup(user, amount):
     wallet = Wallet.objects.get(user=user)
 
     txn = TransactionEngine.initiate(
-        account_identifier=user.email,
+        wallet=wallet,
         amount=amount,
-        txn_type=Transaction.TransactionType.TOP_UP,
+        transaction_type=Transaction.TransactionType.TOP_UP,
+        initiated_by=user,
         metadata=base_metadata(),
     )
-    txn.wallet = wallet
-    txn.save(update_fields=["wallet"])
     logger.info(f"Topup initiated: user={user.id}, amount={amount}, txn_ref={txn.reference}")
     return txn
 
@@ -58,13 +56,14 @@ def initiate_withdrawal(user, amount, channel="MPESA"):
     validate_amount(amount)
     wallet = Wallet.objects.get(user=user)
 
-    if wallet.balance < amount:
+    if wallet.available_balance < amount:
         raise ValidationError("Insufficient balance")
 
     txn = TransactionEngine.initiate(
-        account_identifier=user.email,
+        wallet=wallet,
         amount=amount,
-        txn_type=Transaction.TransactionType.WITHDRAWAL,
+        transaction_type=Transaction.TransactionType.WITHDRAWAL,
+        initiated_by=user,
         metadata=base_metadata(channel=channel),
     )
 
@@ -91,18 +90,17 @@ def transfer_funds(from_user, to_user, amount):
     from_wallet = Wallet.objects.get(user=from_user)
     to_wallet = Wallet.objects.get(user=to_user)
 
-    if from_wallet.balance < amount:
+    if from_wallet.available_balance < amount:
         raise ValidationError("Insufficient funds")
 
     txn = TransactionEngine.initiate(
-        account_identifier=from_user.email,
+        wallet=from_wallet,
         amount=amount,
-        txn_type=Transaction.TransactionType.TRANSFER,
+        transaction_type=Transaction.TransactionType.TRANSFER,
+        initiated_by=from_user,
+        counterparty=to_user,
         metadata=base_metadata(recipient_id=str(to_user.id)),
     )
-    txn.counterparty = to_user
-    txn.wallet = from_wallet
-    txn.save(update_fields=["counterparty", "wallet"])
 
     TransactionEngine.process(txn)
     txn.refresh_from_db()
@@ -126,17 +124,17 @@ def make_payment(user, business_wallet, amount):
     validate_amount(amount)
     wallet = Wallet.objects.get(user=user)
 
-    if wallet.balance < amount:
+    if wallet.available_balance < amount:
         raise ValidationError("Insufficient funds")
 
     txn = TransactionEngine.initiate(
-        account_identifier=user.email,
+        wallet=wallet,
         amount=amount,
-        txn_type=Transaction.TransactionType.PAYMENT,
+        transaction_type=Transaction.TransactionType.PAYMENT,
+        initiated_by=user,
+        counterparty=business_wallet.user,
         metadata=base_metadata(merchant_id=str(business_wallet.user.id)),
     )
-    txn.counterparty = business_wallet.user
-    txn.save(update_fields=["counterparty"])
 
     TransactionEngine.process(txn)
 
@@ -151,16 +149,16 @@ def initiate_refund(original_txn: Transaction):
     if not original_txn.counterparty:
         raise ValidationError("No counterparty found for refund.")
 
-    refund_wallet = Wallet.objects.get(user=original_txn.counterparty)
+    payer_wallet = Wallet.objects.get(user=original_txn.initiated_by)
 
     txn = TransactionEngine.initiate(
-        account_identifier=original_txn.initiated_by.email,
+        wallet=payer_wallet,
         amount=original_txn.amount,
-        txn_type=Transaction.TransactionType.REFUND,
+        transaction_type=Transaction.TransactionType.REFUND,
+        initiated_by=original_txn.initiated_by,
+        counterparty=original_txn.counterparty,
         metadata=base_metadata(reversed_transaction=str(original_txn.id), source_txn_id=str(original_txn.id)),
     )
-    txn.counterparty = original_txn.counterparty
-    txn.save(update_fields=["counterparty"])
 
     TransactionEngine.process(txn)
 

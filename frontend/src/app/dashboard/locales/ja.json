@@ -1,0 +1,63 @@
+{
+  "wallet": {
+    "title": "JamiiWallet"
+  },
+  "cart": {
+    "title": "カート"
+  },
+  "orders": {
+    "title": "注文履歴"
+  },
+  "chat": {
+    "title": "チャット"
+  },
+  "verification": {
+    "required": "本人確認を完了する"
+  },
+  "request_service": {
+    "title": "配送をリクエスト"
+  },
+  "driver": {
+    "dashboard": "ドライバーダッシュボード",
+    "jobs": "利用可能な配送",
+    "deliveries": "配送履歴",
+    "verify": "ドライバー確認",
+    "register": "ドライバーになる"
+  },
+  "home": {
+    "welcome": "おかえりなさい",
+    "subtitle": "必要なものすべてが、ここに。",
+    "quick_actions": "クイックアクション",
+    "action_wallet_desc": "残高確認、送金、出金",
+    "action_cart_desc": "支払い前に商品を確認",
+    "action_orders_desc": "購入履歴を追跡",
+    "action_nearby_desc": "近くの店舗を探す",
+    "action_chat_desc": "出品者・購入者とチャット",
+    "action_request_service_desc": "購入なしでバイクタクシーやトラックを手配",
+    "verification_title": "本人確認をしてください",
+    "verification_desc": "購入または販売する前に本人確認を完了する必要があります。",
+    "verification_cta": "今すぐ確認",
+    "business_title": "マイビジネス",
+    "business_cta": "ダッシュボードへ",
+    "driver_title": "ドライバー",
+    "driver_status_verified": "確認済み - 配送準備完了",
+    "driver_status_pending": "確認待ち",
+    "driver_status_failed": "確認失敗",
+    "driver_cta": "配送を見る"
+  },
+  "billpay": {
+    "title": "料金支払い"
+  },
+  "realestate": {
+    "title": "不動産"
+  },
+  "agriculture": {
+    "title": "収穫物先渡し契約"
+  },
+  "construction": {
+    "title": "建設・請負プロジェクト"
+  },
+  "savings": {
+    "title": "VICOBA/SACCOS 貯蓄グループ"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "payments": {
+    "dashboard": "Betalings",
+    "audit_logs": "Ouditstukke",
+    "invoices": "Fakture",
+    "payment_methods": "Betaalmetodes",
+    "payment_reports": "Betalingsverslae",
+    "pay_invoice": "Betaal Faktuur",
+    "table": {
+      "user": "Gebruiker",
+      "action": "Aksie",
+      "target": "Teiken",
+      "description": "Beskrywing",
+      "metadata": "Metadata",
+      "ip_address": "IP-adres",
+      "timestamp": "Tyd"
+    },
+    "messages": {
+      "loading": "Laai betalings...",
+      "no_data": "Geen betalingsdata nie",
+      "error": "'n Fout het voorgekom tydens die laai van betalings"
+    }
+  },
+  "credit_account": {
+    "title": "Kredietrekening",
+    "summary": "Kredietopsomming",
+    "limit": "Kredietlimiet",
+    "outstanding": "Uitstaande Balans",
+    "available": "Beskikbare Krediet",
+    "invoices": "Kredietfakture",
+    "no_invoices": "Nog geen kredietfakture nie.",
+    "due": "Vervaldatum",
+    "pay_now": "Betaal Nou",
+    "paid": "Faktuur suksesvol betaal.",
+    "pay_failed": "Kon nie faktuur betaal nie.",
+    "no_business": "Jy het nie 'n geverifieerde besigheid met 'n kredietrekening nie."
+  }
+}

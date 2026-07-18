@@ -265,7 +265,7 @@ def debit_wallet_for_withdrawal(withdrawal) -> Transaction:
             return existing
 
         wallet = Wallet.objects.select_for_update().get(user=withdrawal.user)
-        if wallet.balance < Decimal(withdrawal.amount):
+        if wallet.available_balance < Decimal(withdrawal.amount):
             raise ValueError("Insufficient balance")
         wallet.balance -= Decimal(withdrawal.amount)
         wallet.save(update_fields=["balance"])
@@ -347,7 +347,7 @@ def execute_transfer(transfer) -> None:
             transfer.mark_failed("Wallet haijapatikana kwa mtumaji au mpokeaji.")
             return
 
-        if sender_wallet.balance < Decimal(transfer.amount):
+        if sender_wallet.available_balance < Decimal(transfer.amount):
             transfer.mark_failed("Salio halitoshi.")
             return
 

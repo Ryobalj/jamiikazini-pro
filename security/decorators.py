@@ -7,6 +7,7 @@ from django.core.signing import BadSignature, SignatureExpired
 
 from accounts.models import User
 from security.utils.otp_helpers import parse_otp_token
+from security.utils.auth_resolution import resolve_authenticated_user
 import logging
 
 logger = logging.getLogger(__name__)
@@ -36,8 +37,8 @@ def otp_required(scope="general", ttl_minutes=5):
                 
             if not request:
                 return view_func(*args, **kwargs)
-                
-            user = getattr(request, "user", None)
+
+            user = resolve_authenticated_user(request)
             if not user or not user.is_authenticated:
                 return JsonResponse({"detail": "Authentication required."}, status=401)
 
@@ -104,10 +105,10 @@ def conditional_2fa_required(action_type="general", ttl_minutes=5):
                 request = kwargs.get('request')
                 
             if not request:
-                print("WARNING: Could not find request, skipping 2FA check")
+                logger.warning("Could not find request, skipping 2FA check")
                 return view_func(*args, **kwargs)
-            
-            user = getattr(request, "user", None)
+
+            user = resolve_authenticated_user(request)
             if not user or not user.is_authenticated:
                 return JsonResponse({"detail": "Authentication required."}, status=401)
 

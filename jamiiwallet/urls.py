@@ -7,6 +7,7 @@ from jamiiwallet.views.wallet_views import WalletDetailView
 from jamiiwallet.views.topup_views import TopUpView
 from jamiiwallet.views.withdrawal_views import WithdrawalView
 from jamiiwallet.views.transfer_views import TransferView
+from jamiiwallet.views.cashout_views import CashOutView
 from jamiiwallet.views.payment_request_views import PaymentRequestViewSet
 from jamiiwallet.views.beneficiary_views import BeneficiaryViewSet
 from jamiiwallet.views.expense_views import ExpenseViewSet
@@ -30,6 +31,7 @@ urlpatterns = [
     path('topup/', TopUpView.as_view(), name='topup'),
     path('withdraw/', WithdrawalView.as_view(), name='withdraw'),
     path('transfer/', TransferView.as_view(), name='transfer'),
+    path('cash-out/', CashOutView.as_view(), name='cash-out'),
 
 ]
 

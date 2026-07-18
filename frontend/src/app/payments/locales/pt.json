@@ -1,0 +1,38 @@
+{
+  "payments": {
+    "dashboard": "Pagamentos",
+    "audit_logs": "Registros de Auditoria",
+    "invoices": "Faturas",
+    "payment_methods": "Métodos de Pagamento",
+    "payment_reports": "Relatórios de Pagamento",
+    "pay_invoice": "Pagar Fatura",
+    "table": {
+      "user": "Usuário",
+      "action": "Ação",
+      "target": "Alvo",
+      "description": "Descrição",
+      "metadata": "Metadados",
+      "ip_address": "Endereço IP",
+      "timestamp": "Hora"
+    },
+    "messages": {
+      "loading": "Carregando pagamentos...",
+      "no_data": "Nenhum dado de pagamento",
+      "error": "Ocorreu um erro ao carregar os pagamentos"
+    }
+  },
+  "credit_account": {
+    "title": "Conta de Crédito",
+    "summary": "Resumo de Crédito",
+    "limit": "Limite de Crédito",
+    "outstanding": "Saldo Pendente",
+    "available": "Crédito Disponível",
+    "invoices": "Faturas de Crédito",
+    "no_invoices": "Ainda não há faturas de crédito.",
+    "due": "Vencimento",
+    "pay_now": "Pagar Agora",
+    "paid": "Fatura paga com sucesso.",
+    "pay_failed": "Falha ao pagar a fatura.",
+    "no_business": "Você não tem um negócio verificado com conta de crédito."
+  }
+}

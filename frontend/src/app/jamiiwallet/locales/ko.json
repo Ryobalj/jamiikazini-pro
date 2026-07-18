@@ -1,0 +1,78 @@
+{
+  "title": "내 지갑",
+  "available_balance": "사용 가능한 잔액",
+  "this_month": "이번 달",
+  "income": "수입",
+  "expenses": "지출",
+  "quick_actions": "빠른 작업",
+  "topup": "충전",
+  "send": "보내기",
+  "request": "요청",
+  "refresh": "새로고침",
+  "refreshing": "새로고침 중...",
+  "refreshed": "지갑이 새로고침되었습니다",
+  "recent_transactions": "최근 거래",
+  "view_all": "전체 보기",
+  "no_transactions": "아직 거래가 없습니다",
+  "payment_methods": "결제 수단",
+  "no_cards": "아직 추가된 결제 카드가 없습니다",
+  "add_card": "카드 추가",
+  "saved_beneficiaries": "저장된 수취인",
+  "no_beneficiaries": "아직 저장된 수취인이 없습니다",
+  "add_beneficiary": "수취인 추가",
+  "topup_wallet": "지갑 충전",
+  "amount": "금액",
+  "payment_channel": "결제 채널",
+  "cancel": "취소",
+  "confirm_topup": "충전 확인",
+  "invalid_amount": "유효한 금액을 입력해 주세요",
+  "topup_initiated": "충전이 성공적으로 시작되었습니다",
+  "topup_failed": "충전에 실패했습니다. 다시 시도해 주세요.",
+  "copied": "클립보드에 복사되었습니다",
+  "tabs": {
+    "transactions": "거래",
+    "cards": "카드",
+    "beneficiaries": "수취인"
+  },
+  "transaction_types": {
+    "top_up": "충전",
+    "withdrawal": "출금",
+    "transfer": "이체",
+    "payment": "결제",
+    "refund": "환불"
+  },
+  "status": {
+    "pending": "대기 중",
+    "completed": "완료됨",
+    "failed": "실패",
+    "reversed": "취소됨"
+  },
+  "errors": {
+    "failed_to_load_wallet": "지갑 데이터를 불러오지 못했습니다"
+  },
+  "cashout": {
+    "title": "현금 인출",
+    "description": "JamiiKazini 내 인증된 업체를 방문하여 현금을 받으세요 - 현재 수수료가 없습니다.",
+    "business_label": "업체 검색",
+    "business_placeholder": "업체 이름 입력...",
+    "searching": "검색 중...",
+    "change": "변경",
+    "submit": "현금 인출",
+    "submitting": "전송 중...",
+    "success": "{{name}}을(를) 통해 현금 인출을 완료했습니다.",
+    "errors": {
+      "business_required": "현금을 인출할 업체를 선택하세요.",
+      "failed": "현금 인출에 실패했습니다. 다시 시도해 주세요."
+    }
+  },
+  "billpay": {
+    "title": "요금 결제"
+  },
+  "savings": {
+    "title": "VICOBA/SACCOS 저축 그룹"
+  },
+  "withdraw": "출금",
+  "accounts": {
+    "title": "계좌"
+  }
+}

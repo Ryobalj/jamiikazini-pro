@@ -3,16 +3,16 @@
 from rest_framework import serializers
 
 class StaffProfileSearchSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    position = serializers.CharField()
-    title = serializers.CharField()
-    phone = serializers.CharField()
+    id = serializers.CharField()  # StaffProfile is UUID-keyed, not an integer PK
+    position = serializers.CharField(required=False, allow_null=True, allow_blank=True)
+    title = serializers.CharField(required=False, allow_null=True, allow_blank=True)
+    phone = serializers.CharField(required=False, allow_null=True, allow_blank=True)
     is_active = serializers.BooleanField()
     created_at = serializers.DateTimeField()
     updated_at = serializers.DateTimeField()
 
-    user = serializers.DictField(child=serializers.CharField())
-    institution = serializers.DictField(child=serializers.CharField())
-    department = serializers.DictField(child=serializers.CharField())
+    user = serializers.DictField(required=False, allow_null=True)
+    institution = serializers.DictField(required=False, allow_null=True)
+    department = serializers.DictField(required=False, allow_null=True)
 
-    institution_id = serializers.IntegerField()
+    institution_id = serializers.CharField(allow_null=True, required=False)

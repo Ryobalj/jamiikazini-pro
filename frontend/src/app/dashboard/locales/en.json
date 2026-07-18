@@ -1,0 +1,63 @@
+{
+  "wallet": {
+    "title": "JamiiWallet"
+  },
+  "cart": {
+    "title": "Cart"
+  },
+  "orders": {
+    "title": "My Orders"
+  },
+  "chat": {
+    "title": "Chat"
+  },
+  "verification": {
+    "required": "Complete Verification"
+  },
+  "request_service": {
+    "title": "Request a Delivery"
+  },
+  "driver": {
+    "dashboard": "Driver Dashboard",
+    "jobs": "Available Jobs",
+    "deliveries": "My Deliveries",
+    "verify": "Driver Verification",
+    "register": "Become a Driver"
+  },
+  "home": {
+    "welcome": "Welcome back",
+    "subtitle": "Everything you need, in one place.",
+    "quick_actions": "Quick Actions",
+    "action_wallet_desc": "Check balance, send money, cash out",
+    "action_cart_desc": "Review items before checkout",
+    "action_orders_desc": "Track your purchases",
+    "action_nearby_desc": "Find businesses around you",
+    "action_chat_desc": "Message sellers and buyers",
+    "action_request_service_desc": "Get a boda-boda or lorry, no purchase needed",
+    "verification_title": "Verify Your Identity",
+    "verification_desc": "You must complete identity verification before you can buy or sell.",
+    "verification_cta": "Verify Now",
+    "business_title": "My Business",
+    "business_cta": "Go to Dashboard",
+    "driver_title": "Driver",
+    "driver_status_verified": "Verified - ready for jobs",
+    "driver_status_pending": "Verification pending",
+    "driver_status_failed": "Verification failed",
+    "driver_cta": "View Jobs"
+  },
+  "billpay": {
+    "title": "Bill Payments"
+  },
+  "realestate": {
+    "title": "Real Estate"
+  },
+  "agriculture": {
+    "title": "Harvest Forward Contract"
+  },
+  "construction": {
+    "title": "Construction/Contracting Project"
+  },
+  "savings": {
+    "title": "VICOBA/SACCOS Savings Groups"
+  }
+}

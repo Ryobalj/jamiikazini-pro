@@ -1,0 +1,31 @@
+{
+  "title": "Оплата счетов",
+  "available_balance": "Доступный баланс",
+  "description": "Оплачивайте электричество (LUKU), пополнение баланса телефона, DSTV и другие счета прямо из JamiiWallet.",
+  "category_label": "Выберите тип услуги",
+  "category_electricity": "Электричество",
+  "category_airtime": "Пополнение телефона",
+  "category_tv": "Подписка ТВ",
+  "category_water": "Вода",
+  "biller_label": "Поставщик услуг",
+  "biller_placeholder": "Выбрать...",
+  "account_label": "Номер счётчика/телефона/счёта",
+  "account_placeholder": "Введите номер...",
+  "amount_label": "Сумма",
+  "submitting": "Оплата...",
+  "submit": "Оплатить сейчас",
+  "back": "Назад",
+  "success": "Оплата завершена!",
+  "paid_to": "Вы оплатили",
+  "token_label": "Номер токена",
+  "reference_label": "Референс",
+  "pay_another": "Оплатить другой счёт",
+  "back_to_wallet": "Вернуться в кошелёк",
+  "copied": "Скопировано.",
+  "errors": {
+    "biller_required": "Выберите услугу, которую хотите оплатить.",
+    "account_required": "Введите номер счётчика/телефона/счёта.",
+    "amount_required": "Введите корректную сумму.",
+    "failed": "Оплата не удалась. Попробуйте снова."
+  }
+}

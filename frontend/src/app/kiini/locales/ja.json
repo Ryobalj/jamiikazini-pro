@@ -1,0 +1,64 @@
+{
+  "dashboard": {
+    "title": "機関ダッシュボード",
+    "welcomeMessage": "Kiiniのメインダッシュボードへようこそ - 機関、部門、スタッフを管理するシステムです。",
+    "institutions": "機関",
+    "departments": "部門",
+    "staff-profiles": "スタッフプロフィール",
+    "institution-tiers": "機関ティア",
+    "institution-types": "機関タイプ"
+  },
+  "institution": {
+    "title": "機関プロフィール",
+    "description": "機関の詳細を表示・管理する",
+    "not_found": "機関が見つかりません",
+    "create": "機関を作成",
+    "back_to_profile": "プロフィールに戻る",
+    "settings": "設定",
+    "edit": "編集",
+    "info": {
+      "title": "機関情報",
+      "established": "設立",
+      "tier": "ティア",
+      "type": "タイプ",
+      "businesses": "ビジネス"
+    },
+    "members": {
+      "title": "メンバー",
+      "none": "まだメンバーがいません",
+      "invite": "メンバーを招待"
+    },
+    "businesses_section": {
+      "title": "機関のビジネス",
+      "create": "ビジネスを作成",
+      "none": "この機関にはまだビジネスがありません",
+      "create_first": "最初のビジネスを作成"
+    },
+    "errors": {
+      "failed_to_load": "機関の詳細の読み込みに失敗しました"
+    }
+  },
+  "departments": {
+    "title": "部門管理",
+    "description": "機関内の部門を作成、編集、削除します。"
+  },
+  "staff": {
+    "title": "スタッフメンバー",
+    "description": "機関のスタッフ情報を表示・管理します。"
+  },
+  "tiers": {
+    "title": "機関ティア",
+    "description": "小規模、中規模、大規模などの機関向けのティア一覧。"
+  },
+  "types": {
+    "title": "機関タイプ",
+    "description": "民間企業、NGO、政府機関などの機関タイプを表示または選択します。"
+  },
+  "institution_storefront": {
+    "not_found": "施設が見つかりません",
+    "tenants_heading": "この建物内の店舗",
+    "empty": "ここにはまだ登録された店舗がありません。",
+    "tenant_count_one": "{{count}} 店舗",
+    "tenant_count_other": "{{count}} 店舗"
+  }
+}

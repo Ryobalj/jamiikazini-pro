@@ -2,9 +2,12 @@
   "home": {
     "welcome": "Karibu Jamiikazini.",
     "description": "Hili ni jukwaa la kidijitali kwa taasisi, biashara, wataalamu, na watu binafsi kote Afrika Mashariki. Lengo lake ni kuwa kitovu cha huduma muhimu kama elimu, afya, usafiri, na malipo — likiendeshwa na teknolojia ya kisasa inayozingatia lugha, mazingira, na mahitaji ya jamii.",
-    "login_cta": "Ingia ili kuendelea"
+    "login_cta": "Ingia ili kuendelea",
+    "sponsored_heading": "Matangazo Yaliyodhaminiwa",
+    "sponsored_tag": "Tangazo",
+    "trending_heading": "Bidhaa Maarufu",
+    "trending_empty": "Bado hakuna bidhaa za kuonesha."
   },
-
   "topbar": {
     "back": "Nyuma",
     "forward": "Mbele",
@@ -13,7 +16,6 @@
     "notifications": "Arifa",
     "search": "Tafuta"
   },
-
   "user": {
     "menu": "Menyu ya Mtumiaji",
     "profile": "Wasifu",
@@ -23,33 +25,29 @@
     "logout": "Ondoka",
     "login": "Ingia"
   },
-
   "cart": {
     "title": "Kikapu Changu",
     "empty": "Kikapu chako ni tupu.",
     "edit": "Hariri",
     "checkout": "Maliza Kununua"
   },
-
   "notifications": {
-    "requests": "Maombi",
-    "chats": "Majadiliano",
-    "accept": "Kubali",
-    "decline": "Kataa",
-    "view": "Tazama",
-    "open_chat": "Fungua Majadiliano"
+    "title": "Arifa",
+    "mark_all_read": "Zote Zimesomwa",
+    "empty": "Hakuna arifa bado.",
+    "just_now": "Sasa hivi",
+    "minutes_ago": "{{count}} dk zilizopita",
+    "hours_ago": "{{count}} saa zilizopita",
+    "days_ago": "siku {{count}} zilizopita"
   },
-
   "search": {
     "placeholder": "Tafuta...",
     "empty": "Matokeo ya utafutaji yataonekana hapa..."
   },
-
   "actions": {
     "save": "Hifadhi",
     "cancel": "Ghairi"
   },
-
   "dashboard": {
     "welcome": "Karibu kwenye dashibodi yako",
     "description": "Hapa unaweza kuona muhtasari wa shughuli zako",
@@ -59,10 +57,9 @@
     "branches": "Matawi",
     "settings": "Mipangilio"
   },
-
   "user_home": {
-    "welcome": "Karibu Jamiikazini",
-    "description": "Chagua huduma unayotaka kuendelea nayo"
+    "welcome": "Karibu kwenye Dashibodi yako",
+    "description": "Hapa ndipo taarifa zako binafsi, nafasi zako, arifa na mengineyo yataonekana."
   },
   "services": {
     "teaching": "Huduma za Ufundishaji",
@@ -70,14 +67,12 @@
     "health": "Huduma za Afya",
     "payments": "Malipo"
   },
-
   "consent": {
     "title": "Bado uko hapa?",
     "description": "Kwa usalama wa akaunti yako, tafadhali thibitisha kuwa bado uko hai. Vinginevyo, tutakutoa kwa heshima.",
     "cancel": "Hapana",
     "confirm": "Ndiyo, niko hapa"
   },
-
   "auth": {
     "password": "Nenosiri",
     "password_placeholder": "Weka nenosiri",
@@ -92,11 +87,9 @@
     "session_near_expiry": "Session yako karibu itaisha kabisa. Tafadhali jiandae kuingia tena.",
     "kicked_for_inactivity": "Umeondolewa kwa sababu ya kutokuwepo kwa muda mrefu."
   },
-
   "errors": {
     "fetch_user_or_menu": "Imeshindikana kupakia taarifa za mtumiaji au menyu."
   },
-  
   "password": {
     "label": "Nguvu ya nenosiri:",
     "strength": {
@@ -107,11 +100,9 @@
       "very_strong": "Imara Sana"
     }
   },
-
   "sidebar": {
     "app_dashboard": "Dashibodi ya Programu"
   },
-
   "tabs": {
     "jamiikazini": "Jamiikazini",
     "settings": "Mipangilio",
@@ -134,15 +125,9 @@
     "portfolio_dashboard": "Yanihusuyo",
     "teaching": "Huduma za Ufundishaji"
   },
-
-  "user_home": {
-    "welcome": "Karibu kwenye Dashibodi yako",
-    "description": "Hapa ndipo taarifa zako binafsi, nafasi zako, arifa na mengineyo yataonekana."
-  },
-
   "auth_login": {
     "invalid_credentials": "Barua pepe au nywila si sahihi. Tafadhali jaribu tena.",
-    "no_account":"Hauna akaunti, Tafadhali jisajili",
+    "no_account": "Hauna akaunti, Tafadhali jisajili",
     "no_token": "Hakuna tokeni iliyotumwa",
     "title": "Ingia",
     "email_label": "Barua Pepe",
@@ -155,7 +140,6 @@
     "login_failed": "Kuingia kumeharibika.",
     "network_error": "Hitilafu ya mtandao au reCAPTCHA."
   },
-
   "auth_register": {
     "title": "Usajili",
     "email_label": "Barua Pepe",
@@ -171,10 +155,10 @@
       "password_mismatch": "Nenosiri halilingani.",
       "recaptcha_required": "Tafadhali thibitisha kuwa wewe si roboti.",
       "password_length": "Nenosiri linapaswa kuwa na herufi angalau 6.",
-      "network": "Hitilafu ya mtandao. Tafadhali jaribu tena."
+      "network": "Hitilafu ya mtandao. Tafadhali jaribu tena.",
+      "phone_required": "Namba ya simu inahitajika."
     }
   },
-
   "auth_verify_email": {
     "title": "Uthibitisho wa Barua Pepe",
     "verifying": "Inathibitisha barua pepe yako...",
@@ -183,16 +167,13 @@
     "loading": "Inapakia...",
     "to_login": "Nenda kwenye Kuingia"
   },
-
   "userandmenu": {
     "load_failed": "Imeshindwa kupakia taarifa za mtumiaji au menyu."
   },
-
   "jamiiauth": {
     "login_failed": "Kuingia kumeharibika. Tafadhali hakikisha taarifa zako.",
     "register_failed": "Usajili ulishindikana. Tafadhali jaribu tena."
   },
-
   "invite": {
     "title": "Waambie Marafiki Wako",
     "share_text": "Jiunge na Jamiikazini – jukwaa bora la huduma Afrika Mashariki! 🌍",
@@ -200,13 +181,11 @@
     "copy_link": "Nakili Link",
     "link_copied": "Link Imenakiliwa!"
   },
-
   "session": {
     "expired_alert": "Session yako imeisha. Tafadhali login tena.",
     "expiring_soon": "⚠️ Session yako karibu itaisha kabisa. Tafadhali jiandae kuingia tena.",
     "inactive_logout": "Umeondolewa kwa sababu ya kutokuwepo."
   },
-
   "currencies": {
     "tzs": "Shilingi ya Tanzania",
     "kes": "Shilingi ya Kenya",
@@ -248,5 +227,4 @@
       "auto_refresh_disabled": "Usasishaji kiotomatiki umezimwa"
     }
   }
-
 }

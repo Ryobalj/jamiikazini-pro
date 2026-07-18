@@ -1,0 +1,64 @@
+{
+  "dashboard": {
+    "title": "Tableau de Bord de l'Institution",
+    "welcomeMessage": "Bienvenue sur le tableau de bord principal de Kiini - un système de gestion des institutions, départements et personnel.",
+    "institutions": "Institutions",
+    "departments": "Départements",
+    "staff-profiles": "Profils du Personnel",
+    "institution-tiers": "Niveaux d'Institution",
+    "institution-types": "Types d'Institution"
+  },
+  "institution": {
+    "title": "Profil de l'Institution",
+    "description": "Consultez et gérez les détails de votre institution",
+    "not_found": "Institution introuvable",
+    "create": "Créer une Institution",
+    "back_to_profile": "Retour au Profil",
+    "settings": "Paramètres",
+    "edit": "Modifier",
+    "info": {
+      "title": "Informations sur l'Institution",
+      "established": "Établie",
+      "tier": "Niveau",
+      "type": "Type",
+      "businesses": "Entreprises"
+    },
+    "members": {
+      "title": "Membres",
+      "none": "Aucun membre pour le moment",
+      "invite": "Inviter des Membres"
+    },
+    "businesses_section": {
+      "title": "Entreprises de l'Institution",
+      "create": "Créer une Entreprise",
+      "none": "Aucune entreprise dans cette institution pour le moment",
+      "create_first": "Créer la Première Entreprise"
+    },
+    "errors": {
+      "failed_to_load": "Échec du chargement des détails de l'institution"
+    }
+  },
+  "departments": {
+    "title": "Gestion des Départements",
+    "description": "Créez, modifiez et supprimez des départements au sein de votre institution."
+  },
+  "staff": {
+    "title": "Membres du Personnel",
+    "description": "Consultez et gérez les informations du personnel de l'institution."
+  },
+  "tiers": {
+    "title": "Niveaux d'Institution",
+    "description": "Liste des niveaux disponibles pour les institutions, tels que Petit, Moyen, Grand."
+  },
+  "types": {
+    "title": "Types d'Institution",
+    "description": "Consultez ou sélectionnez le type d'institution tel qu'entreprise privée, ONG ou institution gouvernementale."
+  },
+  "institution_storefront": {
+    "not_found": "Institution introuvable",
+    "tenants_heading": "Boutiques dans ce bâtiment",
+    "empty": "Aucune boutique n'est encore enregistrée ici.",
+    "tenant_count_one": "{{count}} boutique",
+    "tenant_count_other": "{{count}} boutiques"
+  }
+}

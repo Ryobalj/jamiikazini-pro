@@ -1,0 +1,64 @@
+{
+  "dashboard": {
+    "title": "기관 대시보드",
+    "welcomeMessage": "Kiini 메인 대시보드에 오신 것을 환영합니다 - 기관, 부서 및 직원을 관리하는 시스템입니다.",
+    "institutions": "기관",
+    "departments": "부서",
+    "staff-profiles": "직원 프로필",
+    "institution-tiers": "기관 등급",
+    "institution-types": "기관 유형"
+  },
+  "institution": {
+    "title": "기관 프로필",
+    "description": "기관 세부 정보를 보고 관리하세요",
+    "not_found": "기관을 찾을 수 없습니다",
+    "create": "기관 생성",
+    "back_to_profile": "프로필로 돌아가기",
+    "settings": "설정",
+    "edit": "편집",
+    "info": {
+      "title": "기관 정보",
+      "established": "설립일",
+      "tier": "등급",
+      "type": "유형",
+      "businesses": "비즈니스"
+    },
+    "members": {
+      "title": "구성원",
+      "none": "아직 구성원이 없습니다",
+      "invite": "구성원 초대"
+    },
+    "businesses_section": {
+      "title": "기관 비즈니스",
+      "create": "비즈니스 생성",
+      "none": "이 기관에는 아직 비즈니스가 없습니다",
+      "create_first": "첫 비즈니스 생성"
+    },
+    "errors": {
+      "failed_to_load": "기관 세부 정보를 불러오지 못했습니다"
+    }
+  },
+  "departments": {
+    "title": "부서 관리",
+    "description": "기관 내 부서를 생성, 편집 및 삭제하세요."
+  },
+  "staff": {
+    "title": "직원",
+    "description": "기관 직원 정보를 보고 관리하세요."
+  },
+  "tiers": {
+    "title": "기관 등급",
+    "description": "소형, 중형, 대형 등 기관에서 사용 가능한 등급 목록입니다."
+  },
+  "types": {
+    "title": "기관 유형",
+    "description": "민간 기업, NGO, 정부 기관 등 기관 유형을 보거나 선택하세요."
+  },
+  "institution_storefront": {
+    "not_found": "기관을 찾을 수 없습니다",
+    "tenants_heading": "이 건물 내 매장",
+    "empty": "아직 등록된 매장이 없습니다.",
+    "tenant_count_one": "매장 {{count}}개",
+    "tenant_count_other": "매장 {{count}}개"
+  }
+}

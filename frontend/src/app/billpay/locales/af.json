@@ -1,0 +1,31 @@
+{
+  "title": "Rekeningbetalings",
+  "available_balance": "Beskikbare saldo",
+  "description": "Betaal elektrisiteit (LUKU), oproeptyd, DSTV en ander rekeninge direk vanaf u JamiiWallet.",
+  "category_label": "Kies diensoort",
+  "category_electricity": "Elektrisiteit",
+  "category_airtime": "Oproeptyd",
+  "category_tv": "TV-inskrywing",
+  "category_water": "Water",
+  "biller_label": "Diensverskaffer",
+  "biller_placeholder": "Kies...",
+  "account_label": "Meter-/foon-/rekeningnommer",
+  "account_placeholder": "Voer nommer in...",
+  "amount_label": "Bedrag",
+  "submitting": "Betaal tans...",
+  "submit": "Betaal Nou",
+  "back": "Terug",
+  "success": "Betaling voltooi!",
+  "paid_to": "U het betaal",
+  "token_label": "Tokennommer",
+  "reference_label": "Verwysing",
+  "pay_another": "Betaal Nog 'n Rekening",
+  "back_to_wallet": "Terug na Beursie",
+  "copied": "Gekopieer.",
+  "errors": {
+    "biller_required": "Kies die diens wat u wil betaal.",
+    "account_required": "Voer die meter-/foon-/rekeningnommer in.",
+    "amount_required": "Voer 'n geldige bedrag in.",
+    "failed": "Betaling het misluk. Probeer weer."
+  }
+}

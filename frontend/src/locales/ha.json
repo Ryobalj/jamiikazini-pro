@@ -2,9 +2,12 @@
   "home": {
     "welcome": "Barka da zuwa Jamiikazini.",
     "description": "Wannan dandali ne na dijital ga cibiyoyi, kasuwanci, ƙwararru da mutane a fadin Gabashin Afirka. Burinsa shine ya zama cibiyar ayyuka masu mahimmanci kamar ilimi, lafiya, sufuri da biyan kuɗi — yana amfani da fasahar zamani wacce ke mutunta harshe, yanki da bukatun al’umma.",
-    "login_cta": "Shiga domin ci gaba"
+    "login_cta": "Shiga domin ci gaba",
+    "sponsored_heading": "Tallace-tallace Masu Daukar Nauyi",
+    "sponsored_tag": "Talla",
+    "trending_heading": "Kayayyaki Masu Shahara",
+    "trending_empty": "Babu kayayyaki don nunawa tukuna."
   },
-
   "topbar": {
     "back": "Komawa baya",
     "forward": "Gaba",
@@ -13,7 +16,6 @@
     "notifications": "Sanarwa",
     "search": "Nema"
   },
-
   "user": {
     "menu": "Menu ɗin Mai Amfani",
     "profile": "Bayanin Kai",
@@ -23,45 +25,39 @@
     "logout": "Fita",
     "login": "Shiga"
   },
-
   "cart": {
     "title": "Keken Siyayyata na",
     "empty": "Babu kaya a cikin kekin siyayyarka.",
     "edit": "Gyara",
     "checkout": "Biya"
   },
-
   "notifications": {
-    "requests": "Buƙatu",
-    "chats": "Tattaunawa",
-    "accept": "Amince",
-    "decline": "Ki",
-    "view": "Duba",
-    "open_chat": "Buɗe Tattaunawa"
+    "title": "Sanarwa",
+    "mark_all_read": "Duk An Karanta",
+    "empty": "Babu sanarwa tukuna.",
+    "just_now": "Yanzu",
+    "minutes_ago": "mintuna {{count}} da suka wuce",
+    "hours_ago": "sa'o'i {{count}} da suka wuce",
+    "days_ago": "kwanaki {{count}} da suka wuce"
   },
-
   "search": {
     "placeholder": "Nema...",
     "empty": "Sakamakon bincike zai bayyana a nan..."
   },
-
   "actions": {
     "save": "Ajiye",
     "cancel": "Soke"
   },
-
   "dashboard": {
     "welcome": "Barka da zuwa allon kulawarka",
     "description": "A nan zaka iya duba taƙaitaccen bayani game da ayyukanka"
   },
-
   "consent": {
     "title": "Har yanzu kana nan?",
     "description": "Domin kare asusunka, da fatan zaka tabbatar kana ci gaba da kasancewa. In ba haka ba, zamu fice ka daga tsarin cikin ladabi.",
     "cancel": "A'a",
     "confirm": "Eh, ina nan"
   },
-
   "auth": {
     "password": "Kalmar sirri",
     "password_placeholder": "Shigar da kalmar sirri",
@@ -73,7 +69,6 @@
     "login": "Shiga",
     "register": "Rajista"
   },
-
   "password": {
     "label": "Ƙarfin kalmar sirri:",
     "strength": {
@@ -84,11 +79,9 @@
       "very_strong": "Mai ƙarfi sosai"
     }
   },
-
   "sidebar": {
     "app_dashboard": "Allon Kulawa na App"
   },
-
   "tabs": {
     "jamiikazini": "Jamiikazini",
     "settings": "Saituna",
@@ -99,13 +92,14 @@
     "register": "Rajista",
     "login": "Shiga"
   },
-
   "user_home": {
     "welcome": "Barka da zuwa allon kulawarka",
     "description": "A nan zaka ga bayananka, bukatun ka, sanarwa da sauran su."
   },
-
   "auth_login": {
+    "no_account": "Ba ka da asusu? Yi rijista",
+    "no_token": "Ba a samu alama daga uwar garke ba",
+    "invalid_credentials": "Imel ko kalmar sirri mara inganci. Da fatan za a sake gwadawa.",
     "title": "Shiga",
     "email_label": "Imel",
     "email_placeholder": "misali: suna@misali.com",
@@ -117,7 +111,6 @@
     "login_failed": "Shiga ya kasa.",
     "network_error": "Kuskuren sadarwa ko reCAPTCHA."
   },
-
   "auth_register": {
     "title": "Rajista",
     "email_label": "Imel",
@@ -133,10 +126,10 @@
       "password_mismatch": "Kalmar sirri ba su dace ba.",
       "recaptcha_required": "Da fatan za a tabbatar ba kai ba ne robot.",
       "password_length": "Kalmar sirri dole ta zama akalla haruffa 6.",
-      "network": "Kuskuren sadarwa. Da fatan za a sake gwadawa."
+      "network": "Kuskuren sadarwa. Da fatan za a sake gwadawa.",
+      "phone_required": "Ana bukatar lambar waya."
     }
   },
-
   "auth_verify_email": {
     "title": "Tabbatar da Imel",
     "verifying": "Ana tabbatar da imel ɗinka...",
@@ -145,16 +138,13 @@
     "loading": "Ana lodawa...",
     "to_login": "Komawa shiga"
   },
-
   "userandmenu": {
     "load_failed": "An kasa loda bayanan mai amfani ko menu."
   },
-
   "jamiiauth": {
     "login_failed": "Shiga ya kasa. Da fatan za a duba bayanan shigarka.",
     "register_failed": "Rajista ta kasa. Da fatan za a sake gwadawa."
   },
-
   "business_dashboard": {
     "loading": "Ana lodin dashboard...",
     "empty": "Babu bayanai a halin yanzu ga wannan kasuwanci.",

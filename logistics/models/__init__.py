@@ -12,3 +12,5 @@ from .transport_leg import (
   )
 from .transport_request import TransportRequest
 from .vehicle import Vehicle
+from .rate_card import TransportRateCard
+from .fare_proposal import FareProposal, FareProposalStatus

@@ -62,7 +62,8 @@ class MeSerializer(serializers.ModelSerializer):
         model = User
         fields = [
             'id', 'email', 'full_name', 'role',
-            'phone_number', 'device_token', 'is_verified',
+            'phone_number', 'device_token', 'is_verified', 'is_identity_verified',
+            'is_2fa_enabled', 'preferred_otp_method',
             'roles', 'institution', 'domain',
         ]
         read_only_fields = fields
@@ -103,7 +104,9 @@ class UserMinimalSerializer(serializers.ModelSerializer):
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
     confirm_password = serializers.CharField(write_only=True)
-    phone_number = serializers.CharField(required=False, allow_blank=True)
+    # Lazima kama email - namba ya simu inaanzishwa saa hii, uthibitisho wake
+    # (OTP ya SMS) hufanyika baadaye kupitia Settings/security phone views.
+    phone_number = serializers.CharField(required=True, allow_blank=False)
     recaptcha_token = serializers.CharField(write_only=True)
 
     class Meta:

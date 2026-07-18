@@ -1,0 +1,64 @@
+{
+  "dashboard": {
+    "title": "Dashboard y'Ekitongole",
+    "welcomeMessage": "Tukusanyukidde ku dashboard enkulu eya Kiini - enkola ey'okuddukanya ebitongole, amatabi, n'abakozi.",
+    "institutions": "Ebitongole",
+    "departments": "Amatabi",
+    "staff-profiles": "Bye Abakozi",
+    "institution-tiers": "Emitendera gy'Ebitongole",
+    "institution-types": "Ebika by'Ebitongole"
+  },
+  "institution": {
+    "title": "Bye Kitongole",
+    "description": "Laba era ofuge eby'ekitongole kyo",
+    "not_found": "Ekitongole tekyazuulibwa",
+    "create": "Tonda Ekitongole",
+    "back_to_profile": "Ddayo ku Bye",
+    "settings": "Ensobozesa",
+    "edit": "Kyusa",
+    "info": {
+      "title": "Ebikwata ku Kitongole",
+      "established": "Kyatondebwa",
+      "tier": "Omutendera",
+      "type": "Ekika",
+      "businesses": "Bizinensi"
+    },
+    "members": {
+      "title": "Bamemba",
+      "none": "Tewannabaawo bamemba",
+      "invite": "Yita Bamemba"
+    },
+    "businesses_section": {
+      "title": "Bizinensi z'Ekitongole",
+      "create": "Tonda Bizinensi",
+      "none": "Tewannabaawo bizinensi mu kitongole kino",
+      "create_first": "Tonda Bizinensi Esooka"
+    },
+    "errors": {
+      "failed_to_load": "Okufulumya ebikwata ku kitongole kulemereddwa"
+    }
+  },
+  "departments": {
+    "title": "Okuddukanya Amatabi",
+    "description": "Tonda, kyusa, era ggyawo amatabi munda mu kitongole kyo."
+  },
+  "staff": {
+    "title": "Abakozi",
+    "description": "Laba era ofuge ebikwata ku bakozi b'ekitongole."
+  },
+  "tiers": {
+    "title": "Emitendera gy'Ebitongole",
+    "description": "Olukalala lw'emitendera egiriwo mu bitongole nga Ekitono, Ekya wakati, Ekinene."
+  },
+  "types": {
+    "title": "Ebika by'Ebitongole",
+    "description": "Laba oba londa ekika ky'ekitongole nga kkampuni ey'obwannannyini, NGO, oba ekitongole kya gavumenti."
+  },
+  "institution_storefront": {
+    "not_found": "Ekitongole tekyalabika",
+    "tenants_heading": "Amaduuka mu Kizimbe Kino",
+    "empty": "Tewali duuka liwandiisibbwa wano.",
+    "tenant_count_one": "Eduuka {{count}}",
+    "tenant_count_other": "Amaduuka {{count}}"
+  }
+}

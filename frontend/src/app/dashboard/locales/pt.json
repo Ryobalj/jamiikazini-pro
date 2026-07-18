@@ -1,0 +1,63 @@
+{
+  "wallet": {
+    "title": "JamiiWallet"
+  },
+  "cart": {
+    "title": "Carrinho"
+  },
+  "orders": {
+    "title": "Meus Pedidos"
+  },
+  "chat": {
+    "title": "Chat"
+  },
+  "verification": {
+    "required": "Concluir Verificação"
+  },
+  "request_service": {
+    "title": "Solicitar uma Entrega"
+  },
+  "driver": {
+    "dashboard": "Painel do Motorista",
+    "jobs": "Trabalhos Disponíveis",
+    "deliveries": "Minhas Entregas",
+    "verify": "Verificação do Motorista",
+    "register": "Tornar-se Motorista"
+  },
+  "home": {
+    "welcome": "Bem-vindo de volta",
+    "subtitle": "Tudo o que você precisa, em um só lugar.",
+    "quick_actions": "Ações Rápidas",
+    "action_wallet_desc": "Verifique saldo, envie dinheiro, saque",
+    "action_cart_desc": "Revise os itens antes de pagar",
+    "action_orders_desc": "Acompanhe suas compras",
+    "action_nearby_desc": "Encontre empresas perto de você",
+    "action_chat_desc": "Converse com vendedores e compradores",
+    "action_request_service_desc": "Peça uma moto-táxi ou caminhão, sem necessidade de compra",
+    "verification_title": "Verifique Sua Identidade",
+    "verification_desc": "Você deve concluir a verificação de identidade antes de comprar ou vender.",
+    "verification_cta": "Verificar Agora",
+    "business_title": "Meu Negócio",
+    "business_cta": "Ir para o Painel",
+    "driver_title": "Motorista",
+    "driver_status_verified": "Verificado - pronto para trabalhos",
+    "driver_status_pending": "Verificação pendente",
+    "driver_status_failed": "Verificação falhou",
+    "driver_cta": "Ver Trabalhos"
+  },
+  "billpay": {
+    "title": "Pagamento de Contas"
+  },
+  "realestate": {
+    "title": "Imóveis"
+  },
+  "agriculture": {
+    "title": "Contrato a Termo de Colheita"
+  },
+  "construction": {
+    "title": "Projeto de Construção/Contrato"
+  },
+  "savings": {
+    "title": "Grupos de Poupança VICOBA/SACCOS"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "title": "Wallet Yange",
+  "available_balance": "Ssente Ezirimu",
+  "this_month": "Omwezi Guno",
+  "income": "Enyingiza",
+  "expenses": "Ebifulumya",
+  "quick_actions": "Ebikolwa Ebyangu",
+  "topup": "Teeka Ssente",
+  "send": "Weereza",
+  "request": "Saba",
+  "refresh": "Zza Buggya",
+  "refreshing": "Kizza buggya...",
+  "refreshed": "Wallet ezziddwa buggya",
+  "recent_transactions": "Emiwendo Egisembye",
+  "view_all": "Laba Byonna",
+  "no_transactions": "Tewannabaawo miwendo",
+  "payment_methods": "Enkola z'Okusasula",
+  "no_cards": "Tewannabaawo kaadi za kusasula",
+  "add_card": "Wongera Kaadi",
+  "saved_beneficiaries": "Abaganyulwa Abaterekeddwa",
+  "no_beneficiaries": "Tewannabaawo baganyulwa baterekeddwa",
+  "add_beneficiary": "Wongera Omuganyulwa",
+  "topup_wallet": "Teeka Ssente mu Wallet",
+  "amount": "Omuwendo",
+  "payment_channel": "Engeri y'Okusasula",
+  "cancel": "Sazaamu",
+  "confirm_topup": "Kakasa Okuteeka Ssente",
+  "invalid_amount": "Nsaba oyingize omuwendo omutuufu",
+  "topup_initiated": "Okuteeka ssente kutandiziddwa bulungi",
+  "topup_failed": "Okuteeka ssente kulemereddwa. Ddamu ogezeeko.",
+  "copied": "Kikopeddwa",
+  "tabs": {
+    "transactions": "Emiwendo",
+    "cards": "Kaadi",
+    "beneficiaries": "Abaganyulwa"
+  },
+  "transaction_types": {
+    "top_up": "Okuteeka Ssente",
+    "withdrawal": "Okuggya Ssente",
+    "transfer": "Okusindika",
+    "payment": "Okusasula",
+    "refund": "Okuzzaayo"
+  },
+  "status": {
+    "pending": "Kirindiridwa",
+    "completed": "Kimaliriziddwa",
+    "failed": "Kilemereddwa",
+    "reversed": "Kizzeeyo"
+  },
+  "errors": {
+    "failed_to_load_wallet": "Okufulumya data za wallet kulemereddwa"
+  },
+  "cashout": {
+    "title": "Ggya Ssente",
+    "description": "Kyalira bizinensi yonna ekakasiddwa mu JamiiKazini ofune ssente - tewali kisale kati.",
+    "business_label": "Noonya Bizinensi",
+    "business_placeholder": "Wandiika erinnya lya bizinensi...",
+    "searching": "Kinoonya...",
+    "change": "Kyusa",
+    "submit": "Ggya Ssente",
+    "submitting": "Kiweereza...",
+    "success": "Oggyeemu ssente bulungi okuyita mu {{name}}.",
+    "errors": {
+      "business_required": "Londa bizinensi gy'oyagala okuggyamu ssente.",
+      "failed": "Okuggya ssente kulemereddwa. Ddamu ogezeeko."
+    }
+  },
+  "billpay": {
+    "title": "Okusasula Bbiirasi"
+  },
+  "savings": {
+    "title": "Ebibiina by'Okutereka VICOBA/SACCOS"
+  },
+  "withdraw": "Ggya",
+  "accounts": {
+    "title": "Akawunti"
+  }
+}

@@ -17,6 +17,7 @@ export function AddProductModal({ businessId, currencies, defaultCurrencyId, onC
   const { createProduct } = useProducts(businessId);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [suggestedTags, setSuggestedTags] = useState([]);
+  const [categories, setCategories] = useState([]);
   
   const {
     formData,
@@ -49,6 +50,19 @@ export function AddProductModal({ businessId, currencies, defaultCurrencyId, onC
       fetchBusinessDetails();
     }
   }, [businessId]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { default: api } = await import("@/lib/axios");
+        const res = await api.get("/product-categories/?ordering=name");
+        setCategories(Array.isArray(res.data) ? res.data : res.data?.results || []);
+      } catch (error) {
+        console.error("Failed to fetch product categories:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
@@ -185,6 +199,8 @@ export function AddProductModal({ businessId, currencies, defaultCurrencyId, onC
                 value={formData.quantity_in_stock}
                 onChange={(e) => setField("quantity_in_stock", e.target.value)}
                 placeholder="0"
+                step="0.001"
+                min="0"
               />
               <div>
                 <label className="block text-sm font-medium mb-2">{t("products.unit")}</label>
@@ -208,6 +224,11 @@ export function AddProductModal({ businessId, currencies, defaultCurrencyId, onC
                   <option value="hour">hour</option>
                   <option value="day">day</option>
                   <option value="session">session</option>
+                  <option value="gunia">gunia</option>
+                  <option value="debe">debe</option>
+                  <option value="fungu">fungu</option>
+                  <option value="roli">roli</option>
+                  <option value="bale">bale</option>
                 </select>
               </div>
             </div>
@@ -236,6 +257,32 @@ export function AddProductModal({ businessId, currencies, defaultCurrencyId, onC
                   <option value="ar">Arabic</option>
                 </select>
               </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">{t("products.category")}</label>
+              <select
+                value={formData.category}
+                onChange={(e) => setField("category", e.target.value)}
+                className="w-full p-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg"
+              >
+                <option value="">{t("products.select_category")}</option>
+                {categories.filter((c) => !c.parent).map((parent) => {
+                  const children = categories.filter((c) => c.parent === parent.id);
+                  if (children.length === 0) {
+                    return (
+                      <option key={parent.id} value={parent.id}>{parent.name}</option>
+                    );
+                  }
+                  return (
+                    <optgroup key={parent.id} label={parent.name}>
+                      {children.map((child) => (
+                        <option key={child.id} value={child.id}>{child.name}</option>
+                      ))}
+                    </optgroup>
+                  );
+                })}
+              </select>
             </div>
 
             <div>

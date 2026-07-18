@@ -11,6 +11,7 @@ const initialState = {
   currency: "",
   quantity_in_stock: "",
   unit: "pcs",
+  category: "",
   is_available: true,
   is_featured: false,
   tags: [],
@@ -90,6 +91,7 @@ export function useProductForm(defaultCurrencyId) {
     formData.append("tax_rate", state.tax_rate || "0");
     
     if (state.discount_price) formData.append("discount_price", state.discount_price);
+    if (state.category) formData.append("category", state.category);
     if (state.external_link) formData.append("external_link", state.external_link);
     if (state.tags?.length > 0) formData.append("tags", JSON.stringify(state.tags));
     if (uploadedImages.length > 0) formData.append("image", uploadedImages[0]);

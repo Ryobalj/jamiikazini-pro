@@ -1,0 +1,31 @@
+{
+  "title": "مدفوعات الفواتير",
+  "available_balance": "الرصيد المتاح",
+  "description": "ادفع فواتير الكهرباء (LUKU)، رصيد الهاتف، DSTV، وفواتير أخرى مباشرة من محفظة JamiiWallet.",
+  "category_label": "اختر نوع الخدمة",
+  "category_electricity": "الكهرباء",
+  "category_airtime": "رصيد الهاتف",
+  "category_tv": "اشتراك التلفزيون",
+  "category_water": "المياه",
+  "biller_label": "مزود الخدمة",
+  "biller_placeholder": "اختر...",
+  "account_label": "رقم العداد/الهاتف/الحساب",
+  "account_placeholder": "أدخل الرقم...",
+  "amount_label": "المبلغ",
+  "submitting": "جاري الدفع...",
+  "submit": "ادفع الآن",
+  "back": "رجوع",
+  "success": "تم الدفع بنجاح!",
+  "paid_to": "لقد دفعت",
+  "token_label": "رقم الرمز",
+  "reference_label": "المرجع",
+  "pay_another": "ادفع فاتورة أخرى",
+  "back_to_wallet": "العودة إلى المحفظة",
+  "copied": "تم النسخ.",
+  "errors": {
+    "biller_required": "اختر الخدمة التي تريد دفعها.",
+    "account_required": "أدخل رقم العداد/الهاتف/الحساب.",
+    "amount_required": "أدخل مبلغاً صحيحاً.",
+    "failed": "فشل الدفع. حاول مرة أخرى."
+  }
+}

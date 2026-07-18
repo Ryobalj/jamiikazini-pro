@@ -32,6 +32,14 @@ class VerificationRequest(models.Model):
     
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     institution = models.ForeignKey('kiini.Institution', on_delete=models.SET_NULL, null=True, blank=True)
+    business = models.ForeignKey(
+        'businesses.Business',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='verification_requests',
+        help_text="Biashara husika, ikiwa ombi hili ni la uthibitisho wa biashara (mf. leseni)."
+    )
     country = models.CharField(max_length=2)  # ISO2: TZ, KE, etc.
     service = models.ForeignKey(
         'gov_integration.ServiceType',  # string lazy reference to avoid import issues

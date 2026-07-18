@@ -1,0 +1,63 @@
+{
+  "wallet": {
+    "title": "JamiiWallet"
+  },
+  "cart": {
+    "title": "السلة"
+  },
+  "orders": {
+    "title": "طلباتي"
+  },
+  "chat": {
+    "title": "الدردشة"
+  },
+  "verification": {
+    "required": "أكمل التحقق"
+  },
+  "request_service": {
+    "title": "اطلب توصيلاً"
+  },
+  "driver": {
+    "dashboard": "لوحة تحكم السائق",
+    "jobs": "المهام المتاحة",
+    "deliveries": "توصيلاتي",
+    "verify": "التحقق من السائق",
+    "register": "كن سائقًا"
+  },
+  "home": {
+    "welcome": "مرحبًا بعودتك",
+    "subtitle": "كل ما تحتاجه، في مكان واحد.",
+    "quick_actions": "إجراءات سريعة",
+    "action_wallet_desc": "تحقق من الرصيد، أرسل الأموال، اسحب نقدًا",
+    "action_cart_desc": "راجع العناصر قبل الدفع",
+    "action_orders_desc": "تتبع مشترياتك",
+    "action_nearby_desc": "ابحث عن الشركات القريبة منك",
+    "action_chat_desc": "راسل البائعين والمشترين",
+    "action_request_service_desc": "احصل على دراجة نارية أو شاحنة، دون الحاجة للشراء",
+    "verification_title": "تحقق من هويتك",
+    "verification_desc": "يجب عليك إكمال التحقق من الهوية قبل أن تتمكن من الشراء أو البيع.",
+    "verification_cta": "تحقق الآن",
+    "business_title": "شركتي",
+    "business_cta": "الذهاب إلى لوحة التحكم",
+    "driver_title": "السائق",
+    "driver_status_verified": "تم التحقق - جاهز للمهام",
+    "driver_status_pending": "التحقق قيد الانتظار",
+    "driver_status_failed": "فشل التحقق",
+    "driver_cta": "عرض المهام"
+  },
+  "billpay": {
+    "title": "مدفوعات الفواتير"
+  },
+  "realestate": {
+    "title": "العقارات"
+  },
+  "agriculture": {
+    "title": "عقد آجل للمحاصيل"
+  },
+  "construction": {
+    "title": "مشروع بناء/مقاولة"
+  },
+  "savings": {
+    "title": "مجموعات ادخار فيكوبا/ساكوس"
+  }
+}

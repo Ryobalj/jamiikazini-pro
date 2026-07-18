@@ -9,7 +9,25 @@
   },
   "settings": {
     "title": "Mipangilio",
-    "description": "Sanidi mapendeleo ya akaunti yako"
+    "description": "Sanidi mapendeleo ya akaunti yako",
+    "language_title": "Lugha",
+    "notifications_title": "Njia ya OTP/Arifa",
+    "otp_method_desc": "Chagua njia unayopendelea kupokea msimbo wa OTP.",
+    "privacy_title": "Faragha na Usalama",
+    "saved": "Imehifadhiwa.",
+    "save_failed": "Imeshindwa kuhifadhi.",
+    "passwords_mismatch": "Manenosiri mapya hayafanani.",
+    "password_changed": "Nenosiri limebadilishwa.",
+    "old_password": "Nenosiri la Zamani",
+    "new_password": "Nenosiri Jipya",
+    "confirm_password": "Rudia Nenosiri Jipya",
+    "otp_code": "Msimbo wa 2FA",
+    "phone_otp_sent": "OTP imetumwa kwa SMS.",
+    "phone_verified": "Namba yako ya simu imethibitishwa.",
+    "phone_invalid_code": "Msimbo si sahihi.",
+    "no_phone": "Hakuna namba ya simu",
+    "verified": "Imethibitishwa",
+    "verify_phone": "Thibitisha"
   },
   "wallet": {
     "title": "Pochi Yangu",
@@ -57,7 +75,8 @@
   "create": "Unda",
   "copied": "imenakiliwa kwenye ubao wa kunakili",
   "errors": {
-    "failed_to_load_profile": "Imeshindwa kupakia taarifa za wasifu"
+    "failed_to_load_profile": "Imeshindwa kupakia taarifa za wasifu",
+    "failed_to_update": "Imeshindwa kusasisha wasifu"
   },
   "tabs": {
     "overview": "Muhtasari",
@@ -67,12 +86,25 @@
     "activity": "Shughuli",
     "security": "Usalama"
   },
-
   "save": "Hifadhi",
   "cancel": "Ghairi",
   "profile_updated": "Wasifu umesasishwa",
-  "errors": {
-    "failed_to_load_profile": "Imeshindwa kupakia taarifa za wasifu",
-    "failed_to_update": "Imeshindwa kusasisha wasifu"
+  "verify_identity": {
+    "title": "Thibitisha Kitambulisho Chako",
+    "description": "Ili kuongeza usalama wa Jamiikazini, kila mnunuzi lazima athibitishe kitambulisho chake cha taifa kabla ya kununua au kuomba bidhaa. Bado unaweza kutazama maduka na bidhaa bila kizuizi.",
+    "already_verified": "Kitambulisho chako kimethibitishwa. Unaweza kununua na kuomba bidhaa bila kizuizi.",
+    "country_label": "Nchi",
+    "country_tz": "Tanzania",
+    "country_ke": "Kenya",
+    "country_ug": "Uganda",
+    "country_rw": "Rwanda",
+    "id_label": "Namba ya Kitambulisho cha Taifa",
+    "id_placeholder": "Weka namba yako",
+    "id_required": "Weka namba ya kitambulisho.",
+    "submit": "Thibitisha Sasa",
+    "success": "Kitambulisho chako kimethibitishwa!",
+    "failed": "Imeshindwa kuthibitisha kitambulisho.",
+    "country_bi": "Burundi",
+    "country_ss": "Sudan Kusini"
   }
 }

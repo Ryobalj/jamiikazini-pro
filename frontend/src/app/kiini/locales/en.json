@@ -53,5 +53,12 @@
   "types": {
     "title": "Institution Types",
     "description": "View or select institution type such as private company, NGO, or government institution."
+  },
+  "institution_storefront": {
+    "not_found": "Institution not found",
+    "tenants_heading": "Shops in This Building",
+    "empty": "No shop has registered here yet.",
+    "tenant_count_one": "{{count}} shop",
+    "tenant_count_other": "{{count}} shops"
   }
 }

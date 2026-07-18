@@ -1,0 +1,38 @@
+{
+  "payments": {
+    "dashboard": "Okusasula",
+    "audit_logs": "Ebiwandiiko by'Okukebera",
+    "invoices": "Faktura",
+    "payment_methods": "Enkola z'Okusasula",
+    "payment_reports": "Lipoota z'Okusasula",
+    "pay_invoice": "Sasula Faktura",
+    "table": {
+      "user": "Omukozesa",
+      "action": "Ekikolwa",
+      "target": "Ekiruubirirwa",
+      "description": "Okunnyonnyola",
+      "metadata": "Metadata",
+      "ip_address": "Endagiriro ya IP",
+      "timestamp": "Ekiseera"
+    },
+    "messages": {
+      "loading": "Okusasula kufulumizibwa...",
+      "no_data": "Tewali data ya kusasula",
+      "error": "Ensobi ezuuse nga okusasula kufulumizibwa"
+    }
+  },
+  "credit_account": {
+    "title": "Akawunti k'Enkolagana",
+    "summary": "Ebikwata ku Nkolagana",
+    "limit": "Ekkomo ly'Enkolagana",
+    "outstanding": "Ebbanja Erisigadde",
+    "available": "Enkolagana Eriwo",
+    "invoices": "Fagitala z'Enkolagana",
+    "no_invoices": "Tewali fagitala ya nkolagana.",
+    "due": "Ekiseera ekituuka",
+    "pay_now": "Sasula Kaakano",
+    "paid": "Fagitala esasuddwa bulungi.",
+    "pay_failed": "Okusasula fagitala kulemye.",
+    "no_business": "Tolina bizinensi ekakasiddwa erina akawunti k'enkolagana."
+  }
+}

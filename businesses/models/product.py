@@ -7,6 +7,7 @@ from django.utils.text import slugify
 
 from kiini.models.base import UUIDModel, TimeStampedModel
 from businesses.models.business import Business
+from businesses.models.product_category import ProductCategory
 
 
 class ProductType(models.TextChoices):
@@ -31,6 +32,21 @@ class UnitChoices(models.TextChoices):
     HOUR = "hour", _("Hour")
     DAY = "day", _("Day")
     SESSION = "session", _("Session")
+    # Informal trading units common in wholesale markets like Kariakoo.
+    GUNIA = "gunia", _("Gunia (Sack)")
+    DEBE = "debe", _("Debe (~20L Tin)")
+    FUNGU = "fungu", _("Fungu (Bundle)")
+    ROLI = "roli", _("Roli (Roll)")
+    BALE = "bale", _("Bale (Mtumba)")
+
+
+# Units that don't make sense fractionally (you can't buy 2.5 pieces or 1.5 boxes)
+WHOLE_UNIT_TYPES = {
+    UnitChoices.PIECES, UnitChoices.BOX, UnitChoices.PACK,
+    UnitChoices.DOZEN, UnitChoices.PAIR, UnitChoices.SET, UnitChoices.SESSION,
+    UnitChoices.GUNIA, UnitChoices.DEBE, UnitChoices.FUNGU,
+    UnitChoices.ROLI, UnitChoices.BALE,
+}
 
 
 class LanguageChoices(models.TextChoices):
@@ -102,10 +118,12 @@ class Product(UUIDModel, TimeStampedModel):
         help_text=_("Sarafu ya bei ya bidhaa.")
     )
 
-    quantity_in_stock = models.PositiveIntegerField(
+    quantity_in_stock = models.DecimalField(
+        max_digits=12,
+        decimal_places=3,
         default=0,
         verbose_name=_("Stock Quantity"),
-        help_text=_("Idadi ya bidhaa zilizopo stock.")
+        help_text=_("Idadi ya bidhaa zilizopo stock (inaweza kuwa na desimali kwa vipimo kama kg, l, m).")
     )
 
     unit = models.CharField(
@@ -144,12 +162,22 @@ class Product(UUIDModel, TimeStampedModel):
         help_text=_("Picha nyingine za bidhaa (URL links).")
     )
 
+    category = models.ForeignKey(
+        ProductCategory,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='products',
+        verbose_name=_("Category"),
+        help_text=_("Aina/kabati la bidhaa hii, mfano: Vyakula, Vinywaji, Nguo.")
+    )
+
     tags = ArrayField(
         base_field=models.CharField(max_length=100),
         blank=True,
         default=list,
         verbose_name=_("Tags / Keywords"),
-        help_text=_("Maneno muhimu au majina ya aina ya bidhaa.")
+        help_text=_("Maneno muhimu ya ziada ya kutafutia bidhaa (si badala ya category).")
     )
 
     tax_inclusive = models.BooleanField(
@@ -216,6 +244,17 @@ class Product(UUIDModel, TimeStampedModel):
 
     def final_price(self):
         return self.discount_price if self.discount_price else self.price
+
+    def price_for_quantity(self, quantity):
+        """Bei ya kitengo kwa kiasi fulani - hutafuta tier ya bei ya jumla ya
+        juu kabisa inayokidhi (min_quantity <= quantity), la sivyo hurudisha
+        bei ya kawaida (final_price - inajumuisha discount ikiwa ipo). Wazi
+        kwa mnunuzi yeyote (si tu biashara) - MOQ ya kila tier ndiyo lango
+        pekee, si aina ya mnunuzi."""
+        from decimal import Decimal
+        quantity = Decimal(str(quantity))
+        tier = self.price_tiers.filter(min_quantity__lte=quantity).order_by("-min_quantity").first()
+        return tier.unit_price if tier else self.final_price()
 
     def has_stock(self):
         return self.quantity_in_stock > 0

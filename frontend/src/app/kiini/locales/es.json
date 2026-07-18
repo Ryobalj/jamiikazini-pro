@@ -1,0 +1,64 @@
+{
+  "dashboard": {
+    "title": "Panel de la Institución",
+    "welcomeMessage": "Bienvenido al panel principal de Kiini - un sistema para gestionar instituciones, departamentos y personal.",
+    "institutions": "Instituciones",
+    "departments": "Departamentos",
+    "staff-profiles": "Perfiles del Personal",
+    "institution-tiers": "Niveles de Institución",
+    "institution-types": "Tipos de Institución"
+  },
+  "institution": {
+    "title": "Perfil de la Institución",
+    "description": "Ver y gestionar los detalles de tu institución",
+    "not_found": "Institución no encontrada",
+    "create": "Crear Institución",
+    "back_to_profile": "Volver al Perfil",
+    "settings": "Configuración",
+    "edit": "Editar",
+    "info": {
+      "title": "Información de la Institución",
+      "established": "Establecida",
+      "tier": "Nivel",
+      "type": "Tipo",
+      "businesses": "Empresas"
+    },
+    "members": {
+      "title": "Miembros",
+      "none": "Aún no hay miembros",
+      "invite": "Invitar Miembros"
+    },
+    "businesses_section": {
+      "title": "Empresas de la Institución",
+      "create": "Crear Empresa",
+      "none": "Aún no hay empresas en esta institución",
+      "create_first": "Crear la Primera Empresa"
+    },
+    "errors": {
+      "failed_to_load": "Error al cargar los detalles de la institución"
+    }
+  },
+  "departments": {
+    "title": "Gestión de Departamentos",
+    "description": "Crea, edita y elimina departamentos dentro de tu institución."
+  },
+  "staff": {
+    "title": "Miembros del Personal",
+    "description": "Ver y gestionar la información del personal de la institución."
+  },
+  "tiers": {
+    "title": "Niveles de Institución",
+    "description": "Lista de niveles disponibles para instituciones, como Pequeña, Mediana, Grande."
+  },
+  "types": {
+    "title": "Tipos de Institución",
+    "description": "Ver o seleccionar el tipo de institución, como empresa privada, ONG o institución gubernamental."
+  },
+  "institution_storefront": {
+    "not_found": "Institución no encontrada",
+    "tenants_heading": "Tiendas en Este Edificio",
+    "empty": "Aún no hay ninguna tienda registrada aquí.",
+    "tenant_count_one": "{{count}} tienda",
+    "tenant_count_other": "{{count}} tiendas"
+  }
+}

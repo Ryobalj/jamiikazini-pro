@@ -1,0 +1,63 @@
+{
+  "wallet": {
+    "title": "JamiiWallet"
+  },
+  "cart": {
+    "title": "Корзина"
+  },
+  "orders": {
+    "title": "Мои Заказы"
+  },
+  "chat": {
+    "title": "Чат"
+  },
+  "verification": {
+    "required": "Завершить Верификацию"
+  },
+  "request_service": {
+    "title": "Запросить Доставку"
+  },
+  "driver": {
+    "dashboard": "Панель Водителя",
+    "jobs": "Доступные Заказы",
+    "deliveries": "Мои Доставки",
+    "verify": "Верификация Водителя",
+    "register": "Стать Водителем"
+  },
+  "home": {
+    "welcome": "С возвращением",
+    "subtitle": "Всё, что вам нужно, в одном месте.",
+    "quick_actions": "Быстрые Действия",
+    "action_wallet_desc": "Проверить баланс, отправить деньги, снять наличные",
+    "action_cart_desc": "Проверьте товары перед оплатой",
+    "action_orders_desc": "Отслеживайте свои покупки",
+    "action_nearby_desc": "Найдите компании рядом с вами",
+    "action_chat_desc": "Общайтесь с продавцами и покупателями",
+    "action_request_service_desc": "Закажите мотоцикл-такси или грузовик, покупка не нужна",
+    "verification_title": "Подтвердите Свою Личность",
+    "verification_desc": "Вы должны завершить верификацию личности, прежде чем сможете покупать или продавать.",
+    "verification_cta": "Подтвердить Сейчас",
+    "business_title": "Мой Бизнес",
+    "business_cta": "Перейти в Панель",
+    "driver_title": "Водитель",
+    "driver_status_verified": "Подтверждено - готов к заказам",
+    "driver_status_pending": "Верификация в ожидании",
+    "driver_status_failed": "Верификация не удалась",
+    "driver_cta": "Посмотреть Заказы"
+  },
+  "billpay": {
+    "title": "Оплата счетов"
+  },
+  "realestate": {
+    "title": "Недвижимость"
+  },
+  "agriculture": {
+    "title": "Форвардный контракт на урожай"
+  },
+  "construction": {
+    "title": "Строительный/Подрядный Проект"
+  },
+  "savings": {
+    "title": "Сберегательные группы VICOBA/SACCOS"
+  }
+}

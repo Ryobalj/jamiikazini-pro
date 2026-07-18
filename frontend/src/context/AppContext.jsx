@@ -19,6 +19,7 @@ export const AppContextProvider = ({ children }) => {
   const [userMenu, setUserMenu] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [notifications, setNotifications] = useState([]);
 
   const [currentBusinessId, setCurrentBusinessId] = useState(null);
   const [showConsentModal, setShowConsentModal] = useState(false);
@@ -89,6 +90,43 @@ export const AppContextProvider = ({ children }) => {
     }
   }, [navigate]);
 
+  // 🔔 Poll notifications every 30s while logged in
+  useEffect(() => {
+    if (!user) {
+      setNotifications([]);
+      return;
+    }
+
+    let cancelled = false;
+    const fetchNotifications = () => {
+      api
+        .get("/kiini/notifications/")
+        .then((res) => {
+          if (!cancelled) {
+            setNotifications(Array.isArray(res.data) ? res.data : res.data?.results || []);
+          }
+        })
+        .catch(() => {});
+    };
+
+    fetchNotifications();
+    const interval = setInterval(fetchNotifications, 30000);
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
+  }, [user]);
+
+  const markNotificationRead = (id) => {
+    setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, is_read: true } : n)));
+    api.post(`/kiini/notifications/${id}/mark-read/`).catch(() => {});
+  };
+
+  const markAllNotificationsRead = () => {
+    setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })));
+    api.post("/kiini/notifications/mark-all-read/").catch(() => {});
+  };
+
   // ⏱ Consent Modal trigger
   useEffect(() => {
     const interval = setInterval(() => {
@@ -127,6 +165,9 @@ export const AppContextProvider = ({ children }) => {
         .post("/security/token/refresh/", { refresh })
         .then((res) => {
           localStorage.setItem("access_token", res.data.access);
+          if (res.data.refresh) {
+            localStorage.setItem("refresh_token", res.data.refresh);
+          }
         })
         .catch(() => {
           logoutUser();
@@ -155,6 +196,10 @@ export const AppContextProvider = ({ children }) => {
         setCurrentBusinessId,
         loading,
         error,
+        notifications,
+        unreadCount: notifications.filter((n) => !n.is_read).length,
+        markNotificationRead,
+        markAllNotificationsRead,
       }}
     >
       {children}

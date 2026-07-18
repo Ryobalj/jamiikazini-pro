@@ -8,7 +8,7 @@ from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser, PermissionsMixin, BaseUserManager, Group, Permission
 )
-from security.helpers.encryption import encrypt_data, decrypt_data
+from security.helpers.encryption import encrypt_data, decrypt_data, hash_data
 from django.utils import timezone
 
 
@@ -95,8 +95,31 @@ class User(AbstractBaseUser, PermissionsMixin):
     _device_token = models.CharField(max_length=255, blank=True, null=True)
     _2fa_secret = models.CharField(max_length=255, blank=True, null=True)
     _national_id = models.CharField(max_length=255, blank=True, null=True)
+    # Fingerprint ya kudumu (HMAC-SHA256) ya national_id - Fernet ciphertext
+    # inabadilika kila mara, hivyo uniqueness ya "NIDA/NIN moja = akaunti moja"
+    # inasimamiwa na hash hii (DB-level unique constraint).
+    national_id_hash = models.CharField(
+        max_length=64, blank=True, null=True, unique=True, editable=False,
+    )
 
     is_verified = models.BooleanField(default=False)
+    is_identity_verified = models.BooleanField(
+        default=False,
+        help_text=(
+            "Set only by a completed government NIDA/national-ID verification "
+            "(gov_integration.NationalIDVerificationSerializer). Distinct from "
+            "is_verified, which is also flipped by plain email verification."
+        ),
+    )
+    is_phone_verified = models.BooleanField(
+        default=False,
+        help_text=(
+            "Set only by a completed SMS OTP challenge to this exact phone "
+            "number (security.views.phone_verification_views). Symmetric with "
+            "is_verified (email link) - together with is_identity_verified, "
+            "gates IsIdentityVerified (accounts.permissions)."
+        ),
+    )
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_2fa_enabled = models.BooleanField(default=False)
@@ -157,7 +180,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @national_id.setter
     def national_id(self, value):
-        self._national_id = encrypt_data(value)
+        if value:
+            self._national_id = encrypt_data(value)
+            self.national_id_hash = hash_data(value)
+        else:
+            self._national_id = None
+            self.national_id_hash = None
 
     # ----------------- 2FA (TOTP) ----------------- #
     def get_2fa_secret(self):
@@ -178,10 +206,15 @@ class User(AbstractBaseUser, PermissionsMixin):
         self.save(update_fields=["_2fa_secret", "is_2fa_enabled"])
 
     # ----------------- OTP via SMS/Email ----------------- #
-    def generate_otp(self):
+    def generate_otp(self, method=None):
         from jamiitasks.tasks.notifications import send_sms_task, send_email_task
 
-        """Generate OTP and send via SMS/Email/TOTP"""
+        """
+        Generate OTP and send via SMS/Email/TOTP. `method` overrides
+        preferred_otp_method for this one call - used by phone-number
+        verification, which must always go via SMS regardless of the user's
+        general 2FA channel preference.
+        """
         # futa OTP ya zamani
         self._otp_code = None
         self._otp_expires_at = None
@@ -191,11 +224,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         self._otp_expires_at = timezone.now() + timezone.timedelta(minutes=5)
         self.save(update_fields=["_otp_code", "_otp_expires_at"])
 
+        delivery_method = method or self.preferred_otp_method
+
         try:
-            if self.preferred_otp_method == "SMS" and self.phone_number:
+            if delivery_method == "SMS" and self.phone_number:
                 send_sms_task.delay(self.phone_number, f"Your Jamiikazini OTP is {code}")
 
-            elif self.preferred_otp_method == "EMAIL" and self.email:
+            elif delivery_method == "EMAIL" and self.email:
                 send_email_task.delay(
                     self.email,
                     "Your Jamiikazini OTP",

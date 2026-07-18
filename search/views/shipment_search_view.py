@@ -2,18 +2,21 @@
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
+
 from elasticsearch_dsl.query import Q, Bool
-from django.core.paginator import Paginator
 
 from search.documents.shipment_document import ShipmentDocument
 from search.serializers.shipment_search_serializer import ShipmentSearchSerializer
 
 
 class ShipmentSearchView(APIView):
+    # Shipment data (sender/receiver PII, cost/commission) - authenticated
+    # only. NOTE: no sender/receiver/institution scoping beyond login yet.
+    permission_classes = [permissions.IsAuthenticated]
+
     def get(self, request):
         query = request.query_params.get("q", "")
-        institution_id = request.query_params.get("institution_id")
         status_filter = request.query_params.get("status")
         transport_mode = request.query_params.get("mode")
         page = int(request.query_params.get("page", 1))
@@ -32,9 +35,6 @@ class ShipmentSearchView(APIView):
             ])
         else:
             bool_query.must = Q("match_all")
-
-        if institution_id:
-            bool_query.filter.append(Q("term", institution_id=int(institution_id)))
 
         if status_filter:
             bool_query.filter.append(Q("term", status=status_filter))

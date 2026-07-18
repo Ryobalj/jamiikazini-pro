@@ -1,0 +1,31 @@
+{
+  "title": "Malipo ya Huduma",
+  "available_balance": "Salio lililopo",
+  "description": "Lipa LUKU, muda wa maongezi, DSTV, na huduma nyingine moja kwa moja kutoka JamiiWallet yako.",
+  "category_label": "Chagua Aina ya Huduma",
+  "category_electricity": "Umeme",
+  "category_airtime": "Muda wa Maongezi",
+  "category_tv": "Runinga (TV)",
+  "category_water": "Maji",
+  "biller_label": "Mtoa Huduma",
+  "biller_placeholder": "Chagua...",
+  "account_label": "Namba ya Mita/Simu/Akaunti",
+  "account_placeholder": "Andika namba...",
+  "amount_label": "Kiasi",
+  "submitting": "Inalipa...",
+  "submit": "Lipa Sasa",
+  "back": "Rudi",
+  "success": "Malipo yamekamilika!",
+  "paid_to": "Umelipa",
+  "token_label": "Namba ya Tokeni",
+  "reference_label": "Kumbukumbu",
+  "pay_another": "Lipia Huduma Nyingine",
+  "back_to_wallet": "Rudi kwenye Wallet",
+  "copied": "Imenakiliwa.",
+  "errors": {
+    "biller_required": "Chagua huduma unayotaka kulipia.",
+    "account_required": "Weka namba ya mita/simu/akaunti.",
+    "amount_required": "Weka kiasi sahihi.",
+    "failed": "Malipo yameshindwa. Jaribu tena."
+  }
+}

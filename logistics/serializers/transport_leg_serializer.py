@@ -3,7 +3,7 @@
 from rest_framework import serializers
 from logistics.models import TransportLeg, LegStatusLog
 from kiini.helpers.domain import generate_subdomain_url
-from logistics.serializers.transport_request_serializers import PointJSONField
+from logistics.serializers.geo_fields import PointJSONField
 
 
 class LegStatusLogSerializer(serializers.ModelSerializer):

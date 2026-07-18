@@ -29,6 +29,7 @@ class TestNationalIDVerificationSerializer:
         result = serializer.save()
         self.user.refresh_from_db()
         assert self.user.is_verified is True
+        assert self.user.is_identity_verified is True
         assert self.user.national_id == "12345678901234567890"
         assert VerificationRequest.objects.filter(user=self.user, country="TZ").exists()
         assert result["message"] == "User successfully verified."
@@ -79,12 +80,28 @@ class TestNationalIDVerificationSerializer:
         assert serializer.is_valid()
 
     def test_already_verified_user(self):
-        self.user.is_verified = True
+        self.user.is_identity_verified = True
         self.user.save()
         data = {"country": "TZ", "national_id": "12345678901234567890"}  # valid TZ NIDA
         request = self.factory.post("/", data)
         request.user = self.user
         serializer = NationalIDVerificationSerializer(data=data, context={"request": request})
-        
+
         assert not serializer.is_valid()
         assert "User is already verified." in str(serializer.errors["non_field_errors"])
+
+    def test_email_verified_only_user_can_still_complete_nida_verification(self):
+        """Regression test: is_verified (flipped by plain email verification) must
+        NOT block the NIDA flow - only is_identity_verified should."""
+        self.user.is_verified = True
+        self.user.is_identity_verified = False
+        self.user.save()
+        data = {"country": "TZ", "national_id": "12345678901234567890"}
+        request = self.factory.post("/", data)
+        request.user = self.user
+        serializer = NationalIDVerificationSerializer(data=data, context={"request": request})
+
+        assert serializer.is_valid(), serializer.errors
+        serializer.save()
+        self.user.refresh_from_db()
+        assert self.user.is_identity_verified is True

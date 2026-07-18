@@ -19,6 +19,9 @@ class Transaction(models.Model):
         TRANSFER = 'TRANSFER', _('Transfer')
         PAYMENT = 'PAYMENT', _('Payment')
         REFUND = 'REFUND', _('Refund')
+        HOLD = 'HOLD', _('Hold')
+        CAPTURE = 'CAPTURE', _('Capture')
+        VOID = 'VOID', _('Void')
 
     class TransactionStatus(models.TextChoices):
         PENDING = 'PENDING', _('Pending')

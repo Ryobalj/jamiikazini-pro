@@ -13,7 +13,13 @@ class TestOrderViewSet:
     def setup(self, business_factory, product_factory, service_factory, user_factory):
         provider = user_factory(role="PROVIDER")
         client = user_factory(role="CLIENT")
-        business = business_factory(owner=provider)
+        client.is_identity_verified = True
+        client.is_phone_verified = True
+        client.save(update_fields=["is_identity_verified", "is_phone_verified"])
+        # Order payment inatokea kupitia JamiiWallet - hakikisha client ana salio la kutosha.
+        client.wallet.balance = Decimal("1000.00")
+        client.wallet.save(update_fields=["balance"])
+        business = business_factory(owner=provider, is_verified=True)
         product = product_factory(business=business, price=Decimal("100.00"))
         service = service_factory(business=business, price=Decimal("50.00"))
         return {

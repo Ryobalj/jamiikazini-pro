@@ -80,6 +80,11 @@ MNO_ALIASES = {
     "TIGOPESA": "MIXBYYAS"
 }
 
+# PCI-DSS: CREDIT_CARD account_identifier lazima iwe gateway token (Stripe/Flutterwave),
+# kamwe si namba halisi ya kadi (PAN). Prefixes hizi ndizo pekee zinazokubalika.
+GATEWAY_TOKEN_PREFIXES = ("pm_", "tok_", "card_", "flw_", "src_")
+RAW_PAN_PATTERN = re.compile(r"^\d{12,19}$")
+
 
 class GatewayType(models.TextChoices):
     PAWAPAY = "PAWAPAY", _("PawaPay")
@@ -184,6 +189,25 @@ class PaymentMethod(AbstractEntity):
         super().clean()
         if self.phone:
             PaymentMethod.validate_eac_phone(str(self.phone), self.country_code or "TZ")
+        self._reject_raw_pan()
+
+    def _reject_raw_pan(self):
+        """PCI-DSS: hatuhifadhi namba halisi ya kadi (PAN) kwenye seva zetu kamwe -
+        account_identifier ya CREDIT_CARD lazima iwe gateway token (Stripe/Flutterwave)."""
+        if self.method_type != PaymentMethodType.CREDIT_CARD:
+            return
+        identifier = self.account_identifier
+        if not identifier:
+            return
+        if RAW_PAN_PATTERN.match(identifier):
+            raise ValidationError(
+                _("Haturuhusiwi kuhifadhi namba halisi ya kadi (PAN). Tumia gateway token "
+                  "(mf. Stripe/Flutterwave) baada ya tokenization salama upande wa client.")
+            )
+        if not identifier.startswith(GATEWAY_TOKEN_PREFIXES):
+            raise ValidationError(
+                _("account_identifier ya CREDIT_CARD lazima iwe gateway token halali.")
+            )
 
     # ---------- Intelligent Account Detection ----------
     def _detect_identifier_type(self, identifier: str):
@@ -192,10 +216,8 @@ class PaymentMethod(AbstractEntity):
 
         if re.match(r"^\+\d{10,15}$", identifier):
             return "PHONE", f"****{identifier[-4:]}"
-        if identifier.startswith("pm_"):
-            return "STRIPE_TOKEN", identifier[:6] + "..."
-        if re.match(r"^\d{12,19}$", identifier):
-            return "CARD", f"****{identifier[-4:]}"
+        if identifier.startswith(GATEWAY_TOKEN_PREFIXES):
+            return "GATEWAY_TOKEN", identifier[:6] + "..."
         if re.match(r"^[A-Za-z0-9\-]{6,}$", identifier):
             return "WALLET", identifier[:4] + "..." + identifier[-3:]
         return "UNKNOWN", "****"
@@ -204,6 +226,8 @@ class PaymentMethod(AbstractEntity):
     def save(self, *args, **kwargs):
         if self.mno in MNO_ALIASES:
             self.mno = MNO_ALIASES[self.mno]
+
+        self._reject_raw_pan()
 
         if self._account_identifier:
             try:
@@ -237,8 +261,7 @@ class PaymentMethod(AbstractEntity):
 
         if self.method_type == PaymentMethodType.CREDIT_CARD:
             gateway_name = self.gateway or _("Unknown Gateway")
-            masked = self.details.get("masked_identifier", "****")
-            last4 = masked[-4:] if masked and masked[-4:].isdigit() else "****"
+            last4 = (self.details or {}).get("last4") or "****"
             return _("Card ending %(last4)s via %(gateway)s - %(user)s") % {
                 "last4": last4, "gateway": gateway_name, "user": user
             }

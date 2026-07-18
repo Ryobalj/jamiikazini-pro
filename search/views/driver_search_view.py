@@ -2,7 +2,7 @@
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 from elasticsearch_dsl.query import Q
 
 from search.documents.driver_document import DriverDocument
@@ -10,6 +10,11 @@ from search.serializers.driver_search_serializer import DriverSearchSerializer
 
 
 class DriverSearchView(APIView):
+    # Driver PII (phone, license) - authenticated only. NOTE: there is no
+    # institution/ownership scoping here beyond login - any authenticated
+    # user can currently search drivers across every transport provider.
+    permission_classes = [permissions.IsAuthenticated]
+
     def get(self, request):
         serializer = DriverSearchSerializer(data=request.query_params)
         serializer.is_valid(raise_exception=True)

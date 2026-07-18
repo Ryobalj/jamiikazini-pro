@@ -1,0 +1,78 @@
+{
+  "title": "我的钱包",
+  "available_balance": "可用余额",
+  "this_month": "本月",
+  "income": "收入",
+  "expenses": "支出",
+  "quick_actions": "快捷操作",
+  "topup": "充值",
+  "send": "转账",
+  "request": "请求",
+  "refresh": "刷新",
+  "refreshing": "刷新中...",
+  "refreshed": "钱包已刷新",
+  "recent_transactions": "最近交易",
+  "view_all": "查看全部",
+  "no_transactions": "暂无交易记录",
+  "payment_methods": "支付方式",
+  "no_cards": "尚未添加支付卡",
+  "add_card": "添加卡片",
+  "saved_beneficiaries": "已保存的收款人",
+  "no_beneficiaries": "尚无已保存的收款人",
+  "add_beneficiary": "添加收款人",
+  "topup_wallet": "钱包充值",
+  "amount": "金额",
+  "payment_channel": "支付渠道",
+  "cancel": "取消",
+  "confirm_topup": "确认充值",
+  "invalid_amount": "请输入有效金额",
+  "topup_initiated": "充值已成功发起",
+  "topup_failed": "充值失败，请重试。",
+  "copied": "已复制到剪贴板",
+  "tabs": {
+    "transactions": "交易",
+    "cards": "卡片",
+    "beneficiaries": "收款人"
+  },
+  "transaction_types": {
+    "top_up": "充值",
+    "withdrawal": "提现",
+    "transfer": "转账",
+    "payment": "支付",
+    "refund": "退款"
+  },
+  "status": {
+    "pending": "待处理",
+    "completed": "已完成",
+    "failed": "失败",
+    "reversed": "已撤销"
+  },
+  "errors": {
+    "failed_to_load_wallet": "加载钱包数据失败"
+  },
+  "cashout": {
+    "title": "提取现金",
+    "description": "前往 JamiiKazini 平台内任意已认证商家即可领取现金 - 目前不收取任何手续费。",
+    "business_label": "搜索商家",
+    "business_placeholder": "输入商家名称...",
+    "searching": "搜索中...",
+    "change": "更改",
+    "submit": "提取现金",
+    "submitting": "发送中...",
+    "success": "您已成功通过 {{name}} 提取现金。",
+    "errors": {
+      "business_required": "请选择要提取现金的商家。",
+      "failed": "提取现金失败，请重试。"
+    }
+  },
+  "billpay": {
+    "title": "账单支付"
+  },
+  "savings": {
+    "title": "VICOBA/SACCOS 储蓄小组"
+  },
+  "withdraw": "提现",
+  "accounts": {
+    "title": "账户"
+  }
+}

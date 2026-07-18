@@ -53,3 +53,36 @@ class InstitutionViewSetTest(APITestCase):
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_authenticated_user_can_create_institution(self):
+        user3 = User.objects.create_user(email="user3@example.com", password="pass1234")
+        refresh = RefreshToken.for_user(user3)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {str(refresh.access_token)}')
+
+        url = reverse("kiini:institution-list")
+        response = self.client.post(url, {"name": "Fresh Institution"}, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        institution = Institution.objects.get(id=response.data["id"])
+        self.assertEqual(institution.owner_id, user3.id)
+
+        # perform_create auto-assigns as the user's primary institution
+        user3.refresh_from_db()
+        self.assertEqual(user3.institution_id, institution.id)
+
+    def test_creating_institution_does_not_override_existing_primary_institution(self):
+        # user1 already has inst1 as their primary institution (see setUp)
+        url = reverse("kiini:institution-list")
+        response = self.client.post(url, {"name": "Second Institution"}, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.user1.refresh_from_db()
+        self.assertEqual(self.user1.institution_id, self.inst1.id)
+
+    def test_unauthenticated_user_cannot_create_institution(self):
+        self.client.credentials()
+        url = reverse("kiini:institution-list")
+        response = self.client.post(url, {"name": "Should Fail"}, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertFalse(Institution.objects.filter(name="Should Fail").exists())

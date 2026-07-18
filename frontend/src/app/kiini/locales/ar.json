@@ -1,0 +1,64 @@
+{
+  "dashboard": {
+    "title": "لوحة تحكم المؤسسة",
+    "welcomeMessage": "مرحبًا بك في لوحة التحكم الرئيسية لـ Kiini - نظام لإدارة المؤسسات والأقسام والموظفين.",
+    "institutions": "المؤسسات",
+    "departments": "الأقسام",
+    "staff-profiles": "ملفات الموظفين",
+    "institution-tiers": "مستويات المؤسسة",
+    "institution-types": "أنواع المؤسسات"
+  },
+  "institution": {
+    "title": "ملف المؤسسة",
+    "description": "عرض وإدارة تفاصيل مؤسستك",
+    "not_found": "المؤسسة غير موجودة",
+    "create": "إنشاء مؤسسة",
+    "back_to_profile": "العودة إلى الملف الشخصي",
+    "settings": "الإعدادات",
+    "edit": "تعديل",
+    "info": {
+      "title": "معلومات المؤسسة",
+      "established": "تأسست",
+      "tier": "المستوى",
+      "type": "النوع",
+      "businesses": "الشركات"
+    },
+    "members": {
+      "title": "الأعضاء",
+      "none": "لا يوجد أعضاء بعد",
+      "invite": "دعوة أعضاء"
+    },
+    "businesses_section": {
+      "title": "شركات المؤسسة",
+      "create": "إنشاء شركة",
+      "none": "لا توجد شركات في هذه المؤسسة بعد",
+      "create_first": "إنشاء أول شركة"
+    },
+    "errors": {
+      "failed_to_load": "فشل تحميل تفاصيل المؤسسة"
+    }
+  },
+  "departments": {
+    "title": "إدارة الأقسام",
+    "description": "إنشاء وتعديل وحذف الأقسام داخل مؤسستك."
+  },
+  "staff": {
+    "title": "أعضاء الموظفين",
+    "description": "عرض وإدارة معلومات موظفي المؤسسة."
+  },
+  "tiers": {
+    "title": "مستويات المؤسسة",
+    "description": "قائمة المستويات المتاحة للمؤسسات مثل صغيرة، متوسطة، كبيرة."
+  },
+  "types": {
+    "title": "أنواع المؤسسات",
+    "description": "عرض أو اختيار نوع المؤسسة مثل شركة خاصة أو منظمة غير حكومية أو مؤسسة حكومية."
+  },
+  "institution_storefront": {
+    "not_found": "لم يتم العثور على المؤسسة",
+    "tenants_heading": "المتاجر داخل هذا المبنى",
+    "empty": "لا يوجد متجر مسجل هنا بعد.",
+    "tenant_count_one": "{{count}} متجر",
+    "tenant_count_other": "{{count}} متجر"
+  }
+}

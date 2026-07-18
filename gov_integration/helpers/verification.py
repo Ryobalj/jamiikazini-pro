@@ -1,8 +1,12 @@
 # gov_integration/helpers/verification.py
 
+import logging
 import requests
 from datetime import datetime, timedelta
+from django.conf import settings
 from jamiikazini.settings import gov_api_config as gov_config_module
+
+logger = logging.getLogger(__name__)
 
 
 def get_gov_api_config(country_code, authority_code):
@@ -14,6 +18,71 @@ def get_gov_api_config(country_code, authority_code):
     return getattr(gov_config_module, key, None)
 
 
+# Mamlaka sahihi ya usajili wa biashara kwa kila nchi (inaendana na majina ya
+# key za jamiikazini/settings/gov_api_config.py, mf. TZ_TRA_BUSINESS).
+BUSINESS_LICENSE_AUTHORITY_BY_COUNTRY = {
+    "TZ": "tra_business",
+    "KE": "brs",
+    "RW": "rdb",
+    "UG": "ursb",
+    "BI": "api",     # Agence de Promotion des Investissements -> BI_API
+    "SS": "trade",   # Ministry of Trade -> SS_TRADE
+}
+
+
+def business_license_authority_for(country_code):
+    """Rudisha authority_code sahihi ya usajili wa biashara kwa nchi husika."""
+    return BUSINESS_LICENSE_AUTHORITY_BY_COUNTRY.get((country_code or "").upper(), "trade")
+
+
+# Mamlaka sahihi ya kitambulisho cha taifa (NIDA-equivalent) kwa kila nchi.
+NATIONAL_ID_AUTHORITY_BY_COUNTRY = {
+    "TZ": "nida",
+    "KE": "nrb",
+    "UG": "nira",
+    "RW": "nida",
+    "BI": "oni",
+    "SS": "nia",
+}
+
+
+def national_id_authority_for(country_code):
+    """Rudisha authority_code sahihi ya kitambulisho cha taifa kwa nchi husika."""
+    return NATIONAL_ID_AUTHORITY_BY_COUNTRY.get((country_code or "").upper(), "nida")
+
+
+# Mamlaka sahihi ya leseni ya udereva kwa kila nchi.
+DRIVER_LICENSE_AUTHORITY_BY_COUNTRY = {
+    "TZ": "tra_driver",
+    "KE": "ntsa",
+    "UG": "ura_driver",
+    "RW": "rnp_driver",
+    "BI": "driver",  # -> BI_DRIVER
+    "SS": "driver",  # -> SS_DRIVER
+}
+
+
+def driver_license_authority_for(country_code):
+    """Rudisha authority_code sahihi ya leseni ya udereva kwa nchi husika."""
+    return DRIVER_LICENSE_AUTHORITY_BY_COUNTRY.get((country_code or "").upper(), "driver")
+
+
+# Mamlaka sahihi ya leseni ya usafirishaji (LATRA-equivalent) kwa kila nchi.
+TRANSPORT_LICENSE_AUTHORITY_BY_COUNTRY = {
+    "TZ": "latra",
+    "UG": "transport",
+    "KE": "ntsa",     # NTSA inasimamia driver na PSV/transport permits zote -> KE_NTSA
+    "RW": "rura",     # Rwanda Utilities Regulatory Authority -> RW_RURA
+    "BI": "transport",  # -> BI_TRANSPORT
+    "SS": "transport",  # -> SS_TRANSPORT
+}
+
+
+def transport_license_authority_for(country_code):
+    """Rudisha authority_code sahihi ya leseni ya usafirishaji kwa nchi husika."""
+    return TRANSPORT_LICENSE_AUTHORITY_BY_COUNTRY.get((country_code or "").upper(), "transport")
+
+
 def verify_entity(country_code, authority_code, payload, user=None):
     """
     Generic verification function for any entity using gov_api_config.
@@ -21,8 +90,15 @@ def verify_entity(country_code, authority_code, payload, user=None):
     - authority_code: e.g. "nida", "ntsa"
     - payload: dict to post to external API
     - user: optional, used for logging or future audit trails
+
+    Production ni fail-closed: config ikikosekana au API halisi ikishindikana,
+    tunarudisha FAILED badala ya mock ya mafanikio - uthibitisho wa uongo ni
+    hatari kuliko kumwambia mtumiaji ajaribu tena baadaye. Mock inaruhusiwa
+    development/test pekee.
     """
+    env = getattr(settings, "DJANGO_ENV", "development").lower()
     config = get_gov_api_config(country_code, authority_code)
+
     if config and config.get("api_url") and config.get("api_key"):
         try:
             response = requests.post(
@@ -33,10 +109,29 @@ def verify_entity(country_code, authority_code, payload, user=None):
             )
             response.raise_for_status()
             return response.json()
-        except requests.RequestException:
-            pass  # fallback to mock if error
+        except requests.RequestException as e:
+            logger.error(
+                f"Gov API call failed for {country_code.upper()}_{authority_code.upper()}: {e}"
+            )
+            if env == "production":
+                return {
+                    "status": "failed",
+                    "verified": False,
+                    "error": "Mamlaka husika haipatikani kwa sasa. Jaribu tena baadaye.",
+                }
+            # dev/test: endelea kwenye mock hapa chini
 
-    # Generic mock fallback
+    elif env == "production":
+        logger.error(
+            f"No gov API config for {country_code.upper()}_{authority_code.upper()} in production."
+        )
+        return {
+            "status": "failed",
+            "verified": False,
+            "error": "Uthibitisho wa mamlaka hii bado haujawashwa. Jaribu tena baadaye.",
+        }
+
+    # Generic mock fallback (development/test only)
     return mock_response(authority_code, payload)
 
 
@@ -45,10 +140,10 @@ def mock_response(authority_code, payload):
     Returns mock response based on the type of authority.
     Extend as needed.
     """
-    if authority_code.lower() == "nida":
+    if authority_code.lower() in ["nida", "nrb", "nira", "oni", "nia"]:
         return {
             "status": "success",
-            "message": f"NIDA verification successful for {payload.get('national_id_number')}",
+            "message": f"National ID verification successful for {payload.get('national_id_number')}",
             "data": {
                 "full_name": "John Doe",
                 "date_of_birth": "1990-01-01",

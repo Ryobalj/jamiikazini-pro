@@ -22,6 +22,11 @@ class Wallet(UUIDModel, TimeStampedModel):
 
     balance = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
 
+    held_balance = models.DecimalField(
+        max_digits=12, decimal_places=2, default=0.00,
+        help_text="Kiasi kilichoshikiliwa (escrow) - hakiwezi kutumika mpaka kiachiliwe."
+    )
+
     currency = models.ForeignKey(
         Currency,
         on_delete=models.PROTECT,
@@ -56,5 +61,9 @@ class Wallet(UUIDModel, TimeStampedModel):
     def __str__(self):
         return f"{self.user.full_name} - {self.currency.code} {self.balance}"
 
+    @property
+    def available_balance(self):
+        return self.balance - self.held_balance
+
     def has_sufficient_balance(self, amount):
-        return self.balance >= amount
+        return self.available_balance >= amount

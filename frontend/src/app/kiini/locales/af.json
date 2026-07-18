@@ -1,0 +1,64 @@
+{
+  "dashboard": {
+    "title": "Instansiepaneelbord",
+    "welcomeMessage": "Welkom by die Kiini-hoofpaneelbord - 'n stelsel vir die bestuur van instansies, departemente en personeel.",
+    "institutions": "Instansies",
+    "departments": "Departemente",
+    "staff-profiles": "Personeelprofiele",
+    "institution-tiers": "Instansievlakke",
+    "institution-types": "Instansietipes"
+  },
+  "institution": {
+    "title": "Instansieprofiel",
+    "description": "Bekyk en bestuur jou instansie se besonderhede",
+    "not_found": "Instansie nie gevind nie",
+    "create": "Skep Instansie",
+    "back_to_profile": "Terug na Profiel",
+    "settings": "Instellings",
+    "edit": "Wysig",
+    "info": {
+      "title": "Instansie-inligting",
+      "established": "Gestig",
+      "tier": "Vlak",
+      "type": "Tipe",
+      "businesses": "Besighede"
+    },
+    "members": {
+      "title": "Lede",
+      "none": "Nog geen lede nie",
+      "invite": "Nooi Lede"
+    },
+    "businesses_section": {
+      "title": "Instansie se Besighede",
+      "create": "Skep Besigheid",
+      "none": "Nog geen besighede in hierdie instansie nie",
+      "create_first": "Skep Eerste Besigheid"
+    },
+    "errors": {
+      "failed_to_load": "Kon nie instansiebesonderhede laai nie"
+    }
+  },
+  "departments": {
+    "title": "Departementsbestuur",
+    "description": "Skep, wysig en verwyder departemente binne jou instansie."
+  },
+  "staff": {
+    "title": "Personeellede",
+    "description": "Bekyk en bestuur personeelinligting vir die instansie."
+  },
+  "tiers": {
+    "title": "Instansievlakke",
+    "description": "Lys van beskikbare vlakke vir instansies soos Klein, Medium, Groot."
+  },
+  "types": {
+    "title": "Instansietipes",
+    "description": "Bekyk of kies instansietipe soos privaat maatskappy, NRO, of regeringsinstansie."
+  },
+  "institution_storefront": {
+    "not_found": "Instelling nie gevind nie",
+    "tenants_heading": "Winkels in Hierdie Gebou",
+    "empty": "Nog geen winkel hier geregistreer nie.",
+    "tenant_count_one": "{{count}} winkel",
+    "tenant_count_other": "{{count}} winkels"
+  }
+}

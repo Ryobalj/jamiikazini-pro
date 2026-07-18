@@ -38,17 +38,22 @@ UG_UNEB = load_gov_api_config("UG_UNEB", STANDARD_FIELDS)
 RW_NIDA = load_gov_api_config("RW_NIDA", STANDARD_FIELDS)
 RW_RDB = load_gov_api_config("RW_RDB", STANDARD_FIELDS)
 RW_RNP_DRIVER = load_gov_api_config("RW_RNP_DRIVER", STANDARD_FIELDS)
+RW_RURA = load_gov_api_config("RW_RURA", STANDARD_FIELDS)  # transport operator permits
 RW_REB = load_gov_api_config("RW_REB", STANDARD_FIELDS)
 RW_RSSB = load_gov_api_config("RW_RSSB", STANDARD_FIELDS)
 
 # BURUNDI
 BI_ONI = load_gov_api_config("BI_ONI", STANDARD_FIELDS)
 BI_API = load_gov_api_config("BI_API", STANDARD_FIELDS)
+BI_DRIVER = load_gov_api_config("BI_DRIVER", STANDARD_FIELDS)
+BI_TRANSPORT = load_gov_api_config("BI_TRANSPORT", STANDARD_FIELDS)
 BI_EDU = load_gov_api_config("BI_EDU", STANDARD_FIELDS)
 BI_HEALTH = load_gov_api_config("BI_HEALTH", STANDARD_FIELDS)
 
 # SOUTH SUDAN
 SS_NIA = load_gov_api_config("SS_NIA", STANDARD_FIELDS)
 SS_TRADE = load_gov_api_config("SS_TRADE", STANDARD_FIELDS)
+SS_DRIVER = load_gov_api_config("SS_DRIVER", STANDARD_FIELDS)
+SS_TRANSPORT = load_gov_api_config("SS_TRANSPORT", STANDARD_FIELDS)
 SS_EDU = load_gov_api_config("SS_EDU", STANDARD_FIELDS)
 SS_HEALTH = load_gov_api_config("SS_HEALTH", STANDARD_FIELDS)

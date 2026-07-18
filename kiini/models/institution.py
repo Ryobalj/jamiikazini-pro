@@ -15,8 +15,13 @@ class Institution(AbstractEntity):
         unique=True,
         null=True,
         blank=True,
-        verbose_name=_("Domain"),
-        help_text=_("Mfano: institution_name.jamiikazini.com")
+        verbose_name=_("Subdomain"),
+        help_text=_(
+            "Sehemu ya kwanza TU ya subdomain (mfano: 'shule-yangu'), SIO "
+            "domain kamili - taasisi inapatikana kwenye "
+            "https://<domain>.jamiikazini.com. Lazima ilingane na "
+            "kile InstitutionMiddleware inachotafuta (parts[0] ya host)."
+        )
     )
 
     def save(self, *args, **kwargs):

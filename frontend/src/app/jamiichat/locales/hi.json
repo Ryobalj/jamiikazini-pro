@@ -1,0 +1,70 @@
+{
+  "profile": {
+    "title": "मेरी प्रोफ़ाइल",
+    "description": "अपने खाते की जानकारी देखें और प्रबंधित करें"
+  },
+  "edit_profile": {
+    "title": "प्रोफ़ाइल संपादित करें",
+    "description": "अपनी व्यक्तिगत जानकारी अपडेट करें"
+  },
+  "settings": {
+    "title": "सेटिंग्स",
+    "description": "अपने खाते की प्राथमिकताएं कॉन्फ़िगर करें"
+  },
+  "wallet": {
+    "title": "मेरा वॉलेट",
+    "description": "शेष राशि और लेनदेन देखें"
+  },
+  "personal_info": "व्यक्तिगत जानकारी",
+  "full_name": "पूरा नाम",
+  "email": "ईमेल पता",
+  "phone": "फ़ोन नंबर",
+  "national_id": "राष्ट्रीय पहचान पत्र",
+  "member_since": "सदस्य बने",
+  "account_status": "खाता स्थिति",
+  "email_verified": "ईमेल सत्यापित",
+  "phone_verified": "फ़ोन सत्यापित",
+  "2fa_enabled": "दो-चरणीय सत्यापन",
+  "account_active": "खाता सक्रिय",
+  "manage_security": "सुरक्षा प्रबंधित करें",
+  "primary_institution": "प्राथमिक संस्था",
+  "view_institution": "संस्था देखें",
+  "two_factor_authentication": "दो-चरणीय सत्यापन",
+  "2fa_status": "2FA स्थिति",
+  "2fa_enabled_desc": "आपका खाता दो-चरणीय सत्यापन से सुरक्षित है",
+  "2fa_disabled_desc": "अपने खाते में सुरक्षा की एक अतिरिक्त परत जोड़ें",
+  "enable_2fa": "2FA सक्षम करें",
+  "disable_2fa": "2FA अक्षम करें",
+  "change_password": "पासवर्ड बदलें",
+  "update_password": "पासवर्ड अपडेट करें",
+  "danger_zone": "खतरे का क्षेत्र",
+  "logout": "लॉगआउट",
+  "logout_success": "सफलतापूर्वक लॉगआउट हो गया",
+  "your_institutions": "आपकी संस्थाएं",
+  "no_institutions_yet": "आपने अभी तक कोई संस्था नहीं बनाई है।",
+  "create_institution": "संस्था बनाएं",
+  "your_businesses": "आपके व्यवसाय",
+  "no_businesses_yet": "आपने अभी तक कोई व्यवसाय नहीं बनाया है।",
+  "create_business": "व्यवसाय बनाएं",
+  "recent_activity": "हाल की गतिविधि",
+  "no_recent_activity": "दिखाने के लिए कोई हालिया गतिविधि नहीं है।",
+  "recent_conversations": "हाल की बातचीत",
+  "no_conversations_yet": "अभी तक कोई बातचीत नहीं।",
+  "open_chat": "चैट खोलें",
+  "start_chat": "बातचीत शुरू करें",
+  "user": "उपयोगकर्ता",
+  "edit": "संपादित करें",
+  "create": "बनाएं",
+  "copied": "क्लिपबोर्ड पर कॉपी किया गया",
+  "errors": {
+    "failed_to_load_profile": "प्रोफ़ाइल डेटा लोड करने में विफल"
+  },
+  "tabs": {
+    "overview": "अवलोकन",
+    "institutions": "संस्थाएं",
+    "businesses": "व्यवसाय",
+    "chat": "चैट",
+    "activity": "गतिविधि",
+    "security": "सुरक्षा"
+  }
+}

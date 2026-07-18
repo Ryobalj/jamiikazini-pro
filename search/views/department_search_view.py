@@ -2,13 +2,16 @@
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 from elasticsearch_dsl.query import Q
 from search.documents.department_document import DepartmentDocument
 from search.serializers.department_search_serializer import DepartmentSearchSerializer
 
 
 class DepartmentSearchView(APIView):
+    # Public directory data - department names/institution are not sensitive.
+    permission_classes = [permissions.AllowAny]
+
     def get(self, request):
         query = request.GET.get("q", "")
         institution_id = request.GET.get("institution_id")

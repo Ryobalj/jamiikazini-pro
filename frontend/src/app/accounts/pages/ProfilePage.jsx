@@ -346,7 +346,12 @@ export default function ProfilePage() {
                 <CardContent>
                   <div className="space-y-4">
                     <StatusRow label={t("email_verified")} status={userData.is_verified} />
-                    <StatusRow label={t("phone_verified")} status={userData.is_phone_verified} />
+                    <StatusRow
+                      label={t("phone_verified")}
+                      status={userData.is_phone_verified}
+                      actionLabel={t("settings.verify_phone", "Thibitisha")}
+                      onAction={() => navigate("/accounts/settings")}
+                    />
                     <StatusRow label={t("2fa_enabled")} status={userData.is_2fa_enabled} />
                     <StatusRow label={t("account_active")} status={userData.is_active} />
                     <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
@@ -601,12 +606,19 @@ function InfoRow({ icon: Icon, label, value, verified, onCopy, showSensitive, or
   );
 }
 
-function StatusRow({ label, status }) {
+function StatusRow({ label, status, actionLabel, onAction }) {
   return (
     <div className="flex items-center justify-between">
       <span className="text-gray-600 dark:text-gray-300">{label}</span>
       {status ? (
         <span className="flex items-center gap-1 text-green-600 dark:text-green-400"><CheckCircle className="w-4 h-4" />Active</span>
+      ) : actionLabel && onAction ? (
+        <button
+          onClick={onAction}
+          className="flex items-center gap-1 text-yellow-600 dark:text-yellow-400 hover:underline"
+        >
+          <XCircle className="w-4 h-4" />{actionLabel}
+        </button>
       ) : (
         <span className="flex items-center gap-1 text-yellow-600 dark:text-yellow-400"><XCircle className="w-4 h-4" />Inactive</span>
       )}

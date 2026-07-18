@@ -6,7 +6,7 @@ from logistics.models.transport_provider_verification import TransportProviderVe
 from gov_integration.models.verification_request import VerificationRequest
 from accounts.serializers import SimpleUserSerializer
 from kiini.serializers.institution_serializers import InstitutionSerializer
-from logistics.serializers.transport_request_serializers import PointJSONField
+from logistics.serializers.geo_fields import PointJSONField
 
 
 class VerificationRequestStatusSerializer(serializers.ModelSerializer):

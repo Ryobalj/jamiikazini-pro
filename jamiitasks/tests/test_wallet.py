@@ -23,6 +23,9 @@ def test_confirm_topup_transaction_success(mocker):
 
     # 2. Mock gateway KABLA ya create - TopUp.save() inaendesha task eagerly
     mocker.patch('jamiitasks.tasks.wallet.confirm_with_gateway', return_value=True)
+    # TopUp.save() tayari inaita task hii kwa .delay() (eager); "1/m" throttle
+    # basi ingezuia kuiita tena hapa chini kwa makusudi kwa ajili ya assertion.
+    mocker.patch('jamiitasks.services.rate_limiter.TaskRateLimiter.allow', return_value=True)
 
     topup = TopUp.objects.create(
         user=user,

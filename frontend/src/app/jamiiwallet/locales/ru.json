@@ -1,0 +1,78 @@
+{
+  "title": "Мой Кошелёк",
+  "available_balance": "Доступный Баланс",
+  "this_month": "В Этом Месяце",
+  "income": "Доход",
+  "expenses": "Расходы",
+  "quick_actions": "Быстрые Действия",
+  "topup": "Пополнить",
+  "send": "Отправить",
+  "request": "Запросить",
+  "refresh": "Обновить",
+  "refreshing": "Обновление...",
+  "refreshed": "Кошелёк обновлён",
+  "recent_transactions": "Последние Транзакции",
+  "view_all": "Показать Все",
+  "no_transactions": "Пока нет транзакций",
+  "payment_methods": "Способы Оплаты",
+  "no_cards": "Платёжные карты ещё не добавлены",
+  "add_card": "Добавить Карту",
+  "saved_beneficiaries": "Сохранённые Получатели",
+  "no_beneficiaries": "Пока нет сохранённых получателей",
+  "add_beneficiary": "Добавить Получателя",
+  "topup_wallet": "Пополнить Кошелёк",
+  "amount": "Сумма",
+  "payment_channel": "Способ Оплаты",
+  "cancel": "Отмена",
+  "confirm_topup": "Подтвердить Пополнение",
+  "invalid_amount": "Пожалуйста, введите корректную сумму",
+  "topup_initiated": "Пополнение успешно начато",
+  "topup_failed": "Пополнение не удалось. Попробуйте снова.",
+  "copied": "Скопировано в буфер обмена",
+  "tabs": {
+    "transactions": "Транзакции",
+    "cards": "Карты",
+    "beneficiaries": "Получатели"
+  },
+  "transaction_types": {
+    "top_up": "Пополнение",
+    "withdrawal": "Вывод",
+    "transfer": "Перевод",
+    "payment": "Платёж",
+    "refund": "Возврат"
+  },
+  "status": {
+    "pending": "В Ожидании",
+    "completed": "Завершено",
+    "failed": "Не Удалось",
+    "reversed": "Отменено"
+  },
+  "errors": {
+    "failed_to_load_wallet": "Не удалось загрузить данные кошелька"
+  },
+  "cashout": {
+    "title": "Снять Наличные",
+    "description": "Посетите любую подтверждённую компанию в JamiiKazini, чтобы получить наличные - пока без комиссии.",
+    "business_label": "Найти Компанию",
+    "business_placeholder": "Введите название компании...",
+    "searching": "Поиск...",
+    "change": "Изменить",
+    "submit": "Снять Наличные",
+    "submitting": "Отправка...",
+    "success": "Вы успешно сняли наличные через {{name}}.",
+    "errors": {
+      "business_required": "Выберите компанию для снятия наличных.",
+      "failed": "Не удалось снять наличные. Попробуйте снова."
+    }
+  },
+  "billpay": {
+    "title": "Оплата счетов"
+  },
+  "savings": {
+    "title": "Сберегательные группы VICOBA/SACCOS"
+  },
+  "withdraw": "Снять",
+  "accounts": {
+    "title": "Счета"
+  }
+}

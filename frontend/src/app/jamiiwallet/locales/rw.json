@@ -1,0 +1,78 @@
+{
+  "title": "Wallet Yanjye",
+  "available_balance": "Amafaranga Ahari",
+  "this_month": "Uku Kwezi",
+  "income": "Amafaranga Yinjiye",
+  "expenses": "Amafaranga Yasohotse",
+  "quick_actions": "Ibikorwa Byihuse",
+  "topup": "Shyiramo Amafaranga",
+  "send": "Ohereza",
+  "request": "Saba",
+  "refresh": "Vugurura",
+  "refreshing": "Kirimo kuvugururwa...",
+  "refreshed": "Wallet yavuguruwe",
+  "recent_transactions": "Ibikorwa Biheruka",
+  "view_all": "Reba Byose",
+  "no_transactions": "Nta bikorwa birahari",
+  "payment_methods": "Uburyo bwo Kwishyura",
+  "no_cards": "Nta karita yo kwishyura yongewe",
+  "add_card": "Ongeraho Ikarita",
+  "saved_beneficiaries": "Abagenerwabikorwa Babitswe",
+  "no_beneficiaries": "Nta mugenerwabikorwa wabitswe",
+  "add_beneficiary": "Ongeraho Umugenerwabikorwa",
+  "topup_wallet": "Shyiramo Amafaranga muri Wallet",
+  "amount": "Umubare",
+  "payment_channel": "Uburyo bwo Kwishyura",
+  "cancel": "Kureka",
+  "confirm_topup": "Emeza Gushyiramo Amafaranga",
+  "invalid_amount": "Nyamuneka injiza umubare wemewe",
+  "topup_initiated": "Gushyiramo amafaranga byatangijwe neza",
+  "topup_failed": "Gushyiramo amafaranga byanze. Ongera ugerageze.",
+  "copied": "Byakopowe",
+  "tabs": {
+    "transactions": "Ibikorwa",
+    "cards": "Amakarita",
+    "beneficiaries": "Abagenerwabikorwa"
+  },
+  "transaction_types": {
+    "top_up": "Kwishyuza",
+    "withdrawal": "Gukura Amafaranga",
+    "transfer": "Kohereza",
+    "payment": "Kwishyura",
+    "refund": "Kwishyura Ingurane"
+  },
+  "status": {
+    "pending": "Bitegereje",
+    "completed": "Byarangiye",
+    "failed": "Byanze",
+    "reversed": "Byasubijwe"
+  },
+  "errors": {
+    "failed_to_load_wallet": "Gupakira amakuru ya wallet byanze"
+  },
+  "cashout": {
+    "title": "Kubona Amafaranga Taslimu",
+    "description": "Sura ubucuruzi ubwo aribwo bwose bwemejwe muri JamiiKazini kugira ngo uhabwe amafaranga taslimu - nta kiguzi kugeza ubu.",
+    "business_label": "Shakisha Ubucuruzi",
+    "business_placeholder": "Andika izina ry'ubucuruzi...",
+    "searching": "Birashakishwa...",
+    "change": "Hindura",
+    "submit": "Kura Amafaranga",
+    "submitting": "Birohererezwa...",
+    "success": "Wakuye amafaranga taslimu neza binyuze kuri {{name}}.",
+    "errors": {
+      "business_required": "Hitamo ubucuruzi uzakuriramo amafaranga.",
+      "failed": "Gukura amafaranga byanze. Ongera ugerageze."
+    }
+  },
+  "billpay": {
+    "title": "Kwishyura Fagitire"
+  },
+  "savings": {
+    "title": "Amatsinda y'Ubwizigame VICOBA/SACCOS"
+  },
+  "withdraw": "Kura",
+  "accounts": {
+    "title": "Konti"
+  }
+}

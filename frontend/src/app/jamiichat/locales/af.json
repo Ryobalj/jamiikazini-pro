@@ -1,0 +1,70 @@
+{
+  "profile": {
+    "title": "My Profiel",
+    "description": "Bekyk en bestuur jou rekeninginligting"
+  },
+  "edit_profile": {
+    "title": "Wysig Profiel",
+    "description": "Werk jou persoonlike inligting op"
+  },
+  "settings": {
+    "title": "Instellings",
+    "description": "Konfigureer jou rekeningvoorkeure"
+  },
+  "wallet": {
+    "title": "My Beursie",
+    "description": "Bekyk saldo en transaksies"
+  },
+  "personal_info": "Persoonlike Inligting",
+  "full_name": "Volle Naam",
+  "email": "E-posadres",
+  "phone": "Telefoonnommer",
+  "national_id": "Nasionale ID",
+  "member_since": "Lid Sedert",
+  "account_status": "Rekeningstatus",
+  "email_verified": "E-pos Geverifieer",
+  "phone_verified": "Telefoon Geverifieer",
+  "2fa_enabled": "Twee-Faktor-Verifikasie",
+  "account_active": "Rekening Aktief",
+  "manage_security": "Bestuur Sekuriteit",
+  "primary_institution": "Primêre Instansie",
+  "view_institution": "Bekyk Instansie",
+  "two_factor_authentication": "Twee-Faktor-Verifikasie",
+  "2fa_status": "2FA-Status",
+  "2fa_enabled_desc": "Jou rekening word beskerm deur twee-faktor-verifikasie",
+  "2fa_disabled_desc": "Voeg 'n ekstra laag sekuriteit by jou rekening",
+  "enable_2fa": "Aktiveer 2FA",
+  "disable_2fa": "Deaktiveer 2FA",
+  "change_password": "Verander Wagwoord",
+  "update_password": "Werk Wagwoord Op",
+  "danger_zone": "Gevaarsone",
+  "logout": "Meld Af",
+  "logout_success": "Suksesvol afgemeld",
+  "your_institutions": "Jou Instansies",
+  "no_institutions_yet": "Jy het nog geen instansies geskep nie.",
+  "create_institution": "Skep Instansie",
+  "your_businesses": "Jou Besighede",
+  "no_businesses_yet": "Jy het nog geen besighede geskep nie.",
+  "create_business": "Skep Besigheid",
+  "recent_activity": "Onlangse Aktiwiteit",
+  "no_recent_activity": "Geen onlangse aktiwiteit om te wys nie.",
+  "recent_conversations": "Onlangse Gesprekke",
+  "no_conversations_yet": "Nog geen gesprekke nie.",
+  "open_chat": "Maak Klets Oop",
+  "start_chat": "Begin 'n Gesprek",
+  "user": "Gebruiker",
+  "edit": "Wysig",
+  "create": "Skep",
+  "copied": "na knipbord gekopieer",
+  "errors": {
+    "failed_to_load_profile": "Kon nie profieldata laai nie"
+  },
+  "tabs": {
+    "overview": "Oorsig",
+    "institutions": "Instansies",
+    "businesses": "Besighede",
+    "chat": "Klets",
+    "activity": "Aktiwiteit",
+    "security": "Sekuriteit"
+  }
+}

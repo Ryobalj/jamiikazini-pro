@@ -1,0 +1,64 @@
+{
+  "dashboard": {
+    "title": "机构仪表盘",
+    "welcomeMessage": "欢迎使用 Kiini 主仪表盘 - 一个用于管理机构、部门和员工的系统。",
+    "institutions": "机构",
+    "departments": "部门",
+    "staff-profiles": "员工档案",
+    "institution-tiers": "机构等级",
+    "institution-types": "机构类型"
+  },
+  "institution": {
+    "title": "机构资料",
+    "description": "查看和管理您的机构详情",
+    "not_found": "未找到该机构",
+    "create": "创建机构",
+    "back_to_profile": "返回资料",
+    "settings": "设置",
+    "edit": "编辑",
+    "info": {
+      "title": "机构信息",
+      "established": "成立于",
+      "tier": "等级",
+      "type": "类型",
+      "businesses": "企业"
+    },
+    "members": {
+      "title": "成员",
+      "none": "暂无成员",
+      "invite": "邀请成员"
+    },
+    "businesses_section": {
+      "title": "机构企业",
+      "create": "创建企业",
+      "none": "该机构暂无企业",
+      "create_first": "创建第一个企业"
+    },
+    "errors": {
+      "failed_to_load": "加载机构详情失败"
+    }
+  },
+  "departments": {
+    "title": "部门管理",
+    "description": "在您的机构内创建、编辑和删除部门。"
+  },
+  "staff": {
+    "title": "员工",
+    "description": "查看和管理机构员工信息。"
+  },
+  "tiers": {
+    "title": "机构等级",
+    "description": "机构可用等级列表，如小型、中型、大型。"
+  },
+  "types": {
+    "title": "机构类型",
+    "description": "查看或选择机构类型，如私营公司、非政府组织或政府机构。"
+  },
+  "institution_storefront": {
+    "not_found": "未找到该机构",
+    "tenants_heading": "本楼内的店铺",
+    "empty": "此处尚无注册店铺。",
+    "tenant_count_one": "{{count}} 家店铺",
+    "tenant_count_other": "{{count}} 家店铺"
+  }
+}

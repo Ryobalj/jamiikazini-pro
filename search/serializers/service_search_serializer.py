@@ -4,10 +4,13 @@ from rest_framework import serializers
 
 
 class BusinessSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField()
-    description = serializers.CharField()
-    is_active = serializers.BooleanField()
+    # required=False throughout: when the underlying FK is unset (e.g. a
+    # Service with no category), django_elasticsearch_dsl's automatic
+    # ObjectField resolution yields an empty object rather than None.
+    id = serializers.CharField(required=False, allow_null=True)  # Business is UUID-keyed, not an integer PK
+    name = serializers.CharField(required=False, allow_null=True)
+    description = serializers.CharField(required=False, allow_null=True, allow_blank=True)
+    is_active = serializers.BooleanField(required=False, allow_null=True)
 
     class Meta:
         # ref_name ya kipekee - inagongana na businesses.BusinessSerializer kwenye schema
@@ -15,14 +18,14 @@ class BusinessSerializer(serializers.Serializer):
 
 
 class CategorySerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField()
-    slug = serializers.CharField()
-    description = serializers.CharField()
+    id = serializers.CharField(required=False, allow_null=True)  # BusinessCategory is UUID-keyed, not an integer PK
+    name = serializers.CharField(required=False, allow_null=True)
+    slug = serializers.CharField(required=False, allow_null=True)
+    description = serializers.CharField(required=False, allow_null=True, allow_blank=True)
 
 
 class ServiceSearchSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
+    id = serializers.CharField()  # Service is UUID-keyed, not an integer PK
     name = serializers.CharField()
     description = serializers.CharField()
     price = serializers.FloatField()
@@ -30,12 +33,12 @@ class ServiceSearchSerializer(serializers.Serializer):
     location_type = serializers.CharField()
     requires_booking = serializers.BooleanField()
     is_available = serializers.BooleanField()
-    duration_minutes = serializers.IntegerField()
-    created = serializers.DateTimeField()
+    duration_minutes = serializers.IntegerField(required=False, allow_null=True)
+    created_at = serializers.DateTimeField()
 
-    business = BusinessSerializer()
-    category = CategorySerializer()
-    location = serializers.DictField()  # {'lat': ..., 'lon': ...}
+    business = BusinessSerializer(required=False, allow_null=True)
+    category = CategorySerializer(required=False, allow_null=True)
+    location = serializers.DictField(required=False, allow_null=True)  # {'lat': ..., 'lon': ...}
 
     distance = serializers.SerializerMethodField()
 

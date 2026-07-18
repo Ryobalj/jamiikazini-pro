@@ -2,13 +2,15 @@
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 from elasticsearch_dsl.query import Q
 from search.documents.transport_provider_document import TransportProviderDocument
 from search.serializers.transport_provider_search_serializer import TransportProviderSearchSerializer
 
 
 class TransportProviderSearchView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
     def get(self, request):
         serializer = TransportProviderSearchSerializer(data=request.query_params)
         serializer.is_valid(raise_exception=True)
@@ -52,13 +54,13 @@ class TransportProviderSearchView(APIView):
         hits = [
             {
                 "id": hit.meta.id,
-                "username": hit.user.username,
-                "email": hit.user.email,
-                "provider_type": hit.provider_type,
-                "institution": hit.institution.name,
-                "is_approved": hit.is_approved,
-                "location": hit.location,
-                "created_at": hit.created_at,
+                "username": getattr(hit.user, "username", None) if hasattr(hit, "user") else None,
+                "email": getattr(hit.user, "email", None) if hasattr(hit, "user") else None,
+                "provider_type": getattr(hit, "provider_type", None),
+                "institution": getattr(hit.institution, "name", None) if hasattr(hit, "institution") else None,
+                "is_approved": getattr(hit, "is_approved", None),
+                "location": getattr(hit, "location", None),
+                "created_at": getattr(hit, "created_at", None),
             }
             for hit in results
         ]

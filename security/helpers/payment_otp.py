@@ -21,6 +21,17 @@ HIGH_VALUE_THRESHOLD = getattr(settings, "SECURITY_HIGH_VALUE_PAYMENT_THRESHOLD"
 BASE_CURRENCY = getattr(settings, "DEFAULT_CURRENCY", "TZS")
 
 
+def _high_value_threshold_in_base_currency() -> Decimal:
+    # SECURITY_HIGH_VALUE_PAYMENT_THRESHOLD ni dict ya kila sarafu (mf.
+    # {"TZS": 10_000, ...}), si namba moja - Decimal(str(dict)) ingesababisha
+    # crash kwa kila malipo kwenye production (haionekani kwenye tests kwa
+    # sababu ya TESTING bypass hapo juu). amount_in_base tayari imebadilishwa
+    # kwenda BASE_CURRENCY, hivyo kikomo lazima kitafutwe kwa sarafu hiyo.
+    if isinstance(HIGH_VALUE_THRESHOLD, dict):
+        return Decimal(str(HIGH_VALUE_THRESHOLD.get(BASE_CURRENCY, 10_000)))
+    return Decimal(str(HIGH_VALUE_THRESHOLD))
+
+
 def get_client_ip(request) -> str:
     xff = request.META.get("HTTP_X_FORWARDED_FOR")
     if xff:
@@ -49,7 +60,7 @@ def enforce_high_value_otp(request, user, amount, currency=None):
         )
         amount_in_base = Decimal("0")
 
-    if amount_in_base < Decimal(str(HIGH_VALUE_THRESHOLD)):
+    if amount_in_base < _high_value_threshold_in_base_currency():
         logger.debug(f"[HighValueOTP] Payment below threshold: {amount_in_base} {BASE_CURRENCY}")
         return  # No OTP required
 

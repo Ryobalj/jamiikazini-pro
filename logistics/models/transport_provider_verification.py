@@ -23,6 +23,13 @@ class TransportProviderVerification(models.Model):
 
     overall_status = models.CharField(max_length=20, choices=PROVIDER_STATUS_CHOICES, default='PENDING')
 
+    # Fingerprint ya kudumu (HMAC-SHA256) ya namba ya leseni ya udereva
+    # iliyothibitishwa - unique constraint inazuia dereva wawili tofauti
+    # wasitumie leseni moja ya udereva. Sawa na User.national_id_hash.
+    driver_license_hash = models.CharField(
+        max_length=64, blank=True, null=True, unique=True, editable=False,
+    )
+
     notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

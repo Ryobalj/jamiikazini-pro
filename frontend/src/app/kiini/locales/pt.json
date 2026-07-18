@@ -1,0 +1,64 @@
+{
+  "dashboard": {
+    "title": "Painel da Instituição",
+    "welcomeMessage": "Bem-vindo ao painel principal do Kiini - um sistema para gerenciar instituições, departamentos e equipe.",
+    "institutions": "Instituições",
+    "departments": "Departamentos",
+    "staff-profiles": "Perfis da Equipe",
+    "institution-tiers": "Níveis de Instituição",
+    "institution-types": "Tipos de Instituição"
+  },
+  "institution": {
+    "title": "Perfil da Instituição",
+    "description": "Veja e gerencie os detalhes da sua instituição",
+    "not_found": "Instituição não encontrada",
+    "create": "Criar Instituição",
+    "back_to_profile": "Voltar ao Perfil",
+    "settings": "Configurações",
+    "edit": "Editar",
+    "info": {
+      "title": "Informações da Instituição",
+      "established": "Fundada",
+      "tier": "Nível",
+      "type": "Tipo",
+      "businesses": "Empresas"
+    },
+    "members": {
+      "title": "Membros",
+      "none": "Ainda não há membros",
+      "invite": "Convidar Membros"
+    },
+    "businesses_section": {
+      "title": "Empresas da Instituição",
+      "create": "Criar Empresa",
+      "none": "Ainda não há empresas nesta instituição",
+      "create_first": "Criar a Primeira Empresa"
+    },
+    "errors": {
+      "failed_to_load": "Falha ao carregar os detalhes da instituição"
+    }
+  },
+  "departments": {
+    "title": "Gestão de Departamentos",
+    "description": "Crie, edite e exclua departamentos dentro da sua instituição."
+  },
+  "staff": {
+    "title": "Membros da Equipe",
+    "description": "Veja e gerencie as informações da equipe da instituição."
+  },
+  "tiers": {
+    "title": "Níveis de Instituição",
+    "description": "Lista de níveis disponíveis para instituições, como Pequena, Média, Grande."
+  },
+  "types": {
+    "title": "Tipos de Instituição",
+    "description": "Veja ou selecione o tipo de instituição, como empresa privada, ONG ou instituição governamental."
+  },
+  "institution_storefront": {
+    "not_found": "Instituição não encontrada",
+    "tenants_heading": "Lojas Neste Prédio",
+    "empty": "Ainda não há nenhuma loja registrada aqui.",
+    "tenant_count_one": "{{count}} loja",
+    "tenant_count_other": "{{count}} lojas"
+  }
+}

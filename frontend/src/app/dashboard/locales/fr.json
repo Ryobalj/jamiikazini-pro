@@ -1,0 +1,63 @@
+{
+  "wallet": {
+    "title": "JamiiWallet"
+  },
+  "cart": {
+    "title": "Panier"
+  },
+  "orders": {
+    "title": "Mes Commandes"
+  },
+  "chat": {
+    "title": "Discussion"
+  },
+  "verification": {
+    "required": "Compléter la Vérification"
+  },
+  "request_service": {
+    "title": "Demander une Livraison"
+  },
+  "driver": {
+    "dashboard": "Tableau de Bord Chauffeur",
+    "jobs": "Missions Disponibles",
+    "deliveries": "Mes Livraisons",
+    "verify": "Vérification du Chauffeur",
+    "register": "Devenir Chauffeur"
+  },
+  "home": {
+    "welcome": "Bon retour",
+    "subtitle": "Tout ce dont vous avez besoin, au même endroit.",
+    "quick_actions": "Actions Rapides",
+    "action_wallet_desc": "Vérifiez le solde, envoyez de l'argent, retirez",
+    "action_cart_desc": "Vérifiez les articles avant de payer",
+    "action_orders_desc": "Suivez vos achats",
+    "action_nearby_desc": "Trouvez des entreprises près de vous",
+    "action_chat_desc": "Discutez avec vendeurs et acheteurs",
+    "action_request_service_desc": "Obtenez une moto-taxi ou un camion, sans achat",
+    "verification_title": "Vérifiez Votre Identité",
+    "verification_desc": "Vous devez compléter la vérification d'identité avant de pouvoir acheter ou vendre.",
+    "verification_cta": "Vérifier Maintenant",
+    "business_title": "Mon Entreprise",
+    "business_cta": "Aller au Tableau de Bord",
+    "driver_title": "Chauffeur",
+    "driver_status_verified": "Vérifié - prêt pour les missions",
+    "driver_status_pending": "Vérification en attente",
+    "driver_status_failed": "Vérification échouée",
+    "driver_cta": "Voir les Missions"
+  },
+  "billpay": {
+    "title": "Paiement de Factures"
+  },
+  "realestate": {
+    "title": "Immobilier"
+  },
+  "agriculture": {
+    "title": "Contrat à Terme sur Récolte"
+  },
+  "construction": {
+    "title": "Projet de Construction/Contrat"
+  },
+  "savings": {
+    "title": "Groupes d'Épargne VICOBA/SACCOS"
+  }
+}

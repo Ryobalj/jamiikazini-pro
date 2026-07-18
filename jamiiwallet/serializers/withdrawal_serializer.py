@@ -45,7 +45,7 @@ class WithdrawalSerializer(serializers.ModelSerializer):
             wallet = Wallet.objects.get(user=user)
         except Wallet.DoesNotExist:
             raise serializers.ValidationError({"detail": "Wallet haijapatikana."})
-        if wallet.balance < amount:
+        if wallet.available_balance < amount:
             raise serializers.ValidationError({"amount": "Salio halitoshi kwa kiasi hiki."})
 
         channel = (data.get("channel") or "").lower()

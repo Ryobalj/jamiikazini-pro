@@ -9,7 +9,25 @@
   },
   "settings": {
     "title": "Settings",
-    "description": "Configure your account preferences"
+    "description": "Configure your account preferences",
+    "language_title": "Language",
+    "notifications_title": "OTP/Notification Method",
+    "otp_method_desc": "Choose how you'd like to receive OTP codes.",
+    "privacy_title": "Privacy & Security",
+    "saved": "Saved.",
+    "save_failed": "Failed to save.",
+    "passwords_mismatch": "New passwords don't match.",
+    "password_changed": "Password changed.",
+    "old_password": "Old Password",
+    "new_password": "New Password",
+    "confirm_password": "Confirm New Password",
+    "otp_code": "2FA Code",
+    "phone_otp_sent": "OTP sent via SMS.",
+    "phone_verified": "Your phone number has been verified.",
+    "phone_invalid_code": "Invalid code.",
+    "no_phone": "No phone number",
+    "verified": "Verified",
+    "verify_phone": "Verify"
   },
   "wallet": {
     "title": "My Wallet",
@@ -57,7 +75,8 @@
   "create": "Create",
   "copied": "copied to clipboard",
   "errors": {
-    "failed_to_load_profile": "Failed to load profile data"
+    "failed_to_load_profile": "Failed to load profile data",
+    "failed_to_update": "Failed to update profile"
   },
   "tabs": {
     "overview": "Overview",
@@ -67,13 +86,25 @@
     "activity": "Activity",
     "security": "Security"
   },
-
   "save": "Save",
   "cancel": "Cancel",
   "profile_updated": "Profile updated successfully",
-  "errors": {
-    "failed_to_load_profile": "Failed to load profile data",
-    "failed_to_update": "Failed to update profile"
+  "verify_identity": {
+    "title": "Verify Your Identity",
+    "description": "To keep Jamiikazini secure, every buyer must verify their national ID before buying or requesting items. You can still browse stores and products freely.",
+    "already_verified": "Your identity is verified. You can buy and request items without restriction.",
+    "country_label": "Country",
+    "country_tz": "Tanzania",
+    "country_ke": "Kenya",
+    "country_ug": "Uganda",
+    "country_rw": "Rwanda",
+    "id_label": "National ID Number",
+    "id_placeholder": "Enter your ID number",
+    "id_required": "Enter your ID number.",
+    "submit": "Verify Now",
+    "success": "Your identity has been verified!",
+    "failed": "Failed to verify your identity.",
+    "country_bi": "Burundi",
+    "country_ss": "South Sudan"
   }
-  
 }

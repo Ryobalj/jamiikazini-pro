@@ -1,9 +1,10 @@
 // src/app/businesses/pages/Overview.jsx
 
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import api from '@/lib/axios';
+import { toast } from 'react-toastify';
 import { useCurrency } from '@/context/CurrencyContext';
 import {
   Loader2,
@@ -27,6 +28,7 @@ import {
   Users,
   Clock,
   AlertCircle,
+  MessageCircle,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -37,15 +39,32 @@ import TopServices from '@/app/businesses/components/dashboards/TopServices';
 
 export default function BusinessDashboard() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { t } = useTranslation("businesses");
   const { formatCurrency } = useCurrency();
-  
+
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState('');
   const [range, setRange] = useState('30d');
   const [showRangeDropdown, setShowRangeDropdown] = useState(false);
+  const [messaging, setMessaging] = useState(false);
+
+  const handleMessageSeller = async () => {
+    setMessaging(true);
+    try {
+      const res = await api.post('/jamiichat/conversations/start-with-business/', {
+        business_id: id,
+        message: 'Habari, ningependa kupata maelezo zaidi.',
+      });
+      navigate(`/jamiichat/${res.data.id}`);
+    } catch (err) {
+      toast.error(err.response?.data?.business_id?.[0] || 'Imeshindwa kuanzisha mazungumzo.');
+    } finally {
+      setMessaging(false);
+    }
+  };
 
   useEffect(() => {
     fetchStats();
@@ -267,7 +286,42 @@ export default function BusinessDashboard() {
           >
             <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
           </button>
+
+          {/* Wasiliana na Muuzaji */}
+          <button
+            onClick={handleMessageSeller}
+            disabled={messaging}
+            className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm transition-colors disabled:opacity-50"
+          >
+            <MessageCircle className="w-4 h-4" />
+            Wasiliana na Muuzaji
+          </button>
         </div>
+      </div>
+
+      {/* Dashboard Section Tabs */}
+      <div className="flex flex-wrap gap-2 border-b border-gray-200 dark:border-gray-700 pb-2">
+        {[
+          { key: 'overview', label: t('tabs.overview', 'Overview') },
+          { key: 'products', label: t('tabs.products', 'Products') },
+          { key: 'services', label: t('tabs.services', 'Services') },
+          { key: 'branches', label: t('tabs.branches', 'Branches') },
+          { key: 'advertise', label: t('tabs.advertise', 'Tangaza') },
+          { key: 'requests', label: t('tabs.requests', 'Maombi') },
+          { key: 'settings', label: t('tabs.settings', 'Settings') },
+        ].map((tab) => (
+          <button
+            key={tab.key}
+            onClick={() => navigate(`/businesses/dashboard/${id}/${tab.key}`)}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              tab.key === 'overview'
+                ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
+                : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
 
       {/* Stats Grid */}

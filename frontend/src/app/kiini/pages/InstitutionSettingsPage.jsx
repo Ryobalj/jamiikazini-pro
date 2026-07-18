@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import api from "@/lib/axios";
-import { ArrowLeft, Loader2, Settings, Users, Building, Pencil } from "lucide-react";
+import { ArrowLeft, Loader2, Settings, Users, Building, Pencil, Globe, Link2, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { toast } from "react-toastify";
@@ -17,14 +17,44 @@ export default function InstitutionSettingsPage() {
   const [institution, setInstitution] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [domainInput, setDomainInput] = useState("");
+  const [savingDomain, setSavingDomain] = useState(false);
 
   useEffect(() => {
     api
       .get(`/kiini/institutions/${id}/`)
-      .then((res) => setInstitution(res.data))
+      .then((res) => {
+        setInstitution(res.data);
+        setDomainInput(res.data?.domain || "");
+      })
       .catch(() => toast.error(t("settings.errors.load_failed") || "Imeshindwa kupakia taasisi."))
       .finally(() => setLoading(false));
   }, [id, t]);
+
+  const handleSaveDomain = async () => {
+    const value = domainInput.trim().toLowerCase();
+    if (!value) {
+      toast.error(t("settings.errors.domain_required") || "Weka jina la subdomain.");
+      return;
+    }
+    setSavingDomain(true);
+    try {
+      const res = await api.patch(`/kiini/institutions/${id}/`, { domain: value });
+      setInstitution(res.data);
+      setDomainInput(res.data.domain);
+      toast.success(t("settings.domain_saved") || "Anwani imehifadhiwa.");
+    } catch (error) {
+      toast.error(error.response?.data?.domain?.[0] || t("settings.errors.domain_save_failed") || "Imeshindwa kuhifadhi.");
+    } finally {
+      setSavingDomain(false);
+    }
+  };
+
+  const handleCopyLink = () => {
+    if (!institution?.domain) return;
+    navigator.clipboard?.writeText(`https://${institution.domain}.jamiikazini.com`);
+    toast.success(t("settings.link_copied") || "Kiungo kimenakiliwa.");
+  };
 
   const toggleActive = async () => {
     setSaving(true);
@@ -102,9 +132,50 @@ export default function InstitutionSettingsPage() {
         </CardContent>
       </Card>
 
+      <Card className="mb-6">
+        <CardHeader title={t("settings.share_venue") || "Shiriki Taasisi Yako"} icon={<Link2 className="w-5 h-5 text-purple-600" />} divider />
+        <CardContent className="space-y-3">
+          <div className="flex gap-2">
+            <span className="flex items-center px-2 text-sm text-gray-400 border border-r-0 border-gray-200 dark:border-gray-700 rounded-l-lg bg-gray-50 dark:bg-gray-800">
+              https://
+            </span>
+            <input
+              type="text"
+              value={domainInput}
+              onChange={(e) => setDomainInput(e.target.value)}
+              placeholder="jina-la-taasisi"
+              className="flex-1 px-2 py-2 border-y border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-900 dark:text-white"
+            />
+            <span className="flex items-center px-2 text-sm text-gray-400 border border-l-0 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+              .jamiikazini.com
+            </span>
+            <Button size="sm" onClick={handleSaveDomain} disabled={savingDomain} className="rounded-l-none">
+              {savingDomain ? <Loader2 className="w-4 h-4 animate-spin" /> : (t("settings.save") || "Hifadhi")}
+            </Button>
+          </div>
+          {institution.domain && (
+            <div className="flex items-center gap-2">
+              <code className="flex-1 p-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm truncate">
+                https://{institution.domain}.jamiikazini.com
+              </code>
+              <Button size="sm" variant="outline" onClick={handleCopyLink}>
+                <Copy className="w-4 h-4" />
+              </Button>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
       <Card>
         <CardHeader title={t("settings.manage") || "Usimamizi"} divider />
         <CardContent className="space-y-2">
+          <Link
+            to={`/homepage/manage/institution/${id}`}
+            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+          >
+            <Globe className="w-5 h-5 text-purple-600" />
+            <span className="text-gray-900 dark:text-white">{t("settings.homepage") || "Homepage ya Umma"}</span>
+          </Link>
           <Link
             to="/kiini/dashboard/departments"
             className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"

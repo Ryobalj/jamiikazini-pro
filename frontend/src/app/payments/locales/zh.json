@@ -1,0 +1,38 @@
+{
+  "payments": {
+    "dashboard": "支付",
+    "audit_logs": "审计日志",
+    "invoices": "发票",
+    "payment_methods": "支付方式",
+    "payment_reports": "支付报告",
+    "pay_invoice": "支付发票",
+    "table": {
+      "user": "用户",
+      "action": "操作",
+      "target": "目标",
+      "description": "描述",
+      "metadata": "元数据",
+      "ip_address": "IP 地址",
+      "timestamp": "时间"
+    },
+    "messages": {
+      "loading": "正在加载支付信息...",
+      "no_data": "暂无支付数据",
+      "error": "加载支付信息时出错"
+    }
+  },
+  "credit_account": {
+    "title": "信用账户",
+    "summary": "信用摘要",
+    "limit": "信用额度",
+    "outstanding": "未结余额",
+    "available": "可用信用",
+    "invoices": "信用发票",
+    "no_invoices": "暂无信用发票。",
+    "due": "到期日",
+    "pay_now": "立即付款",
+    "paid": "发票支付成功。",
+    "pay_failed": "发票支付失败。",
+    "no_business": "您没有已验证的信用账户业务。"
+  }
+}

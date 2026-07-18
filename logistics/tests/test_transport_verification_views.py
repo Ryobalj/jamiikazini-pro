@@ -30,27 +30,19 @@ class TransportProviderVerificationTests(APITestCase):
 
     @patch("logistics.views.transport_provider_verification_views.verify_entity")
     def test_verify_all_for_transporter(self, mock_verify):
-        # request_id must be a real VerificationRequest pk (FK on the tpv record)
-        from gov_integration.models import VerificationRequest, CountryConfig, ServiceType
-        country = CountryConfig.objects.create(code="TZ", name="Tanzania", currency="TZS")
-        service = ServiceType.objects.create(name="NIDA", code="NIDA", country=country)
-        vr = VerificationRequest.objects.create(
-            user=self.transporter,
-            institution=self.institution,
-            country="TZ",
-            service=service,
-            payload={"national_id_number": "12345678"},
-        )
+        # _save_verification_result now creates its own VerificationRequest row from
+        # the response itself, rather than trusting an inbound request_id - so the
+        # mock only needs to report a successful status.
         mock_verify.return_value = {
             "status": "success",
-            "data": {"request_id": vr.id},
+            "data": {"full_name": "John Doe"},
         }
         self.client.force_authenticate(user=self.transporter)
         data = {
             "country_code": "tz",
             "national_id_number": "12345678",
             "driver_license_number": "D1234",
-            "business_license_number": "B5678",
+            "vehicle_license_number": "V5678",
             "latra_license_number": "L9988"
         }
         response = self.client.post(self.verify_url, data, format="json")
@@ -58,6 +50,10 @@ class TransportProviderVerificationTests(APITestCase):
         self.assertEqual(mock_verify.call_count, 4)
         tpv = TransportProviderVerification.objects.get(user=self.transporter)
         self.assertIsNotNone(tpv.nida_verification_id)
+        self.assertIsNotNone(tpv.driving_license_verification_id)
+        self.assertIsNotNone(tpv.vehicle_license_verification_id)
+        self.assertIsNotNone(tpv.latra_permit_verification_id)
+        self.assertEqual(tpv.overall_status, "VERIFIED")
         self.assertEqual(tpv.institution, self.institution)
 
     def test_verify_all_requires_authentication(self):
@@ -88,3 +84,72 @@ class TransportProviderVerificationTests(APITestCase):
         self.client.force_authenticate(user=outsider)
         response = self.client.get(url)
         self.assertEqual(len(response.data), 0)
+
+
+class OneDriverPerLicenseNumberTests(APITestCase):
+    """Leseni moja ya udereva = dereva mmoja tu - sawa na kizuizi cha NIN."""
+
+    def setUp(self):
+        self.institution = Institution.objects.create(name="Dual Driver Co")
+        self.driver1 = User.objects.create_user(
+            email="driver1@logistics.com", password="1234",
+            role="TRANSPORTER", full_name="Driver One", institution=self.institution,
+        )
+        self.driver2 = User.objects.create_user(
+            email="driver2@logistics.com", password="1234",
+            role="TRANSPORTER", full_name="Driver Two", institution=self.institution,
+        )
+        self.verify_url = reverse("logistics:transport-verification-verify-all")
+        self.client = APIClient()
+
+    @patch("logistics.views.transport_provider_verification_views.verify_entity")
+    def test_same_driver_license_rejected_on_second_driver(self, mock_verify):
+        mock_verify.return_value = {"status": "success", "data": {}}
+
+        self.client.force_authenticate(user=self.driver1)
+        first = self.client.post(self.verify_url, {
+            "country_code": "tz", "driver_license_number": "SAMEDL001",
+        }, format="json")
+        self.assertEqual(first.status_code, 200)
+        self.assertEqual(first.data["driver_license"]["status"], "success")
+
+        self.client.force_authenticate(user=self.driver2)
+        second = self.client.post(self.verify_url, {
+            "country_code": "tz", "driver_license_number": "SAMEDL001",
+        }, format="json")
+        self.assertEqual(second.status_code, 200)
+        self.assertEqual(second.data["driver_license"]["status"], "failed")
+
+        tpv2 = TransportProviderVerification.objects.filter(user=self.driver2).first()
+        self.assertIsNone(tpv2)
+
+    @patch("logistics.views.transport_provider_verification_views.verify_entity")
+    def test_different_driver_licenses_both_verify(self, mock_verify):
+        mock_verify.return_value = {"status": "success", "data": {}}
+
+        self.client.force_authenticate(user=self.driver1)
+        first = self.client.post(self.verify_url, {
+            "country_code": "tz", "driver_license_number": "DL-A",
+        }, format="json")
+        self.client.force_authenticate(user=self.driver2)
+        second = self.client.post(self.verify_url, {
+            "country_code": "tz", "driver_license_number": "DL-B",
+        }, format="json")
+
+        self.assertEqual(first.data["driver_license"]["status"], "success")
+        self.assertEqual(second.data["driver_license"]["status"], "success")
+
+    @patch("logistics.views.transport_provider_verification_views.verify_entity")
+    def test_same_driver_can_reverify_own_license(self, mock_verify):
+        mock_verify.return_value = {"status": "success", "data": {}}
+        self.client.force_authenticate(user=self.driver1)
+
+        first = self.client.post(self.verify_url, {
+            "country_code": "tz", "driver_license_number": "OWNDL001",
+        }, format="json")
+        second = self.client.post(self.verify_url, {
+            "country_code": "tz", "driver_license_number": "OWNDL001",
+        }, format="json")
+
+        self.assertEqual(first.data["driver_license"]["status"], "success")
+        self.assertEqual(second.data["driver_license"]["status"], "success")

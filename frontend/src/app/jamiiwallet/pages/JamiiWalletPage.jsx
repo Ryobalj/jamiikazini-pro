@@ -23,10 +23,12 @@ import {
   EyeOff,
   Smartphone,
   Globe,
+  Zap,
   Plus,
   ChevronRight,
   DollarSign,
   PiggyBank,
+  Banknote,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -394,7 +396,7 @@ export default function JamiiWalletPage() {
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
                 {t("quick_actions")}
               </p>
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 <Button
                   size="sm"
                   className="w-full bg-purple-600 hover:bg-purple-700"
@@ -438,6 +440,33 @@ export default function JamiiWalletPage() {
                 >
                   <PiggyBank className="w-4 h-4 mr-1 shrink-0" />
                   <span className="truncate">{t("accounts.title") || "Hesabu"}</span>
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => navigate("/jamiiwallet/cash-out")}
+                >
+                  <Banknote className="w-4 h-4 mr-1 shrink-0" />
+                  <span className="truncate">{t("cashout.title") || "Toa Taslimu"}</span>
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => navigate("/billpay")}
+                >
+                  <Zap className="w-4 h-4 mr-1 shrink-0" />
+                  <span className="truncate">{t("billpay.title") || "Malipo ya Huduma"}</span>
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => navigate("/savings")}
+                >
+                  <Users className="w-4 h-4 mr-1 shrink-0" />
+                  <span className="truncate">{t("savings.title") || "VICOBA/SACCOS"}</span>
                 </Button>
               </div>
             </CardContent>
