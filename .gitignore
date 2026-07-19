@@ -106,8 +106,8 @@ frontend/dist/
 .eggs/
 *.egg
 
-# Claude Code local settings (per-machine, not shared)
-.claude/settings.local.json
+# Claude Code local settings/config (per-machine, not shared)
+.claude/
 
 # Env variants (secrets) - keep .env.example tracked as a template
 .env.*
