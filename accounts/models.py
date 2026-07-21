@@ -134,6 +134,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
+    # Last drop-off location used on a transport/delivery request - saved
+    # automatically on each request so returning users get it pre-filled next
+    # time instead of re-picking the same address (logistics.RequestServicePage).
+    last_dropoff_lat = models.FloatField(null=True, blank=True)
+    last_dropoff_lng = models.FloatField(null=True, blank=True)
+    last_dropoff_address_text = models.CharField(max_length=255, blank=True, default="")
+
     groups = models.ManyToManyField(
         Group,
         related_name='custom_user_set',

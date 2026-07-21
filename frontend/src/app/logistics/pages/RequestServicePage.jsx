@@ -37,6 +37,7 @@ export default function RequestServicePage() {
   const [dropoffLng, setDropoffLng] = useState(null);
   const [pickupAddress, setPickupAddress] = useState("");
   const [dropoffAddress, setDropoffAddress] = useState("");
+  const [usingLastDropoff, setUsingLastDropoff] = useState(false);
   const [description, setDescription] = useState("");
   const [weightKg, setWeightKg] = useState("5");
   const [volumeCbm, setVolumeCbm] = useState("");
@@ -53,7 +54,15 @@ export default function RequestServicePage() {
   useEffect(() => {
     api
       .get("/auth/me/")
-      .then((res) => setIsIdentityVerified(!!res.data?.is_identity_verified))
+      .then((res) => {
+        setIsIdentityVerified(!!res.data?.is_identity_verified);
+        if (res.data?.last_dropoff_lat != null && res.data?.last_dropoff_lng != null) {
+          setDropoffLat(res.data.last_dropoff_lat);
+          setDropoffLng(res.data.last_dropoff_lng);
+          setDropoffAddress(res.data.last_dropoff_address_text || "");
+          setUsingLastDropoff(true);
+        }
+      })
       .catch(() => {});
   }, []);
 
@@ -279,7 +288,14 @@ export default function RequestServicePage() {
       <Card>
         <CardHeader title={t("request_service.pickup_heading", "Eneo la Kuchukua")} icon={<MapPin className="w-4 h-4" />} />
         <CardContent className="space-y-3">
-          <LocationPicker lat={pickupLat} lon={pickupLng} setLat={setPickupLat} setLon={setPickupLng} />
+          <LocationPicker
+            lat={pickupLat}
+            lon={pickupLng}
+            setLat={setPickupLat}
+            setLon={setPickupLng}
+            onAddressChange={setPickupAddress}
+            placeholder={t("request_service.pickup_search_placeholder", "Tafuta eneo la kuchukua...")}
+          />
           <input
             type="text"
             value={pickupAddress}
@@ -293,11 +309,29 @@ export default function RequestServicePage() {
       <Card>
         <CardHeader title={t("request_service.dropoff_heading", "Eneo la Kupokelea")} icon={<MapPin className="w-4 h-4" />} />
         <CardContent className="space-y-3">
-          <LocationPicker lat={dropoffLat} lon={dropoffLng} setLat={setDropoffLat} setLon={setDropoffLng} />
+          {usingLastDropoff && (
+            <p className="text-xs text-blue-600 dark:text-blue-400">
+              {t("request_service.last_dropoff_hint", "Hii ni anwani uliyotumia mara ya mwisho - tafuta au bonyeza kwenye ramani kubadilisha.")}
+            </p>
+          )}
+          <LocationPicker
+            lat={dropoffLat}
+            lon={dropoffLng}
+            setLat={setDropoffLat}
+            setLon={setDropoffLng}
+            onAddressChange={(address) => {
+              setDropoffAddress(address);
+              setUsingLastDropoff(false);
+            }}
+            placeholder={t("request_service.dropoff_search_placeholder", "Tafuta eneo la kupokelea...")}
+          />
           <input
             type="text"
             value={dropoffAddress}
-            onChange={(e) => setDropoffAddress(e.target.value)}
+            onChange={(e) => {
+              setDropoffAddress(e.target.value);
+              setUsingLastDropoff(false);
+            }}
             placeholder={t("request_service.address_placeholder", "Maelezo ya anwani (hiari)")}
             className="w-full p-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white text-sm"
           />
