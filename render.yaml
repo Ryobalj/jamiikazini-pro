@@ -39,6 +39,21 @@ services:
         generateValue: true
       - key: FERNET_SECRET_KEY               # WEKA MWENYEWE: Fernet key halali (44-char base64)
         sync: false                          # tengeneza kwa: Fernet.generate_key()
+      # Demo/presentation data (users, businesses, products, etc.) seeded on
+      # every deploy while true - flip to "false" (or remove) before this
+      # becomes the real production deployment. See build.sh.
+      - key: SEED_DEMO_DATA
+        value: "true"
+      # Cloudinary (media storage in production) - WEKA MWENYEWE kwenye Render
+      # dashboard baada ya kuunda akaunti ya Cloudinary (bure): bila hivi,
+      # picha zilizopakiwa/zilizozalishwa hazitodumu (Render free disk si
+      # ya kudumu - hupotea kila deploy).
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
       # CORS: inashughulikiwa na CORS_ALLOWED_ORIGIN_REGEXES (*.onrender.com) kwenye prod.py
       # ---- Database creds (zinaingizwa kiotomatiki kutoka jamiikazini-db) ----
       - key: POSTGRES_DB

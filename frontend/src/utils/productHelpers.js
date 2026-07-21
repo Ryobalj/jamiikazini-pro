@@ -3,10 +3,8 @@
 export function getAllProductImages(product) {
   const images = [];
   if (product.image) images.push(product.image);
-  if (product.additional_images) {
-    if (Array.isArray(product.additional_images)) {
-      images.push(...product.additional_images);
-    }
+  if (Array.isArray(product.images)) {
+    images.push(...product.images.map((img) => img.image).filter(Boolean));
   }
   return images;
 }

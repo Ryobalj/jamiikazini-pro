@@ -23,6 +23,19 @@ class GeoLocationLanguageMiddleware:
 
     def __call__(self, request: HttpRequest):
 
+        # 0. Respect an explicit language requested by the client (e.g. the
+        # frontend's language switcher, sent as Accept-Language) - takes
+        # priority over IP-based geolocation guessing.
+        accept_language = request.META.get("HTTP_ACCEPT_LANGUAGE")
+        if accept_language:
+            requested = accept_language.split(",")[0].split("-")[0].strip().lower()
+            if requested in dict(settings.LANGUAGES):
+                translation.activate(requested)
+                request.LANGUAGE_CODE = requested
+                response = self.get_response(request)
+                translation.deactivate()
+                return response
+
         # 1. Respect user language preference
         if request.user.is_authenticated and hasattr(request.user, "language"):
             translation.activate(request.user.language)

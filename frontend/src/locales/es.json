@@ -6,7 +6,14 @@
     "sponsored_heading": "Anuncios Patrocinados",
     "sponsored_tag": "Anuncio",
     "trending_heading": "Productos Tendencia",
-    "trending_empty": "Aún no hay productos para mostrar."
+    "trending_empty": "Aún no hay productos para mostrar.",
+    "trending_services_heading": "Servicios Tendencia",
+    "trending_services_empty": "Aún no hay servicios para mostrar.",
+    "verified_businesses_heading": "Negocios Verificados",
+    "categories_heading": "Explorar por Categoría"
+  },
+  "category": {
+    "empty": "Aún no hay negocios en esta categoría."
   },
   "topbar": {
     "back": "Atrás",

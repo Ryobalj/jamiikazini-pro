@@ -29,10 +29,27 @@ BUSINESS_LICENSE_AUTHORITY_BY_COUNTRY = {
     "SS": "trade",   # Ministry of Trade -> SS_TRADE
 }
 
+# Tanzania pekee ina njia mbili tofauti za uthibitisho wa biashara: TIN
+# (TRA - mamlaka ya kodi) na namba ya usajili wa BRELA (msajili wa
+# makampuni) - ni namba mbili tofauti kabisa, sio sawa. Nchi nyingine bado
+# zina mamlaka moja tu iliyounganishwa (angalia BUSINESS_LICENSE_AUTHORITY_BY_COUNTRY
+# hapo juu), hivyo id_type inapuuzwa kwao kwa sasa.
+TZ_BUSINESS_ID_AUTHORITY_BY_TYPE = {
+    "tin": "tra_business",
+    "brela": "brela",
+}
 
-def business_license_authority_for(country_code):
-    """Rudisha authority_code sahihi ya usajili wa biashara kwa nchi husika."""
-    return BUSINESS_LICENSE_AUTHORITY_BY_COUNTRY.get((country_code or "").upper(), "trade")
+
+def business_license_authority_for(country_code, id_type=None):
+    """
+    Rudisha authority_code sahihi ya usajili wa biashara kwa nchi husika.
+    kwa Tanzania, id_type ("tin" au "brela") huchagua kati ya TRA na BRELA -
+    nchi nyingine zina mamlaka moja tu, hivyo id_type hazina athari kwao.
+    """
+    country = (country_code or "").upper()
+    if country == "TZ":
+        return TZ_BUSINESS_ID_AUTHORITY_BY_TYPE.get((id_type or "tin").lower(), "tra_business")
+    return BUSINESS_LICENSE_AUTHORITY_BY_COUNTRY.get(country, "trade")
 
 
 # Mamlaka sahihi ya kitambulisho cha taifa (NIDA-equivalent) kwa kila nchi.
@@ -161,6 +178,17 @@ def mock_response(authority_code, payload):
                 "expiry_date": "2030-06-15",
                 "class": "C1",
                 "holder_name": "Jane Doe",
+            }
+        }
+    elif authority_code.lower() == "brela":
+        return {
+            "status": "success",
+            "message": f"BRELA registration verification successful for {payload.get('business_license_number')}",
+            "data": {
+                "business_name": "ABC Group Ltd",
+                "registration_number": payload.get("business_license_number"),
+                "certificate_type": "Certificate of Incorporation",
+                "registered_date": "2022-03-14",
             }
         }
     elif authority_code.lower() in ["tra_business", "brs", "rdb", "ursb", "trade"]:

@@ -6,7 +6,14 @@
     "sponsored_heading": "Ebirango Ebyesigamiziddwa",
     "sponsored_tag": "Ekirango",
     "trending_heading": "Ebintu Ebyettondebwa",
-    "trending_empty": "Tewali bintu kulaga kati."
+    "trending_empty": "Tewali bintu kulaga kati.",
+    "trending_services_heading": "Empeereza Ezettondebwa",
+    "trending_services_empty": "Tewali mpeereza kulaga kati.",
+    "verified_businesses_heading": "Bizinensi Ezikakasibbwa",
+    "categories_heading": "Noonya nga Osinziira ku Ssuula"
+  },
+  "category": {
+    "empty": "Tewali bizinensi mu ssuula eno kati."
   },
   "topbar": {
     "back": "Dda",

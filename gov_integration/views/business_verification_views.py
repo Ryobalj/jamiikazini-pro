@@ -24,17 +24,33 @@ DUPLICATE_LICENSE_MESSAGE = (
 )
 
 
-def get_or_create_business_license_service(country_code):
+def get_or_create_business_license_service(country_code, id_type="tin"):
     country, _ = CountryConfig.objects.get_or_create(
         code=country_code.upper(),
         defaults={"name": dict(CountryConfig.ISO_CODES).get(country_code.upper(), country_code.upper())}
     )
+    # BRELA (usajili wa kampuni) na TIN (TRA) ni mamlaka mbili tofauti kabisa
+    # nchini Tanzania - kila moja ina ServiceType yake ili VerificationRequest
+    # ionyeshe wazi ni njia ipi ilitumika, badala ya kuchanganya zote chini
+    # ya "BUSINESS_LICENSE" moja isiyo wazi.
+    if country_code.upper() == "TZ" and id_type == "brela":
+        code, name, description = (
+            "BRELA_REGISTRATION",
+            "BRELA Registration Verification",
+            "Uthibitisho wa usajili wa kampuni kupitia BRELA.",
+        )
+    else:
+        code, name, description = (
+            "BUSINESS_LICENSE",
+            "Business License Verification",
+            "Uthibitisho wa leseni ya biashara kupitia mamlaka husika ya nchi.",
+        )
     service, _ = ServiceType.objects.get_or_create(
-        code="BUSINESS_LICENSE",
+        code=code,
         defaults={
-            "name": "Business License Verification",
+            "name": name,
             "country": country,
-            "description": "Uthibitisho wa leseni ya biashara kupitia mamlaka husika ya nchi.",
+            "description": description,
             "is_active": True,
         }
     )
@@ -64,6 +80,7 @@ class BusinessVerificationRequestView(APIView):
         serializer = BusinessVerificationRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         country_code = serializer.validated_data.get('country_code') or 'tz'
+        id_type = serializer.validated_data.get('id_type') or 'tin'
         license_number = serializer.validated_data['business_license_number']
 
         # Leseni moja = biashara moja: hash ya kudumu inalinganishwa kabla ya
@@ -74,12 +91,12 @@ class BusinessVerificationRequestView(APIView):
             return Response({"business_license_number": [DUPLICATE_LICENSE_MESSAGE]}, status=status.HTTP_400_BAD_REQUEST)
 
         payload = {"business_license_number": license_number}
-        authority_code = business_license_authority_for(country_code)
+        authority_code = business_license_authority_for(country_code, id_type)
         result = verify_entity(country_code, authority_code, payload, user=request.user)
 
         status_value = 'VERIFIED' if result.get('status') in ('success', 'mock_success') else 'FAILED'
 
-        service = get_or_create_business_license_service(country_code)
+        service = get_or_create_business_license_service(country_code, id_type)
         vr = VerificationRequest.objects.create(
             user=request.user,
             institution=business.institution,

@@ -6,6 +6,7 @@ from .category import BusinessCategory
 from .review import Review
 from .product_category import ProductCategory
 from .product import Product
+from .product_image import ProductImage
 from .product_price_tier import ProductPriceTier
 from .business_credit_account import BusinessCreditAccount
 from .order import Order, OrderItem

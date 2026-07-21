@@ -3,8 +3,16 @@
 from rest_framework import serializers
 from businesses.models.product import Product, ProductType, UnitChoices, LanguageChoices
 from businesses.models.product_category import ProductCategory
+from businesses.models.product_image import ProductImage
 from businesses.serializers.business_serializer import BusinessDetailSerializer
 from payments.models.currency import Currency
+
+
+class ProductImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductImage
+        fields = ["id", "image", "caption", "order"]
+        read_only_fields = ["id"]
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -78,16 +86,11 @@ class ProductSerializer(serializers.ModelSerializer):
     )
 
     image = serializers.ImageField(
-        required=False, 
-        allow_null=True, 
-        help_text="Picha kuu ya bidhaa."
-    )
-    additional_images = serializers.ListField(
-        child=serializers.URLField(),
         required=False,
         allow_null=True,
-        help_text="Orodha ya picha za ziada (viungo vya URL)."
+        help_text="Picha kuu ya bidhaa."
     )
+    images = ProductImageSerializer(many=True, read_only=True)
 
     tags = serializers.ListField(
         child=serializers.CharField(max_length=100),
@@ -134,14 +137,14 @@ class ProductSerializer(serializers.ModelSerializer):
             "price", "discount_price", "currency", "currency_symbol", "currency_code",
             "category", "category_name",
             "quantity_in_stock", "unit", "unit_display",
-            "is_available", "is_featured", "image", "additional_images", "tags",
+            "is_available", "is_featured", "image", "images", "tags",
             "tax_inclusive", "tax_rate", "external_link", "digital_file",
             "language_code", "language_display",
             "created_at", "updated_at",
         ]
         read_only_fields = [
             "id", "business", "slug", "created_at", "updated_at",
-            "currency_symbol", "currency_code", "unit_display", "language_display", "category_name"
+            "currency_symbol", "currency_code", "unit_display", "language_display", "category_name", "images",
         ]
 
     def validate(self, data):
@@ -171,6 +174,7 @@ class ProductListSerializer(serializers.ModelSerializer):
     category_name = serializers.CharField(source='category.name', read_only=True, default=None)
     unit_display = serializers.SerializerMethodField(read_only=True)
     language_display = serializers.SerializerMethodField(read_only=True)
+    images = ProductImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Product
@@ -179,7 +183,7 @@ class ProductListSerializer(serializers.ModelSerializer):
             "currency", "currency_symbol", "currency_code",
             "category", "category_name",
             "quantity_in_stock", "unit", "unit_display",
-            "image", "additional_images", "is_featured", "is_available", "tags",
+            "image", "images", "is_featured", "is_available", "tags",
             "language_code", "language_display",
             "created_at"
         ]
@@ -227,6 +231,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     category_name = serializers.CharField(source='category.name', read_only=True, default=None)
     unit_display = serializers.SerializerMethodField(read_only=True)
     language_display = serializers.SerializerMethodField(read_only=True)
+    images = ProductImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Product
@@ -235,7 +240,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
             "price", "discount_price", "currency", "currency_symbol", "currency_code",
             "category", "category_name",
             "quantity_in_stock", "unit", "unit_display",
-            "is_available", "is_featured", "image", "additional_images", "tags",
+            "is_available", "is_featured", "image", "images", "tags",
             "tax_inclusive", "tax_rate", "external_link", "digital_file",
             "language_code", "language_display",
             "created_at", "updated_at",

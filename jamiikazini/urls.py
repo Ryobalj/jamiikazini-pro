@@ -53,6 +53,10 @@ if settings.DEBUG:
         path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
     ]
+    # Serve uploaded media (product images, etc.) locally - in production this
+    # is handled by the storage backend/CDN (django-storages), not Django itself.
+    from django.conf.urls.static import static
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = "jamiikazini.views.error_views.custom_404_view"
 handler403 = "jamiikazini.views.error_views.custom_403_view"

@@ -6,7 +6,14 @@
     "sponsored_heading": "スポンサー広告",
     "sponsored_tag": "広告",
     "trending_heading": "トレンド商品",
-    "trending_empty": "表示できる商品はまだありません。"
+    "trending_empty": "表示できる商品はまだありません。",
+    "trending_services_heading": "トレンドサービス",
+    "trending_services_empty": "表示できるサービスはまだありません。",
+    "verified_businesses_heading": "認証済みビジネス",
+    "categories_heading": "カテゴリーで探す"
+  },
+  "category": {
+    "empty": "このカテゴリーにはまだビジネスがありません。"
   },
   "topbar": {
     "back": "戻る",

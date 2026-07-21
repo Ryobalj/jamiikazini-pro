@@ -136,6 +136,8 @@ INSTALLED_APPS = [
     "django_recaptcha",
     "widget_tweaks",
     "nested_admin",
+    "cloudinary_storage",
+    "cloudinary",
 
     # Local apps
     "accounts.apps.AccountsConfig",
@@ -214,6 +216,17 @@ LANGUAGES = [
     ("sw", _("Swahili")),
     ("fr", _("French")),
     ("ar", _("Arabic")),
+    ("af", _("Afrikaans")),
+    ("ha", _("Hausa")),
+    ("hi", _("Hindi")),
+    ("ja", _("Japanese")),
+    ("ko", _("Korean")),
+    ("lg", _("Luganda")),
+    ("pt", _("Portuguese")),
+    ("ru", _("Russian")),
+    ("rw", _("Kinyarwanda")),
+    ("zh", _("Chinese")),
+    ("es", _("Spanish")),
 ]
 
 TIME_ZONE = "Africa/Nairobi"
@@ -228,7 +241,9 @@ GEOIP_PATH = BASE_DIR / "geoip"
 # Modeltranslation
 MODELTRANSLATION_DEFAULT_LANGUAGE = "en"
 MODELTRANSLATION_FALLBACK_LANGUAGES = ("en",)
-MODELTRANSLATION_LANGUAGES = ("en", "sw", "fr", "ar")
+MODELTRANSLATION_LANGUAGES = (
+    "en", "sw", "fr", "ar", "af", "ha", "hi", "ja", "ko", "lg", "pt", "ru", "rw", "zh", "es",
+)
 
 LANGUAGE_COOKIE_NAME = "jamiikazini_language"
 
@@ -249,6 +264,18 @@ STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
     "staticfiles": {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"},
 }
+
+# In production, serve uploaded media (product images, etc.) from Cloudinary
+# instead of local disk - mirrors the common dev-local/prod-cloud storage
+# split. Falls back to local FileSystemStorage if the account isn't actually
+# configured, so an incomplete .env doesn't silently break uploads.
+if not DEBUG and config("CLOUDINARY_CLOUD_NAME", default=""):
+    CLOUDINARY_STORAGE = {
+        "CLOUD_NAME": config("CLOUDINARY_CLOUD_NAME", default=""),
+        "API_KEY": config("CLOUDINARY_API_KEY", default=""),
+        "API_SECRET": config("CLOUDINARY_API_SECRET", default=""),
+    }
+    STORAGES["default"] = {"BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage"}
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

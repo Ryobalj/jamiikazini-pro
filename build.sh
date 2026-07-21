@@ -28,4 +28,17 @@ python manage.py seed_currencies || echo "seed_currencies skipped"
 echo "==> Fetching real market exchange rates (ERAPI)"
 python manage.py update_exchange_rates --source ERAPI || echo "update_exchange_rates skipped (using seeded rates)"
 
+# Presentation demo data (users/businesses/products/etc.) - OFF by default so
+# a real production deploy never gets fake accounts seeded in automatically.
+# Set SEED_DEMO_DATA=true in Render's env vars to turn it on for a demo/staging
+# deploy; flip it back to false (or unset it) before going fully live. To
+# permanently remove an already-seeded demo dataset, run this once via Render
+# Shell: python manage.py seed_demo_data --clear-only
+if [ "$SEED_DEMO_DATA" = "true" ]; then
+    echo "==> Seeding demo data (SEED_DEMO_DATA=true)"
+    python manage.py seed_demo_data || echo "seed_demo_data skipped"
+else
+    echo "==> Skipping demo data (SEED_DEMO_DATA not set to true)"
+fi
+
 echo "==> Build complete"

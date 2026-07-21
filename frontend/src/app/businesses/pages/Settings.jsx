@@ -13,6 +13,12 @@ import { useProducts } from "@/hooks/useProducts";
 
 const LOW_STOCK_THRESHOLD = 5;
 
+// Only TZ's mapped authorities are actual government IDs distinct from a
+// generic "business license": TIN (TRA, tax authority) and BRELA (company
+// registrar) are two different official numbers. KE/UG/RW only have one
+// mapped registrar authority each (BRS/URSB/RDB), so they stay generic.
+const TIN_COUNTRIES = new Set(["tz"]);
+
 export default function Settings() {
   const { id: businessId } = useParams();
   const { t } = useTranslation("businesses");
@@ -24,6 +30,7 @@ export default function Settings() {
   const [restockAmounts, setRestockAmounts] = useState({});
   const [licenseNumber, setLicenseNumber] = useState("");
   const [countryCode, setCountryCode] = useState("tz");
+  const [idType, setIdType] = useState("tin");
   const [verifying, setVerifying] = useState(false);
   const [verificationResult, setVerificationResult] = useState(null);
   const [commissionRate, setCommissionRate] = useState("0.00");
@@ -154,6 +161,7 @@ export default function Settings() {
       const res = await api.post(`/gov/verify/business/${businessId}/license/`, {
         business_license_number: licenseNumber.trim(),
         country_code: countryCode,
+        id_type: idType,
       });
       setVerificationResult(res.data);
       if (res.data.status === "VERIFIED") {
@@ -377,8 +385,14 @@ export default function Settings() {
           />
           <CardContent>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
-              {t("settings.verify_business_desc") ||
-                "Weka namba ya leseni ya biashara ili tuthibitishe na mamlaka husika ya nchi yako."}
+              {TIN_COUNTRIES.has(countryCode)
+                ? idType === "brela"
+                  ? t("settings.verify_business_desc_brela") ||
+                    "Weka namba yako ya usajili wa BRELA ili tuthibitishe na BRELA."
+                  : t("settings.verify_business_desc_tin") ||
+                    "Weka TIN yako (Namba ya Utambulisho wa Mlipa Kodi) ili tuthibitishe na TRA."
+                : t("settings.verify_business_desc") ||
+                  "Weka namba ya usajili wa biashara ili tuthibitishe na mamlaka husika ya nchi yako."}
             </p>
             <div className="flex flex-col sm:flex-row gap-2">
               <select
@@ -391,11 +405,27 @@ export default function Settings() {
                 <option value="ug">Uganda</option>
                 <option value="rw">Rwanda</option>
               </select>
+              {TIN_COUNTRIES.has(countryCode) && (
+                <select
+                  value={idType}
+                  onChange={(e) => setIdType(e.target.value)}
+                  className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm"
+                >
+                  <option value="tin">{t("settings.id_type_tin") || "TIN (TRA)"}</option>
+                  <option value="brela">{t("settings.id_type_brela") || "BRELA"}</option>
+                </select>
+              )}
               <input
                 type="text"
                 value={licenseNumber}
                 onChange={(e) => setLicenseNumber(e.target.value)}
-                placeholder={t("settings.license_number_placeholder") || "Namba ya Leseni ya Biashara"}
+                placeholder={
+                  TIN_COUNTRIES.has(countryCode)
+                    ? idType === "brela"
+                      ? t("settings.brela_placeholder") || "Namba ya Usajili wa BRELA"
+                      : t("settings.tin_placeholder") || "TIN (Namba ya Utambulisho wa Mlipa Kodi)"
+                    : t("settings.business_reg_placeholder") || "Namba ya Usajili wa Biashara"
+                }
                 className="flex-1 px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm"
               />
               <Button

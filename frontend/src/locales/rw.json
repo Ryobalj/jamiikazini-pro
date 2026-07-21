@@ -6,7 +6,14 @@
     "sponsored_heading": "Amatangazo Yishyuwe",
     "sponsored_tag": "Itangazo",
     "trending_heading": "Ibicuruzwa Bikunzwe",
-    "trending_empty": "Nta bicuruzwa biracyagaragara."
+    "trending_empty": "Nta bicuruzwa biracyagaragara.",
+    "trending_services_heading": "Serivisi Zikunzwe",
+    "trending_services_empty": "Nta serivisi ziracyagaragara.",
+    "verified_businesses_heading": "Ubucuruzi Bwemejwe",
+    "categories_heading": "Shakisha ukurikije Icyiciro"
+  },
+  "category": {
+    "empty": "Nta bucuruzi buracyagaragara muri iki cyiciro."
   },
   "topbar": {
     "back": "Subira inyuma",

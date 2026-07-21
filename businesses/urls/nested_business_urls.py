@@ -21,6 +21,7 @@ from businesses.views.product_category_views import ProductCategoryViewSet
 from businesses.views.utils import check_domain_availability
 from businesses.views.public_views import (
     PublicBusinessDetailView, BusinessStorefrontView, BusinessResolveDomainView, TrendingProductsView,
+    TrendingServicesView, VerifiedBusinessesView, TopCategoriesView, BusinessesByCategoryView,
 )
 from businesses.views.featured_listing_views import (
     FeaturedListingRequestView,
@@ -147,6 +148,10 @@ custom_urlpatterns = [
     path("store/<uuid:pk>/", BusinessStorefrontView.as_view(), name="business-storefront"),
     path("resolve-domain/", BusinessResolveDomainView.as_view(), name="business-resolve-domain"),
     path("products/trending/", TrendingProductsView.as_view(), name="trending-products"),
+    path("services/trending/", TrendingServicesView.as_view(), name="trending-services"),
+    path("businesses/verified/", VerifiedBusinessesView.as_view(), name="verified-businesses"),
+    path("categories/top/", TopCategoriesView.as_view(), name="top-categories"),
+    path("categories/<slug:slug>/businesses/", BusinessesByCategoryView.as_view(), name="category-businesses"),
     path("featured-listings/request/", FeaturedListingRequestView.as_view(), name="featured-listing-request"),
     path("featured-listings/mine/", MyFeaturedListingsView.as_view(), name="featured-listing-mine"),
     path("featured-listings/active/", ActiveFeaturedListingsView.as_view(), name="featured-listing-active"),

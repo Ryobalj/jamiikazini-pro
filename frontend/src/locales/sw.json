@@ -6,7 +6,14 @@
     "sponsored_heading": "Matangazo Yaliyodhaminiwa",
     "sponsored_tag": "Tangazo",
     "trending_heading": "Bidhaa Maarufu",
-    "trending_empty": "Bado hakuna bidhaa za kuonesha."
+    "trending_empty": "Bado hakuna bidhaa za kuonesha.",
+    "trending_services_heading": "Huduma Maarufu",
+    "trending_services_empty": "Bado hakuna huduma za kuonesha.",
+    "verified_businesses_heading": "Biashara Zilizothibitishwa",
+    "categories_heading": "Vinjari kwa Aina"
+  },
+  "category": {
+    "empty": "Bado hakuna biashara katika aina hii."
   },
   "topbar": {
     "back": "Nyuma",

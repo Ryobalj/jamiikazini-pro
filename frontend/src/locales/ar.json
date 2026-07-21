@@ -6,7 +6,14 @@
     "sponsored_heading": "إعلانات مدعومة",
     "sponsored_tag": "إعلان",
     "trending_heading": "المنتجات الرائجة",
-    "trending_empty": "لا توجد منتجات لعرضها بعد."
+    "trending_empty": "لا توجد منتجات لعرضها بعد.",
+    "trending_services_heading": "الخدمات الرائجة",
+    "trending_services_empty": "لا توجد خدمات لعرضها بعد.",
+    "verified_businesses_heading": "الشركات الموثقة",
+    "categories_heading": "تصفح حسب الفئة"
+  },
+  "category": {
+    "empty": "لا توجد شركات في هذه الفئة بعد."
   },
   "topbar": {
     "back": "العودة",

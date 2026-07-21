@@ -6,7 +6,14 @@
     "sponsored_heading": "Geborgde Advertensies",
     "sponsored_tag": "Advertensie",
     "trending_heading": "Gewilde Produkte",
-    "trending_empty": "Nog geen produkte om te wys nie."
+    "trending_empty": "Nog geen produkte om te wys nie.",
+    "trending_services_heading": "Gewilde Dienste",
+    "trending_services_empty": "Nog geen dienste om te wys nie.",
+    "verified_businesses_heading": "Geverifieerde Besighede",
+    "categories_heading": "Blaai volgens Kategorie"
+  },
+  "category": {
+    "empty": "Nog geen besighede in hierdie kategorie nie."
   },
   "topbar": {
     "back": "Terug",

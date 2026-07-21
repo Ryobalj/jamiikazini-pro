@@ -15,6 +15,7 @@ STANDARD_FIELDS = ["API_URL", "API_KEY"]
 TZ_NIDA = load_gov_api_config("TZ_NIDA", STANDARD_FIELDS)
 TZ_TRA_DRIVER = load_gov_api_config("TZ_TRA_DRIVER", STANDARD_FIELDS)
 TZ_TRA_BUSINESS = load_gov_api_config("TZ_TRA_BUSINESS", STANDARD_FIELDS)
+TZ_BRELA = load_gov_api_config("TZ_BRELA", STANDARD_FIELDS)
 TZ_LATRA = load_gov_api_config("TZ_LATRA", STANDARD_FIELDS)
 TZ_NACTE = load_gov_api_config("TZ_NACTE", STANDARD_FIELDS)
 TZ_NHIF = load_gov_api_config("TZ_NHIF", STANDARD_FIELDS)

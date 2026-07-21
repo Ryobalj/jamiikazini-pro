@@ -2,11 +2,15 @@
 
 from datetime import date, timedelta
 from decimal import Decimal
+from io import BytesIO
 
 from django.contrib.gis.geos import Point
+from django.core.files.base import ContentFile
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 from django.db import transaction
+from django.utils.text import slugify
+from PIL import Image, ImageDraw, ImageFont
 
 from accounts.models import User
 from agriculture.models.harvest_contract import HarvestContract, HarvestContractStatus
@@ -19,6 +23,7 @@ from businesses.models.order import (
     FulfillmentType, Order, OrderItem, OrderStatus, PaymentMethod, PaymentStatus,
 )
 from businesses.models.product import Product
+from businesses.models.product_image import ProductImage
 from businesses.models.service import Service
 from construction.models.construction_project import ConstructionProject
 from jamiiwallet.models.transaction import Transaction
@@ -67,6 +72,44 @@ WALLET_FUNDING = {
 }
 
 
+def _placeholder_image(text, bg_color):
+    """Generate a simple colored placeholder JPEG with the product name on it.
+    No real product photos exist for demo data, so this gives the homepage/
+    storefront something visual to render instead of a blank icon."""
+    width, height = 640, 480
+    img = Image.new("RGB", (width, height), color=bg_color)
+    draw = ImageDraw.Draw(img)
+    try:
+        font = ImageFont.truetype("arial.ttf", 40)
+    except OSError:
+        font = ImageFont.load_default()
+
+    lines = text.split(" ")
+    # Wrap into at most 3 lines so long product names still fit the canvas.
+    wrapped, current = [], ""
+    for word in lines:
+        candidate = f"{current} {word}".strip()
+        if draw.textlength(candidate, font=font) > width - 60 and current:
+            wrapped.append(current)
+            current = word
+        else:
+            current = candidate
+    if current:
+        wrapped.append(current)
+
+    line_height = 52
+    total_height = line_height * len(wrapped)
+    y = (height - total_height) / 2
+    for line in wrapped:
+        line_width = draw.textlength(line, font=font)
+        draw.text(((width - line_width) / 2, y), line, fill="white", font=font)
+        y += line_height
+
+    buffer = BytesIO()
+    img.save(buffer, format="JPEG", quality=85)
+    return buffer.getvalue()
+
+
 class Command(BaseCommand):
     help = "Seed a small set of realistic East African demo data across the whole platform, for presentations."
 
@@ -74,10 +117,22 @@ class Command(BaseCommand):
         parser.add_argument(
             "--clear",
             action="store_true",
-            help="Delete previously seeded demo users (and everything cascading from them) before reseeding.",
+            help="Delete previously seeded demo data before reseeding.",
+        )
+        parser.add_argument(
+            "--clear-only",
+            action="store_true",
+            help="Delete previously seeded demo data and exit, without reseeding. "
+                 "Use this to permanently remove the demo dataset (e.g. before going fully live).",
         )
 
     def handle(self, *args, **options):
+        if options["clear_only"]:
+            with transaction.atomic():
+                self._clear()
+            self.stdout.write(self.style.SUCCESS("Demo data cleared. Nothing reseeded (--clear-only)."))
+            return
+
         with transaction.atomic():
             if options["clear"]:
                 self._clear()
@@ -124,10 +179,24 @@ class Command(BaseCommand):
     # Housekeeping
     # ------------------------------------------------------------------
     def _clear(self):
+        # Business/Institution use on_delete=SET_NULL for owner (a real user
+        # might legitimately keep owning a business after account deletion
+        # elsewhere in the app), so deleting the demo Users alone leaves them
+        # orphaned instead of removed. Everything else (products, services,
+        # orders, savings groups, transfers, shipments, etc.) does cascade
+        # correctly from either the User or the Business FK, so deleting
+        # these two by name is enough to erase the whole demo tree.
+        business_names = ["Mwakalinga Electronics", "Fatuma Fresh Produce", "Amani Properties"]
+        deleted_biz, _ = Business.objects.filter(name__in=business_names).delete()
+
+        deleted_inst, _ = Institution.objects.filter(name="Amani SACCOS").delete()
+
         emails = [row["email"] for row in USERS]
-        deleted, _ = User.objects.filter(email__in=emails).delete()
-        if deleted:
-            self.stdout.write(self.style.WARNING(f"Cleared {deleted} previously seeded demo records."))
+        deleted_users, _ = User.objects.filter(email__in=emails).delete()
+
+        total = deleted_biz + deleted_inst + deleted_users
+        if total:
+            self.stdout.write(self.style.WARNING(f"Cleared {total} previously seeded demo records."))
 
     def _seed_lookups(self):
         for cmd in [
@@ -196,7 +265,7 @@ class Command(BaseCommand):
             defaults=dict(
                 owner=u["juma"],
                 category=tech_cat,
-                description="Simu, TV na vifaa vya umeme - Kariakoo, Dar es Salaam.",
+                description="Phones, TVs, and electrical equipment - Kariakoo, Dar es Salaam.",
                 phone="255712000002",
                 address="Kariakoo, Dar es Salaam",
                 location=DAR_ES_SALAAM,
@@ -208,7 +277,7 @@ class Command(BaseCommand):
             defaults=dict(
                 owner=u["fatuma"],
                 category=agric_cat,
-                description="Mazao safi ya kilimo moja kwa moja kutoka shambani - mahindi, mchele, mboga.",
+                description="Fresh farm produce straight from the field - maize, rice, vegetables.",
                 phone="255712000003",
                 address="Morogoro Road, Dar es Salaam",
                 location=DAR_ES_SALAAM,
@@ -221,27 +290,48 @@ class Command(BaseCommand):
             defaults=dict(
                 owner=u["amina"],
                 institution=institution,
-                description="Upangaji na uuzaji wa nyumba na viwanja - Dar es Salaam.",
+                description="Renting and selling houses and land - Dar es Salaam.",
                 is_verified=True,
             ),
         )
 
-        def _product(business, name, price, unit="pcs", qty=Decimal("25")):
+        def _product(business, name, price, unit="pcs", qty=Decimal("25"), image_color=None):
             obj, _ = Product.objects.get_or_create(
                 business=business,
                 name=name,
                 defaults=dict(price=price, currency=tzs, quantity_in_stock=qty, unit=unit),
             )
+            if not obj.image and image_color:
+                obj.image.save(
+                    f"{slugify(name)}.jpg",
+                    ContentFile(_placeholder_image(name, image_color)),
+                    save=True,
+                )
             return obj
 
-        p_phone = _product(electronics, "Simu ya Mkononi - Tecno Spark", Decimal("320000.00"), qty=Decimal("15"))
-        p_tv = _product(electronics, 'Televisheni 43" Smart TV', Decimal("650000.00"), qty=Decimal("8"))
-        p_maize = _product(produce, "Mahindi (Gunia)", Decimal("75000.00"), unit="gunia", qty=Decimal("120"))
-        p_rice = _product(produce, "Mchele Kilo 25", Decimal("68000.00"), unit="pack", qty=Decimal("60"))
+        p_phone = _product(electronics, "Tecno Spark Mobile Phone", Decimal("320000.00"), qty=Decimal("15"), image_color="#2563eb")
+        p_tv = _product(electronics, '43" Smart TV', Decimal("650000.00"), qty=Decimal("8"), image_color="#4f46e5")
+        p_maize = _product(produce, "Maize (Sack)", Decimal("75000.00"), unit="gunia", qty=Decimal("120"), image_color="#92400e")
+        p_rice = _product(produce, "Rice (25kg)", Decimal("68000.00"), unit="pack", qty=Decimal("60"), image_color="#16a34a")
+
+        # A couple of gallery photos on the phone, to demonstrate the
+        # ProductImage gallery (extra angles beyond the main product.image).
+        for i, (caption, color) in enumerate([
+            ("Side view", "#1d4ed8"),
+            ("Box contents", "#1e3a8a"),
+        ]):
+            if not ProductImage.objects.filter(product=p_phone, caption=caption).exists():
+                gallery_image = ProductImage(product=p_phone, caption=caption, order=i)
+                gallery_image.image.save(
+                    f"{p_phone.slug}-{slugify(caption)}.jpg",
+                    ContentFile(_placeholder_image(caption, color)),
+                    save=False,
+                )
+                gallery_image.save()
 
         Service.objects.get_or_create(
             business=electronics,
-            name="Ukarabati wa Simu na TV",
+            name="Phone & TV Repair",
             defaults=dict(price=Decimal("15000.00"), billing_type="ONE_TIME"),
         )
 
@@ -355,7 +445,7 @@ class Command(BaseCommand):
         amount = Decimal("50000.00")
 
         transfer = Transfer.objects.create(
-            sender=u["grace"], recipient=u["halima"], amount=amount, note="Kwa ajili ya karo",
+            sender=u["grace"], recipient=u["halima"], amount=amount, note="For school fees",
         )
         sender_txn = Transaction.objects.create(
             wallet=sender_wallet,
@@ -457,7 +547,7 @@ class Command(BaseCommand):
         HarvestContract.objects.create(
             buyer=u["peter"],
             seller=biz["produce"],
-            crop_description="Mahindi ya msimu (Maize)",
+            crop_description="Seasonal Maize",
             estimated_weight_kg=Decimal("2000.000"),
             agreed_price_per_kg=Decimal("900.00"),
             delivery_window_start=today + timedelta(days=30),
@@ -515,7 +605,7 @@ class Command(BaseCommand):
                 bedrooms=3,
                 bathrooms=2,
                 size_sqm=Decimal("120.00"),
-                description="Ghorofa la kisasa lenye vyumba 3, karibu na fukwe ya Masaki.",
+                description="Modern 3-bedroom apartment near the Masaki beachfront.",
             ),
         )
 
@@ -527,7 +617,7 @@ class Command(BaseCommand):
             return
         ConstructionProject.objects.create(
             client=u["peter"],
-            scope_description="Ujenzi wa nyumba ya kuishi yenye vyumba 3, msingi wa zege - Kigamboni, Dar es Salaam.",
+            scope_description="Construction of a 3-bedroom house with a concrete foundation - Kigamboni, Dar es Salaam.",
             location=KIGAMBONI,
             budget_ceiling=Decimal("45000000.00"),
         )

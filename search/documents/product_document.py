@@ -43,7 +43,6 @@ class ProductDocument(Document):
     # Django.fields (ModelFieldNotMappedError), so they're declared explicitly
     # here and filled in via their matching prepare_ methods instead.
     tags = fields.TextField(multi=True)
-    additional_images = fields.TextField(multi=True)
 
     class Index:
         name = 'products'
@@ -109,12 +108,6 @@ class ProductDocument(Document):
         """Prepare tags array for Elasticsearch"""
         if instance.tags:
             return instance.tags
-        return []
-
-    def prepare_additional_images(self, instance):
-        """Prepare additional images array"""
-        if instance.additional_images:
-            return instance.additional_images
         return []
 
     def prepare_location(self, instance):

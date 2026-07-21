@@ -6,7 +6,14 @@
     "sponsored_heading": "Tallace-tallace Masu Daukar Nauyi",
     "sponsored_tag": "Talla",
     "trending_heading": "Kayayyaki Masu Shahara",
-    "trending_empty": "Babu kayayyaki don nunawa tukuna."
+    "trending_empty": "Babu kayayyaki don nunawa tukuna.",
+    "trending_services_heading": "Ayyuka Masu Shahara",
+    "trending_services_empty": "Babu ayyuka don nunawa tukuna.",
+    "verified_businesses_heading": "Kasuwancin da Aka Tabbatar",
+    "categories_heading": "Bincika ta Nau'i"
+  },
+  "category": {
+    "empty": "Babu kasuwanci a wannan nau'in tukuna."
   },
   "topbar": {
     "back": "Komawa baya",

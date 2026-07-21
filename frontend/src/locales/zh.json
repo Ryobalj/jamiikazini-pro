@@ -6,7 +6,14 @@
     "sponsored_heading": "赞助广告",
     "sponsored_tag": "广告",
     "trending_heading": "热门产品",
-    "trending_empty": "暂无产品可显示。"
+    "trending_empty": "暂无产品可显示。",
+    "trending_services_heading": "热门服务",
+    "trending_services_empty": "暂无服务可显示。",
+    "verified_businesses_heading": "已验证商家",
+    "categories_heading": "按类别浏览"
+  },
+  "category": {
+    "empty": "该类别暂无商家。"
   },
   "topbar": {
     "back": "返回",

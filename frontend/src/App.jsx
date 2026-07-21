@@ -11,6 +11,7 @@ import Register from "@/pages/auth/Register";
 import VerifyEmail from "@/pages/auth/VerifyEmail";
 import Home from "@/pages/Home";
 import HomePage from "@/pages/HomePage";
+import CategoryBrowsePage from "@/pages/CategoryBrowsePage";
 import InviteFriends from "@/pages/InviteFriends";
 
 // Account Pages
@@ -97,6 +98,7 @@ export default function App() {
       <Routes location={backgroundLocation || location}>
         {/* Public Routes */}
         <Route path="/" element={<MainLayout><HomePage /></MainLayout>} />
+        <Route path="/category/:slug" element={<MainLayout><CategoryBrowsePage /></MainLayout>} />
         <Route path="/security/login/" element={<MainLayout hideSidebar><Login /></MainLayout>} />
         <Route path="/auth/register/" element={<MainLayout hideSidebar><Register /></MainLayout>} />
         <Route path="/auth/verify-email/:user_id/:token/" element={<MainLayout hideSidebar><VerifyEmail /></MainLayout>} />

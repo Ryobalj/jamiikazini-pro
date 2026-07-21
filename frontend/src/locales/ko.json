@@ -6,7 +6,14 @@
     "sponsored_heading": "스폰서 광고",
     "sponsored_tag": "광고",
     "trending_heading": "인기 상품",
-    "trending_empty": "표시할 상품이 아직 없습니다."
+    "trending_empty": "표시할 상품이 아직 없습니다.",
+    "trending_services_heading": "인기 서비스",
+    "trending_services_empty": "표시할 서비스가 아직 없습니다.",
+    "verified_businesses_heading": "인증된 비즈니스",
+    "categories_heading": "카테고리별로 찾아보기"
+  },
+  "category": {
+    "empty": "이 카테고리에는 아직 비즈니스가 없습니다."
   },
   "topbar": {
     "back": "뒤로",

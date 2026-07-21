@@ -6,7 +6,14 @@
     "sponsored_heading": "Annonces Sponsorisées",
     "sponsored_tag": "Annonce",
     "trending_heading": "Produits Tendance",
-    "trending_empty": "Aucun produit à afficher pour le moment."
+    "trending_empty": "Aucun produit à afficher pour le moment.",
+    "trending_services_heading": "Services Tendance",
+    "trending_services_empty": "Aucun service à afficher pour le moment.",
+    "verified_businesses_heading": "Entreprises Vérifiées",
+    "categories_heading": "Parcourir par Catégorie"
+  },
+  "category": {
+    "empty": "Aucune entreprise dans cette catégorie pour le moment."
   },
   "topbar": {
     "back": "Retour",

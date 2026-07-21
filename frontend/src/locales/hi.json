@@ -6,7 +6,14 @@
     "sponsored_heading": "प्रायोजित विज्ञापन",
     "sponsored_tag": "विज्ञापन",
     "trending_heading": "ट्रेंडिंग उत्पाद",
-    "trending_empty": "अभी दिखाने के लिए कोई उत्पाद नहीं है।"
+    "trending_empty": "अभी दिखाने के लिए कोई उत्पाद नहीं है।",
+    "trending_services_heading": "ट्रेंडिंग सेवाएं",
+    "trending_services_empty": "अभी दिखाने के लिए कोई सेवा नहीं है।",
+    "verified_businesses_heading": "सत्यापित व्यवसाय",
+    "categories_heading": "श्रेणी के अनुसार ब्राउज़ करें"
+  },
+  "category": {
+    "empty": "इस श्रेणी में अभी तक कोई व्यवसाय नहीं है।"
   },
   "topbar": {
     "back": "पीछे",

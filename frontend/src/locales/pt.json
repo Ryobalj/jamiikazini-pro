@@ -6,7 +6,14 @@
     "sponsored_heading": "Anúncios Patrocinados",
     "sponsored_tag": "Anúncio",
     "trending_heading": "Produtos em Alta",
-    "trending_empty": "Ainda não há produtos para mostrar."
+    "trending_empty": "Ainda não há produtos para mostrar.",
+    "trending_services_heading": "Serviços em Alta",
+    "trending_services_empty": "Ainda não há serviços para mostrar.",
+    "verified_businesses_heading": "Empresas Verificadas",
+    "categories_heading": "Explorar por Categoria"
+  },
+  "category": {
+    "empty": "Ainda não há empresas nesta categoria."
   },
   "topbar": {
     "back": "Voltar",

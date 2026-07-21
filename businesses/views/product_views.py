@@ -17,11 +17,13 @@ from django.db import models
 from django.utils.text import slugify
 
 from businesses.models.product import Product
+from businesses.models.product_image import ProductImage
 from businesses.models.business import Business
 from businesses.serializers.product_serializer import (
     ProductListSerializer,
     ProductDetailSerializer,
     ProductSerializer,
+    ProductImageSerializer,
 )
 from kiini.helpers.domain import generate_subdomain_url
 
@@ -225,6 +227,22 @@ class ProductViewSet(viewsets.ModelViewSet):
             "id": str(product.id),
             "quantity_in_stock": product.quantity_in_stock,
         })
+
+    @action(detail=True, methods=["post"], url_path="images")
+    def upload_image(self, request, slug=None, **kwargs):
+        """Ongeza picha ya ziada kwenye galeri ya bidhaa (mmiliki wa biashara pekee)."""
+        product = self.get_object()
+        if product.business.owner != request.user:
+            raise PermissionDenied("You don't have permission to add images to this product")
+
+        serializer = ProductImageSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        order = request.data.get("order") or product.images.count()
+        image = ProductImage.objects.create(
+            product=product, image=serializer.validated_data["image"],
+            caption=serializer.validated_data.get("caption", ""), order=order,
+        )
+        return Response(ProductImageSerializer(image).data, status=status.HTTP_201_CREATED)
 
     @action(detail=False, methods=["get"])
     def nearby(self, request, **kwargs):
