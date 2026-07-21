@@ -795,6 +795,11 @@ LOGGING = {
             "level": "INFO" if not DEBUG else "DEBUG",
             "propagate": True,
         },
+        "security": {
+            "handlers": ["console", "file"],
+            "level": "INFO" if not DEBUG else "DEBUG",
+            "propagate": True,
+        },
     },
 }
 
