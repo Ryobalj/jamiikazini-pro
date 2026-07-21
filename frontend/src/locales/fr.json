@@ -378,7 +378,7 @@
         "bullets": [
           "Utilisez JamiiChat pour contacter directement une entreprise pour des questions liées à une commande ou une annonce.",
           "Consultez votre centre de notifications pour les mises à jour des commandes, demandes de vérification et activité du portefeuille.",
-          "Contactez le support de la plateforme via le canal fourni sur le site web de JamiiKazini."
+          "Envoyez un e-mail à support@jamiikazini.com si vous avez besoin d'aide directement de l'équipe de la plateforme."
         ]
       },
       "multidomain": {
@@ -401,6 +401,7 @@
           "Programme de travail — choisissez une matière et un calendrier scolaire, puis prévisualisez, générez, ou téléchargez le programme complet d'enseignement du trimestre en PDF."
         ]
       }
-    }
+    },
+    "contact_label": "Contacter le Support"
   }
 }

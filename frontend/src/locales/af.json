@@ -379,7 +379,7 @@
         "bullets": [
           "Gebruik JamiiChat om 'n besigheid direk te boodskap vir bestellings- of lysverwante vrae.",
           "Gaan jou kennisgewingsentrum na vir opdaterings oor bestellings, verifikasieversoeke, en beursie-aktiwiteit.",
-          "Kontak platformondersteuning via die kanaal wat op die JamiiKazini-webwerf verskaf word."
+          "E-pos support@jamiikazini.com as jy direk hulp van die platform-span nodig het."
         ]
       },
       "multidomain": {
@@ -402,6 +402,7 @@
           "Werkskema — kies 'n vak en akademiese kalender, en voorskou dan, genereer, of laai die volle kwartaal se onderrigskedule as 'n PDF af."
         ]
       }
-    }
+    },
+    "contact_label": "Kontak Ondersteuning"
   }
 }

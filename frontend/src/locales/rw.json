@@ -379,7 +379,7 @@
         "bullets": [
           "Koresha JamiiChat kugira ngo uvugane n'ubucuruzi ku bibazo bijyanye n'itumiza cyangwa icyatanzwe.",
           "Reba ikigo cyawe cy'amakuru ku bijyanye n'ivugurura ry'amateka, ibisabwa byo kwemezwa, n'ibikorwa by'agasanduku.",
-          "Vugana n'ubufasha bw'urubuga binyuze mu nzira zitangwa ku rubuga rwa JamiiKazini."
+          "Ohereza imeli kuri support@jamiikazini.com niba ukeneye ubufasha butaziguye buturuka ku itsinda ry'urubuga."
         ]
       },
       "multidomain": {
@@ -402,6 +402,7 @@
           "Gahunda y'Akazi — hitamo isomo na kalendari y'amashuri, hanyuma urebe, ukore, cyangwa umanure gahunda yose y'igihembwe y'kwigisha nka PDF."
         ]
       }
-    }
+    },
+    "contact_label": "Vugana n'Ubufasha"
   }
 }

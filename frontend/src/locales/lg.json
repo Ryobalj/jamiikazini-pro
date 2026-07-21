@@ -379,7 +379,7 @@
         "bullets": [
           "Kozesa JamiiChat okuweereza obubaka butereevu eri bizinensi ku bibuuzo ebikwatagana n'oda oba olulalo.",
           "Kebera ekifo kyo eky'okulabula ku nkyukakyuka za oda, okusaba okukakasibwa, n'ebikolwa by'ensawo.",
-          "Tuukirira obuyambi bw'ekifo okuyita mu mukutu ogulaze ku mukutu gwa yintaneeti gwa JamiiKazini."
+          "Weereza email ku support@jamiikazini.com bw'oba weetaaga obuyambi butereevu okuva ku kibiina ky'ekifo."
         ]
       },
       "multidomain": {
@@ -402,6 +402,7 @@
           "Entegeka y'Omulimu — londa ekisomo ne kalenda w'ekyomu, oluvannyuma weerabire, okole, oba osindike sikedyulu y'omwaka gwonna ogw'okusomesa nga PDF."
         ]
       }
-    }
+    },
+    "contact_label": "Tuukirira Obuyambi"
   }
 }

@@ -1,7 +1,7 @@
 // src/components/Sidebar.jsx
 
 import React, { useState, useEffect, useRef } from "react";
-import { ChevronRight, LogIn, UserPlus, X, BookOpen } from "lucide-react";
+import { ChevronRight, LogIn, UserPlus, X, BookOpen, Mail } from "lucide-react";
 import * as LucideIcons from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAppContext } from "@/context/AppContext";
@@ -152,19 +152,16 @@ export default function Sidebar({ isOpen = false, onClose }) {
             <button
               aria-label={t("help.sidebar_label", { ns: "common", defaultValue: "User Manual" })}
               title={t("help.sidebar_label", { ns: "common", defaultValue: "User Manual" })}
-              onClick={() => {
-                setActiveMenu(null);
-                navigate("/help");
-              }}
+              onClick={() => setActiveMenu("help")}
               className="flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-xl mx-auto transition-all duration-300 hover:scale-105 relative"
               style={{
-                backgroundColor: location.pathname === "/help" ? "#C08A2E15" : "transparent",
-                color: location.pathname === "/help" ? "#C08A2E" : "#6B7280",
+                backgroundColor: location.pathname === "/help" || activeMenu === "help" ? "#C08A2E15" : "transparent",
+                color: location.pathname === "/help" || activeMenu === "help" ? "#C08A2E" : "#6B7280",
               }}
             >
               <div
                 className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-r-full transition-all duration-300"
-                style={{ backgroundColor: location.pathname === "/help" ? "#C08A2E" : "transparent" }}
+                style={{ backgroundColor: location.pathname === "/help" || activeMenu === "help" ? "#C08A2E" : "transparent" }}
               />
               <BookOpen size={20} className="mx-auto" />
             </button>
@@ -219,7 +216,50 @@ export default function Sidebar({ isOpen = false, onClose }) {
             </>
           )}
 
-          {activeMenu && activeMenu !== "auth" && (
+          {activeMenu === "help" && (
+            <>
+              <header className="mb-3 flex items-center space-x-2">
+                <ChevronRight className="text-amber-500" size={16} />
+                <h2 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                  {t("help.sidebar_label", { ns: "common", defaultValue: "User Manual" })}
+                </h2>
+              </header>
+              <nav className="space-y-0.5">
+                <button
+                  onClick={() => {
+                    setActiveMenu(null);
+                    navigate("/help");
+                  }}
+                  className="flex items-center space-x-3 px-3 py-2.5 rounded-lg w-full text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors relative group"
+                >
+                  <div
+                    className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 rounded-r-full transition-all duration-300 group-hover:h-8"
+                    style={{ backgroundColor: levelColors[0] }}
+                  />
+                  <BookOpen size={16} className="text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200" />
+                  <span className="text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-gray-200">
+                    {t("help.sidebar_label", { ns: "common", defaultValue: "User Manual" })}
+                  </span>
+                </button>
+                <a
+                  href="mailto:support@jamiikazini.com"
+                  onClick={() => setActiveMenu(null)}
+                  className="flex items-center space-x-3 px-3 py-2.5 rounded-lg w-full text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors relative group"
+                >
+                  <div
+                    className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 rounded-r-full transition-all duration-300 group-hover:h-8"
+                    style={{ backgroundColor: levelColors[1] }}
+                  />
+                  <Mail size={16} className="text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200" />
+                  <span className="text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-gray-200">
+                    {t("help.contact_label", { ns: "common", defaultValue: "Contact Support" })}
+                  </span>
+                </a>
+              </nav>
+            </>
+          )}
+
+          {activeMenu && activeMenu !== "auth" && activeMenu !== "help" && (
             <>
               <header className="mb-3 flex items-center space-x-2">
                 <ChevronRight className="text-blue-500" size={16} />

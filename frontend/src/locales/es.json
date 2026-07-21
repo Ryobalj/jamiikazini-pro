@@ -379,7 +379,7 @@
         "bullets": [
           "Usa JamiiChat para escribir directamente a un negocio sobre preguntas relacionadas con un pedido o anuncio.",
           "Revisa tu centro de notificaciones para actualizaciones de pedidos, solicitudes de verificación y actividad de la billetera.",
-          "Contacta al soporte de la plataforma a través del canal proporcionado en el sitio web de JamiiKazini."
+          "Escribe a support@jamiikazini.com si necesitas ayuda directamente del equipo de la plataforma."
         ]
       },
       "multidomain": {
@@ -402,6 +402,7 @@
           "Programa de trabajo — elige una materia y calendario académico, luego previsualiza, genera, o descarga el horario completo de enseñanza del trimestre como PDF."
         ]
       }
-    }
+    },
+    "contact_label": "Contactar Soporte"
   }
 }

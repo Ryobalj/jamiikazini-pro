@@ -445,7 +445,7 @@
         "bullets": [
           "Use JamiiChat to message a business directly for order- or listing-specific questions.",
           "Check your notification center for updates on orders, verification requests, and wallet activity.",
-          "Contact platform support through the channel provided on the JamiiKazini website."
+          "Email support@jamiikazini.com if you need help directly from the platform team."
         ]
       },
       "multidomain": {
@@ -468,6 +468,7 @@
           "Scheme of Work — pick a subject and academic calendar, then preview, generate, or download a full term's teaching schedule as a PDF."
         ]
       }
-    }
+    },
+    "contact_label": "Contact Support"
   }
 }

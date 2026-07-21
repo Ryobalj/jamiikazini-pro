@@ -425,7 +425,7 @@
         "bullets": [
           "Tumia JamiiChat kuwasiliana na biashara moja kwa moja kwa maswali yanayohusiana na oda au tangazo.",
           "Angalia kituo chako cha arifa kwa masasisho ya oda, maombi ya uthibitisho, na shughuli za pochi.",
-          "Wasiliana na msaada wa jukwaa kupitia njia iliyotolewa kwenye tovuti ya JamiiKazini."
+          "Tuma barua pepe kwa support@jamiikazini.com ukihitaji msaada moja kwa moja kutoka kwa timu ya jukwaa."
         ]
       },
       "multidomain": {
@@ -448,6 +448,7 @@
           "Mpango wa Kazi — chagua somo na kalenda ya kitaaluma, kisha onyesha kwa muhtasari, tengeneza, au pakua ratiba nzima ya muhula wa ufundishaji kama PDF."
         ]
       }
-    }
+    },
+    "contact_label": "Wasiliana na Msaada"
   }
 }

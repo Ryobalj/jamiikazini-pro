@@ -379,7 +379,7 @@
         "bullets": [
           "Yi amfani da JamiiChat don aika sako kai tsaye zuwa kasuwanci domin tambayoyin da suka shafi oda ko jeri.",
           "Duba cibiyar sanarwarka domin sabuntawa kan oda, bukatun tabbatarwa, da ayyukan walat.",
-          "Tuntubi tallafin dandali ta hanyar da aka bayar akan gidan yanar gizon JamiiKazini."
+          "Aika imel zuwa support@jamiikazini.com idan kana bukatar taimako kai tsaye daga tawagar dandali."
         ]
       },
       "multidomain": {
@@ -402,6 +402,7 @@
           "Tsarin Aiki — zabi darasi da kalandar ilimi, sannan ka duba a takaice, samar, ko sauke jadawalin koyarwa na dukkan zangon a matsayin PDF."
         ]
       }
-    }
+    },
+    "contact_label": "Tuntuɓi Tallafi"
   }
 }
