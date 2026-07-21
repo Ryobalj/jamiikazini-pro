@@ -92,12 +92,14 @@
     "confirm_failed": "Imeshindwa kuthibitisha."
   },
   "vehicle_types": {
+    "bicycle": "Baiskeli (hadi kilo 20, safari fupi)",
     "boda_boda": "Boda Boda (hadi kilo 100)",
     "bajaji": "Bajaji (hadi kilo 300)",
+    "taxi": "Taxi (hadi kilo 100)",
     "suzuki_carry": "Suzuki Carry (hadi kilo 600)",
     "tuk_tuk": "Tuk Tuk / Gari la Magurudumu Matatu (hadi tani 1)",
-    "public_transport": "Daladala (safari fupi, hadi km 20)",
-    "bus": "Basi (safari ndefu, hadi km 1000)",
+    "public_transport": "Daladala (kifurushi kidogo, hadi kilo 25 / km 60)",
+    "bus": "Basi (kifurushi kidogo, hadi kilo 30, safari ndefu)",
     "canter": "Canter",
     "fuso": "Fuso",
     "scania": "Scania",

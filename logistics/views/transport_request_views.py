@@ -52,6 +52,19 @@ class TransportRequestViewSet(viewsets.ModelViewSet):
             return TransportRequestWriteSerializer
         return TransportRequestSerializer
 
+    @staticmethod
+    def _remember_last_dropoff(user, serializer):
+        # Save the drop-off used on this request as the user's "last address"
+        # so RequestServicePage can pre-fill it for them next time, regardless
+        # of which requestor_type branch created the request.
+        dropoff = serializer.validated_data.get("dropoff_location")
+        if dropoff is None:
+            return
+        user.last_dropoff_lat = dropoff.y
+        user.last_dropoff_lng = dropoff.x
+        user.last_dropoff_address_text = serializer.validated_data.get("dropoff_address_text", "") or ""
+        user.save(update_fields=["last_dropoff_lat", "last_dropoff_lng", "last_dropoff_address_text"])
+
     def perform_create(self, serializer):
         from decimal import Decimal
         from django.core.exceptions import ValidationError as DjangoValidationError
@@ -61,9 +74,11 @@ class TransportRequestViewSet(viewsets.ModelViewSet):
         business = user.businesses.first() if hasattr(user, "businesses") else None
         if business is not None:
             serializer.save(requestor_type="business", business=business)
+            self._remember_last_dropoff(user, serializer)
             return
         if getattr(user, "institution", None) is not None:
             serializer.save(requestor_type="institution", institution=user.institution)
+            self._remember_last_dropoff(user, serializer)
             return
 
         # Standalone request: a plain buyer wants pure transport (no product
@@ -102,7 +117,7 @@ class TransportRequestViewSet(viewsets.ModelViewSet):
         except TransportRateCard.DoesNotExist:
             raise DRFValidationError({"suggested_transport_type": "Aina hii ya usafiri haipatikani kwa sasa."})
 
-        fare = rate_card.estimate_fare(distance_km)
+        fare = rate_card.estimate_fare(distance_km, weight_kg)
 
         hold_txn = TransactionEngine.initiate(
             wallet=user.wallet,
@@ -119,6 +134,7 @@ class TransportRequestViewSet(viewsets.ModelViewSet):
             )
 
         serializer.save(requestor_type="individual", requested_by=user, estimated_fare=fare)
+        self._remember_last_dropoff(user, serializer)
 
     @action(detail=True, methods=["get"], url_path="recommended-vehicles")
     def recommended_vehicles(self, request, pk=None):

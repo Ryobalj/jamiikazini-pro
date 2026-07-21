@@ -11,8 +11,10 @@ import api from "@/lib/axios";
 import { useAppContext } from "@/context/AppContext";
 
 const VEHICLE_TYPES = [
+  "bicycle",
   "boda_boda",
   "bajaji",
+  "taxi",
   "suzuki_carry",
   "tuk_tuk",
   "public_transport",

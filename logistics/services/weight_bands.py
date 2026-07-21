@@ -19,12 +19,18 @@
 from logistics.choices import TransportTypeChoices
 
 TRANSPORT_WEIGHT_BANDS = {
+    TransportTypeChoices.BICYCLE: {"min_kg": 0, "max_kg": 20, "max_volume_cbm": 0.15, "max_distance_km": 5},
     TransportTypeChoices.BODA_BODA: {"min_kg": 0, "max_kg": 100, "max_volume_cbm": 0.3},
     TransportTypeChoices.BAJAJI: {"min_kg": 0, "max_kg": 300, "max_volume_cbm": 1.0},
+    TransportTypeChoices.TAXI: {"min_kg": 0, "max_kg": 100, "max_volume_cbm": 0.5},
     TransportTypeChoices.SUZUKI_CARRY: {"min_kg": 0, "max_kg": 600, "max_volume_cbm": 3.5},
     TransportTypeChoices.TUK_TUK: {"min_kg": 0, "max_kg": 1000, "max_volume_cbm": 2.0},
-    TransportTypeChoices.PUBLIC_TRANSPORT: {"min_kg": 0, "max_kg": 1500, "max_distance_km": 20},
-    TransportTypeChoices.BUS: {"min_kg": 0, "max_kg": 3000, "max_distance_km": 1000},
+    # Daladala/bus hazikodishwi kwa ajili ya mzigo pekee - mzigo mdogo
+    # "unapanda" pamoja na abiria kwenye safari iliyokwishapangwa, hivyo uzito
+    # unaokubalika ni mdogo sana (si tani kama lori halisi), tofauti na
+    # canter/fuso/scania ambazo hukodishwa mahususi kwa mzigo.
+    TransportTypeChoices.PUBLIC_TRANSPORT: {"min_kg": 0, "max_kg": 25, "max_distance_km": 60},
+    TransportTypeChoices.BUS: {"min_kg": 0, "max_kg": 30, "max_distance_km": 1000},
     TransportTypeChoices.CANTER: {"min_kg": 500, "max_kg": 3000},
     TransportTypeChoices.FUSO: {"min_kg": 2000, "max_kg": 8000},
     TransportTypeChoices.SCANIA: {"min_kg": 5000, "max_kg": 30000},

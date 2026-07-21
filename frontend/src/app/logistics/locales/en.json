@@ -92,12 +92,14 @@
     "confirm_failed": "Failed to confirm receipt."
   },
   "vehicle_types": {
+    "bicycle": "Bicycle (up to 20kg, short trips)",
     "boda_boda": "Motorcycle Taxi (up to 100kg)",
     "bajaji": "Bajaji (up to 300kg)",
+    "taxi": "Taxi (up to 100kg)",
     "suzuki_carry": "Suzuki Carry (up to 600kg)",
     "tuk_tuk": "Tuk Tuk / Tricycle Cargo (up to 1 tonne)",
-    "public_transport": "Daladala (short trips, up to 20km)",
-    "bus": "Bus (long-distance, up to 1000km)",
+    "public_transport": "Daladala (small parcel, up to 25kg / 60km)",
+    "bus": "Bus (small parcel, up to 30kg, long-distance)",
     "canter": "Canter",
     "fuso": "Fuso",
     "scania": "Scania",

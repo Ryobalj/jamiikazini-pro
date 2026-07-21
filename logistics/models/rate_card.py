@@ -22,6 +22,11 @@ class TransportRateCard(models.Model):
     )
     base_fare = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_("Base Fare"))
     per_km_rate = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_("Rate per Km"))
+    per_kg_rate = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0, verbose_name=_("Rate per Kg"),
+        help_text=_("Extra charge per kg of cargo weight - 0 for shared/scheduled-route "
+                     "vehicles (daladala, bus) where a small parcel rides along a fixed fare."),
+    )
     minimum_fare = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name=_("Minimum Fare"))
     is_active = models.BooleanField(default=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -33,6 +38,10 @@ class TransportRateCard(models.Model):
     def __str__(self):
         return f"{self.get_vehicle_type_display()} - base {self.base_fare} + {self.per_km_rate}/km"
 
-    def estimate_fare(self, distance_km):
-        estimated = self.base_fare + (self.per_km_rate * Decimal(str(distance_km)))
+    def estimate_fare(self, distance_km, weight_kg=0):
+        estimated = (
+            self.base_fare
+            + (self.per_km_rate * Decimal(str(distance_km)))
+            + (self.per_kg_rate * Decimal(str(weight_kg or 0)))
+        )
         return max(estimated, self.minimum_fare)
