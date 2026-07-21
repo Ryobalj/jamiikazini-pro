@@ -187,5 +187,221 @@
       "empty": "Tewali buweereza bungi.",
       "used": "{{count}} byakozesebwa"
     }
+  },
+  "help": {
+    "sidebar_label": "Ekiwandiiko ky'Omukozesa",
+    "title": "Ekiwandiiko ky'Omukozesa kya JamiiKazini",
+    "subtitle": "Obulagirizi obujjuvu obw'okukozesa buli kitundu ky'ekifo",
+    "toc": {
+      "intro": "Enyanjula",
+      "getting_started": "Okutandika",
+      "wallet": "Ensawo",
+      "marketplace": "Akatale",
+      "businesses": "Bizinensi",
+      "institutions": "Ebitongole",
+      "logistics": "Entambula",
+      "realestate": "Ebizimbe",
+      "agriculture": "Obulimi",
+      "construction": "Okuzimba",
+      "payments": "Okusasula",
+      "chat": "Emboozi",
+      "security": "Obukuumi",
+      "language": "Olulimi",
+      "faq": "Ebibuuzo Ebisinga Okubuuzibwa",
+      "support": "Obuyambi",
+      "multidomain": "Amaduuka g'Amasaza Amangi",
+      "teaching": "Okuyigiriza"
+    },
+    "note_label": "Ekiwandiiko",
+    "body": {
+      "intro": {
+        "p1": "JamiiKazini (\"Ekibiina ky'Emirimu\") ekwataganya obulamu bw'ebyenfuna obwa buli lunaku obw'ebibiina by'omu Bugwanjuba bwa Afirika mu kifo kimu: ensawo ya digito, akatale ka yintaneeti, ebikozesebwa mu bizinensi, entambula, ebibiina by'okutereka, n'obuweereza obw'enjawulo (ebizimbe, obulimi, okuzimba).",
+        "subheading": "Ani akozesa JamiiKazini?",
+        "bullets": [
+          "Omukasitoma / Omuguzi — anoonya era agula, aweereza era afuna ssente, ayingira mu bibiina by'okutereka, asaba entambula, apangisa oba agula ettaka.",
+          "Nannyini Bizinensi / Omuweereza — awandiisa bizinensi, awandiika ebintu n'obuweereza, alabirira oda, asaba okukakasibwa kwa gavumenti (TIN/BRELA).",
+          "Omutwazi / Omuvuzi — yeewandiisa ng'omuweereza w'entambula era akkiriza emirimu gy'entambula.",
+          "Omuddukanya w'Ekitongole — alabirira ekitongole (SACCOS, kkampuni, essomero) n'abakozi baakyo."
+        ],
+        "p2": "Ekifo kiriwo mu nnimi 15 (Olungereza, Oluswahili, Olufalansa, Luwalabu, Luafirikansi, Luhausa, Luhindi, Lujapani, Lukoreya, Luganda, Lupotugiizi, Lurashi, Ikinyarwanda, Lucayina, Lusipeyini) era kiwagira okukwatagana kw'okukakasibwa kwa gavumenti mu Tanzania, Kenya, Uganda, Rwanda, Burundi, ne South Sudan."
+      },
+      "getting_started": {
+        "subheading1": "Okuteekawo akawunti",
+        "steps": [
+          "Londa \"Wewandiise\" ku lubalirira olw'engulu.",
+          "Yingiza erinnya lyo eryenkomerero, email, ennamba y'essimu, n'ekigambo ekyekusifu.",
+          "Londa olulimi n'eggwanga by'oyagala.",
+          "Weereza — omuguwa gw'okukakasa gujja kuweerezebwa ku email yo.",
+          "Nyiga ku muguwa okusobola okusumulula akawunti yo, oluvannyuma weyingize."
+        ],
+        "subheading2": "Pulofayiro n'okukakasa endagamuntu",
+        "p1": "Kyusa ebikukwatako okuva mu Pulofayiro / Kyusa Pulofayiro / Entegeka z'Akawunti. Ebikolwa ebimu — okufuna ssente ennene, okufuuka omuvuzi w'entambula, okukakasa bulambulukufu bizinensi — byetaagisa okukakasa endagamuntu okuyita mu \"Kakasa Endagamuntu,\" ekyekenneenya endagamuntu yo ey'eggwanga okugeraageranya n'ebiwandiiko by'eggwanga lyo.",
+        "subheading3": "Okuyita mikwano",
+        "p2": "Okuva ku \"Yita Mikwano\" mu lukalala lw'akawunti yo, gabana obubaka obw'okuyita obwesudde okuyita mu WhatsApp, Facebook, Telegram, X (Twitter), oba LinkedIn, oba nga bwe wanguddewo omuguwa. Nkola ntongole ey'okuleeta abantu b'omanyi ku kifo — tewali mpeera ya kusiimibwa egoberelwa ku muguwa guno gwokka (bizinensi zirina enkola endala ey'ekoodi y'okusiimibwa mu ntegeka zaazo).",
+        "subheading4": "Olubalirira olw'engulu olw'okunoonya",
+        "p3": "Akabonero k'okunoonya kazibula akabbo k'okunoonya amangu wennyini ku lubalirira. Akabonero k'ekide kalaga Ebibuulirwa byo, nga kalina akabonero ku ekyo kyonna ekitasomeddwa. Akabonero k'enjuba/omwezi/sikirini kakyusa endabika yo wakati wa Musana, Kizikiza, ne Sisitemu (ekigoberera entegeka y'ekyuma kyo mu ngeri ey'obwannaggwa)."
+      },
+      "wallet": {
+        "p1": "Buli mukozesa alina ensawo erimu ssente mu ssente z'eggwanga lye, ezikozesebwa mu kifo kyonna.",
+        "subheading1": "Okuteekamu ssente",
+        "p2": "Okuva ku JamiiWallet → \"Yongeramu Ssente,\" sasula okuyita mu ssente za simu (M-Pesa, Airtel Money n'endala okuyita ku PawaPay), kaadi (Stripe), oba Flutterwave, okusinziira ku ggwanga lyo.",
+        "subheading2": "Okuweereza ssente n'okuggyamu",
+        "steps": [
+          "Londa \"Weereza Ssente,\" yingiza ennamba y'essimu/email/erinnya ly'omukozesa ow'oyo azigenda kufuna ne omuwendo, kakasa.",
+          "Terekera abafuni be bulijjo nga Abaganyulwa olw'okuweereza ssente amangu.",
+          "Kozesa \"Ggyamu Ssente\" okuggya okugenda mu ssente za simu oba akawunti k'ebbanka akakwatagana."
+        ],
+        "subheading3": "Bbiro, empisa, n'ebibiina by'okutereka",
+        "bullets": [
+          "BillPay — sasula bbiro ez'oluvannyuma butereevu okuva mu ssente z'omu nsawo yo.",
+          "Empisa — ebyafaayo byonna ebinoonyezebwa eby'okuteekamu ssente, okuweereza, okusasula, n'okuggyamu.",
+          "Ebibiina by'Okutereka — tondawo oba weegatte ku kibiina kya digito eky'engeri ya VICOBA/SACCOS, weeyongereyo okuva mu nsawo yo, era oleke abakulembeze b'ekibiina bakkirize okusaba okw'okuggyamu, byonna mu kitabo ekigabanyizibwamu eky'olwatu."
+        ]
+      },
+      "marketplace": {
+        "subheading1": "Olupapula lw'awaka",
+        "bullets1": [
+          "Obuweereza obw'Amaanyi — obuweereza obwatiikirivu obulimu kaakano ku kifo.",
+          "Bizinensi Ezikakasiddwa — bizinensi ezimazeeko okukakasa endagamuntu/layisinsi ya gavumenti.",
+          "Noonya nga Oyita mu Ssaza — nyiga ku ssaza lyonna okulaba buli bizinensi n'ebintu wansi waalyo.",
+          "Bizinensi Eziriraanyi — endabika esinziira ku kifo eky'amaduuka n'abaweereza abali okumpi naawe."
+        ],
+        "subheading2": "Ekibbo n'okusasula",
+        "steps": [
+          "Yongeza ebintu mu kibbo kyo okuva ku mabaluwa gaabyo ag'okulaga.",
+          "Kebera ebintu mu \"Ekibbo,\" longoosa omuwendo nga bwe kyetaagisa.",
+          "Sasula, londa okutuusibwa oba okukima wo, era osasule okuva mu ssente zo eza JamiiWallet.",
+          "Goberera oda yo wansi wa \"Oda Zange.\""
+        ],
+        "p1": "Tofuna ky'oyagala? Teekawo \"Saba Ekintu\" (oba \"Saba Ebiyingizibwa\" olw'ebintu ebiva mu bifo ebirala) era kebera ebisuubizo by'abatunzi wansi wa \"Ebisuubizo Byange.\"",
+        "subheading3": "Bizinensi Eziriraanyi",
+        "p2": "\"Bizinensi Eziriraanyi\" ekozesa ekifo ky'ekyuma kyo okulaga amaduuka n'abaweereza abali okumpi naawe, nga erina akapapula k'okusalawo bbanga n'ekisengejja ky'ekika okufunza okunoonya. Buli kya kudda kiraga bbanga lyakyo, obulungi, n'ebikwatako, n'akabonero \"Tuukirira Omutunzi\" kazibula emboozi ya JamiiChat naye butereevu."
+      },
+      "businesses": {
+        "subheading1": "Okuwandiisa bizinensi",
+        "steps": [
+          "Londa \"Wandiisa Bizinensi\" mu lukalala lw'akawunti yo.",
+          "Yingiza erinnya lya bizinensi, ekika, ebikwatako, obukwatagana, n'ekifo.",
+          "Situza akabonero n'ekifaananyi ky'ekisaanikira, oluvannyuma weereza.",
+          "Eduuka lyo liba limu mangu — osobola okuwandiika ebintu n'obuweereza mangu ago."
+        ],
+        "subheading2": "Dashboard ya bizinensi",
+        "p1": "Enfaanana Ejjuvu · Ebintu/Obuweereza (n'ebifaananyi) · Amatabi · Oda · Ebisaba/Ebisuubizo · Ebiyingizibwa · Amakungula · Ebikwata ku Mikutu · Kulembeza · Entegeka.",
+        "subheading3": "Okukakasibwa (TIN / BRELA)",
+        "p2": "Bizinensi ezikakasiddwa zifuna akabonero k'obwesigwa era zirabika mu \"Bizinensi Ezikakasiddwa\" ku lupapula lw'awaka. Okuva mu Entegeka za Bizinensi → \"Saba Okukakasibwa,\" londa TIN okukakasa ennamba yo ey'omusolo ku byafaayo bya TRA, oba BRELA okukakasa okuwandiisibwa kwo okwa kkampuni okw'omu bufuzi — byombi bya bwerere era tebyetaagisa.",
+        "note": "Okukakasibwa kwa bwerere okumalako — bizinensi ezitakakasiddwa zisobola okuwandiisa, okuwandiika, n'okutunda nga bulijjo. Kyongera bukebonero bw'obwesigwa obulabika eri abaguzi.",
+        "subheading4": "Okulangirira bizinensi yo",
+        "p3": "Okuva ku ttabu \"Kulembeza,\" sasula okulaga bizinensi yo yonna oba ekintu kimu ku lupapula lw'awaka okumala ennaku ezigere (7, 14, oba 30). Okusaba kusigala nga \"Kulindirira Okusasula\" okutuusa envoyisi lwe erabibwako, oluvannyuma ne kufuuka nga kukola okumala ekiseera ekyalondeddwa.",
+        "subheading5": "Ebisaba, ebisuubizo, n'ebiyingizibwa",
+        "bullets2": [
+          "Ebisaba — laba ebisaba by'ebintu eby'awamu okuva ku baguzi abali okumpi era osabe ekyo kyonna ekigwanira ku kimu ku bintu byo.",
+          "Ebisuubizo — kebera ebisuubizo by'omuwendo abaguzi bye baawa ku bintu byo, era Kkiriza, Gaana, oba Wa Ekisuubizo Ekirala ku muwendo omulala.",
+          "Ebiyingizibwa — bwe weyongereza \"okukola mu biyingizibwa\" mu Ntegeka, saba ebisaba by'abaguzi eby'ebiyingizibwa nga owaayo omuwendo, ssente, n'ekiseera ekisuubirwa eky'okutuusa."
+        ]
+      },
+      "institutions": {
+        "p1": "Ekitongole kikiikirira ekibiina (SACCOS, ekibiina ky'obuyambi, essomero, kkampuni) ekyawukana ku eduuka lya bizinensi ery'omuntu omu. Tondawo ku \"Tondawo Ekitongole,\" oluvannyuma olabirire abakozi, ebisaawe, n'entegeka okuva ku lupapula lwakyo olw'obuyambi — buli kitongole era kifuna olupapula lwakyo olw'olukale.",
+        "subheading1": "Okulabirira ekitongole kyo",
+        "bullets": [
+          "Ebitongole — laba buli kitongole ky'olabirira, nga kirimu enjagala ey'okutandikawo ekipya.",
+          "Ebisaawe — yongeramu oba ggyamu ebisaawe ebiri munda mu kitongole kyo.",
+          "Abakozi — yongeramu omukozesa amaze okwewandiisa ng'omukozi nga oyingiza email ye ne ekifo kye n'ennamba y'essimu.",
+          "Amasaza n'Ebika by'Ekitongole — amawulire agakozesebwa ng'oteekawo ekitongole kyo; tegakyusibwa okuva wano."
+        ]
+      },
+      "logistics": {
+        "bullets": [
+          "Fuuka omutwazi okuva ku Entambula → Kakasa (kiwaayo laisinsi yo ey'okuvuga n'ebikwatako emmotoka olw'okukakasibwa).",
+          "Saba okutwalibwa okuva ku Entambula → Saba, ng'olaga we ekintu kikwatirwa, we kigenda, n'ebikwatako paketi.",
+          "Abatwazi abakakasiddwa bakkiriza emirimu okuva ku \"Emirimu gy'Entambula\" era baddiramu embeera nga bagenda mu maaso; enjuyi zombi zigoberera ekyo wansi wa \"Ebyokutwala Byange.\""
+        ]
+      },
+      "realestate": {
+        "bullets": [
+          "Noonya olulalo wansi wa \"Ebizimbe,\" ng'osengejja ku kika, ekifo, n'omuwendo.",
+          "Ggulawo olulalo okulaba ebifaananyi n'okuweereza ekibuuzo eri nannyini kyo.",
+          "Bannannyini balabirira olulalo lwabwe wansi wa \"Ebyange\" n'ebibuuzo wansi wa \"Ebibuuzo Byange.\""
+        ]
+      },
+      "agriculture": {
+        "p1": "Abalimi bateekawo olulalo lwa \"Saba Ekungula\" olunnyonnyola ekirime, omuwendo ogusuubirwa, n'ennaku; abaguzi beeyama ku kugula mu maaso ng'ekungula tekinnaba kutegekebwa. Abatunzi balabirira endagaano zino okuva ku ttabu lya \"Amakungula\" mu dashboard yaabwe eya bizinensi."
+      },
+      "construction": {
+        "p1": "Bakasitoma bateekawo pulojekiti wansi wa \"Saba Pulojekiti\" enyonnyola omugendo, ssente, n'ekiseera. Bizinensi z'okuzimba ziwaayo ebisuubizo okuva ku ttabu lyazo \"Ebikwata ku Mikutu,\" era omukasitoma alonda omukozi w'omulimu."
+      },
+      "payments": {
+        "bullets": [
+          "Envoyisi — kola era okebere envoyisi ezifulumizibwa eri oba okuva ku bizinensi yo.",
+          "Enkola z'Okusasula — labirira kaadi eziterekeddwa n'akawunti akakwatagana.",
+          "Lipoota z'Okusasula — enfaanana y'omuwendo n'ebikolwa by'okusasula okumala ekiseera.",
+          "Akawunti k'Ebbanja — labirira akawunti ka bizinensi ak'engeri y'ebbanja, we kasangibwa.",
+          "Endagiriro z'Okwekebejja — endagiriro y'ebikolwa ebikwatagana n'okusasula olw'obuvunaanyizibwa."
+        ]
+      },
+      "chat": {
+        "p1": "Okuwuliziganya mu kaseera ako kennyini wakati w'abaguzi n'abatunzi, oba abakozesa babiri bonna ab'oku kifo — buuza ku lulalo, tereza, oba tegeka okutwalibwa nga tofulumye ku JamiiKazini."
+      },
+      "security": {
+        "bullets": [
+          "Kyusa ekigambo kyo ekyekusifu okuva ku Entegeka z'Akawunti.",
+          "Teekawo Okukakasibwa mu Mitendera Ebiri (2FA) n'app y'okukakasa olw'ekifo ekirala eky'okuyingira.",
+          "Okukakasibwa kw'endagamuntu ne bizinensi kwekenneenyezebwa ku byafaayo bya gavumenti ebituufu, nga bisibiddwa nga biterekeddwa."
+        ]
+      },
+      "language": {
+        "p1": "Kyusa olulimi lwo olw'okulaga buli ssaawa okuva ku kalondoozi ku lubalirira olw'engulu — kikola mangu mu kifo kyonna, tewali kwetaaga kuddamu kutandika. Okulondawo kwo eggwanga kwe kuteekawo ssente zo ez'obulijjo; okukyusa okugenda mu ssente endala ezikozesebwa ku kifo kikolebwa kyokka nga kukozesa emiwendo gy'akatale agafulumye."
+      },
+      "faq": {
+        "items": [
+          {
+            "q": "Nneetaaga okukakasa endagamuntu yange okukozesa JamiiKazini?",
+            "a": "Nedda. Okuwandiisa, okunoonya, okugula, n'okutunda byonna bikola awatali ekyo. Okukakasibwa kwa bwerere era kwongera akabonero k'obwesigwa."
+          },
+          {
+            "q": "Nsobola okukozesa JamiiKazini mu lulimi lwange?",
+            "a": "Yee — ennimi 15 ziwagirwa, era zisobola okukyusibwa buli ssaawa okuva ku kalondoozi k'olulimi."
+          },
+          {
+            "q": "Ndiggya ssente zange okuva ku JamiiKazini ntya?",
+            "a": "Kozesa \"Ggyamu Ssente\" mu JamiiWallet okuggya okugenda mu ssente za simu oba akawunti k'ebbanka akakwatagana."
+          },
+          {
+            "q": "Bizinensi esobola okukola awatali kuwandiisa kitongole?",
+            "a": "Yee — Bizinensi n'Ekitongole bya njawulo; abatunzi abasinga baabwe beetaaga kuwandiisa Bizinensi yokka."
+          },
+          {
+            "q": "Nkole ntya bwe sifuna kintu kye neetaaga?",
+            "a": "Teekawo \"Saba Ekintu\" oba \"Saba Ebiyingizibwa\" ng'onnyonnyola ky'oyagala, era okebere ebisuubizo by'abatunzi."
+          }
+        ]
+      },
+      "support": {
+        "bullets": [
+          "Kozesa JamiiChat okuweereza obubaka butereevu eri bizinensi ku bibuuzo ebikwatagana n'oda oba olulalo.",
+          "Kebera ekifo kyo eky'okulabula ku nkyukakyuka za oda, okusaba okukakasibwa, n'ebikolwa by'ensawo.",
+          "Tuukirira obuyambi bw'ekifo okuyita mu mukutu ogulaze ku mukutu gwa yintaneeti gwa JamiiKazini."
+        ]
+      },
+      "multidomain": {
+        "p1": "Buli bizinensi na kitongole kisobola okufuna endagiriro yaakyo ey'eduuka, ng'eduuka lyo.jamiikazini.com, mu kifo ky'okuweereza bakasitoma ku muguwa ogw'awamu ogw'eduuka. Omugenyi ku ndagiriro eyo alaba enkola esimbiddwa, ey'eduuka limu — okunoonya, ekibbo, okusasula, n'okuyingira/okwewandiisa — awatali menyu endala eya JamiiKazini okwetooloola.",
+        "steps": [
+          "Ggulawo olupapula lw'Entegeka za Bizinensi yo (oba Ekitongole).",
+          "Noonya kaadi \"Gabana Eduuka Lyo\" (oba \"Gabana Ekitongole Kyo\").",
+          "Wandiika akasaawe k'oyagala era okatereke.",
+          "Kozesa \"Koppa Omuguwa\" okufuna endagiriro yo eyennyini (nga eduuka lyo.jamiikazini.com) nga yetegese okugabanibwa wonna wonna."
+        ],
+        "note": "Akasaawe akeetongole akalonzeddwa kya bwerere okumalako — eduuka lyo era lisigala nga lisangibwa ku muguwa gwalyo ogw'obulijjo ogwa /store/ oba /institutions/ ku mukutu omukulu."
+      },
+      "teaching": {
+        "p1": "Ekitongole ky'Okuyigiriza kikoleddwa abasomesa, nga kibakkiriza okulabirira ebisomo n'amakalasi bye bayigiriza era nga bafuna obutereevu enteekateeka z'okusomesa n'entegeka z'omulimu mu kifo ky'okuziwandiika okuva ku ntandikwa.",
+        "steps": [
+          "Awaka w'Okuyigiriza — ekitandikira ekirimu ebitundu bina: Ebisomo Byange, Sikedyulu, Enteekateeka y'Okusomesa, n'Entegeka y'Omulimu.",
+          "Ebisomo Byange — sooka oteekewo ekifo ky'omulimu (essomero, disitulikiti, wadi), oluvannyuma olabe ebisomo by'oyigiriza n'omuwendo gw'abayizi ogunnyweza okuva ku sikedyulu yo, era ogende butereevu okukola enteekateeka y'okusomesa oba entegeka y'omulimu ku kimu ku byo.",
+          "Sikedyulu Yange — yongeramu, kyusa, oba ggyamu ebisomo by'oyigiriza, olw'ekibiina ki, n'ebiseera bimeka mu wiiki.",
+          "Enteekateeka y'Okusomesa — londa ekisomo n'omulimu ogw'okuyiga, jjuza ebikwata ku kusomesa, era okole enteekateeka y'okusomesa nga yeetegese.",
+          "Entegeka y'Omulimu — londa ekisomo ne kalenda w'ekyomu, oluvannyuma weerabire, okole, oba osindike sikedyulu y'omwaka gwonna ogw'okusomesa nga PDF."
+        ]
+      }
+    }
   }
 }

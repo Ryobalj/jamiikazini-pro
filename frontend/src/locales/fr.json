@@ -186,5 +186,221 @@
       "empty": "Aucun service en tête disponible.",
       "used": "{{count}} utilisés"
     }
+  },
+  "help": {
+    "sidebar_label": "Manuel de l'Utilisateur",
+    "title": "Manuel de l'Utilisateur JamiiKazini",
+    "subtitle": "Un guide complet pour utiliser chaque partie de la plateforme",
+    "toc": {
+      "intro": "Introduction",
+      "getting_started": "Premiers Pas",
+      "wallet": "Portefeuille",
+      "marketplace": "Marché",
+      "businesses": "Entreprises",
+      "institutions": "Institutions",
+      "logistics": "Logistique",
+      "realestate": "Immobilier",
+      "agriculture": "Agriculture",
+      "construction": "Construction",
+      "payments": "Paiements",
+      "chat": "Discussion",
+      "security": "Sécurité",
+      "language": "Langue",
+      "faq": "FAQ",
+      "support": "Assistance",
+      "multidomain": "Boutiques Multi-domaines",
+      "teaching": "Enseignement"
+    },
+    "note_label": "Remarque",
+    "body": {
+      "intro": {
+        "p1": "JamiiKazini (« Communauté de Travail ») rassemble la vie économique quotidienne des communautés d'Afrique de l'Est sur une seule plateforme : un portefeuille numérique, une place de marché en ligne, des outils pour les entreprises, la logistique, des groupes d'épargne, et des services sectoriels (immobilier, agriculture, construction).",
+        "subheading": "Qui utilise JamiiKazini ?",
+        "bullets": [
+          "Client / Acheteur — parcourt et achète, envoie et reçoit de l'argent, rejoint des groupes d'épargne, demande des livraisons, loue ou achète un bien.",
+          "Propriétaire d'entreprise / Prestataire — enregistre une entreprise, liste des produits et services, gère les commandes, demande une vérification gouvernementale (TIN/BRELA).",
+          "Transporteur / Chauffeur — s'enregistre comme prestataire de livraison et accepte des missions logistiques.",
+          "Administrateur d'institution — gère une institution (SACCOS, entreprise, école) et son personnel."
+        ],
+        "p2": "La plateforme est disponible en 15 langues (anglais, kiswahili, français, arabe, afrikaans, haoussa, hindi, japonais, coréen, luganda, portugais, russe, kinyarwanda, chinois, espagnol) et prend en charge les intégrations de vérification gouvernementale en Tanzanie, au Kenya, en Ouganda, au Rwanda, au Burundi et au Soudan du Sud."
+      },
+      "getting_started": {
+        "subheading1": "Créer un compte",
+        "steps": [
+          "Sélectionnez « S'inscrire » dans la barre de navigation supérieure.",
+          "Entrez votre nom complet, e-mail, numéro de téléphone et mot de passe.",
+          "Choisissez votre langue et pays préférés.",
+          "Validez — un lien de vérification est envoyé à votre e-mail.",
+          "Cliquez sur le lien pour activer votre compte, puis connectez-vous."
+        ],
+        "subheading2": "Profil et vérification d'identité",
+        "p1": "Mettez à jour vos informations depuis Profil / Modifier le profil / Paramètres du compte. Certaines actions — recevoir de gros paiements, devenir chauffeur-livreur, vérifier entièrement une entreprise — nécessitent une vérification d'identité via « Vérifier l'identité », qui contrôle votre pièce d'identité nationale par rapport au registre de votre pays.",
+        "subheading3": "Inviter des amis",
+        "p2": "Depuis « Inviter des amis » dans votre menu de compte, partagez un message d'invitation tout prêt via WhatsApp, Facebook, Telegram, X (Twitter), ou LinkedIn, ou copiez simplement le lien. C'est un moyen simple d'amener des personnes que vous connaissez sur la plateforme — aucune récompense de parrainage n'est suivie sur ce lien précis (les entreprises ont leur propre système de code de parrainage dans leurs paramètres).",
+        "subheading4": "La barre de navigation supérieure",
+        "p3": "L'icône Recherche ouvre une boîte de recherche rapide directement dans la barre. L'icône cloche affiche vos Notifications, avec un badge pour tout ce qui n'a pas été lu. L'icône soleil/lune/moniteur fait défiler votre thème d'affichage entre Clair, Sombre, et Système (qui suit automatiquement le réglage de votre appareil)."
+      },
+      "wallet": {
+        "p1": "Chaque utilisateur dispose d'un portefeuille avec un solde dans sa devise locale, utilisé dans toute la plateforme.",
+        "subheading1": "Recharger",
+        "p2": "Depuis JamiiWallet → « Ajouter des fonds », payez par mobile money (M-Pesa, Airtel Money et autres via PawaPay), carte (Stripe), ou Flutterwave, selon votre pays.",
+        "subheading2": "Envoyer de l'argent et retirer",
+        "steps": [
+          "Sélectionnez « Envoyer de l'argent », entrez le téléphone/e-mail/nom d'utilisateur du destinataire et le montant, confirmez.",
+          "Enregistrez les destinataires fréquents comme Bénéficiaires pour des transferts plus rapides.",
+          "Utilisez « Retirer » pour retirer vers du mobile money ou un compte bancaire lié."
+        ],
+        "subheading3": "Factures, transactions et groupes d'épargne",
+        "bullets": [
+          "BillPay — payez vos factures récurrentes directement depuis le solde de votre portefeuille.",
+          "Transactions — historique complet et consultable de chaque recharge, transfert, paiement et retrait.",
+          "Groupes d'épargne — créez ou rejoignez un groupe numérique de type VICOBA/SACCOS, cotisez depuis votre portefeuille, et laissez les administrateurs du groupe approuver les demandes de retrait, le tout dans un registre partagé transparent."
+        ]
+      },
+      "marketplace": {
+        "subheading1": "La page d'accueil",
+        "bullets1": [
+          "Services tendance — services populaires actuellement actifs sur la plateforme.",
+          "Entreprises vérifiées — entreprises ayant terminé la vérification d'identité/licence gouvernementale.",
+          "Parcourir par catégorie — appuyez sur une tuile de catégorie pour voir toutes les entreprises et produits associés.",
+          "Entreprises à proximité — une vue géolocalisée des boutiques et prestataires proches de vous."
+        ],
+        "subheading2": "Panier et paiement",
+        "steps": [
+          "Ajoutez des produits à votre panier depuis leurs pages d'annonce.",
+          "Vérifiez les articles dans « Panier », ajustez les quantités si besoin.",
+          "Passez à la caisse, choisissez livraison ou retrait, et payez depuis votre solde JamiiWallet.",
+          "Suivez votre commande sous « Mes commandes »."
+        ],
+        "p1": "Vous ne trouvez pas ce dont vous avez besoin ? Publiez une « Demande d'article » (ou « Demande d'importation » pour les produits venant d'ailleurs) et consultez les offres des vendeurs sous « Mes offres ».",
+        "subheading3": "Entreprises à proximité",
+        "p2": "« Entreprises à proximité » utilise la localisation de votre appareil pour afficher les boutiques et prestataires autour de vous, avec un curseur de distance et un filtre par catégorie pour affiner la recherche. Chaque résultat affiche sa distance, sa note, et ses coordonnées, et un bouton « Contacter le vendeur » ouvre directement une conversation JamiiChat avec lui."
+      },
+      "businesses": {
+        "subheading1": "Enregistrer une entreprise",
+        "steps": [
+          "Sélectionnez « Enregistrer une entreprise » dans votre menu de compte.",
+          "Entrez le nom de l'entreprise, la catégorie, la description, les coordonnées et l'emplacement.",
+          "Téléchargez un logo et une photo de couverture, puis validez.",
+          "Votre boutique est immédiatement en ligne — vous pouvez lister produits et services tout de suite."
+        ],
+        "subheading2": "Le tableau de bord de l'entreprise",
+        "p1": "Aperçu · Produits/Services (avec galeries photo) · Succursales · Commandes · Demandes/Offres · Importations · Récoltes · Appels d'offres · Publicité · Paramètres.",
+        "subheading3": "Vérification (TIN / BRELA)",
+        "p2": "Les entreprises vérifiées obtiennent un badge de confiance et apparaissent dans « Entreprises vérifiées » sur la page d'accueil. Depuis Paramètres de l'entreprise → « Demander une vérification », choisissez TIN pour vérifier votre numéro d'identification fiscale auprès de la TRA, ou BRELA pour vérifier votre enregistrement officiel d'entreprise — les deux sont indépendants et facultatifs.",
+        "note": "La vérification est entièrement facultative — les entreprises non vérifiées peuvent s'enregistrer, lister et vendre normalement. Elle ajoute seulement un signal de confiance visible pour les acheteurs.",
+        "subheading4": "Faire de la publicité pour votre entreprise",
+        "p3": "Depuis l'onglet « Publicité », payez pour mettre en avant toute votre entreprise ou un seul produit sur la page d'accueil pendant un nombre de jours défini (7, 14, ou 30). Une demande reste « En attente de paiement » jusqu'au règlement de la facture, puis devient active pour la durée choisie.",
+        "subheading5": "Demandes, offres et importations",
+        "bullets2": [
+          "Demandes — consultez les demandes d'articles génériques des acheteurs à proximité et acceptez celles qui correspondent à l'un de vos produits.",
+          "Offres — examinez les offres de prix que les acheteurs ont faites sur vos produits, et Acceptez, Refusez, ou Contre-proposez un prix différent.",
+          "Importations — si vous activez « traite des importations » dans les Paramètres, acceptez les demandes d'importation des acheteurs en indiquant un prix, une devise, et un délai de livraison estimé."
+        ]
+      },
+      "institutions": {
+        "p1": "Une Institution représente une organisation (SACCOS, coopérative, école, entreprise) distincte d'une boutique d'entreprise individuelle. Créez-en une depuis « Créer une institution », puis gérez le personnel, les départements et les paramètres depuis sa page de gestion — chaque institution obtient aussi sa propre page publique.",
+        "subheading1": "Gérer votre institution",
+        "bullets": [
+          "Institutions — voyez chaque institution que vous gérez, avec un raccourci pour en créer une nouvelle.",
+          "Départements — ajoutez ou supprimez les départements au sein de votre institution.",
+          "Personnel — ajoutez un utilisateur déjà enregistré comme membre du personnel en saisissant son e-mail ainsi que son titre et son numéro de téléphone.",
+          "Niveaux et types d'institution — informations de référence utilisées lors de la configuration de votre institution ; elles ne sont pas modifiables ici."
+        ]
+      },
+      "logistics": {
+        "bullets": [
+          "Devenez transporteur depuis Logistique → Vérifier (soumet votre permis de conduire et les détails du véhicule pour vérification).",
+          "Demandez une livraison depuis Logistique → Demander, en précisant le lieu de collecte, de dépôt et les détails du colis.",
+          "Les transporteurs vérifiés acceptent des missions depuis « Missions logistiques » et mettent à jour le statut au fur et à mesure ; les deux parties suivent cela sous « Mes livraisons »."
+        ]
+      },
+      "realestate": {
+        "bullets": [
+          "Parcourez les annonces sous « Immobilier », en filtrant par type, emplacement et prix.",
+          "Ouvrez une annonce pour voir les photos et envoyer une demande au propriétaire.",
+          "Les propriétaires gèrent leurs annonces sous « Mes biens » et les demandes sous « Mes demandes »."
+        ]
+      },
+      "agriculture": {
+        "p1": "Les agriculteurs publient une annonce « Demande de récolte » décrivant la culture, la quantité attendue et la date ; les acheteurs s'engagent sur un achat à terme avant que la récolte soit prête. Les vendeurs gèrent ces engagements depuis l'onglet « Récolte » de leur tableau de bord d'entreprise."
+      },
+      "construction": {
+        "p1": "Les clients publient un projet sous « Demande de projet » décrivant la portée, le budget et le calendrier. Les entreprises de construction soumettent des offres depuis leur onglet « Appels d'offres », et le client sélectionne un entrepreneur."
+      },
+      "payments": {
+        "bullets": [
+          "Factures — générez et consultez les factures émises vers ou depuis votre entreprise.",
+          "Moyens de paiement — gérez les cartes enregistrées et les comptes liés.",
+          "Rapports de paiement — résumés des revenus et de l'activité de paiement dans le temps.",
+          "Compte de crédit — gérez un compte de type ligne de crédit pour votre entreprise, si disponible.",
+          "Journaux d'audit — un enregistrement des actions liées aux paiements pour la responsabilisation."
+        ]
+      },
+      "chat": {
+        "p1": "Messagerie en temps réel entre acheteurs et vendeurs, ou entre deux utilisateurs quelconques de la plateforme — posez des questions sur une annonce, négociez, ou coordonnez une livraison sans quitter JamiiKazini."
+      },
+      "security": {
+        "bullets": [
+          "Changez votre mot de passe depuis les Paramètres du compte.",
+          "Configurez l'authentification à deux facteurs (2FA) avec une application d'authentification pour une étape de connexion supplémentaire.",
+          "La vérification d'identité et d'entreprise est contrôlée par rapport aux registres gouvernementaux officiels, chiffrée au repos."
+        ]
+      },
+      "language": {
+        "p1": "Changez votre langue d'affichage à tout moment depuis le sélecteur dans la barre de navigation supérieure — cela s'applique instantanément sur toute la plateforme, sans besoin de rafraîchir. Votre choix de pays définit votre devise par défaut ; la conversion vers d'autres devises utilisées sur la plateforme est automatique grâce à des taux de marché à jour."
+      },
+      "faq": {
+        "items": [
+          {
+            "q": "Dois-je vérifier mon identité pour utiliser JamiiKazini ?",
+            "a": "Non. L'inscription, la navigation, l'achat et la vente fonctionnent tous sans cela. La vérification est facultative et ajoute un badge de confiance."
+          },
+          {
+            "q": "Puis-je utiliser JamiiKazini dans ma propre langue ?",
+            "a": "Oui — 15 langues sont prises en charge, modifiables à tout moment depuis le sélecteur de langue."
+          },
+          {
+            "q": "Comment retirer mon argent de JamiiKazini ?",
+            "a": "Utilisez « Retirer » dans JamiiWallet pour retirer vers du mobile money ou un compte bancaire lié."
+          },
+          {
+            "q": "Une entreprise peut-elle fonctionner sans enregistrer une institution ?",
+            "a": "Oui — Entreprise et Institution sont distinctes ; la plupart des vendeurs n'ont besoin d'enregistrer qu'une Entreprise."
+          },
+          {
+            "q": "Que faire si je ne trouve pas un produit dont j'ai besoin ?",
+            "a": "Publiez une « Demande d'article » ou « Demande d'importation » décrivant ce dont vous avez besoin, et consultez les offres des vendeurs."
+          }
+        ]
+      },
+      "support": {
+        "bullets": [
+          "Utilisez JamiiChat pour contacter directement une entreprise pour des questions liées à une commande ou une annonce.",
+          "Consultez votre centre de notifications pour les mises à jour des commandes, demandes de vérification et activité du portefeuille.",
+          "Contactez le support de la plateforme via le canal fourni sur le site web de JamiiKazini."
+        ]
+      },
+      "multidomain": {
+        "p1": "Chaque entreprise et institution peut obtenir sa propre adresse de boutique, comme monmagasin.jamiikazini.com, au lieu d'envoyer les clients vers un lien de boutique générique. Un visiteur sur cette adresse voit une expérience ciblée, celle d'une seule boutique — navigation, panier, paiement, et connexion/inscription — sans le reste du menu JamiiKazini autour.",
+        "steps": [
+          "Ouvrez la page Paramètres de votre entreprise (ou institution).",
+          "Trouvez la carte « Partager votre boutique » (ou « Partager votre institution »).",
+          "Tapez le sous-domaine que vous voulez et enregistrez-le.",
+          "Utilisez « Copier le lien » pour obtenir votre adresse complète (par ex. monmagasin.jamiikazini.com) prête à partager n'importe où."
+        ],
+        "note": "Le sous-domaine personnalisé est entièrement facultatif — votre boutique reste également accessible via son lien habituel /store/ ou /institutions/ sur le site principal."
+      },
+      "teaching": {
+        "p1": "Le module Enseignement est destiné aux enseignants, leur permettant de gérer les matières et classes qu'ils enseignent et de générer automatiquement des plans de leçon et des programmes de travail plutôt que de les rédiger de zéro.",
+        "steps": [
+          "Accueil Enseignement — un lanceur avec quatre tuiles : Mes matières, Emploi du temps, Plan de leçon, et Programme de travail.",
+          "Mes matières — configurez d'abord votre poste de travail (école, district, quartier), puis consultez les matières que vous enseignez avec le nombre d'élèves tiré de votre emploi du temps, et accédez directement à la génération d'un plan de leçon ou d'un programme de travail pour l'une d'entre elles.",
+          "Mon emploi du temps — ajoutez, modifiez, ou supprimez les matières que vous enseignez, pour quelle classe, et combien de périodes par semaine.",
+          "Plan de leçon — choisissez une matière et une activité d'apprentissage, remplissez les détails de la leçon, et générez un plan de leçon prêt.",
+          "Programme de travail — choisissez une matière et un calendrier scolaire, puis prévisualisez, générez, ou téléchargez le programme complet d'enseignement du trimestre en PDF."
+        ]
+      }
+    }
   }
 }

@@ -1,7 +1,7 @@
 // src/components/Sidebar.jsx
 
 import React, { useState, useEffect, useRef } from "react";
-import { ChevronRight, LogIn, UserPlus, X } from "lucide-react";
+import { ChevronRight, LogIn, UserPlus, X, BookOpen } from "lucide-react";
 import * as LucideIcons from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAppContext } from "@/context/AppContext";
@@ -146,6 +146,29 @@ export default function Sidebar({ isOpen = false, onClose }) {
           ) : (
             userMenu.map((item, idx) => renderMenuButton(item, idx))
           )}
+
+          {/* Always visible, whether logged in or a guest */}
+          <div className="border-t border-gray-200 dark:border-gray-700 pt-2 mt-1">
+            <button
+              aria-label={t("help.sidebar_label", { ns: "common", defaultValue: "User Manual" })}
+              title={t("help.sidebar_label", { ns: "common", defaultValue: "User Manual" })}
+              onClick={() => {
+                setActiveMenu(null);
+                navigate("/help");
+              }}
+              className="flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-xl mx-auto transition-all duration-300 hover:scale-105 relative"
+              style={{
+                backgroundColor: location.pathname === "/help" ? "#C08A2E15" : "transparent",
+                color: location.pathname === "/help" ? "#C08A2E" : "#6B7280",
+              }}
+            >
+              <div
+                className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-r-full transition-all duration-300"
+                style={{ backgroundColor: location.pathname === "/help" ? "#C08A2E" : "transparent" }}
+              />
+              <BookOpen size={20} className="mx-auto" />
+            </button>
+          </div>
         </nav>
       </aside>
 

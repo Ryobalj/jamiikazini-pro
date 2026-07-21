@@ -187,5 +187,221 @@
       "empty": "Nta serivisi zikunzwe ziboneka.",
       "used": "{{count}} zakoreshejwe"
     }
+  },
+  "help": {
+    "sidebar_label": "Ubuyobozi bw'Ukoresha",
+    "title": "Ubuyobozi bw'Ukoresha bwa JamiiKazini",
+    "subtitle": "Ubuyobozi bwuzuye bwo gukoresha buri gice cy'urubuga",
+    "toc": {
+      "intro": "Intangiriro",
+      "getting_started": "Gutangira",
+      "wallet": "Ikofi",
+      "marketplace": "Isoko",
+      "businesses": "Ubucuruzi",
+      "institutions": "Ibigo",
+      "logistics": "Ubwikorezi",
+      "realestate": "Amazu n'Ubutaka",
+      "agriculture": "Ubuhinzi",
+      "construction": "Ubwubatsi",
+      "payments": "Kwishyura",
+      "chat": "Ikiganiro",
+      "security": "Umutekano",
+      "language": "Ururimi",
+      "faq": "Ibibazo Bikunze Kubazwa",
+      "support": "Ubufasha",
+      "multidomain": "Amaduka Afite Domain Nyinshi",
+      "teaching": "Kwigisha"
+    },
+    "note_label": "Icyitonderwa",
+    "body": {
+      "intro": {
+        "p1": "JamiiKazini (\"Umuryango w'Akazi\") ihuza ubuzima bwa buri munsi bw'ubukungu bw'imiryango yo mu Burasirazuba bwa Afurika ku rubuga rumwe: agasanduku k'ikoranabuhanga, isoko rikorera kuri interineti, ibikoresho by'ubucuruzi, ubwikorezi, amatsinda y'ubwizigame, n'imirimo yihariye (imitungo itimukanwa, ubuhinzi, ubwubatsi).",
+        "subheading": "Ninde ukoresha JamiiKazini?",
+        "bullets": [
+          "Umukiriya / Umuguzi — arareba akaguza, ohereza kandi akakira amafaranga, yinjira mu matsinda y'ubwizigame, asaba gutwara ibintu, akodesha cyangwa akagura umutungo.",
+          "Nyir'ubucuruzi / Utanga serivisi — yandikisha ubucuruzi, ashyiraho ibicuruzwa na serivisi, acunga amateka, asaba kwemezwa na leta (TIN/BRELA).",
+          "Utwara ibintu / Umushoferi — yiyandikisha nk'utanga serivisi z'ubwikorezi kandi yemera imirimo y'ubwikorezi.",
+          "Umuyobozi w'Ikigo — acunga ikigo (SACCOS, sosiyete, ishuri) n'abakozi bacyo."
+        ],
+        "p2": "Urubuga ruboneka mu ndimi 15 (Icyongereza, Igiswahili, Igifaransa, Icyarabu, Ikiyafurika, Igihausa, Igihindi, Ikiyapani, Ikoreya, Iruganda, Igiporutugali, Ikirusiya, Ikinyarwanda, Igishinwa, Icyesipanyoli) kandi rishyigikira ubufatanye bwo kwemeza n'ibihugu muri Tanzaniya, Kenya, Uganda, u Rwanda, Burundi, na Sudani y'Epfo."
+      },
+      "getting_started": {
+        "subheading1": "Gufungura konti",
+        "steps": [
+          "Hitamo \"Iyandikishe\" ku murongo w'ibikoresho hejuru.",
+          "Injiza amazina yawe yuzuye, imeli, numero ya telefone, n'ijambobanga.",
+          "Hitamo ururimi n'igihugu ushaka.",
+          "Ohereza — ihuza ryo kwemeza rizoherezwa kuri imeli yawe.",
+          "Kanda kuri iryo huza kugira ngo ukoreshe konti yawe, hanyuma winjire."
+        ],
+        "subheading2": "Umwirondoro no kwemeza indangamuntu",
+        "p1": "Vugurura amakuru yawe uhereye ku Mwirondoro / Hindura Umwirondoro / Igenamiterere rya Konti. Ibikorwa bimwe — kwakira amafaranga menshi, kuba umushoferi w'ubwikorezi, kwemeza burundu ubucuruzi — bisaba kwemeza indangamuntu binyuze muri \"Emeza Indangamuntu,\" bigenzura indangamuntu yawe y'igihugu ugereranyije n'ibyanditswe by'igihugu cyawe.",
+        "subheading3": "Gutumira inshuti",
+        "p2": "Uhereye kuri \"Tumira Inshuti\" mu rutonde rwa konti yawe, sangira ubutumwa bw'ubutumire buteguwe binyuze kuri WhatsApp, Facebook, Telegram, X (Twitter), cyangwa LinkedIn, cyangwa gukoporora gusa ihuza. Ni uburyo bworoshye bwo kuzana abantu ubazi ku rubuga — nta gihembo cy'ubwoherezanyi gikurikiranwa kuri iri huza ryihariye (ubucuruzi bufite uburyo butandukanye bw'kode y'ubwoherezanyi mu igenamiterere ryabwo bwite).",
+        "subheading4": "Umurongo w'ibikoresho hejuru",
+        "p3": "Ikimenyetso cyo Gushakisha gifungura agasanduku ko gushakisha vuba aho ku murongo. Ikimenyetso cy'inzogera kigaragaza Amatangazo yawe, hamwe n'akamenyetso ku ntariko byose bitasomwe. Ikimenyetso cy'izuba/ukwezi/ecran gihindura uburyo bwo kwerekana hagati y'Umucyo, Umwijima, na Sisitemu (bikurikiza mu buryo bwikora igenamiterere ry'igikoresho cyawe)."
+      },
+      "wallet": {
+        "p1": "Buri mukoresha afite agasanduku gafite amafaranga mu ifaranga ry'igihugu cye, gakoreshwa mu rubuga rwose.",
+        "subheading1": "Kwinjiza amafaranga",
+        "p2": "Uhereye kuri JamiiWallet → \"Ongeraho Amafaranga,\" ishyura ukoresheje amafaranga ya telefone (M-Pesa, Airtel Money n'andi binyuze kuri PawaPay), ikarita (Stripe), cyangwa Flutterwave, bitewe n'igihugu cyawe.",
+        "subheading2": "Kohereza amafaranga no kubikuramo",
+        "steps": [
+          "Hitamo \"Ohereza Amafaranga,\" injiza telefone/imeli/izina ry'uwakira n'umubare, wemeze.",
+          "Bika abakira kenshi nk'Abungukirwa kugira ngo kwohereza bibe byihuse.",
+          "Koresha \"Kubikuramo\" kugira ngo ubikure ujye mu mafaranga ya telefone cyangwa konti ya banki ihujwe."
+        ],
+        "subheading3": "Fagitire, ibikorwa, n'amatsinda y'ubwizigame",
+        "bullets": [
+          "BillPay — ishyura fagitire zisubira kenshi zituruka ku mafaranga y'agasanduku kawe.",
+          "Ibikorwa — amateka yuzuye ashobora gushakishwa ya buri kwinjiza amafaranga, kohereza, kwishyura, no kubikuramo.",
+          "Amatsinda y'Ubwizigame — kora cyangwa injira mu itsinda ry'ikoranabuhanga rimeze nka VICOBA/SACCOS, tanga umusanzu uturuka ku gasanduku kawe, kandi ureke abayobozi b'itsinda bemeze ibisabwa byo kubikuramo, byose mu gitabo gisangiwe kigaragara."
+        ]
+      },
+      "marketplace": {
+        "subheading1": "Urupapuro rw'itangiriro",
+        "bullets1": [
+          "Serivisi zikunzwe — serivisi zikunzwe zikora ubu ku rubuga.",
+          "Ubucuruzi bwemejwe — ubucuruzi bwarangije kwemeza indangamuntu/uruhushya rwa leta.",
+          "Shakisha ukurikije Icyiciro — kanda ku kintu icyo ari cyo cyose cy'icyiciro kugira ngo ubone ubucuruzi n'ibicuruzwa byose biri munsi yacyo.",
+          "Ubucuruzi buri hafi — igaragaza amaduka n'abatanga serivisi bari hafi yawe hashingiwe ku ho uri."
+        ],
+        "subheading2": "Igikoni n'ukwishyura",
+        "steps": [
+          "Ongeraho ibicuruzwa mu gikoni cyawe uhereye ku mapaji yabyo yo kuyereka.",
+          "Suzuma ibintu muri \"Igikoni,\" hindura umubare uko bikenewe.",
+          "Ishyura, hitamo gutwarwa cyangwa kubijyana wenyine, wishyure ukoresheje amafaranga yo kuri JamiiWallet yawe.",
+          "Kurikirana itumiza ryawe munsi ya \"Itumiza Ryanjye.\""
+        ],
+        "p1": "Ntubona icyo ukeneye? Shyiraho \"Saba Ikintu\" (cyangwa \"Saba Itumizwa\" ku bintu bituruka ahandi) hanyuma usuzume ibyo abacuruzi batanga munsi ya \"Ibyo Bantangiye.\"",
+        "subheading3": "Ubucuruzi buri hafi",
+        "p2": "\"Ubucuruzi buri hafi\" bukoresha aho igikoresho cyawe giherereye kugira ngo bwerekane amaduka n'abatanga serivisi bakugoye, hamwe n'akayunguruzo k'intera n'icyiciro kugira ngo bugabanye ubushakashatsi. Buri gisubizo kigaragaza intera, amanota, n'amakuru yo kuvugana, kandi buto ya \"Vugana n'Umucuruzi\" ifungura ikiganiro cya JamiiChat na we ako kanya."
+      },
+      "businesses": {
+        "subheading1": "Kwandikisha ubucuruzi",
+        "steps": [
+          "Hitamo \"Andikisha Ubucuruzi\" mu rutonde rwa konti yawe.",
+          "Injiza izina ry'ubucuruzi, icyiciro, ibisobanuro, amakuru yo kuvugana, n'aho buherereye.",
+          "Ohereza ikirango n'ifoto y'ipfundo, hanyuma witange.",
+          "Iduka ryawe rikora ako kanya — ushobora gushyiraho ibicuruzwa na serivisi ako kanya."
+        ],
+        "subheading2": "Dashboard y'ubucuruzi",
+        "p1": "Incamake · Ibicuruzwa/Serivisi (bifite amafoto) · Amashami · Amateka · Ibisabwa/Ibyatanzwe · Itumizwa · Umusaruro · Amasoko yo Gupiganwa · Kwamamaza · Igenamiterere.",
+        "subheading3": "Kwemezwa (TIN / BRELA)",
+        "p2": "Ubucuruzi bwemejwe bubona ikimenyetso cy'icyizere kandi bugaragara muri \"Ubucuruzi bwemejwe\" ku rupapuro rw'itangiriro. Uhereye ku Igenamiterere ry'Ubucuruzi → \"Saba Kwemezwa,\" hitamo TIN kugira ngo wemeze nimero yawe y'umusoro ugereranyije n'ibyanditswe bya TRA, cyangwa BRELA kugira ngo wemeze iyandikwa ryemewe rya sosiyete yawe — byombi ni ibyigenga kandi si itegeko.",
+        "note": "Kwemezwa ni ibyihitiyemo rwose — ubucuruzi butemejwe bushobora kwiyandikisha, gushyiraho ibicuruzwa, no kugurisha nk'uko bisanzwe. Byongeraho gusa ikimenyetso cy'icyizere kigaragara ku baguzi.",
+        "subheading4": "Kwamamaza ubucuruzi bwawe",
+        "p3": "Uhereye ku gace ka \"Kwamamaza,\" ishyura kugira ngo werekane ubucuruzi bwawe bwose cyangwa igicuruzwa kimwe ku rupapuro rw'itangiriro mu minsi runaka (7, 14, cyangwa 30). Icyifuzo gikomeza kuba \"Gitegereje Kwishyurwa\" kugeza fagitire ishyuwe, hanyuma kigakora mu gihe cyahiswemo.",
+        "subheading5": "Ibisabwa, ibyatanzwe, n'itumizwa",
+        "bullets2": [
+          "Ibisabwa — reba ibisabwa rusange by'ibintu biva ku baguzi bari hafi kandi wemere icyo cyose kihuye n'ikintu kimwe mu bicuruzwa byawe.",
+          "Ibyatanzwe — suzuma ibyatanzwe by'ibiciro abaguzi batanze ku bicuruzwa byawe, kandi Wemere, Wange, cyangwa Utange igiciro gitandukanye.",
+          "Itumizwa — niba wemeje \"gukorana n'itumizwa\" mu Igenamiterere, emera ibisabwa by'itumizwa by'abaguzi utanga igiciro, ifaranga, n'igihe giteganyijwe cyo gutanga."
+        ]
+      },
+      "institutions": {
+        "p1": "Ikigo kigereranya umuryango (SACCOS, koperative, ishuri, sosiyete) utandukanye n'iduka ry'ubucuruzi bw'umuntu ku giti cye. Kora kimwe uhereye kuri \"Kora Ikigo,\" hanyuma ucunge abakozi, amashami, n'igenamiterere uhereye ku rupapuro rwacyo rwo gucunga — buri kigo nacyo gifite urupapuro rwacyo rwo hanze.",
+        "subheading1": "Gucunga ikigo cyawe",
+        "bullets": [
+          "Ibigo — reba buri kigo ucunga, hamwe n'inzira yihuse yo gukora ikigo gishya.",
+          "Amashami — ongeraho cyangwa ukureho amashami ari mu kigo cyawe.",
+          "Abakozi — ongeraho umukoresha wamaze kwiyandikisha nk'umukozi winjiza imeli ye hamwe n'umwanya we n'inomero ye ya telefone.",
+          "Amanota n'Ubwoko bw'Ikigo — amakuru y'ibisobanuro akoreshwa mu gushyiraho ikigo cyawe; ntabwo ahinduka aha."
+        ]
+      },
+      "logistics": {
+        "bullets": [
+          "Ba utwara ibintu uhereye ku Bwikorezi → Emeza (bitanga uruhushya rwawe rwo gutwara ibinyabiziga n'amakuru y'ikinyabiziga kugira ngo bemezwe).",
+          "Saba gutwarwa uhereye ku Bwikorezi → Saba, ugaragaza aho bizafatirwa, aho bizajya, n'amakuru y'ipaki.",
+          "Abatwara ibintu bemejwe bemera imirimo uhereye kuri \"Imirimo y'Ubwikorezi\" kandi bavugurura uko bagenda bakomeza; impande zombi zikurikirana ibi munsi ya \"Ibyo Ntwaye.\""
+        ]
+      },
+      "realestate": {
+        "bullets": [
+          "Reba ibyatanzwe munsi ya \"Imitungo Itimukanwa,\" ushungura ukurikije ubwoko, aho biherereye, n'igiciro.",
+          "Fungura icyatanzwe kugira ngo urebe amafoto kandi wohereze ikibazo kuri nyirabyo.",
+          "Ba nyir'ibintu bacunga ibyo batanze munsi ya \"Ibyanjye\" n'ibibazo munsi ya \"Ibibazo Byanjye.\""
+        ]
+      },
+      "agriculture": {
+        "p1": "Abahinzi bashyiraho icyatanzwe cya \"Saba Umusaruro\" kigaragaza igihingwa, umubare witezwe, n'itariki; abaguzi biyemeza kugura mbere y'igihe mbere y'uko umusaruro witegura. Abacuruzi bacunga aya masezerano bakoresheje agace ka \"Umusaruro\" ka dashboard yabo y'ubucuruzi."
+      },
+      "construction": {
+        "p1": "Abakiriya bashyiraho umushinga munsi ya \"Saba Umushinga\" ugaragaza ubugari, ingengo y'imari, n'igihe. Ubucuruzi bw'ubwubatsi butanga ibyifuzo bikoresheje agace kabwo ka \"Amasoko yo Gupiganwa,\" kandi umukiriya ahitamo umukozi."
+      },
+      "payments": {
+        "bullets": [
+          "Fagitire — kora kandi usuzume fagitire zatanzwe ku bucuruzi bwawe cyangwa buturuka kuri bwo.",
+          "Uburyo bwo Kwishyura — cunga amakarita yabitswe n'amakonti ahujwe.",
+          "Raporo z'Ubwishyu — incamake y'amafaranga yinjira n'ibikorwa byo kwishyura mu gihe runaka.",
+          "Konti y'Inguzanyo — cunga konti y'ubucuruzi bwawe ifite ubwoko bw'inguzanyo, aho iboneka.",
+          "Raporo z'Igenzura — inyandiko y'ibikorwa bijyanye n'ubwishyu ku bwibutsa."
+        ]
+      },
+      "chat": {
+        "p1": "Kuvugana ako kanya hagati y'abaguzi n'abacuruzi, cyangwa abakoresha babiri bo ku rubuga — baza ibibazo ku byatanzwe, kuganira, cyangwa gutunganya gutwara ibintu utavuye kuri JamiiKazini."
+      },
+      "security": {
+        "bullets": [
+          "Hindura ijambobanga ryawe uhereye ku Igenamiterere rya Konti.",
+          "Shyiraho Kwemeza mu Buryo Bubiri (2FA) ukoresheje porogaramu yo kwemeza kugira ngo intambwe indi yo kwinjira.",
+          "Kwemeza indangamuntu n'ubucuruzi bisuzumwa hifashishijwe inyandiko za leta zemewe, bigafungirwa mu gihe bibitswe."
+        ]
+      },
+      "language": {
+        "p1": "Hindura ururimi rwo kwerekana igihe cyose uhereye ku ihitamo riri ku murongo w'ibikoresho hejuru — bikoreshwa ako kanya ku rubuga rwose, nta gukenera guhindura urupapuro. Igihugu wahisemo kigena ifaranga ryawe risanzwe; guhindura mu yandi mafaranga akoreshwa ku rubuga bikorwa mu buryo bwikora hifashishijwe ibiciro by'isoko bishya."
+      },
+      "faq": {
+        "items": [
+          {
+            "q": "Nkeneye kwemeza indangamuntu yanjye kugira ngo nkoreshe JamiiKazini?",
+            "a": "Oya. Kwiyandikisha, kureba, kugura, no kugurisha byose bikora nta bwo bikenewe. Kwemezwa ni ibyihitiyemo kandi byongeraho ikimenyetso cy'icyizere."
+          },
+          {
+            "q": "Nshobora gukoresha JamiiKazini mu rurimi rwanjye?",
+            "a": "Yego — indimi 15 zishyigikiwe, zishobora guhindurwa igihe cyose uhereye ku ihitamo ry'ururimi."
+          },
+          {
+            "q": "Ni gute nkuramo amafaranga yanjye kuri JamiiKazini?",
+            "a": "Koresha \"Kubikuramo\" kuri JamiiWallet kugira ngo ubikure ujye mu mafaranga ya telefone cyangwa konti ya banki ihujwe."
+          },
+          {
+            "q": "Ubucuruzi bushobora gukora nta kwiyandikisha ikigo?",
+            "a": "Yego — Ubucuruzi n'Ikigo ni ibintu bitandukanye; abacuruzi benshi bakeneye gusa kwandikisha Ubucuruzi."
+          },
+          {
+            "q": "Nakora iki nihagira igicuruzwa nkeneye ntabona?",
+            "a": "Shyiraho \"Saba Ikintu\" cyangwa \"Saba Itumizwa\" bigaragaza icyo ukeneye, hanyuma usuzume ibyo abacuruzi batanga."
+          }
+        ]
+      },
+      "support": {
+        "bullets": [
+          "Koresha JamiiChat kugira ngo uvugane n'ubucuruzi ku bibazo bijyanye n'itumiza cyangwa icyatanzwe.",
+          "Reba ikigo cyawe cy'amakuru ku bijyanye n'ivugurura ry'amateka, ibisabwa byo kwemezwa, n'ibikorwa by'agasanduku.",
+          "Vugana n'ubufasha bw'urubuga binyuze mu nzira zitangwa ku rubuga rwa JamiiKazini."
+        ]
+      },
+      "multidomain": {
+        "p1": "Buri bucuruzi n'ikigo bishobora kubona aderesi yabyo bwite y'iduka, nka iduka.jamiikazini.com, aho kohereza abakiriya ku ihuza risanzwe ry'iduka. Umushyitsi kuri iyo aderesi abona uburambe bwibanze ku iduka rimwe — kureba, igikoni, kwishyura, no kwinjira/kwiyandikisha — nta yandi mabwiriza ya JamiiKazini akikije.",
+        "steps": [
+          "Fungura urupapuro rw'Igenamiterere ry'Ubucuruzi (cyangwa Ikigo) cyawe.",
+          "Shakisha ikarita \"Sangira Iduka Ryawe\" (cyangwa \"Sangira Ikigo Cyawe\").",
+          "Andika izina ry'agace k'urubuga ushaka hanyuma ubibike.",
+          "Koresha \"Koporora Ihuza\" kugira ngo ubone aderesi yawe yuzuye (urugero iduka.jamiikazini.com) yiteguye gusangirwa ahantu hose."
+        ],
+        "note": "Agace k'urubuga wihariye ni ibyihitiyemo rwose — iduka ryawe naryo rikomeza gushobora kugerwaho ku ihuza ryaryo risanzwe rya /store/ cyangwa /institutions/ ku rubuga nyamukuru."
+      },
+      "teaching": {
+        "p1": "Igice cy'Kwigisha ni icy'abarimu, kibemerera gucunga amasomo n'amashuri babwiriza kandi bagakora mu buryo bwikora gahunda z'amasomo n'ahunda z'akazi aho kuzandika bahereye ku busa.",
+        "steps": [
+          "Ahabanza h'Kwigisha — ahantu ho gutangira hafite ibice bine: Amasomo Yanjye, Gahunda y'Igihe, Gahunda y'Isomo, na Gahunda y'Akazi.",
+          "Amasomo Yanjye — banza ushyireho aho ukorera (ishuri, akarere, umurenge), hanyuma urebe amasomo ubwiriza hamwe n'umubare w'abanyeshuri bavuye muri gahunda y'igihe cyawe, hanyuma ujye ubwo bwose ukora gahunda y'isomo cyangwa gahunda y'akazi ku kimwe muri byo.",
+          "Gahunda y'Igihe Cyanjye — ongeraho, hindura, cyangwa ukureho amasomo ubwiriza, mu ishuri ryihe, n'amasaha angahe mu cyumweru.",
+          "Gahunda y'Isomo — hitamo isomo n'igikorwa cyo kwiga, wuzuze amakuru y'isomo, hanyuma ukore gahunda y'isomo iteguye.",
+          "Gahunda y'Akazi — hitamo isomo na kalendari y'amashuri, hanyuma urebe, ukore, cyangwa umanure gahunda yose y'igihembwe y'kwigisha nka PDF."
+        ]
+      }
+    }
   }
 }

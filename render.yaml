@@ -39,6 +39,19 @@ services:
         generateValue: true
       - key: FERNET_SECRET_KEY               # WEKA MWENYEWE: Fernet key halali (44-char base64)
         sync: false                          # tengeneza kwa: Fernet.generate_key()
+      # reCAPTCHA - lazima zilingane na VITE_RECAPTCHA_PUBLIC_KEY / VITE_
+      # RECAPTCHA_SITE_KEY upande wa frontend service. Site keys ni za
+      # hadharani (salama kuweka wazi); secret keys LAZIMA ziwekwe mwenyewe
+      # kwenye Render dashboard - bila hizi, uthibitishaji wa siteverify
+      # hushindwa daima (secret tupu) na Register/Login hazikamiliki.
+      - key: RECAPTCHA_PUBLIC_KEY_V2
+        value: 6LfdHXQrAAAAAHH48HbSpMayztg9fVl7WAkLrvLC
+      - key: RECAPTCHA_PRIVATE_KEY_V2
+        sync: false
+      - key: RECAPTCHA_PUBLIC_KEY_V3
+        value: 6LevXGIrAAAAAC3H8RyWcIHhefYvZUcw3Jlzo8uk
+      - key: RECAPTCHA_PRIVATE_KEY_V3
+        sync: false
       # Demo/presentation data (users, businesses, products, etc.) seeded on
       # every deploy while true - flip to "false" (or remove) before this
       # becomes the real production deployment. See build.sh.
@@ -95,6 +108,16 @@ services:
       # dashboard - hatua za nje ya msimbo huu, lazima zifanywe na mmiliki.
       - key: VITE_CENTRAL_DOMAIN
         value: jamiikazini.com
+      # reCAPTCHA site keys (public - safe to embed client-side). Bila hivi,
+      # Register (v2 checkbox) na Login (v3 invisible) hazikamiliki kwenye
+      # production kwa sababu Vite huoka env vars wakati wa build - bila
+      # kuwekwa hapa, thamani inakuwa "undefined" kwenye bundle. Lazima
+      # zilingane na RECAPTCHA_PUBLIC_KEY_V2 / RECAPTCHA_PUBLIC_KEY_V3
+      # zilizowekwa upande wa backend (jamiikazini-pro service).
+      - key: VITE_RECAPTCHA_PUBLIC_KEY
+        value: 6LfdHXQrAAAAAHH48HbSpMayztg9fVl7WAkLrvLC
+      - key: VITE_RECAPTCHA_SITE_KEY
+        value: 6LevXGIrAAAAAC3H8RyWcIHhefYvZUcw3Jlzo8uk
     routes:
       - type: rewrite                         # React Router (SPA)
         source: /*

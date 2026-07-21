@@ -253,5 +253,221 @@
       "auto_refresh_enabled": "Auto-refresh enabled",
       "auto_refresh_disabled": "Auto-refresh disabled"
     }
+  },
+  "help": {
+    "sidebar_label": "User Manual",
+    "title": "JamiiKazini User Manual",
+    "subtitle": "A complete guide to using every part of the platform",
+    "toc": {
+      "intro": "Introduction",
+      "getting_started": "Getting Started",
+      "wallet": "Wallet",
+      "marketplace": "Marketplace",
+      "businesses": "Businesses",
+      "institutions": "Institutions",
+      "logistics": "Logistics",
+      "realestate": "Real Estate",
+      "agriculture": "Agriculture",
+      "construction": "Construction",
+      "payments": "Payments",
+      "chat": "Chat",
+      "security": "Security",
+      "language": "Language",
+      "faq": "FAQ",
+      "support": "Support",
+      "multidomain": "Multi-Domain Storefronts",
+      "teaching": "Teaching"
+    },
+    "note_label": "Note",
+    "body": {
+      "intro": {
+        "p1": "JamiiKazini (\"Community of Work\") brings together the everyday economic life of East African communities in one platform: a digital wallet, an online marketplace, business tools, logistics, savings groups, and sector-specific services (real estate, agriculture, construction).",
+        "subheading": "Who uses JamiiKazini?",
+        "bullets": [
+          "Client / Buyer — browses and buys, sends and receives money, joins savings groups, requests deliveries, rents or buys property.",
+          "Business Owner / Provider — registers a business, lists products and services, manages orders, requests government verification (TIN/BRELA).",
+          "Transporter / Driver — registers as a delivery provider and accepts logistics jobs.",
+          "Institution Admin — manages an institution (SACCOS, company, school) and its staff."
+        ],
+        "p2": "The platform is available in 15 languages (English, Kiswahili, French, Arabic, Afrikaans, Hausa, Hindi, Japanese, Korean, Luganda, Portuguese, Russian, Kinyarwanda, Chinese, Spanish) and supports government verification integrations across Tanzania, Kenya, Uganda, Rwanda, Burundi, and South Sudan."
+      },
+      "getting_started": {
+        "subheading1": "Creating an account",
+        "steps": [
+          "Select \"Register\" from the top navigation bar.",
+          "Enter your full name, email, phone number, and password.",
+          "Choose your preferred language and country.",
+          "Submit — a verification link is sent to your email.",
+          "Click the link to activate your account, then log in."
+        ],
+        "subheading2": "Profile & identity verification",
+        "p1": "Update your details from Profile / Edit Profile / Account Settings. Some actions — receiving large payments, becoming a delivery driver, fully verifying a business — require identity verification via \"Verify Identity,\" which checks your national ID against your country's registry.",
+        "subheading3": "Inviting friends",
+        "p2": "From \"Invite Friends\" in your account menu, share a ready-made invite message via WhatsApp, Facebook, Telegram, X (Twitter), or LinkedIn, or just copy the link. It's a simple way to bring people you know onto the platform — there's no referral reward tracked on this particular link (businesses have a separate referral-code system in their own settings).",
+        "subheading4": "The top navigation bar",
+        "p3": "The Search icon opens a quick search box right there in the bar. The bell icon shows your Notifications, with a badge for anything unread. The sun/moon/monitor icon cycles your display theme between Light, Dark, and System (which follows your device's setting automatically)."
+      },
+      "wallet": {
+        "p1": "Every user has a wallet holding a balance in their local currency, used across the whole platform.",
+        "subheading1": "Top up",
+        "p2": "From JamiiWallet → \"Add Funds,\" pay via mobile money (M-Pesa, Airtel Money and others through PawaPay), card (Stripe), or Flutterwave, depending on your country.",
+        "subheading2": "Send money & cash out",
+        "steps": [
+          "Select \"Send Money,\" enter the recipient's phone/email/username and amount, confirm.",
+          "Save frequent recipients as Beneficiaries for faster transfers.",
+          "Use \"Cash Out\" to withdraw back to mobile money or a linked bank account."
+        ],
+        "subheading3": "Bills, transactions & savings groups",
+        "bullets": [
+          "BillPay — pay recurring bills straight from your wallet balance.",
+          "Transactions — full searchable history of every top-up, transfer, payment, and cash-out.",
+          "Savings Groups — create or join a VICOBA/SACCOS-style digital group, contribute from your wallet, and let group admins approve withdrawal requests, all in a transparent shared ledger."
+        ]
+      },
+      "marketplace": {
+        "subheading1": "The home page",
+        "bullets1": [
+          "Trending Services — popular services currently active on the platform.",
+          "Verified Businesses — businesses that completed identity/government-license verification.",
+          "Browse by Category — tap any category tile to see every business and product under it.",
+          "Nearby Businesses — a location-aware view of shops and providers close to you."
+        ],
+        "subheading2": "Cart & checkout",
+        "steps": [
+          "Add products to your cart from their listing pages.",
+          "Review items in \"Cart,\" adjust quantities as needed.",
+          "Checkout, choose delivery or pickup, and pay from your JamiiWallet balance.",
+          "Track your order under \"My Orders.\""
+        ],
+        "p1": "Can't find what you need? Post a \"Request Item\" (or \"Request Import\" for goods sourced elsewhere) and review seller offers under \"My Offers.\"",
+        "subheading3": "Nearby Businesses",
+        "p2": "\"Nearby Businesses\" uses your device's location to show shops and providers around you, with a distance slider and category filter to narrow the search. Each result shows its distance, rating, and contact details, and a \"Contact Seller\" button opens a JamiiChat conversation with them directly."
+      },
+      "businesses": {
+        "subheading1": "Registering a business",
+        "steps": [
+          "Select \"Register Business\" from your account menu.",
+          "Enter business name, category, description, contact details, and location.",
+          "Upload a logo and cover photo, then submit.",
+          "Your storefront is live immediately — you can list products and services right away."
+        ],
+        "subheading2": "The business dashboard",
+        "p1": "Overview · Products/Services (with photo galleries) · Branches · Orders · Requests/Offers · Imports · Harvest · Tenders · Advertise · Settings.",
+        "subheading3": "Verification (TIN / BRELA)",
+        "p2": "Verified businesses get a trust badge and appear in \"Verified Businesses\" on the home page. From Business Settings → \"Request Verification,\" choose TIN to verify your Tax Identification Number against TRA records, or BRELA to verify your official company registration — both are independent and optional.",
+        "note": "Verification is entirely optional — unverified businesses can register, list, and sell normally. It only adds a visible trust signal for buyers.",
+        "subheading4": "Advertising your business",
+        "p3": "From the \"Advertise\" tab, pay to feature your whole business or a single product on the home page for a set number of days (7, 14, or 30). A request stays \"Pending Payment\" until the invoice is settled, then becomes active for its chosen duration.",
+        "subheading5": "Requests, offers & imports",
+        "bullets2": [
+          "Requests — see nearby buyers' generic item requests and claim any that match one of your products.",
+          "Offers — review price offers buyers have made on your products, and Accept, Reject, or Counter with a different price.",
+          "Imports — if you enable \"deals in imports\" in Settings, claim buyer import requests by quoting a price, currency, and estimated delivery time."
+        ]
+      },
+      "institutions": {
+        "p1": "An Institution represents an organization (SACCOS, cooperative, school, company) as distinct from an individual business storefront. Create one from \"Create Institution,\" then manage staff, departments, and settings from its management page — every institution also gets its own public page.",
+        "subheading1": "Managing your institution",
+        "bullets": [
+          "Institutions — see every institution you manage, with a shortcut to create a new one.",
+          "Departments — add or remove the departments within your institution.",
+          "Staff — add an already-registered user as staff by entering their email plus their title and phone number.",
+          "Institution Tiers & Types — reference information used when setting up your institution; these aren't editable from here."
+        ]
+      },
+      "logistics": {
+        "bullets": [
+          "Become a transporter from Logistics → Verify (submits your driver's license and vehicle details for verification).",
+          "Request a delivery from Logistics → Request, specifying pickup, drop-off, and package details.",
+          "Verified transporters accept jobs from \"Logistics Jobs\" and update status as they progress; both sides track it under \"My Deliveries.\""
+        ]
+      },
+      "realestate": {
+        "bullets": [
+          "Browse listings under \"Real Estate,\" filtering by type, location, and price.",
+          "Open a listing to view photos and send an inquiry to the owner.",
+          "Owners manage their listings under \"My Properties\" and inquiries under \"My Inquiries.\""
+        ]
+      },
+      "agriculture": {
+        "p1": "Farmers post a \"Request Harvest\" listing describing the crop, expected quantity, and date; buyers commit to a forward purchase before the harvest is ready. Sellers manage these commitments from the \"Harvest\" tab of their business dashboard."
+      },
+      "construction": {
+        "p1": "Clients post a project under \"Request Project\" describing scope, budget, and timeline. Construction businesses submit bids from their \"Tenders\" dashboard tab, and the client selects a contractor."
+      },
+      "payments": {
+        "bullets": [
+          "Invoices — generate and review invoices issued to or from your business.",
+          "Payment Methods — manage saved cards and linked accounts.",
+          "Payment Reports — income and payment activity summaries over time.",
+          "Credit Account — manage a business's line-of-credit style account, where available.",
+          "Audit Logs — a record of payment-related actions for accountability."
+        ]
+      },
+      "chat": {
+        "p1": "Real-time messaging between buyers and sellers, or any two platform users — ask about a listing, negotiate, or coordinate delivery without leaving JamiiKazini."
+      },
+      "security": {
+        "bullets": [
+          "Change your password from Account Settings.",
+          "Set up Two-Factor Authentication (2FA) with an authenticator app for an extra login step.",
+          "Identity and business verification are checked against official government records, encrypted at rest."
+        ]
+      },
+      "language": {
+        "p1": "Change your display language anytime from the selector in the top navigation bar — it applies instantly across the whole platform, no refresh needed. Your country selection sets your default currency; conversion to other currencies used on the platform is automatic using up-to-date market rates."
+      },
+      "faq": {
+        "items": [
+          {
+            "q": "Do I need to verify my identity to use JamiiKazini?",
+            "a": "No. Registration, browsing, buying, and selling all work without it. Verification is optional and adds a trust badge."
+          },
+          {
+            "q": "Can I use JamiiKazini in my own language?",
+            "a": "Yes — 15 languages are supported, switchable anytime from the language selector."
+          },
+          {
+            "q": "How do I get my money out of JamiiKazini?",
+            "a": "Use \"Cash Out\" in JamiiWallet to withdraw to mobile money or a linked bank account."
+          },
+          {
+            "q": "Can a business operate without registering an institution?",
+            "a": "Yes — Business and Institution are separate; most sellers only need to register a Business."
+          },
+          {
+            "q": "What if I can't find a product I need?",
+            "a": "Post a \"Request Item\" or \"Request Import\" describing what you need, and review seller offers."
+          }
+        ]
+      },
+      "support": {
+        "bullets": [
+          "Use JamiiChat to message a business directly for order- or listing-specific questions.",
+          "Check your notification center for updates on orders, verification requests, and wallet activity.",
+          "Contact platform support through the channel provided on the JamiiKazini website."
+        ]
+      },
+      "multidomain": {
+        "p1": "Every business and institution can get its own storefront address, like yourshop.jamiikazini.com, instead of sending customers to a generic store link. A visitor on that address sees a focused, single-shop experience — browsing, cart, checkout, and login/register — without the rest of the JamiiKazini menu around it.",
+        "steps": [
+          "Open your Business (or Institution) Settings page.",
+          "Find the \"Share Your Shop\" (or \"Share Your Institution\") card.",
+          "Type the subdomain you want and save it.",
+          "Use \"Copy Link\" to get your full address (e.g. yourshop.jamiikazini.com) ready to share anywhere."
+        ],
+        "note": "The custom subdomain is entirely optional — your storefront also stays reachable at its regular /store/ or /institutions/ link on the main site."
+      },
+      "teaching": {
+        "p1": "The Teaching module is for teachers, letting them manage the subjects and classes they teach and automatically generate lesson plans and schemes of work instead of writing them from scratch.",
+        "steps": [
+          "Teaching Home — a launcher with four tiles: My Subjects, Timetable, Lesson Plan, and Scheme of Work.",
+          "My Subjects — first set up your workstation (school, district, ward), then see the subjects you teach with student counts pulled from your timetable, and jump straight to generating a lesson plan or scheme of work for any of them.",
+          "My Timetable — add, edit, or remove which subjects you teach, for which class, and how many periods a week.",
+          "Lesson Plan — pick a subject and a learning activity, fill in the lesson details, and generate a ready lesson plan.",
+          "Scheme of Work — pick a subject and academic calendar, then preview, generate, or download a full term's teaching schedule as a PDF."
+        ]
+      }
+    }
   }
 }

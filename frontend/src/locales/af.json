@@ -187,5 +187,221 @@
       "empty": "Geen top dienste beskikbaar nie.",
       "used": "{{count}} gebruik"
     }
+  },
+  "help": {
+    "sidebar_label": "Gebruikersgids",
+    "title": "JamiiKazini Gebruikersgids",
+    "subtitle": "'n Volledige gids om elke deel van die platform te gebruik",
+    "toc": {
+      "intro": "Inleiding",
+      "getting_started": "Aan die Gang Kom",
+      "wallet": "Beursie",
+      "marketplace": "Mark",
+      "businesses": "Besighede",
+      "institutions": "Instellings",
+      "logistics": "Logistiek",
+      "realestate": "Eiendom",
+      "agriculture": "Landbou",
+      "construction": "Konstruksie",
+      "payments": "Betalings",
+      "chat": "Klets",
+      "security": "Sekuriteit",
+      "language": "Taal",
+      "faq": "Gereelde Vrae",
+      "support": "Ondersteuning",
+      "multidomain": "Multi-domein Winkelfronte",
+      "teaching": "Onderrig"
+    },
+    "note_label": "Let wel",
+    "body": {
+      "intro": {
+        "p1": "JamiiKazini (\"Gemeenskap van Werk\") bring die alledaagse ekonomiese lewe van Oos-Afrikaanse gemeenskappe saam op een platform: 'n digitale beursie, 'n aanlyn mark, besigheidsgereedskap, logistiek, spaargroepe, en sektor-spesifieke dienste (eiendom, landbou, konstruksie).",
+        "subheading": "Wie gebruik JamiiKazini?",
+        "bullets": [
+          "Kliënt / Koper — blaai en koop, stuur en ontvang geld, sluit aan by spaargroepe, versoek aflewerings, huur of koop eiendom.",
+          "Besigheidseienaar / Verskaffer — registreer 'n besigheid, lys produkte en dienste, bestuur bestellings, versoek regeringsverifikasie (TIN/BRELA).",
+          "Vervoerder / Bestuurder — registreer as 'n afleweringsverskaffer en aanvaar logistieke werk.",
+          "Instansie-administrateur — bestuur 'n instansie (SACCOS, maatskappy, skool) en die personeel daarvan."
+        ],
+        "p2": "Die platform is beskikbaar in 15 tale (Engels, Swahili, Frans, Arabies, Afrikaans, Hausa, Hindi, Japannees, Koreaans, Luganda, Portugees, Russies, Kinyarwanda, Sjinees, Spaans) en ondersteun regeringsverifikasie-integrasies regoor Tanzanië, Kenia, Uganda, Rwanda, Burundi, en Suid-Soedan."
+      },
+      "getting_started": {
+        "subheading1": "Skep 'n rekening",
+        "steps": [
+          "Kies \"Registreer\" op die boonste navigasiebalk.",
+          "Voer jou volle naam, e-pos, telefoonnommer, en wagwoord in.",
+          "Kies jou voorkeurtaal en -land.",
+          "Dien in — 'n verifikasieskakel word na jou e-pos gestuur.",
+          "Klik op die skakel om jou rekening te aktiveer, meld dan aan."
+        ],
+        "subheading2": "Profiel en identiteitsverifikasie",
+        "p1": "Werk jou besonderhede by vanaf Profiel / Wysig Profiel / Rekeninginstellings. Sommige aksies — die ontvang van groot betalings, om 'n afleweringsbestuurder te word, volledige verifikasie van 'n besigheid — vereis identiteitsverifikasie via \"Verifieer Identiteit\", wat jou nasionale ID teen jou land se register nagaan.",
+        "subheading3": "Nooi vriende uit",
+        "p2": "Vanaf \"Nooi Vriende Uit\" in jou rekeningkieslys, deel 'n kant-en-klaar uitnodigingsboodskap via WhatsApp, Facebook, Telegram, X (Twitter), of LinkedIn, of kopieer net die skakel. Dit is 'n eenvoudige manier om mense wat jy ken na die platform te bring — daar word geen verwysingsbeloning op hierdie spesifieke skakel nagespoor nie (besighede het 'n aparte verwysingskode-stelsel in hul eie instellings).",
+        "subheading4": "Die boonste navigasiebalk",
+        "p3": "Die Soek-ikoon maak 'n vinnige soekblokkie reg daar in die balk oop. Die klokkie-ikoon wys jou Kennisgewings, met 'n plaatjie vir enigiets ongelees. Die son/maan/monitor-ikoon wissel jou vertoontema tussen Lig, Donker, en Stelsel (wat outomaties jou toestel se instelling volg)."
+      },
+      "wallet": {
+        "p1": "Elke gebruiker het 'n beursie met 'n balans in hul plaaslike geldeenheid, wat regoor die hele platform gebruik word.",
+        "subheading1": "Laai op",
+        "p2": "Vanaf JamiiWallet → \"Voeg Fondse By\", betaal via mobiele geld (M-Pesa, Airtel Money en ander deur PawaPay), kaart (Stripe), of Flutterwave, afhangende van jou land.",
+        "subheading2": "Stuur geld en trek uit",
+        "steps": [
+          "Kies \"Stuur Geld\", voer die ontvanger se telefoon/e-pos/gebruikersnaam en bedrag in, bevestig.",
+          "Stoor gereelde ontvangers as Begunstigdes vir vinniger oorplasings.",
+          "Gebruik \"Trek Uit\" om na mobiele geld of 'n gekoppelde bankrekening te onttrek."
+        ],
+        "subheading3": "Rekeninge, transaksies en spaargroepe",
+        "bullets": [
+          "BillPay — betaal herhalende rekeninge direk vanaf jou beursiebalans.",
+          "Transaksies — volledige deursoekbare geskiedenis van elke oplaai, oorplasing, betaling, en onttrekking.",
+          "Spaargroepe — skep of sluit aan by 'n digitale groep in VICOBA/SACCOS-styl, dra by vanaf jou beursie, en laat groepadministrateurs onttrekkingsversoeke goedkeur, alles in 'n deursigtige gedeelde grootboek."
+        ]
+      },
+      "marketplace": {
+        "subheading1": "Die tuisblad",
+        "bullets1": [
+          "Gewilde Dienste — gewilde dienste wat tans op die platform aktief is.",
+          "Geverifieerde Besighede — besighede wat identiteit-/regeringslisensieverifikasie voltooi het.",
+          "Blaai volgens Kategorie — tik op enige kategorietegel om elke besigheid en produk daaronder te sien.",
+          "Nabygeleë Besighede — 'n liggingbewuste aansig van winkels en verskaffers naby jou."
+        ],
+        "subheading2": "Mandjie en afhandeling",
+        "steps": [
+          "Voeg produkte by jou mandjie vanaf hul lysbladsye.",
+          "Gaan items in \"Mandjie\" na, pas hoeveelhede aan soos nodig.",
+          "Gaan af, kies aflewering of afhaal, en betaal vanaf jou JamiiWallet-balans.",
+          "Volg jou bestelling onder \"My Bestellings\"."
+        ],
+        "p1": "Kan jy nie kry wat jy nodig het nie? Plaas 'n \"Versoek Item\" (of \"Versoek Invoer\" vir goedere van elders) en gaan verkopersaanbiedinge onder \"My Aanbiedinge\" na.",
+        "subheading3": "Nabygeleë Besighede",
+        "p2": "\"Nabygeleë Besighede\" gebruik jou toestel se ligging om winkels en verskaffers rondom jou te wys, met 'n afstandskuifknop en kategoriefilter om die soektog te vernou. Elke resultaat wys sy afstand, gradering, en kontakbesonderhede, en 'n \"Kontak Verkoper\"-knoppie open direk 'n JamiiChat-gesprek met hulle."
+      },
+      "businesses": {
+        "subheading1": "Registreer 'n besigheid",
+        "steps": [
+          "Kies \"Registreer Besigheid\" in jou rekeningkieslys.",
+          "Voer die besigheidsnaam, kategorie, beskrywing, kontakbesonderhede, en ligging in.",
+          "Laai 'n logo en omslagfoto op, dien dan in.",
+          "Jou winkel is onmiddellik regstreeks — jy kan dadelik produkte en dienste lys."
+        ],
+        "subheading2": "Die besigheidskontroleskerm",
+        "p1": "Oorsig · Produkte/Dienste (met fotogalerye) · Takke · Bestellings · Versoeke/Aanbiedinge · Invoere · Oes · Tenders · Adverteer · Instellings.",
+        "subheading3": "Verifikasie (TIN / BRELA)",
+        "p2": "Geverifieerde besighede kry 'n vertrouensbadge en verskyn in \"Geverifieerde Besighede\" op die tuisblad. Vanaf Besigheidsinstellings → \"Versoek Verifikasie\", kies TIN om jou Belastingidentifikasienommer teen TRA-rekords te verifieer, of BRELA om jou amptelike maatskappyregistrasie te verifieer — albei is onafhanklik en opsioneel.",
+        "note": "Verifikasie is heeltemal opsioneel — ongeverifieerde besighede kan normaal registreer, lys, en verkoop. Dit voeg slegs 'n sigbare vertrouensein aan vir kopers.",
+        "subheading4": "Adverteer jou besigheid",
+        "p3": "Vanaf die \"Adverteer\"-oortjie, betaal om jou hele besigheid of 'n enkele produk vir 'n vasgestelde aantal dae (7, 14, of 30) op die tuisblad uit te lig. 'n Versoek bly \"Betaling Hangende\" totdat die faktuur betaal is, en word dan aktief vir die gekose duur.",
+        "subheading5": "Versoeke, aanbiedinge, en invoere",
+        "bullets2": [
+          "Versoeke — sien nabygeleë kopers se algemene itemversoeke en eis enige wat by een van jou produkte pas.",
+          "Aanbiedinge — gaan prysaanbiedinge na wat kopers op jou produkte gemaak het, en Aanvaar, Verwerp, of Teenaanbod met 'n ander prys.",
+          "Invoere — as jy \"handel in invoere\" in Instellings aktiveer, eis kopers se invoerversoeke deur 'n prys, geldeenheid, en geskatte afleweringstyd aan te bied."
+        ]
+      },
+      "institutions": {
+        "p1": "'n Instansie verteenwoordig 'n organisasie (SACCOS, koöperasie, skool, maatskappy) wat verskil van 'n individuele besigheidswinkel. Skep een vanaf \"Skep Instansie\", bestuur dan personeel, departemente, en instellings vanaf sy bestuursbladsy — elke instansie kry ook sy eie openbare bladsy.",
+        "subheading1": "Bestuur jou instansie",
+        "bullets": [
+          "Instansies — sien elke instansie wat jy bestuur, met 'n kortpad om 'n nuwe een te skep.",
+          "Departemente — voeg departemente binne jou instansie by of verwyder dit.",
+          "Personeel — voeg 'n reeds-geregistreerde gebruiker as personeel by deur hul e-pos plus hul titel en telefoonnommer in te voer.",
+          "Instansievlakke en -tipes — verwysingsinligting wat gebruik word wanneer jy jou instansie opstel; dit is nie hiervandaan wysigbaar nie."
+        ]
+      },
+      "logistics": {
+        "bullets": [
+          "Word 'n vervoerder vanaf Logistiek → Verifieer (dien jou bestuurslisensie en voertuigbesonderhede in vir verifikasie).",
+          "Versoek 'n aflewering vanaf Logistiek → Versoek, en spesifiseer afhaal-, aflewer-, en pakketbesonderhede.",
+          "Geverifieerde vervoerders aanvaar werk vanaf \"Logistieke Werk\" en werk status by soos hulle vorder; albei kante volg dit onder \"My Aflewerings\"."
+        ]
+      },
+      "realestate": {
+        "bullets": [
+          "Blaai deur lyste onder \"Eiendom\", en filter volgens tipe, ligging, en prys.",
+          "Maak 'n lys oop om foto's te sien en 'n navraag aan die eienaar te stuur.",
+          "Eienaars bestuur hul lyste onder \"My Eiendomme\" en navrae onder \"My Navrae\"."
+        ]
+      },
+      "agriculture": {
+        "p1": "Boere plaas 'n \"Versoek Oes\"-lys wat die gewas, verwagte hoeveelheid, en datum beskryf; kopers verbind hulle tot 'n voorafaankoop voordat die oes gereed is. Verkopers bestuur hierdie verbintenisse vanaf die \"Oes\"-oortjie van hul besigheidskontroleskerm."
+      },
+      "construction": {
+        "p1": "Kliënte plaas 'n projek onder \"Versoek Projek\" wat omvang, begroting, en tydlyn beskryf. Konstruksiebesighede dien tenders in vanaf hul \"Tenders\"-oortjie, en die kliënt kies 'n kontrakteur."
+      },
+      "payments": {
+        "bullets": [
+          "Fakture — genereer en gaan fakture na wat aan of vanaf jou besigheid uitgereik is.",
+          "Betaalmetodes — bestuur gestoorde kaarte en gekoppelde rekeninge.",
+          "Betalingsverslae — inkomste- en betalingsaktiwiteitopsommings oor tyd.",
+          "Kredietrekening — bestuur 'n kredietlyn-tipe rekening vir jou besigheid, waar beskikbaar.",
+          "Ouditlogs — 'n rekord van betalingsverwante aksies vir aanspreeklikheid."
+        ]
+      },
+      "chat": {
+        "p1": "Intydse boodskappe tussen kopers en verkopers, of enige twee platformgebruikers — vra oor 'n lys, onderhandel, of koördineer aflewering sonder om JamiiKazini te verlaat."
+      },
+      "security": {
+        "bullets": [
+          "Verander jou wagwoord vanaf Rekeninginstellings.",
+          "Stel Twee-Faktor-Verifikasie (2FA) op met 'n verifikasie-app vir 'n ekstra aanmeldingstap.",
+          "Identiteit- en besigheidverifikasie word teen amptelike regeringsrekords nagegaan, geënkripteer wanneer gestoor."
+        ]
+      },
+      "language": {
+        "p1": "Verander jou vertoontaal enige tyd vanaf die kieser in die boonste navigasiebalk — dit word onmiddellik regoor die hele platform toegepas, geen herlaai nodig nie. Jou landkeuse stel jou verstekgeldeenheid in; omskakeling na ander geldeenhede wat op die platform gebruik word, is outomaties met bygewerkte markkoerse."
+      },
+      "faq": {
+        "items": [
+          {
+            "q": "Moet ek my identiteit verifieer om JamiiKazini te gebruik?",
+            "a": "Nee. Registrasie, blaai, koop, en verkoop werk alles sonder dit. Verifikasie is opsioneel en voeg 'n vertrouensbadge by."
+          },
+          {
+            "q": "Kan ek JamiiKazini in my eie taal gebruik?",
+            "a": "Ja — 15 tale word ondersteun, wisselbaar enige tyd vanaf die taalkieser."
+          },
+          {
+            "q": "Hoe kry ek my geld uit JamiiKazini?",
+            "a": "Gebruik \"Trek Uit\" in JamiiWallet om na mobiele geld of 'n gekoppelde bankrekening te onttrek."
+          },
+          {
+            "q": "Kan 'n besigheid funksioneer sonder om 'n instansie te registreer?",
+            "a": "Ja — Besigheid en Instansie is afsonderlik; die meeste verkopers hoef net 'n Besigheid te registreer."
+          },
+          {
+            "q": "Wat as ek nie 'n produk kan vind wat ek nodig het nie?",
+            "a": "Plaas 'n \"Versoek Item\" of \"Versoek Invoer\" wat beskryf wat jy nodig het, en gaan verkopersaanbiedinge na."
+          }
+        ]
+      },
+      "support": {
+        "bullets": [
+          "Gebruik JamiiChat om 'n besigheid direk te boodskap vir bestellings- of lysverwante vrae.",
+          "Gaan jou kennisgewingsentrum na vir opdaterings oor bestellings, verifikasieversoeke, en beursie-aktiwiteit.",
+          "Kontak platformondersteuning via die kanaal wat op die JamiiKazini-webwerf verskaf word."
+        ]
+      },
+      "multidomain": {
+        "p1": "Elke besigheid en instansie kan sy eie winkelfrontadres kry, soos jouwinkel.jamiikazini.com, in plaas daarvan om kliënte na 'n generiese winkelskakel te stuur. 'n Besoeker by daardie adres sien 'n gefokusde, enkelwinkel-ervaring — blaai, mandjie, afhandeling, en aanmeld/registreer — sonder die res van die JamiiKazini-kieslys rondom dit.",
+        "steps": [
+          "Maak jou Besigheid- (of Instansie-) instellingsbladsy oop.",
+          "Vind die \"Deel Jou Winkel\"- (of \"Deel Jou Instansie\"-) kaart.",
+          "Tik die subdomein wat jy wil hê en stoor dit.",
+          "Gebruik \"Kopieer Skakel\" om jou volledige adres (bv. jouwinkel.jamiikazini.com) gereed te kry om enige plek te deel."
+        ],
+        "note": "Die pasgemaakte subdomein is heeltemal opsioneel — jou winkelfront bly ook bereikbaar by sy gewone /store/ of /institutions/ skakel op die hoofwerf."
+      },
+      "teaching": {
+        "p1": "Die Onderrig-module is vir onderwysers, en laat hulle toe om die vakke en klasse wat hulle onderrig te bestuur en outomaties lesplanne en werkskemas te genereer in plaas daarvan om dit van nuuts af te skryf.",
+        "steps": [
+          "Onderrig Tuisblad — 'n laaier met vier teëls: My Vakke, Rooster, Lesplan, en Werkskema.",
+          "My Vakke — stel eers jou werkstasie op (skool, distrik, wyk), sien dan die vakke wat jy onderrig met leerlingtelling getrek uit jou rooster, en spring reguit na die generering van 'n lesplan of werkskema vir enige daarvan.",
+          "My Rooster — voeg by, wysig, of verwyder watter vakke jy onderrig, vir watter klas, en hoeveel periodes per week.",
+          "Lesplan — kies 'n vak en 'n leeraktiwiteit, vul die lesbesonderhede in, en genereer 'n gereed-gemaakte lesplan.",
+          "Werkskema — kies 'n vak en akademiese kalender, en voorskou dan, genereer, of laai die volle kwartaal se onderrigskedule as 'n PDF af."
+        ]
+      }
+    }
   }
 }

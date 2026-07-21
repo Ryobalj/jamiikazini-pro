@@ -233,5 +233,221 @@
       "auto_refresh_enabled": "Usasishaji kiotomatiki umewashwa",
       "auto_refresh_disabled": "Usasishaji kiotomatiki umezimwa"
     }
+  },
+  "help": {
+    "sidebar_label": "Mwongozo wa Mtumiaji",
+    "title": "Mwongozo wa Mtumiaji wa JamiiKazini",
+    "subtitle": "Mwongozo kamili wa kutumia kila sehemu ya jukwaa",
+    "toc": {
+      "intro": "Utangulizi",
+      "getting_started": "Kuanza",
+      "wallet": "Pochi",
+      "marketplace": "Soko",
+      "businesses": "Biashara",
+      "institutions": "Taasisi",
+      "logistics": "Usafirishaji",
+      "realestate": "Mali Isiyohamishika",
+      "agriculture": "Kilimo",
+      "construction": "Ujenzi",
+      "payments": "Malipo",
+      "chat": "Mazungumzo",
+      "security": "Usalama",
+      "language": "Lugha",
+      "faq": "Maswali Yanayoulizwa Mara kwa Mara",
+      "support": "Msaada",
+      "multidomain": "Maduka ya Kikoa Maalum",
+      "teaching": "Ufundishaji"
+    },
+    "note_label": "Kumbuka",
+    "body": {
+      "intro": {
+        "p1": "JamiiKazini inaunganisha maisha ya kiuchumi ya kila siku ya jamii za Afrika Mashariki katika jukwaa moja: pochi ya kidijitali, soko la mtandaoni, zana za biashara, usafirishaji, vikundi vya akiba, na huduma za kisekta (mali isiyohamishika, kilimo, ujenzi).",
+        "subheading": "Nani anatumia JamiiKazini?",
+        "bullets": [
+          "Mteja / Mnunuzi — anavinjari na kununua, kutuma na kupokea pesa, kujiunga na vikundi vya akiba, kuomba usafirishaji, kukodisha au kununua mali.",
+          "Mmiliki wa Biashara / Mtoa Huduma — anasajili biashara, kuorodhesha bidhaa na huduma, kusimamia oda, kuomba uthibitisho wa serikali (TIN/BRELA).",
+          "Msafirishaji / Dereva — anajisajili kama mtoa huduma za usafirishaji na kukubali kazi za usafirishaji.",
+          "Msimamizi wa Taasisi — anasimamia taasisi (SACCOS, kampuni, shule) na wafanyakazi wake."
+        ],
+        "p2": "Jukwaa linapatikana katika lugha 15 (Kiingereza, Kiswahili, Kifaransa, Kiarabu, Kiafrikaans, Kihausa, Kihindi, Kijapani, Kikorea, Kiganda, Kireno, Kirusi, Kinyarwanda, Kichina, Kihispania) na linasaidia uthibitisho wa serikali katika Tanzania, Kenya, Uganda, Rwanda, Burundi, na Sudan Kusini."
+      },
+      "getting_started": {
+        "subheading1": "Kufungua akaunti",
+        "steps": [
+          "Chagua \"Jisajili\" kwenye upau wa juu wa urambazaji.",
+          "Ingiza jina lako kamili, barua pepe, namba ya simu, na nenosiri.",
+          "Chagua lugha na nchi unayopendelea.",
+          "Wasilisha — kiungo cha uthibitisho kitatumwa kwenye barua pepe yako.",
+          "Bofya kiungo kuamsha akaunti yako, kisha ingia."
+        ],
+        "subheading2": "Wasifu na uthibitisho wa utambulisho",
+        "p1": "Sasisha maelezo yako kutoka Wasifu / Hariri Wasifu / Mipangilio ya Akaunti. Baadhi ya vitendo — kupokea malipo makubwa, kuwa dereva wa usafirishaji, kuthibitisha kikamilifu biashara — vinahitaji uthibitisho wa utambulisho kupitia \"Thibitisha Utambulisho,\" unaoangalia kitambulisho chako cha taifa dhidi ya rejista ya nchi yako.",
+        "subheading3": "Kualika marafiki",
+        "p2": "Kutoka \"Alika Marafiki\" kwenye menyu ya akaunti yako, shiriki ujumbe wa mwaliko uliotayarishwa kupitia WhatsApp, Facebook, Telegram, X (Twitter), au LinkedIn, au nakili tu kiungo. Ni njia rahisi ya kuleta watu unaowajua kwenye jukwaa — hakuna zawadi ya rufaa inayofuatiliwa kwenye kiungo hiki maalum (biashara zina mfumo tofauti wa msimbo wa rufaa kwenye mipangilio yao).",
+        "subheading4": "Upau wa juu wa urambazaji",
+        "p3": "Alama ya Tafuta inafungua kisanduku cha utafutaji wa haraka papo hapo kwenye upau. Alama ya kengele inaonyesha Arifa zako, na alama ya nambari kwa chochote kisichosomwa. Alama ya jua/mwezi/kompyuta inazungusha mandhari yako ya kuonyesha kati ya Nuru, Giza, na Mfumo (unaofuata mipangilio ya kifaa chako kiotomatiki)."
+      },
+      "wallet": {
+        "p1": "Kila mtumiaji ana pochi inayoshikilia salio kwa sarafu yake ya ndani, inayotumika katika jukwaa lote.",
+        "subheading1": "Kuongeza fedha",
+        "p2": "Kutoka JamiiWallet → \"Ongeza Fedha,\" lipa kupitia pesa za simu (M-Pesa, Airtel Money na nyingine kupitia PawaPay), kadi (Stripe), au Flutterwave, kutegemea na nchi yako.",
+        "subheading2": "Kutuma pesa na kutoa fedha",
+        "steps": [
+          "Chagua \"Tuma Pesa,\" ingiza namba ya simu/barua pepe/jina la mtumiaji la mpokeaji na kiasi, thibitisha.",
+          "Hifadhi wapokeaji wa mara kwa mara kama Wanufaika kwa uhamisho wa haraka zaidi.",
+          "Tumia \"Toa Fedha\" kutoa kwenda pesa za simu au akaunti ya benki iliyounganishwa."
+        ],
+        "subheading3": "Bili, miamala, na vikundi vya akiba",
+        "bullets": [
+          "BillPay — lipa bili za mara kwa mara moja kwa moja kutoka salio la pochi yako.",
+          "Miamala — historia kamili inayotafutika ya kila kuongeza fedha, uhamisho, malipo, na kutoa fedha.",
+          "Vikundi vya Akiba — anzisha au jiunge na kikundi cha kidijitali cha aina ya VICOBA/SACCOS, changia kutoka pochi yako, na waache wasimamizi wa kikundi kuidhinisha maombi ya kutoa fedha, yote katika daftari la pamoja lililo wazi."
+        ]
+      },
+      "marketplace": {
+        "subheading1": "Ukurasa wa nyumbani",
+        "bullets1": [
+          "Huduma Zinazovuma — huduma maarufu zinazoendelea kwa sasa kwenye jukwaa.",
+          "Biashara Zilizothibitishwa — biashara zilizokamilisha uthibitisho wa utambulisho/leseni ya serikali.",
+          "Vinjari kwa Aina — gusa kigae chochote cha aina kuona kila biashara na bidhaa chini yake.",
+          "Biashara za Karibu — mwonekano unaozingatia eneo la maduka na watoa huduma walio karibu nawe."
+        ],
+        "subheading2": "Kikapu na malipo",
+        "steps": [
+          "Ongeza bidhaa kwenye kikapu chako kutoka kwenye kurasa zao za matangazo.",
+          "Kagua bidhaa katika \"Kikapu,\" rekebisha idadi inavyohitajika.",
+          "Fanya malipo, chagua uwasilishaji au kuchukua mwenyewe, na lipa kutoka salio lako la JamiiWallet.",
+          "Fuatilia oda yako chini ya \"Oda Zangu.\""
+        ],
+        "p1": "Huoni unachohitaji? Weka \"Omba Bidhaa\" (au \"Omba Uagizaji\" kwa bidhaa zinazopatikana nje) na kagua ofa za wauzaji chini ya \"Ofa Zangu.\"",
+        "subheading3": "Biashara za Karibu",
+        "p2": "\"Biashara za Karibu\" hutumia eneo la kifaa chako kuonyesha maduka na watoa huduma walio karibu nawe, ikiwa na kitelezi cha umbali na kichujio cha aina kupunguza utafutaji. Kila matokeo huonyesha umbali wake, kiwango, na maelezo ya mawasiliano, na kitufe cha \"Wasiliana na Muuzaji\" hufungua mazungumzo ya JamiiChat nao moja kwa moja."
+      },
+      "businesses": {
+        "subheading1": "Kusajili biashara",
+        "steps": [
+          "Chagua \"Sajili Biashara\" kwenye menyu yako ya akaunti.",
+          "Ingiza jina la biashara, aina, maelezo, mawasiliano, na eneo.",
+          "Pakia nembo na picha ya jalada, kisha wasilisha.",
+          "Duka lako linakuwa hai mara moja — unaweza kuorodhesha bidhaa na huduma papo hapo."
+        ],
+        "subheading2": "Dashibodi ya biashara",
+        "p1": "Muhtasari · Bidhaa/Huduma (zenye ngazi za picha) · Matawi · Oda · Maombi/Ofa · Uagizaji · Mavuno · Zabuni · Tangaza · Mipangilio.",
+        "subheading3": "Uthibitisho (TIN / BRELA)",
+        "p2": "Biashara zilizothibitishwa hupata alama ya uaminifu na kuonekana katika \"Biashara Zilizothibitishwa\" kwenye ukurasa wa nyumbani. Kutoka Mipangilio ya Biashara → \"Omba Uthibitisho,\" chagua TIN kuthibitisha Namba yako ya Utambulisho wa Kodi dhidi ya rekodi za TRA, au BRELA kuthibitisha usajili wako rasmi wa kampuni — zote mbili ni huru na si za lazima.",
+        "note": "Uthibitisho si wa lazima kabisa — biashara zisizothibitishwa zinaweza kusajili, kuorodhesha, na kuuza kawaida. Huongeza tu alama ya uaminifu inayoonekana kwa wanunuzi.",
+        "subheading4": "Kutangaza biashara yako",
+        "p3": "Kutoka kichupo cha \"Tangaza,\" lipa ili kuonyesha biashara yako yote au bidhaa moja kwenye ukurasa wa nyumbani kwa idadi maalum ya siku (7, 14, au 30). Ombi linabaki \"Linasubiri Malipo\" hadi ankara itakapolipwa, kisha linakuwa hai kwa muda uliochaguliwa.",
+        "subheading5": "Maombi, ofa, na uagizaji",
+        "bullets2": [
+          "Maombi — angalia maombi ya jumla ya bidhaa kutoka kwa wanunuzi walio karibu na dai lolote linalolingana na mojawapo ya bidhaa zako.",
+          "Ofa — kagua ofa za bei ambazo wanunuzi wametoa kwenye bidhaa zako, na Kubali, Kataa, au Toa Ofa Nyingine kwa bei tofauti.",
+          "Uagizaji — ukiwezesha \"biashara ya uagizaji\" kwenye Mipangilio, dai maombi ya uagizaji ya wanunuzi kwa kutoa bei, sarafu, na muda unaotarajiwa wa uwasilishaji."
+        ]
+      },
+      "institutions": {
+        "p1": "Taasisi inawakilisha shirika (SACCOS, ushirika, shule, kampuni) tofauti na duka la biashara la mtu binafsi. Anzisha moja kutoka \"Anzisha Taasisi,\" kisha simamia wafanyakazi, idara, na mipangilio kutoka ukurasa wake wa usimamizi — kila taasisi pia hupata ukurasa wake wa umma.",
+        "subheading1": "Kusimamia taasisi yako",
+        "bullets": [
+          "Taasisi — angalia kila taasisi unayosimamia, ikiwa na njia ya haraka ya kuanzisha mpya.",
+          "Idara — ongeza au ondoa idara zilizo ndani ya taasisi yako.",
+          "Wafanyakazi — ongeza mtumiaji aliyeshasajiliwa kama mfanyakazi kwa kuingiza barua pepe yake pamoja na cheo na namba ya simu.",
+          "Ngazi na Aina za Taasisi — maelezo ya rejea yanayotumika unaposanidi taasisi yako; hayabadilishwi kutoka hapa."
+        ]
+      },
+      "logistics": {
+        "bullets": [
+          "Kuwa msafirishaji kutoka Usafirishaji → Thibitisha (huwasilisha leseni yako ya udereva na maelezo ya gari kwa uthibitisho).",
+          "Omba usafirishaji kutoka Usafirishaji → Omba, ukibainisha mahali pa kuchukua, kupeleka, na maelezo ya kifurushi.",
+          "Wasafirishaji waliothibitishwa hukubali kazi kutoka \"Kazi za Usafirishaji\" na kusasisha hali wanapoendelea; pande zote mbili hufuatilia chini ya \"Uwasilishaji Wangu.\""
+        ]
+      },
+      "realestate": {
+        "bullets": [
+          "Vinjari matangazo chini ya \"Mali Isiyohamishika,\" ukichuja kwa aina, eneo, na bei.",
+          "Fungua tangazo kuona picha na kutuma hoja kwa mmiliki.",
+          "Wamiliki husimamia matangazo yao chini ya \"Mali Zangu\" na hoja chini ya \"Hoja Zangu.\""
+        ]
+      },
+      "agriculture": {
+        "p1": "Wakulima huweka tangazo la \"Omba Mavuno\" likielezea zao, kiasi kinachotarajiwa, na tarehe; wanunuzi hujitolea kwa ununuzi wa mapema kabla mavuno hayajakuwa tayari. Wauzaji husimamia ahadi hizi kutoka kichupo cha \"Mavuno\" cha dashibodi yao ya biashara."
+      },
+      "construction": {
+        "p1": "Wateja huweka mradi chini ya \"Omba Mradi\" ukielezea wigo, bajeti, na muda. Biashara za ujenzi huwasilisha zabuni kutoka kichupo chao cha \"Zabuni\" cha dashibodi, na mteja huchagua mkandarasi."
+      },
+      "payments": {
+        "bullets": [
+          "Ankara — tengeneza na kagua ankara zilizotolewa kwenda au kutoka biashara yako.",
+          "Njia za Malipo — simamia kadi zilizohifadhiwa na akaunti zilizounganishwa.",
+          "Ripoti za Malipo — muhtasari wa mapato na shughuli za malipo kwa muda.",
+          "Akaunti ya Mkopo — simamia akaunti ya biashara ya aina ya mkopo, pale inapopatikana.",
+          "Kumbukumbu za Ukaguzi — rekodi ya vitendo vinavyohusiana na malipo kwa uwajibikaji."
+        ]
+      },
+      "chat": {
+        "p1": "Mawasiliano ya papo kwa papo kati ya wanunuzi na wauzaji, au watumiaji wowote wawili wa jukwaa — uliza kuhusu tangazo, jadiliana, au ratibu uwasilishaji bila kuondoka JamiiKazini."
+      },
+      "security": {
+        "bullets": [
+          "Badilisha nenosiri lako kutoka Mipangilio ya Akaunti.",
+          "Weka Uthibitishaji wa Hatua Mbili (2FA) kwa programu ya uthibitishaji kwa hatua ya ziada ya kuingia.",
+          "Uthibitisho wa utambulisho na biashara hukaguliwa dhidi ya rekodi rasmi za serikali, zikiwa zimefichwa (encrypted) zinapohifadhiwa."
+        ]
+      },
+      "language": {
+        "p1": "Badilisha lugha yako ya kuonyesha wakati wowote kutoka kwenye kichaguzi kwenye upau wa juu wa urambazaji — inatumika papo hapo katika jukwaa lote, hakuna haja ya kusasisha ukurasa. Uchaguzi wako wa nchi huweka sarafu yako chaguomsingi; ubadilishaji kwenda sarafu nyingine zinazotumika kwenye jukwaa ni wa kiotomatiki kwa kutumia viwango vya soko vilivyosasishwa."
+      },
+      "faq": {
+        "items": [
+          {
+            "q": "Je, nahitaji kuthibitisha utambulisho wangu ili kutumia JamiiKazini?",
+            "a": "Hapana. Usajili, uvinjari, ununuzi, na uuzaji vyote hufanya kazi bila hiyo. Uthibitisho si wa lazima na huongeza alama ya uaminifu."
+          },
+          {
+            "q": "Je, ninaweza kutumia JamiiKazini kwa lugha yangu mwenyewe?",
+            "a": "Ndiyo — lugha 15 zinasaidiwa, zinazobadilishwa wakati wowote kutoka kwenye kichaguzi cha lugha."
+          },
+          {
+            "q": "Ninawezaje kutoa pesa zangu kutoka JamiiKazini?",
+            "a": "Tumia \"Toa Fedha\" katika JamiiWallet kutoa kwenda pesa za simu au akaunti ya benki iliyounganishwa."
+          },
+          {
+            "q": "Je, biashara inaweza kufanya kazi bila kusajili taasisi?",
+            "a": "Ndiyo — Biashara na Taasisi ni tofauti; wauzaji wengi wanahitaji tu kusajili Biashara."
+          },
+          {
+            "q": "Je, nifanye nini nisipopata bidhaa ninayohitaji?",
+            "a": "Weka \"Omba Bidhaa\" au \"Omba Uagizaji\" ukielezea unachohitaji, na kagua ofa za wauzaji."
+          }
+        ]
+      },
+      "support": {
+        "bullets": [
+          "Tumia JamiiChat kuwasiliana na biashara moja kwa moja kwa maswali yanayohusiana na oda au tangazo.",
+          "Angalia kituo chako cha arifa kwa masasisho ya oda, maombi ya uthibitisho, na shughuli za pochi.",
+          "Wasiliana na msaada wa jukwaa kupitia njia iliyotolewa kwenye tovuti ya JamiiKazini."
+        ]
+      },
+      "multidomain": {
+        "p1": "Kila biashara na taasisi inaweza kupata anwani yake ya duka, kama vile dukalako.jamiikazini.com, badala ya kuwatuma wateja kwenye kiungo cha kawaida cha duka. Mgeni kwenye anwani hiyo huona uzoefu ulioelekezwa, wa duka moja tu — kuvinjari, kikapu, malipo, na kuingia/kujisajili — bila menyu nyingine ya JamiiKazini kumzunguka.",
+        "steps": [
+          "Fungua ukurasa wa Mipangilio ya Biashara (au Taasisi) yako.",
+          "Tafuta kadi ya \"Shiriki Duka Lako\" (au \"Shiriki Taasisi Yako\").",
+          "Andika kikoa kidogo unachotaka na kihifadhi.",
+          "Tumia \"Nakili Kiungo\" kupata anwani yako kamili (mfano dukalako.jamiikazini.com) tayari kushiriki popote."
+        ],
+        "note": "Kikoa kidogo maalum si cha lazima kabisa — duka lako pia linabaki kufikika kwenye kiungo chake cha kawaida cha /store/ au /institutions/ kwenye tovuti kuu."
+      },
+      "teaching": {
+        "p1": "Sehemu ya Ufundishaji ni kwa walimu, ikiwaruhusu kusimamia masomo na madarasa wanayofundisha na kutengeneza kiotomatiki mipango ya somo na mipango ya kazi badala ya kuandika kutoka mwanzo.",
+        "steps": [
+          "Nyumbani kwa Ufundishaji — kizinduzi chenye vigae vinne: Masomo Yangu, Ratiba, Mpango wa Somo, na Mpango wa Kazi.",
+          "Masomo Yangu — kwanza sanidi kituo chako cha kazi (shule, wilaya, kata), kisha ona masomo unayofundisha ukiwa na idadi ya wanafunzi kutoka ratiba yako, na uende moja kwa moja kutengeneza mpango wa somo au mpango wa kazi kwa lolote kati yao.",
+          "Ratiba Yangu — ongeza, hariri, au ondoa masomo unayofundisha, kwa darasa gani, na vipindi vingapi kwa wiki.",
+          "Mpango wa Somo — chagua somo na shughuli ya kujifunza, jaza maelezo ya somo, na utengeneze mpango wa somo tayari.",
+          "Mpango wa Kazi — chagua somo na kalenda ya kitaaluma, kisha onyesha kwa muhtasari, tengeneza, au pakua ratiba nzima ya muhula wa ufundishaji kama PDF."
+        ]
+      }
+    }
   }
 }

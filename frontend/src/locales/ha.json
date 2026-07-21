@@ -187,5 +187,221 @@
       "empty": "Babu ayyuka da suka fi a halin yanzu.",
       "used": "{{count}} an yi amfani"
     }
+  },
+  "help": {
+    "sidebar_label": "Jagorar Mai Amfani",
+    "title": "Jagorar Mai Amfani ta JamiiKazini",
+    "subtitle": "Cikakken jagora don amfani da kowane sashi na dandalin",
+    "toc": {
+      "intro": "Gabatarwa",
+      "getting_started": "Fara Amfani",
+      "wallet": "Walat",
+      "marketplace": "Kasuwa",
+      "businesses": "Kasuwanci",
+      "institutions": "Cibiyoyi",
+      "logistics": "Sufuri",
+      "realestate": "Gidaje da Filaye",
+      "agriculture": "Noma",
+      "construction": "Gini",
+      "payments": "Biyan Kudi",
+      "chat": "Hira",
+      "security": "Tsaro",
+      "language": "Harshe",
+      "faq": "Tambayoyin da Ake Yawan Yi",
+      "support": "Taimako",
+      "multidomain": "Shagunan Yankuna Dabam-dabam",
+      "teaching": "Koyarwa"
+    },
+    "note_label": "Lura",
+    "body": {
+      "intro": {
+        "p1": "JamiiKazini (\"Al'ummar Aiki\") tana hada rayuwar tattalin arziki ta yau da kullum na al'ummomin Gabashin Afirka a dandali daya: walat na dijital, kasuwar yanar gizo, kayan aikin kasuwanci, safarar kaya, kungiyoyin tanadi, da ayyukan musamman na sassa (gine-gine, noma, gini).",
+        "subheading": "Wanene ke amfani da JamiiKazini?",
+        "bullets": [
+          "Abokin ciniki / Mai saye — yana bincike da sayayya, aika da karban kudi, shiga kungiyoyin tanadi, neman kai kaya, hayar ko sayen gida.",
+          "Mai kasuwanci / Mai bayarwa — yana rijistar kasuwanci, jera kayayyaki da ayyuka, sarrafa oda, neman tabbatarwar gwamnati (TIN/BRELA).",
+          "Mai safara / Direba — yana rijista a matsayin mai bayar da kaya kuma yana karban ayyukan safara.",
+          "Manajan Cibiyoyi — yana sarrafa cibiya (SACCOS, kamfani, makaranta) da ma'aikatanta."
+        ],
+        "p2": "Dandalin yana samuwa a cikin harsuna 15 (Turanci, Swahili, Faransanci, Larabci, Afrikaans, Hausa, Hindi, Jafananci, Koriya, Luganda, Fotigal, Rashanci, Kinyarwanda, Sinanci, Sifen) kuma yana goyon bayan hadin gwiwar tabbatarwar gwamnati a Tanzaniya, Kenya, Uganda, Ruwanda, Burundi, da Kudancin Sudan."
+      },
+      "getting_started": {
+        "subheading1": "Kirkiro asusu",
+        "steps": [
+          "Zabi \"Yi Rijista\" daga jerin abubuwa na sama.",
+          "Shigar da cikakken suna, imel, lambar waya, da kalmar sirri.",
+          "Zabi harshe da kasar da kake so.",
+          "Sallama — za a aiko da hanyar tabbatarwa zuwa imel dinka.",
+          "Danna hanyar don kunna asusunka, sannan ka shiga."
+        ],
+        "subheading2": "Bayanan sirri da tabbatar da shaida",
+        "p1": "Sabunta bayananka daga Bayanan Sirri / Gyara Bayanan Sirri / Saitunan Asusu. Wasu ayyuka — karban kudi masu yawa, zama direban kai kaya, cikakken tabbatar da kasuwanci — suna bukatar tabbatar da shaida ta hanyar \"Tabbatar da Shaida,\" wanda ke duba katin shaidarka na kasa da bayanan kasarka.",
+        "subheading3": "Gayyatar abokai",
+        "p2": "Daga \"Gayyaci Abokai\" a menu na asusunka, raba sakon gayyata da aka riga aka shirya ta hanyar WhatsApp, Facebook, Telegram, X (Twitter), ko LinkedIn, ko kawai kwafi hanyar. Hanya ce mai sauki ta kawo mutanen da ka sani zuwa dandali — babu lada na yin gayyata da ake bibiya akan wannan hanyar musamman (kasuwanci suna da tsarin lambar gayyata daban a saitunansu).",
+        "subheading4": "Layin bincike na sama",
+        "p3": "Alamar Bincike tana bude akwatin bincike mai sauri nan take a layin. Alamar kararrawa tana nuna Sanarwarka, tare da alama ga duk abin da ba a karanta ba. Alamar rana/wata/kwamfuta tana canza jigon nuna alama tsakanin Haske, Duhu, da Tsarin Na'ura (wanda ke bin saitin na'urarka ta atomatik)."
+      },
+      "wallet": {
+        "p1": "Kowane mai amfani yana da walat wanda ke rike da kudi a cikin kudin kasarsa, wanda ake amfani dashi a duk dandali.",
+        "subheading1": "Cika Kudi",
+        "p2": "Daga JamiiWallet → \"Kara Kudi,\" biya ta hanyar kudin waya (M-Pesa, Airtel Money da sauransu ta PawaPay), katin banki (Stripe), ko Flutterwave, dangane da kasarka.",
+        "subheading2": "Aika kudi da fitar da kudi",
+        "steps": [
+          "Zabi \"Aika Kudi,\" shigar da lambar waya/imel/sunan mai karba da adadin kudi, tabbatar.",
+          "Ajiye masu karba akai-akai a matsayin Masu Amfana don sauri wajen aikawa.",
+          "Yi amfani da \"Fitar da Kudi\" don fitarwa zuwa kudin waya ko asusun banki da aka hada."
+        ],
+        "subheading3": "Kudade, ma'amaloli, da kungiyoyin tanadi",
+        "bullets": [
+          "BillPay — biya kudade masu maimaita kai tsaye daga ma'aunin walat dinka.",
+          "Ma'amaloli — cikakken tarihin da za a iya bincike na kowace cikawa, tura kudi, biya, da fitarwa.",
+          "Kungiyoyin Tanadi — kirkiro ko shiga kungiyar dijital irin ta VICOBA/SACCOS, ba da gudummawa daga walat dinka, kuma ka bar manajojin kungiya su amince da bukatun fitar da kudi, duk a cikin littafin lissafi mai bayyane da aka raba."
+        ]
+      },
+      "marketplace": {
+        "subheading1": "Shafin gida",
+        "bullets1": [
+          "Ayyukan da ke Shahara — sanannun ayyuka da ke aiki a yanzu a dandali.",
+          "Kasuwancin da aka Tabbatar — kasuwancin da suka kammala tabbatar da shaida/lasisin gwamnati.",
+          "Bincika ta Nau'i — danna kowane tayil na nau'i don ganin kowane kasuwanci da kaya a karkashinsa.",
+          "Kasuwancin da ke Kusa — kallon shaguna da masu bayarwa da ke kusa da kai bisa wurin da kake."
+        ],
+        "subheading2": "Kwando da biya",
+        "steps": [
+          "Kara kayayyaki zuwa kwandonka daga shafukan sayarwa.",
+          "Bincika abubuwa a \"Kwando,\" gyara adadi kamar yadda ake bukata.",
+          "Yi biya, zabi kai kaya ko dauka, kuma biya daga ma'aunin JamiiWallet dinka.",
+          "Bibiyi odarka a karkashin \"Ododi Na.\""
+        ],
+        "p1": "Ba ka samun abin da kake bukata? Sanya \"Nemi Kaya\" (ko \"Nemi Shigo da Kaya\" don kayan da ake dauka daga wani wuri) kuma bincika tayin masu sayarwa a karkashin \"Tayina.\"",
+        "subheading3": "Kasuwancin da ke Kusa",
+        "p2": "\"Kasuwancin da ke Kusa\" yana amfani da wurin na'urarka don nuna shaguna da masu bayarwa da ke kusa da kai, tare da mai sarrafa nisa da tacewar nau'i don takaita bincike. Kowane sakamako yana nuna nisansa, kimantawa, da bayanan tuntuba, kuma maballin \"Tuntubi Mai Sayarwa\" yana bude tattaunawar JamiiChat da su kai tsaye."
+      },
+      "businesses": {
+        "subheading1": "Rijistar kasuwanci",
+        "steps": [
+          "Zabi \"Yi Rijistar Kasuwanci\" daga menu na asusunka.",
+          "Shigar da sunan kasuwanci, nau'i, bayani, bayanan tuntuba, da wuri.",
+          "Loda tambari da hoton murfi, sannan sallama.",
+          "Shagon ka yana nan take a bude — za ka iya jera kayayyaki da ayyuka nan take."
+        ],
+        "subheading2": "Dashboard na kasuwanci",
+        "p1": "Bayyani · Kayayyaki/Ayyuka (tare da hotuna) · Rassa · Oda · Bukatu/Tayi · Shigo da Kaya · Girbi · Tanadin Fara Aiki · Talla · Saituna.",
+        "subheading3": "Tabbatarwa (TIN / BRELA)",
+        "p2": "Kasuwancin da aka tabbatar suna samun alamar amana kuma suna bayyana a \"Kasuwancin da aka Tabbatar\" a shafin gida. Daga Saitunan Kasuwanci → \"Nemi Tabbatarwa,\" zabi TIN don tabbatar da lambar shaidar haraji dinka da bayanan TRA, ko BRELA don tabbatar da rijistar kamfaninka na hukuma — dukansu 'yanci ne kuma na zabi.",
+        "note": "Tabbatarwa na zabi ne kawai — kasuwancin da ba a tabbatar ba za su iya yin rijista, jerawa, da sayarwa yadda aka saba. Yana kara alamar amana da za a iya gani ga masu saye kawai.",
+        "subheading4": "Tallata kasuwancinka",
+        "p3": "Daga shafin \"Talla,\" biya don nuna dukan kasuwancinka ko kaya daya akan shafin gida na kwanaki takamaimai (7, 14, ko 30). Bukata tana ci gaba da kasancewa \"Tana Jiran Biya\" har sai an biya lissafin, sannan ta zama mai aiki na tsawon lokacin da aka zaba.",
+        "subheading5": "Bukatu, tayi, da shigo da kaya",
+        "bullets2": [
+          "Bukatu — duba bukatun kaya na gaba daya daga masu saye da ke kusa kuma ka dai kowace da ta dace da daya daga cikin kayanka.",
+          "Tayi — bincika tayin farashi da masu saye suka yi akan kayanka, kuma Karba, Ki, ko Bayar da Wani Farashi.",
+          "Shigo da Kaya — idan ka kunna \"kasuwancin shigo da kaya\" a Saituna, dai bukatun shigo da kaya na masu saye ta hanyar bayar da farashi, kudi, da kwanan da za a kai."
+        ]
+      },
+      "institutions": {
+        "p1": "Cibiya tana wakiltar kungiya (SACCOS, hadin gwiwa, makaranta, kamfani) daban da shagon kasuwanci na mutum daya. Kirkiro daya daga \"Kirkiro Cibiya,\" sannan ka sarrafa ma'aikata, sassa, da saituna daga shafin sarrafawarta — kowace cibiya kuma tana samun shafinta na jama'a.",
+        "subheading1": "Sarrafa cibiyarka",
+        "bullets": [
+          "Cibiyoyi — duba kowace cibiya da kake sarrafawa, tare da hanyar sauri ta kirkiro sabuwa.",
+          "Sassa — kara ko cire sassan da ke cikin cibiyarka.",
+          "Ma'aikata — kara mai amfani da aka rijista ya riga ya rijista a matsayin ma'aikaci ta hanyar shigar da imel dinsa tare da mukaminsa da lambar wayarsa.",
+          "Matakan da Nau'ukan Cibiya — bayanan tunani da ake amfani dasu lokacin da ake sanya cibiyarka; ba za a iya gyara su daga nan ba."
+        ]
+      },
+      "logistics": {
+        "bullets": [
+          "Zama mai safara daga Safarar Kaya → Tabbatar (yana mika lasisin tuki da bayanan mota domin tabbatarwa).",
+          "Nemi kai kaya daga Safarar Kaya → Nema, tare da bayyana wurin daukan kaya, wurin isarwa, da bayanan kunshin kaya.",
+          "Masu safara da aka tabbatar suna karban ayyuka daga \"Ayyukan Safara\" kuma suna sabunta matsayi yayin da suke ci gaba; bangarorin biyu suna bibiyar wannan a karkashin \"Kai Kayana.\""
+        ]
+      },
+      "realestate": {
+        "bullets": [
+          "Bincika jeri a karkashin \"Gine-gine,\" tare da tantancewa ta nau'i, wuri, da farashi.",
+          "Bude jeri don ganin hotuna da aika tambaya ga mai shi.",
+          "Masu shi suna sarrafa jerinsu a karkashin \"Gine-ginena\" da tambayoyi a karkashin \"Tambayoyina.\""
+        ]
+      },
+      "agriculture": {
+        "p1": "Manoma suna sanya jeri na \"Nemi Girbi\" da ke bayyana amfani, adadin da ake tsammani, da rana; masu saye suna sadaukar da kansu ga siyayya ta gaba kafin girbi ya shirya. Masu sayarwa suna sarrafa wadannan alkawurra daga shafin \"Girbi\" na dashboard din kasuwancinsu."
+      },
+      "construction": {
+        "p1": "Abokan ciniki suna sanya aikin gini a karkashin \"Nemi Aikin Gini\" da ke bayyana girman aiki, kudi, da lokaci. Kasuwancin gini suna mika tayi daga shafin \"Tanadin Fara Aiki,\" kuma abokin ciniki yana zabar makera."
+      },
+      "payments": {
+        "bullets": [
+          "Takardar Kudi — kirkiro da bincika takardun kudi da aka bayar zuwa ko daga kasuwancinka.",
+          "Hanyoyin Biya — sarrafa katunan da aka ajiye da asusun da aka hada.",
+          "Rahoton Biya — takaitaccen bayanin kudin shiga da ayyukan biya na tsawon lokaci.",
+          "Asusun Bashi — sarrafa asusun kasuwanci na irin layin bashi, inda ake samu.",
+          "Rajistar Bincike — rikodin ayyukan da suka shafi biya domin lissafi."
+        ]
+      },
+      "chat": {
+        "p1": "Sadarwa ta ainihin lokaci tsakanin masu saye da masu sayarwa, ko duk wasu masu amfani biyu na dandali — tambaya game da jeri, tattaunawa, ko shirya kai kaya ba tare da barin JamiiKazini ba."
+      },
+      "security": {
+        "bullets": [
+          "Canza kalmar sirrinka daga Saitunan Asusu.",
+          "Kafa Tabbatarwa Sau Biyu (2FA) tare da app na tabbatarwa domin karin mataki na shiga.",
+          "Ana duba tabbatar da shaida da kasuwanci da bayanan gwamnati na hukuma, ana rufe su lokacin ajiyewa."
+        ]
+      },
+      "language": {
+        "p1": "Canza harshen nunawarka a kowane lokaci daga zabin da ke jerin abubuwa na sama — yana aiki nan take a duk dandali, babu bukatar sabuntawa. Zabinka na kasa yana kafa kudin da ake amfani dashi; canzawa zuwa wasu kudade da ake amfani dasu a dandali na atomatik ne ta amfani da farashin kasuwa da aka sabunta."
+      },
+      "faq": {
+        "items": [
+          {
+            "q": "Ina bukatar tabbatar da shaida ta domin amfani da JamiiKazini?",
+            "a": "A'a. Rijista, bincike, sayayya, da sayarwa duk suna aiki ba tare da hakan ba. Tabbatarwa na zabi ne kuma yana kara alamar amana."
+          },
+          {
+            "q": "Zan iya amfani da JamiiKazini a cikin harshena?",
+            "a": "Eh — ana goyon bayan harsuna 15, wadanda za a iya canzawa a kowane lokaci daga zabin harshe."
+          },
+          {
+            "q": "Ta yaya zan fitar da kudina daga JamiiKazini?",
+            "a": "Yi amfani da \"Fitar da Kudi\" a JamiiWallet don fitarwa zuwa kudin waya ko asusun banki da aka hada."
+          },
+          {
+            "q": "Shin kasuwanci na iya aiki ba tare da yin rijistar cibiya ba?",
+            "a": "Eh — Kasuwanci da Cibiya abubuwa ne daban-daban; yawancin masu sayarwa suna bukatar rijistar Kasuwanci kawai."
+          },
+          {
+            "q": "Me zan yi idan ban samu kayan da nake bukata ba?",
+            "a": "Sanya \"Nemi Kaya\" ko \"Nemi Shigo da Kaya\" da ke bayyana abin da kake bukata, kuma bincika tayin masu sayarwa."
+          }
+        ]
+      },
+      "support": {
+        "bullets": [
+          "Yi amfani da JamiiChat don aika sako kai tsaye zuwa kasuwanci domin tambayoyin da suka shafi oda ko jeri.",
+          "Duba cibiyar sanarwarka domin sabuntawa kan oda, bukatun tabbatarwa, da ayyukan walat.",
+          "Tuntubi tallafin dandali ta hanyar da aka bayar akan gidan yanar gizon JamiiKazini."
+        ]
+      },
+      "multidomain": {
+        "p1": "Kowane kasuwanci da cibiya na iya samun adireshin shago na su, kamar shagonka.jamiikazini.com, maimakon aika abokan ciniki zuwa hanyar shago ta gaba daya. Wanda ya ziyarci wannan adireshin yana ganin kwarewa ta shago daya kacal — bincike, kwando, biya, da shiga/rijista — ba tare da sauran menu na JamiiKazini ba.",
+        "steps": [
+          "Bude shafin Saitunan Kasuwancinka (ko Cibiya).",
+          "Nemo katin \"Raba Shagonka\" (ko \"Raba Cibiyarka\").",
+          "Rubuta yankin da kake so kuma ka ajiye shi.",
+          "Yi amfani da \"Kwafi Hanyar\" don samun cikakken adireshinka (misali shagonka.jamiikazini.com) shirye don raba a ko'ina."
+        ],
+        "note": "Yankin da aka kwastam yana zabi ne kawai — shagonka kuma yana ci gaba da samuwa a hanyarsa ta yau da kullum ta /store/ ko /institutions/ akan babban shafin."
+      },
+      "teaching": {
+        "p1": "Sashin Koyarwa na malamai ne, yana bar su su sarrafa darussa da azuzuwan da suke koyarwa kuma su samar da tsare-tsaren darasi da tsare-tsaren aiki ta atomatik maimakon rubuta su daga farko.",
+        "steps": [
+          "Gidan Koyarwa — mai kaddamarwa mai tayal hudu: Darussana, Jadawalin Lokaci, Tsarin Darasi, da Tsarin Aiki.",
+          "Darussana — da farko ka kafa wurin aikinka (makaranta, gunduma, unguwa), sannan ka duba darussan da kake koyarwa tare da adadin dalibai da aka fitar daga jadawalin lokacinka, kuma ka tafi kai tsaye zuwa samar da tsarin darasi ko tsarin aiki na dukkansu.",
+          "Jadawalin Lokacina — kara, gyara, ko cire wadanne darussa kake koyarwa, ga wane aji, da adadin lokutan da a kowace mako.",
+          "Tsarin Darasi — zabi darasi da wani aiki na koyo, cika bayanan darasi, kuma ka samar da tsarin darasi a shirye.",
+          "Tsarin Aiki — zabi darasi da kalandar ilimi, sannan ka duba a takaice, samar, ko sauke jadawalin koyarwa na dukkan zangon a matsayin PDF."
+        ]
+      }
+    }
   }
 }
