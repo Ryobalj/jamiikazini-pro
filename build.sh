@@ -28,6 +28,9 @@ python manage.py seed_currencies || echo "seed_currencies skipped"
 echo "==> Fetching real market exchange rates (ERAPI)"
 python manage.py update_exchange_rates --source ERAPI || echo "update_exchange_rates skipped (using seeded rates)"
 
+echo "==> Seeding transport rate cards (idempotent)"
+python manage.py seed_transport_rate_cards || echo "seed_transport_rate_cards skipped"
+
 # Presentation demo data (users/businesses/products/etc.) - OFF by default so
 # a real production deploy never gets fake accounts seeded in automatically.
 # Set SEED_DEMO_DATA=true in Render's env vars to turn it on for a demo/staging
