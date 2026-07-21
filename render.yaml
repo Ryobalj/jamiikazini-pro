@@ -49,7 +49,7 @@ services:
       - key: RECAPTCHA_PRIVATE_KEY_V2
         sync: false
       - key: RECAPTCHA_PUBLIC_KEY_V3
-        value: 6LevXGIrAAAAAC3H8RyWcIHhefYvZUcw3Jlzo8uk
+        value: 6LcktV4tAAAAALK4bak9wjLwp4WLFNKqgw8gedbd
       - key: RECAPTCHA_PRIVATE_KEY_V3
         sync: false
       # Demo/presentation data (users, businesses, products, etc.) seeded on
@@ -117,7 +117,7 @@ services:
       - key: VITE_RECAPTCHA_PUBLIC_KEY
         value: 6LfdHXQrAAAAAHH48HbSpMayztg9fVl7WAkLrvLC
       - key: VITE_RECAPTCHA_SITE_KEY
-        value: 6LevXGIrAAAAAC3H8RyWcIHhefYvZUcw3Jlzo8uk
+        value: 6LcktV4tAAAAALK4bak9wjLwp4WLFNKqgw8gedbd
     routes:
       - type: rewrite                         # React Router (SPA)
         source: /*
