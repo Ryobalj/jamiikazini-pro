@@ -59,6 +59,18 @@ export default function TabBar() {
     // ongeza apps nyingine hapa kama education, health, etc.
   };
 
+  // Pages for a specific business/institution/product set document.title to
+  // "{name} — JamiiKazini" (see useDocumentTitle hook) - reuse that as the
+  // active tab's label instead of falling back to the raw :id from the URL.
+  const [docTitle, setDocTitle] = useState(document.title);
+  useEffect(() => {
+    const titleEl = document.querySelector("title");
+    if (!titleEl) return;
+    const observer = new MutationObserver(() => setDocTitle(document.title));
+    observer.observe(titleEl, { childList: true, characterData: true, subtree: true });
+    return () => observer.disconnect();
+  }, []);
+
   const labelFromPath = (path) => {
     if (staticMap[path]) return tCommon(staticMap[path]);
 
@@ -82,6 +94,12 @@ export default function TabBar() {
     }
 
     const lastSegment = path.split("/").filter(Boolean).at(-1);
+
+    if (path === location.pathname) {
+      const [namePart] = docTitle.split(" — ");
+      if (namePart && namePart !== "Jamiikazini") return namePart;
+    }
+
     return lastSegment?.charAt(0).toUpperCase() + lastSegment?.slice(1);
   };
 

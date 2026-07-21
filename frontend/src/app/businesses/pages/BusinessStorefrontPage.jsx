@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import api from "@/lib/axios";
 import { useCart } from "@/context/CartContext";
 import { useCurrency } from "@/context/CurrencyContext";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 const THEME_BY_TYPE = {
   products: { icon: Store, label: "storefront.type_products" },
@@ -40,6 +41,8 @@ export default function BusinessStorefrontPage() {
   const [submittingOffer, setSubmittingOffer] = useState(false);
 
   const quantityFor = (product) => quantities[product.id] ?? 1;
+
+  useDocumentTitle(business?.name);
 
   useEffect(() => {
     if (!businessId) return;

@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { Building2, Loader2, Phone, Mail, MapPin, Store, ShieldCheck, Package, Wrench } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import api from "@/lib/axios";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 export default function InstitutionStorefrontPage() {
   const { id: institutionId } = useParams();
@@ -20,6 +21,8 @@ export default function InstitutionStorefrontPage() {
   const [institution, setInstitution] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+
+  useDocumentTitle(institution?.name);
 
   useEffect(() => {
     if (!institutionId) return;
