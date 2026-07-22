@@ -24,8 +24,6 @@ export default function DriverVerificationPage() {
   const [countryCode, setCountryCode] = useState("tz");
   const [nationalId, setNationalId] = useState("");
   const [driverLicense, setDriverLicense] = useState("");
-  const [vehicleLicense, setVehicleLicense] = useState("");
-  const [latraLicense, setLatraLicense] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   const loadStatus = () => {
@@ -42,11 +40,21 @@ export default function DriverVerificationPage() {
 
   useEffect(() => {
     loadStatus();
+    // Chagua-msingi ya nchi inatoka kwenye TransportProvider yako mwenyewe -
+    // mtumiaji bado anaweza kubadilisha hapa chini kama anahitaji.
+    api
+      .get("/logistics/transport-providers/")
+      .then((res) => {
+        const providers = Array.isArray(res.data) ? res.data : res.data?.results || [];
+        const mine = providers[0];
+        if (mine?.country_code) setCountryCode(mine.country_code.toLowerCase());
+      })
+      .catch(() => {});
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!nationalId && !driverLicense && !vehicleLicense && !latraLicense) {
+    if (!nationalId && !driverLicense) {
       toast.error(t("verify_driver.at_least_one_required", "Jaza angalau namba moja ya uthibitisho."));
       return;
     }
@@ -56,8 +64,6 @@ export default function DriverVerificationPage() {
         country_code: countryCode,
         national_id_number: nationalId || undefined,
         driver_license_number: driverLicense || undefined,
-        vehicle_license_number: vehicleLicense || undefined,
-        latra_license_number: latraLicense || undefined,
       });
       toast.success(t("verify_driver.submitted", "Maombi ya uthibitisho yametumwa."));
       loadStatus();
@@ -105,7 +111,7 @@ export default function DriverVerificationPage() {
                 <p>
                   {t(
                     "verify_driver.description",
-                    "Lazima ukamilishe uthibitisho wa NIDA, leseni ya udereva, leseni ya gari, na LATRA kabla ya kupokea kazi za usafirishaji."
+                    "Lazima ukamilishe uthibitisho wa NIDA na leseni ya udereva kabla ya kupokea kazi za usafirishaji. Uthibitisho wa TRA na LATRA kwa gari lako unafanywa kando, kwa kila gari, kutoka 'Magari Yangu'."
                   )}
                 </p>
                 {overallStatus && (
@@ -133,6 +139,8 @@ export default function DriverVerificationPage() {
                     <option value="ke">Kenya</option>
                     <option value="ug">Uganda</option>
                     <option value="rw">Rwanda</option>
+                    <option value="bi">Burundi</option>
+                    <option value="ss">South Sudan</option>
                   </select>
                 </div>
                 <div>
@@ -154,28 +162,6 @@ export default function DriverVerificationPage() {
                     type="text"
                     value={driverLicense}
                     onChange={(e) => setDriverLicense(e.target.value)}
-                    className="w-full p-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    {t("verify_driver.vehicle_license_label", "Namba ya Leseni ya Gari")}
-                  </label>
-                  <input
-                    type="text"
-                    value={vehicleLicense}
-                    onChange={(e) => setVehicleLicense(e.target.value)}
-                    className="w-full p-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    {t("verify_driver.latra_label", "Namba ya Leseni ya LATRA")}
-                  </label>
-                  <input
-                    type="text"
-                    value={latraLicense}
-                    onChange={(e) => setLatraLicense(e.target.value)}
                     className="w-full p-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white text-sm"
                   />
                 </div>

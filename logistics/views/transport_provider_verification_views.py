@@ -11,8 +11,6 @@ from gov_integration.helpers.verification import (
     verify_entity,
     national_id_authority_for,
     driver_license_authority_for,
-    business_license_authority_for,
-    transport_license_authority_for,
 )
 from gov_integration.models.verification_request import VerificationRequest
 from security.helpers.encryption import hash_data
@@ -28,8 +26,6 @@ class TransportProviderVerificationViewSet(viewsets.ReadOnlyModelViewSet):
         'user', 'institution',
         'nida_verification',
         'driving_license_verification',
-        'vehicle_license_verification',
-        'latra_permit_verification'
     )
     serializer_class = TransportProviderVerificationSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -127,17 +123,5 @@ class TransportProviderVerificationViewSet(viewsets.ReadOnlyModelViewSet):
                             vr.save(update_fields=["status", "response_data"])
                         tpv.update_overall_status()
                 responses["driver_license"] = res
-
-        if vehicle_license := data.get("vehicle_license_number"):
-            payload = {"vehicle_license_number": vehicle_license}
-            res = verify_entity(country_code, business_license_authority_for(country_code), payload, user)
-            self._save_verification_result(user, "vehicle_license_verification", country_code, payload, res)
-            responses["vehicle_license"] = res
-
-        if latra := data.get("latra_license_number"):
-            payload = {"latra_license_number": latra}
-            res = verify_entity(country_code, transport_license_authority_for(country_code), payload, user)
-            self._save_verification_result(user, "latra_permit_verification", country_code, payload, res)
-            responses["latra"] = res
 
         return Response(responses, status=status.HTTP_200_OK)

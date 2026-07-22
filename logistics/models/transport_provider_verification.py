@@ -16,10 +16,12 @@ class TransportProviderVerification(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='transport_verification')
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE, related_name='transport_verifications')
     
+    # Uthibitisho wa MTU pekee (NIDA + leseni ya udereva) - kila mmoja ana
+    # kimoja tu bila kujali magari mangapi anayomiliki/kuendesha. Usajili wa
+    # gari (TRA) na kibali cha LATRA ni wa GARI mahususi sasa - angalia
+    # logistics.models.vehicle_verification.VehicleVerification.
     nida_verification = models.OneToOneField(VerificationRequest, on_delete=models.SET_NULL, null=True, blank=True, related_name='nida_transport_verification')
     driving_license_verification = models.OneToOneField(VerificationRequest, on_delete=models.SET_NULL, null=True, blank=True, related_name='driving_license_verification')
-    vehicle_license_verification = models.OneToOneField(VerificationRequest, on_delete=models.SET_NULL, null=True, blank=True, related_name='vehicle_license_verification')
-    latra_permit_verification = models.OneToOneField(VerificationRequest, on_delete=models.SET_NULL, null=True, blank=True, related_name='latra_permit_verification')
 
     overall_status = models.CharField(max_length=20, choices=PROVIDER_STATUS_CHOICES, default='PENDING')
 
@@ -46,8 +48,6 @@ class TransportProviderVerification(models.Model):
         verifications = [
             self.nida_verification,
             self.driving_license_verification,
-            self.vehicle_license_verification,
-            self.latra_permit_verification,
         ]
 
         # Check if any verification failed

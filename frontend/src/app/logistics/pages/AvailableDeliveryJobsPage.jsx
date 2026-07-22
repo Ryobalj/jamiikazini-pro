@@ -2,30 +2,13 @@
 
 import React, { useEffect, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { Loader2, Truck, MapPin, Package, UserPlus, PlusCircle, ShieldAlert } from "lucide-react";
+import { Loader2, Truck, MapPin, Package, UserPlus, ShieldAlert } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "react-toastify";
 import api from "@/lib/axios";
 import { useAppContext } from "@/context/AppContext";
-
-const VEHICLE_TYPES = [
-  "bicycle",
-  "boda_boda",
-  "bajaji",
-  "taxi",
-  "suzuki_carry",
-  "tuk_tuk",
-  "public_transport",
-  "bus",
-  "canter",
-  "fuso",
-  "scania",
-  "train",
-  "ship",
-  "air",
-];
 
 export default function AvailableDeliveryJobsPage() {
   const { t } = useTranslation("logistics");
@@ -39,15 +22,6 @@ export default function AvailableDeliveryJobsPage() {
   const [selectedVehicle, setSelectedVehicle] = useState({});
   const [proposedFare, setProposedFare] = useState({});
   const [busyId, setBusyId] = useState(null);
-
-  // Provider registration form
-  const [regSubmitting, setRegSubmitting] = useState(false);
-  const [regLocation, setRegLocation] = useState(null);
-
-  // Vehicle registration form
-  const [vehType, setVehType] = useState(VEHICLE_TYPES[0]);
-  const [vehReg, setVehReg] = useState("");
-  const [vehSubmitting, setVehSubmitting] = useState(false);
 
   const loadAll = useCallback(async () => {
     setLoading(true);
@@ -95,49 +69,6 @@ export default function AvailableDeliveryJobsPage() {
   useEffect(() => {
     loadAll();
   }, [loadAll]);
-
-  useEffect(() => {
-    if (!navigator.geolocation) return;
-    navigator.geolocation.getCurrentPosition(
-      (position) => setRegLocation({ lat: position.coords.latitude, lng: position.coords.longitude }),
-      () => setRegLocation(null)
-    );
-  }, []);
-
-  const handleRegisterProvider = async (e) => {
-    e.preventDefault();
-    setRegSubmitting(true);
-    try {
-      const payload = { provider_type: "individual" };
-      if (regLocation) {
-        payload.location = { type: "Point", coordinates: [regLocation.lng, regLocation.lat] };
-      }
-      await api.post("/logistics/transport-providers/", payload);
-      toast.success(t("provider_registered", "Umejisajili kama dereva."));
-      loadAll();
-    } catch (err) {
-      toast.error(err.response?.data?.detail || t("provider_register_failed", "Imeshindwa kujisajili."));
-    } finally {
-      setRegSubmitting(false);
-    }
-  };
-
-  const handleRegisterVehicle = async (e) => {
-    e.preventDefault();
-    if (!vehReg.trim()) return;
-    setVehSubmitting(true);
-    try {
-      await api.post("/logistics/vehicles/", { vehicle_type: vehType, registration_number: vehReg.trim() });
-      toast.success(t("vehicle_registered", "Gari limesajiliwa."));
-      setVehReg("");
-      loadAll();
-    } catch (err) {
-      const detail = err.response?.data?.registration_number || err.response?.data?.detail;
-      toast.error(typeof detail === "string" ? detail : t("vehicle_register_failed", "Imeshindwa kusajili gari."));
-    } finally {
-      setVehSubmitting(false);
-    }
-  };
 
   const matchingVehicles = (vehicleType) => vehicles.filter((v) => v.vehicle_type === vehicleType && v.is_active);
 
@@ -195,7 +126,7 @@ export default function AvailableDeliveryJobsPage() {
     );
   }
 
-  if (!provider) {
+  if (!provider || vehicles.length === 0) {
     return (
       <div className="max-w-md mx-auto p-4 sm:p-6">
         <Card>
@@ -205,67 +136,13 @@ export default function AvailableDeliveryJobsPage() {
               {t("become_driver_title", "Kuwa Dereva wa Jamiikazini")}
             </h2>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              {t("become_driver_desc", "Jisajili kama mtoa huduma wa usafirishaji ili uanze kupokea kazi za kufikisha bidhaa.")}
+              {!provider
+                ? t("become_driver_desc", "Jisajili kama mtoa huduma wa usafirishaji ili uanze kupokea kazi za kufikisha bidhaa.")
+                : t("add_vehicle_desc", "Unahitaji kusajili gari kabla ya kuanza kupokea kazi za usafirishaji.")}
             </p>
-            <form onSubmit={handleRegisterProvider}>
-              <Button type="submit" disabled={regSubmitting} className="w-full">
-                {regSubmitting ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
-                {t("register_now", "Jisajili Sasa")}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
-  if (vehicles.length === 0) {
-    return (
-      <div className="max-w-md mx-auto p-4 sm:p-6">
-        <Card>
-          <CardContent className="p-6 space-y-4">
-            <div className="text-center">
-              <PlusCircle className="w-10 h-10 mx-auto text-blue-600 mb-2" />
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                {t("add_vehicle_title", "Ongeza Gari Lako")}
-              </h2>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                {t("add_vehicle_desc", "Unahitaji kusajili gari kabla ya kuanza kupokea kazi za usafirishaji.")}
-              </p>
-            </div>
-            <form onSubmit={handleRegisterVehicle} className="space-y-3">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  {t("vehicle_type", "Aina ya Gari")}
-                </label>
-                <select
-                  value={vehType}
-                  onChange={(e) => setVehType(e.target.value)}
-                  className="w-full p-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white text-sm"
-                >
-                  {VEHICLE_TYPES.map((vt) => (
-                    <option key={vt} value={vt}>{t(`vehicle_types.${vt}`, vt)}</option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  {t("registration_number", "Namba ya Usajili")}
-                </label>
-                <input
-                  type="text"
-                  value={vehReg}
-                  onChange={(e) => setVehReg(e.target.value)}
-                  placeholder={t("registration_number_placeholder", "Mfano: T123ABC")}
-                  className="w-full p-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white text-sm"
-                  required
-                />
-              </div>
-              <Button type="submit" disabled={vehSubmitting} className="w-full">
-                {vehSubmitting ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
-                {t("add_vehicle_submit", "Sajili Gari")}
-              </Button>
-            </form>
+            <Link to="/logistics/register">
+              <Button className="w-full">{t("register_now", "Jisajili Sasa")}</Button>
+            </Link>
           </CardContent>
         </Card>
       </div>

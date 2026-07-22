@@ -12,7 +12,7 @@ from logistics.serializers.geo_fields import PointJSONField
 class VerificationRequestStatusSerializer(serializers.ModelSerializer):
     class Meta:
         model = VerificationRequest
-        fields = ['id', 'document_number', 'status', 'created_at', 'updated_at']
+        fields = ['id', 'status', 'created_at', 'updated_at']
 
 
 class TransportProviderSerializer(serializers.ModelSerializer):
@@ -29,6 +29,9 @@ class TransportProviderSerializer(serializers.ModelSerializer):
             'institution',
             'provider_type',
             'provider_type_display',
+            'country_code',
+            'company_name',
+            'company_registration_number',
             'location',
             'is_approved',
             'approval_letter',
@@ -46,6 +49,13 @@ class TransportProviderSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({
                 "approval_letter": "Unapaswa kupakia barua ya uthibitisho kabla ya kuidhinishwa."
             })
+
+        provider_type = data.get('provider_type', getattr(self.instance, 'provider_type', None))
+        company_name = data.get('company_name', getattr(self.instance, 'company_name', ''))
+        if provider_type == 'company' and not company_name:
+            raise serializers.ValidationError({
+                "company_name": "Kampuni ya usafirishaji lazima iwe na jina."
+            })
         return data
 
     def validate_provider_type(self, value):
@@ -60,8 +70,6 @@ class TransportProviderVerificationSerializer(serializers.ModelSerializer):
 
     nida_verification = VerificationRequestStatusSerializer(read_only=True)
     driving_license_verification = VerificationRequestStatusSerializer(read_only=True)
-    vehicle_license_verification = VerificationRequestStatusSerializer(read_only=True)
-    latra_permit_verification = VerificationRequestStatusSerializer(read_only=True)
 
     class Meta:
         model = TransportProviderVerification
@@ -71,8 +79,6 @@ class TransportProviderVerificationSerializer(serializers.ModelSerializer):
             'institution',
             'nida_verification',
             'driving_license_verification',
-            'vehicle_license_verification',
-            'latra_permit_verification',
             'overall_status',
             'notes',
             'created_at',

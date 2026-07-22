@@ -11,6 +11,10 @@ class Driver(UUIDModel, TimeStampedModel):
     )
     full_name = models.CharField(max_length=255)
     license_number = models.CharField(max_length=50, unique=True)
+    license_photo = models.ImageField(
+        upload_to='drivers/licenses/', null=True, blank=True,
+        help_text="Picha ya leseni ya udereva - inasaidia uthibitisho wa mwongozo.",
+    )
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     profile_image = models.ImageField(upload_to='drivers/profiles/', null=True, blank=True)
     is_verified = models.BooleanField(default=False)

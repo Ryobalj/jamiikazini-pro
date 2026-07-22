@@ -67,7 +67,14 @@ class TransportAssignmentViewSet(viewsets.ModelViewSet):
         verification = getattr(request.user, "transport_verification", None)
         if not verification or verification.overall_status != "VERIFIED":
             return Response(
-                {"detail": "Lazima ukamilishe uthibitisho wako (NIDA, leseni, LATRA) kabla ya kupokea kazi."},
+                {"detail": "Lazima ukamilishe uthibitisho wako (NIDA, leseni ya udereva) kabla ya kupokea kazi."},
+                status=drf_status.HTTP_403_FORBIDDEN,
+            )
+
+        vehicle_verification = getattr(vehicle, "verification", None)
+        if not vehicle_verification or vehicle_verification.overall_status != "VERIFIED":
+            return Response(
+                {"detail": "Gari hili bado halijathibitishwa (TRA/LATRA). Lithibitishe kwanza kabla ya kupokea kazi."},
                 status=drf_status.HTTP_403_FORBIDDEN,
             )
 

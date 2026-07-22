@@ -61,6 +61,7 @@ import RequestImportPage from "@/app/businesses/pages/RequestImportPage";
 import AvailableDeliveryJobsPage from "@/app/logistics/pages/AvailableDeliveryJobsPage";
 import RequestServicePage from "@/app/logistics/pages/RequestServicePage";
 import MyDeliveriesPage from "@/app/logistics/pages/MyDeliveriesPage";
+import DriverRegistrationPage from "@/app/logistics/pages/DriverRegistrationPage";
 
 // Chat Pages
 import ConversationsListPage from "@/app/jamiichat/pages/ConversationsListPage";
@@ -157,6 +158,7 @@ export default function App() {
 
         {/* Logistics (Driver) Routes */}
         <Route path="/logistics/jobs" element={<ProtectedRoute><MainLayout><AvailableDeliveryJobsPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/logistics/register" element={<ProtectedRoute><MainLayout><DriverRegistrationPage /></MainLayout></ProtectedRoute>} />
         <Route path="/logistics/request" element={<ProtectedRoute><MainLayout><RequestServicePage /></MainLayout></ProtectedRoute>} />
         <Route path="/logistics/deliveries" element={<ProtectedRoute><MainLayout><MyDeliveriesPage /></MainLayout></ProtectedRoute>} />
         <Route path="/logistics/verify" element={<ProtectedRoute><MainLayout><DriverVerificationPage /></MainLayout></ProtectedRoute>} />

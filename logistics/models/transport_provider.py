@@ -7,6 +7,7 @@ from django.contrib.gis.db import models as geomodels
 from kiini.models.base import UUIDModel, TimeStampedModel
 from kiini.models.institution import Institution
 from accounts.models import User
+from gov_integration.models.country_config import CountryConfig
 
 
 def approval_letter_upload_path(instance, filename):
@@ -40,6 +41,25 @@ class TransportProvider(UUIDModel, TimeStampedModel):
         default=ProviderType.INDIVIDUAL,
         help_text=_("Chagua kama huu ni usafiri binafsi au kampuni.")
     )
+    country_code = models.CharField(
+        max_length=2,
+        choices=CountryConfig.ISO_CODES,
+        default="TZ",
+        help_text=_(
+            "Nchi ya mtoa-huduma huyu - inaamua ni mamlaka gani (TRA/LATRA, NTSA, "
+            "URSB, n.k.) inayotumika kuthibitisha NIDA yake, leseni, na magari yake."
+        ),
+    )
+    company_name = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text=_("Jina rasmi la kampuni - linahitajika kama provider_type ni 'company'."),
+    )
+    company_registration_number = models.CharField(
+        max_length=50,
+        blank=True,
+        help_text=_("Namba ya usajili wa kampuni (TIN au BRELA)."),
+    )
     location = geomodels.PointField(
         geography=True,
         null=True,
@@ -68,6 +88,10 @@ class TransportProvider(UUIDModel, TimeStampedModel):
         return f"{self.user.full_name} - Transport Provider"
 
     def clean(self):
+        # Kampuni lazima iwe na jina - dereva binafsi hahitaji hili
+        if self.provider_type == self.ProviderType.COMPANY and not self.company_name:
+            raise ValidationError(_("Kampuni ya usafirishaji lazima iwe na jina."))
+
         # Lazima approval_letter iwepo kama is_approved ni True
         if self.is_approved and not self.approval_letter:
             raise ValidationError(_("Unapaswa kupakia barua ya uthibitisho kabla ya kuidhinishwa."))
