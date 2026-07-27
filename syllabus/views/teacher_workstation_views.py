@@ -10,9 +10,16 @@ from syllabus.serializers.teacher_workstation_serializer import TeacherWorkStati
 
 class TeacherWorkStationViewSet(viewsets.ModelViewSet):
     """
-    CRUD operations for TeacherWorkStation
-    - Admin can manage all workstations
-    - Client can manage only their own workstation
+    CRUD operations for TeacherWorkStation - always scoped to the
+    requesting teacher's own workstation, regardless of role.
+
+    Every consumer of this endpoint (MyTimetable, SchemeOfWorkPage,
+    LessonPlanPage, ExamResultsPage, MySubjects, WorkstationFormModal)
+    treats the list result as "my workstation" (takes index 0) - an
+    unfiltered "all workstations" result for Admin/other roles would
+    silently hand the frontend a DIFFERENT teacher's workstation instead
+    of correctly reporting that the requesting user has none. True
+    cross-teacher administration belongs in Django Admin, not here.
     """
     serializer_class = TeacherWorkStationSerializer
     permission_classes = [IsAuthenticated]
@@ -24,10 +31,7 @@ class TeacherWorkStationViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        qs = TeacherWorkStation.objects.all().select_related("teacher")
-        if user.role == "CLIENT":
-            qs = qs.filter(teacher=user)
-        return qs
+        return TeacherWorkStation.objects.filter(teacher=user).select_related("teacher")
 
     def perform_create(self, serializer):
         user = self.request.user

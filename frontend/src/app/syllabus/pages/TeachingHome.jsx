@@ -3,12 +3,14 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import SubscriptionStatusCard from "../components/SubscriptionStatusCard";
 
 const teachingServices = [
   { id: "my_subjects", route: "/teaching/my-subjects", icon: "📘" },
   { id: "timetable", route: "/teaching/timetable", icon: "🗓️" },
   { id: "scheme", route: "/teaching/scheme", icon: "📑" },
   { id: "lesson_plan", route: "/teaching/lesson-plan", icon: "📝" },
+  { id: "exam_results", route: "/teaching/exam-results", icon: "📊" },
 ];
 
 export default function TeachingHome() {
@@ -25,6 +27,8 @@ export default function TeachingHome() {
       <p className="text-sm text-gray-600 dark:text-gray-300 mb-6">
         {t("teaching_home.subtitle")}
       </p>
+
+      <SubscriptionStatusCard />
 
       {/* Services Launcher */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">

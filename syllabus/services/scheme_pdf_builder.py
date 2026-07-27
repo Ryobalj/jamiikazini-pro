@@ -25,12 +25,13 @@ class SchemePDFBuilder:
     def __init__(self, data: SchemeData, labels: Optional[dict] = None):
         self.data = data
         self.labels = labels or self._get_default_labels()
-        
+
         filename = self._generate_filename()
-        
+
         self.pdf = PDFGenerator(
             filename=filename,
             orientation="landscape",  # LANDSCAPE FOR WIDE TABLES
+            language=getattr(data.identification, "language", "sw") if hasattr(data, "identification") else "sw",
         )
         
         self._setup_styles()
@@ -197,7 +198,6 @@ class SchemePDFBuilder:
         try:
             self._build_header_page()
             self._build_objectives()
-            self._build_period_summary()
             self._build_main_table()
             self._build_summary_footer()
             
@@ -214,17 +214,17 @@ class SchemePDFBuilder:
     # -------------------------------------------------
     def _build_header_page(self):
         """Build header page with school information."""
-        self.pdf.add_title("AZIMIO LA KAZI")
-        
+        self.pdf.add_title(self.labels["document_title"])
+
         # School information table
         info_data = [
-            ["Halmashauri:", self.data.council or "-"],
-            ["Shule:", self.data.school_name or "-"],
-            ["Mwalimu:", self.data.teacher_name or "-"],
-            ["Darasa:", self.data.class_level_name or "-"],
-            ["Somo:", self.data.subject_name or "-"],
-            ["Mwaka:", self.data.year or "-"],
-            ["Muhula:", self.data.term_display or self.data.term or "-"],
+            [f"{self.labels['field_council']}:", self.data.council or "-"],
+            [f"{self.labels['field_school']}:", self.data.school_name or "-"],
+            [f"{self.labels['field_teacher']}:", self.data.teacher_name or "-"],
+            [f"{self.labels['field_class']}:", self.data.class_level_name or "-"],
+            [f"{self.labels['field_subject']}:", self.data.subject_name or "-"],
+            [f"{self.labels['field_year']}:", self.data.year or "-"],
+            [f"{self.labels['field_term']}:", self.data.term_display or self.data.term or "-"],
         ]
         
         info_table = Table(info_data, colWidths=[100, 350])
@@ -245,49 +245,16 @@ class SchemePDFBuilder:
     # -------------------------------------------------
     def _build_objectives(self):
         """Build objectives section."""
-        self.pdf.add_section("MALENGO")
-        
+        self.pdf.add_section(self.labels["objectives"])
+
         objectives_list = self.data.objectives if hasattr(self.data, 'objectives') else []
-        
+
         if objectives_list:
             for i, obj in enumerate(objectives_list, start=1):
                 self.pdf.add_paragraph(f"{i}. {obj}", small=True)
         else:
-            self.pdf.add_paragraph("Hakuna malengo maalum yaliyobainishwa.", small=True)
+            self.pdf.add_paragraph(self.labels["objectives_empty"], small=True)
         
-        self.pdf.add_spacer(12)
-
-    # -------------------------------------------------
-    # PERIOD SUMMARY
-    # -------------------------------------------------
-    def _build_period_summary(self):
-        """Build period calculation summary."""
-        if not hasattr(self.data, 'period_calculation'):
-            return
-        
-        pc = self.data.period_calculation
-        
-        summary_data = [
-            ["Jumla ya Vipindi Mtaalani:", str(pc.total_periods)],
-            ["Vipindi kwa Wiki:", f"{pc.periods_per_week}"],
-            ["Wiki Zinazohitajika:", f"{pc.required_weeks:.1f}"],
-            ["Wiki Zilizopo:", str(pc.available_weeks)],
-            ["Vipindi Vinavyopatikana:", str(pc.available_periods)],
-            ["Tofauti ya Vipindi:", f"{pc.period_difference:+.1f}"],
-            ["Vipindi Vilivyobaki kwa Wiki:", f"{pc.adjusted_periods_per_week:.1f}"],
-        ]
-        
-        summary_table = Table(summary_data, colWidths=[150, 100])
-        summary_table.setStyle(TableStyle([
-            ("GRID", (0, 0), (-1, -1), 0.5, colors.black),
-            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-            ("FONTNAME", (0, 0), (0, -1), "Helvetica-Bold"),
-            ("FONTSIZE", (0, 0), (-1, -1), 9),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
-            ("TOPPADDING", (0, 0), (-1, -1), 4),
-        ]))
-        
-        self.pdf.flowables.append(summary_table)
         self.pdf.add_spacer(12)
 
     # -------------------------------------------------
@@ -297,25 +264,23 @@ class SchemePDFBuilder:
         """Build main 12-column scheme table with all features."""
         headers = self.data.headers if hasattr(self.data, 'headers') else self.labels["headers"]
         
-        # Start with header row
-        table_data = [[Paragraph(h, self.pdf.styles["Small"]) for h in headers]]
-        
-        rows_on_current_page = 0
-        max_rows_per_page = 35  # Increased for better spacing
-        
+        # Build ALL rows into a single continuous table_data. Do not
+        # manually insert PageBreak()/reset table_data here: reportlab's
+        # Table flowable (with repeatRows=1, set below) already splits
+        # itself across pages and repeats the header row automatically.
+        # The previous per-"page" reset silently discarded every earlier
+        # batch of rows (only the final batch was ever turned into a
+        # Table and appended to flowables), while the holiday-row style
+        # commands below still counted row indices across ALL items —
+        # so for any scheme with more than 35 rows, the style commands
+        # referenced row indices past the end of the actual (truncated)
+        # table, crashing reportlab with "list index out of range".
+        table_data = [[Paragraph(h.upper(), self.pdf.styles["TableHeader"]) for h in headers]]
+
         if hasattr(self.data, 'schedule_items') and self.data.schedule_items:
             for item in self.data.schedule_items:
-                # Add page break if needed
-                if rows_on_current_page >= max_rows_per_page:
-                    self.pdf.flowables.append(PageBreak())
-                    # Add header row on new page
-                    table_data = [[Paragraph(h, self.pdf.styles["Small"]) for h in headers]]
-                    rows_on_current_page = 0
-                
-                # Format row based on item type
                 row_cells = self._format_table_row(item)
                 table_data.append(row_cells)
-                rows_on_current_page += 1
         
         # Column widths optimized for landscape with merged content
         col_widths = [
@@ -362,73 +327,85 @@ class SchemePDFBuilder:
             ("TOPPADDING", (0, 1), (-1, -1), 5),
         ]
         
-        # Apply styles to holiday blocks
+        # Apply styles to holiday/exam blocks
         current_row = 1  # Start after header
         if hasattr(self.data, 'schedule_items'):
             for item in self.data.schedule_items:
-                if self._is_holiday_block_row(item):
-                    # Apply special styling to holiday block rows
+                if self._is_exam_row(item):
+                    # Exam rows still need to show which week the exam
+                    # falls in, so only merge the label columns and the
+                    # methodology-through-remarks columns, leaving
+                    # Mwezi/Wiki/Vipindi visible.
                     style_commands.extend([
-                        ("SPAN", (0, current_row), (3, current_row)),  # Merge first 4 columns
-                        ("SPAN", (7, current_row), (10, current_row)), # Merge methodology through assessment
-                        ("BACKGROUND", (0, current_row), (-1, current_row), colors.white),  # White background
+                        ("SPAN", (0, current_row), (3, current_row)),
+                        ("SPAN", (7, current_row), (len(headers) - 1, current_row)),
+                        ("BACKGROUND", (0, current_row), (-1, current_row), colors.white),
+                    ])
+                elif self._is_holiday_block_row(item):
+                    # Holiday date-range rows merge across the ENTIRE row
+                    # so the statement is centered, matching the real
+                    # reference documents.
+                    style_commands.extend([
+                        ("SPAN", (0, current_row), (len(headers) - 1, current_row)),
+                        ("BACKGROUND", (0, current_row), (-1, current_row), colors.white),
                     ])
                 current_row += 1
-        
+
         table.setStyle(TableStyle(style_commands))
         self.pdf.flowables.append(table)
         self.pdf.add_spacer(10)
 
     def _format_table_row(self, item: ScheduleItem) -> List[Paragraph]:
         """Format a table row based on item type."""
-        # Check if this is a holiday block row
-        if self._is_holiday_block_row(item):
-            return self._format_holiday_block_row(item)
+        if self._is_exam_row(item):
+            return self._format_exam_row(item)
+        elif self._is_holiday_block_row(item):
+            return self._format_full_merge_row(item)
         else:
             return self._format_teaching_row(item)
-    
+
+    def _is_exam_row(self, item: ScheduleItem) -> bool:
+        """Check if item is an exam-week banner row. Uses the explicit
+        row_type set by SchemeTimelineBuilder rather than matching
+        Kiswahili keywords in student_activity, which silently failed to
+        recognize English-language exam/holiday labels."""
+        return getattr(item, "row_type", "normal") == "exam"
+
     def _is_holiday_block_row(self, item: ScheduleItem) -> bool:
-        """Check if item is part of a holiday block."""
-        if not item.student_activity:
-            return False
-        
-        # Check for holiday/exam keywords
-        holiday_keywords = ["MITIHANI", "LIKIZO", "Kuanzia tarehe"]
-        return any(keyword in item.student_activity for keyword in holiday_keywords)
-    
-    def _format_holiday_block_row(self, item: ScheduleItem) -> List[Paragraph]:
-        """Format 3-row holiday block with centered text."""
-        # Determine which row of the block this is
-        student_activity = item.student_activity or ""
-        
-        if "MITIHANI" in student_activity:
-            style = self.pdf.styles["ExamRow"]
-        elif "LIKIZO" in student_activity:
-            style = self.pdf.styles["HolidayRow"]
-        else:  # Date range row
-            style = self.pdf.styles["DateRow"]
-        
-        # Get week display
+        """Check if item is a holiday date-range banner row (or an exam
+        row — both render as banner-style rows, see _format_table_row)."""
+        return getattr(item, "row_type", "normal") in ("exam", "holiday")
+
+    def _format_exam_row(self, item: ScheduleItem) -> List[Paragraph]:
+        """Format an exam-week row: label banner + real Mwezi/Wiki/Vipindi
+        cells still visible (unlike the fully-merged holiday row), so the
+        exam week stays legible."""
         week_display = self._get_week_display(item)
-        
-        # For holiday blocks, student_activity goes in the 4th column (Shughuli za Ujifunzaji)
-        # and is centered across merged cells
-        centered_text = Paragraph(student_activity, style)
-        
+        exam_text = Paragraph(item.student_activity or "", self.pdf.styles["ExamRow"])
+        empty_cell = Paragraph("", self.pdf.styles["TeachingCell"])
+
         return [
-            Paragraph("", self.pdf.styles["TeachingCell"]),  # Umahiri Mkuu (empty, will be merged)
-            Paragraph("", self.pdf.styles["TeachingCell"]),  # Umahiri Mahususi (empty, will be merged)
-            Paragraph("", self.pdf.styles["TeachingCell"]),  # Shughuli za Ufundishaji (empty, will be merged)
-            centered_text,                                   # Shughuli za Ujifunzaji (centered text)
+            exam_text,
+            empty_cell, empty_cell, empty_cell,
             self._format_month_cell(item.month),
             self._format_week_cell(week_display),
             self._format_period_cell(item.periods),
-            Paragraph("", self.pdf.styles["TeachingCell"]),  # Mbinu (empty, will be merged)
-            Paragraph("", self.pdf.styles["TeachingCell"]),  # Marejeo (empty, will be merged)
-            Paragraph("", self.pdf.styles["TeachingCell"]),  # Zana (empty, will be merged)
-            Paragraph("", self.pdf.styles["TeachingCell"]),  # Vigezo vya Upimaji (empty, will be merged)
+            empty_cell, empty_cell, empty_cell, empty_cell,
             self._format_remarks_cell(item.remarks),
         ]
+
+    def _format_full_merge_row(self, item: ScheduleItem) -> List[Paragraph]:
+        """Format a holiday date-range row as a single full-width centered
+        banner spanning every column, matching the real reference
+        documents."""
+        # reportlab only renders the TOP-LEFT cell's content for a SPANned
+        # range, so the text must live in column 0 — every other cell in
+        # the row is merged away and must stay empty.
+        centered_text = Paragraph(item.student_activity or "", self.pdf.styles["HolidayRow"])
+        empty_cell = Paragraph("", self.pdf.styles["TeachingCell"])
+
+        headers = self.data.headers if hasattr(self.data, 'headers') else self.labels["headers"]
+        return [centered_text] + [empty_cell for _ in range(len(headers) - 1)]
     
     def _format_teaching_row(self, item: ScheduleItem) -> List[Paragraph]:
         """Format normal teaching activity row."""
@@ -484,24 +461,34 @@ class SchemePDFBuilder:
         
         return Paragraph(text, self.pdf.styles["TeachingCell"])
     
-    def _format_references_cell(self, text: Optional[str]) -> Paragraph:
-        """Format references cell."""
+    def _format_references_cell(self, text) -> Paragraph:
+        """Format references cell. references is a Postgres ArrayField on
+        SpecificLearningActivity, so it may arrive as a list rather than a
+        plain string."""
+        if isinstance(text, (list, tuple)):
+            text = ", ".join(str(t) for t in text if t)
+
         if not text or text.strip() == "":
             text = "-"
-        
+
         if len(text) > 60:
             text = text[:57] + "..."
-        
+
         return Paragraph(text, self.pdf.styles["TeachingCell"])
-    
-    def _format_teaching_aids_cell(self, text: Optional[str]) -> Paragraph:
-        """Format teaching aids cell."""
+
+    def _format_teaching_aids_cell(self, text) -> Paragraph:
+        """Format teaching aids cell. teaching_aids is a Postgres ArrayField
+        on SpecificLearningActivity, so it may arrive as a list rather than
+        a plain string."""
+        if isinstance(text, (list, tuple)):
+            text = ", ".join(str(t) for t in text if t)
+
         if not text or text.strip() == "":
             text = "-"
-        
+
         if len(text) > 60:
             text = text[:57] + "..."
-        
+
         return Paragraph(text, self.pdf.styles["TeachingCell"])
     
     def _format_assessment_cell(self, text: Optional[str]) -> Paragraph:
@@ -572,43 +559,8 @@ class SchemePDFBuilder:
     # SUMMARY AND FOOTER
     # -------------------------------------------------
     def _build_summary_footer(self):
-        """Build summary footer with statistics."""
-        if not hasattr(self.data, 'schedule_items') or not self.data.schedule_items:
-            return
-        
-        # Calculate statistics
-        teaching_weeks = set()
-        teaching_rows = 0
-        holiday_blocks = 0
-        total_periods = 0
-        
-        for item in self.data.schedule_items:
-            student_activity = item.student_activity or ""
-            
-            if "MITIHANI" in student_activity:
-                holiday_blocks += 1
-            elif item.periods > 0:
-                teaching_rows += 1
-                total_periods += item.periods
-                
-                # Count unique teaching weeks
-                if hasattr(item, 'week_number') and item.week_number:
-                    teaching_weeks.add(item.week_number)
-        
-        current_date = datetime.now().strftime("%d/%m/%Y")
-        
-        summary_text = (
-            f"MUHTASARI: Safu za mafunzo {teaching_rows} | "
-            f"Wiki za mafunzo {len(teaching_weeks)} | "
-            f"Vitalu vya likizo {holiday_blocks} | "
-            f"Jumla ya vipindi {total_periods} | "
-            f"Mwalimu: {self.data.teacher_name} | "
-            f"Tarehe: {current_date}"
-        )
-        
-        self.pdf.add_spacer(15)
-        self.pdf.add_paragraph(summary_text, small=True)
-        
-        # Add school footer
-        footer_text = f"{self.data.school_name} - {self.data.council}"
+        """Set the page footer to school name + teacher name. The old
+        internal planning-statistics paragraph (row/period counts) isn't
+        part of the actual document and has been removed."""
+        footer_text = f"{self.data.school_name} - {self.data.teacher_name}"
         self.pdf.set_footer(footer_text)

@@ -556,6 +556,12 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": 7200.0,
     },
 
+    # === SYLLABUS SUBSCRIPTIONS ===
+    "renew-due-syllabus-subscriptions": {
+        "task": "jamiitasks.tasks.syllabus_subscription_tasks.renew_due_subscriptions",
+        "schedule": crontab(hour=2, minute=0),
+    },
+
     # === GATEWAY AUTOMATION ===
     "poll-pending-transactions": {
         "task": "jamiitasks.tasks.payments_gateway_tasks.poll_pending_transactions",
@@ -620,6 +626,13 @@ PAWAPAY_PROVIDERS = {
 }
 # Sarafu chaguo-msingi kwa malipo ya mobile money (Tanzania)
 PAWAPAY_DEFAULT_CURRENCY = config("PAWAPAY_DEFAULT_CURRENCY", default="TZS")
+
+# Revenue destination for in-platform fees that don't yet belong to a
+# registered Business (e.g. syllabus subscription fees) — credited to this
+# account's JamiiWallet via TransactionEngine.PAYMENT. Temporary: once
+# "Elimu"/Jamiikazini is registered as its own Business, switch fee flows
+# to that Business's owner instead.
+PLATFORM_REVENUE_OWNER_EMAIL = config("PLATFORM_REVENUE_OWNER_EMAIL", default="dsimonryoba95@gmail.com")
 
 # Flutterwave
 FLUTTERWAVE = {

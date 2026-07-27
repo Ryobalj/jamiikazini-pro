@@ -176,6 +176,12 @@ class LessonPlanSubjectInfoSerializer(serializers.Serializer):
     specific_activity = serializers.CharField()
     teaching_aids = serializers.CharField()
     references = serializers.CharField()
+    lesson_notes_intro = serializers.CharField(required=False, allow_blank=True)
+    lesson_notes_details = serializers.CharField(required=False, allow_blank=True)
+    lesson_notes_illustrations = serializers.CharField(required=False, allow_blank=True)
+    lesson_notes_daily_life = serializers.CharField(required=False, allow_blank=True)
+    exercise_questions = serializers.ListField(child=serializers.DictField(), required=False)
+    diagram_type = serializers.CharField(required=False, allow_blank=True)
 
 
 class StudentCountSerializer(serializers.Serializer):

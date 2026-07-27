@@ -1,0 +1,17 @@
+category,language,is_awali,is_active,teaching_sw,learning_sw,indicator_primary_sw,indicator_secondary_sw,reflection_sw,reflection_comment_sw,teaching_en,learning_en,indicator_primary_en,indicator_secondary_en,reflection_en,reflection_comment_en
+intro,sw,0,1,Kuwahoji wanafunzi kwa maswali kuhusu,Kujibu maswali ya mahojiano kuhusu,Maswali kuhusu,,,,,,,,,
+intro,sw,0,1,Kuwaongoza wanafunzi kukumbuka mafunzo ya awali kuhusu,Kukumbuka na kueleza mafunzo ya awali kuhusu,Maelezo sahihi kuhusu,,,,,,,,,
+intro,en,0,1,,,,,,,Asking students questions about,Answering questions about,Questions about,,,
+intro,en,0,1,,,,,,,Guiding students to recall previous lessons about,Recalling and explaining previous lessons about,Correct explanation about,,,
+development,sw,0,1,Kuwapa wanafunzi mazoezi ya ziada kuhusu,Kufanya mazoezi ya ziada kuhusu,,Mazoezi kuhusu,,,,,,,,
+development,sw,0,1,Kuwaongoza wanafunzi kufanya kazi kwa vikundi kuhusu,Kufanya kazi kwa vikundi kuhusu,,Kazi za vikundi kuhusu,,,,,,,,
+development,en,0,1,,,,,,,Giving students extra practice on,Doing extra practice on,,Practice on,,
+development,en,0,1,,,,,,,Guiding students to work in groups on,Working in groups on,,Group work on,,
+conclusion,sw,0,1,Kutoa jaribio fupi kuhusu somo lililofundishwa,Kufanya jaribio fupi kuhusu somo lililofundishwa,,Jaribio fupi limefanywa kwa usahihi,,,,,,,,
+conclusion,sw,0,1,Kuwauliza wanafunzi maswali ya kufunga somo,Kujibu maswali ya kufunga somo,,Maswali ya kufunga somo yamejibiwa kwa usahihi,,,,,,,,
+conclusion,en,0,1,,,,,,,Giving a short quiz on the lesson taught,Doing a short quiz on the lesson taught,,The short quiz was completed correctly,,
+conclusion,en,0,1,,,,,,,Asking students closing questions about the lesson,Answering the closing questions about the lesson,,The closing questions were answered correctly,,
+reflection,sw,0,1,,,,,Wanafunzi wameshiriki kikamilifu na kuonesha uelewa mzuri wa somo.,Nitaendelea na mada inayofuata kipindi kijacho.,,,,,,
+reflection,sw,0,1,,,,,Somo limekwenda vizuri na wanafunzi wengi wameweza kufikia malengo ya somo.,Nitafanya mapitio kidogo kabla ya kuendelea na mada mpya.,,,,,,
+reflection,en,0,1,,,,,,,,,,,Students participated fully and showed good understanding of the lesson.,I will continue with the next topic in the next session.
+reflection,en,0,1,,,,,,,,,,,The lesson went well and most students were able to meet the lesson objectives.,I will do a brief review before moving to a new topic.

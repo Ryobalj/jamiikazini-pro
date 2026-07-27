@@ -25,6 +25,7 @@ from syllabus.services.scheme_pdf_builder import SchemePDFBuilder
 from syllabus.permissions import CanDownloadPDF, IsAdminOrClientTeacher
 from syllabus.services.competence_tree_service import CompetenceTreeService
 from syllabus.services.calendar_service import CalendarService
+from syllabus.services.institution_helpers import get_school_display_name
 from syllabus.i18n import sw as sw_labels, en as en_labels
 from datetime import datetime
 
@@ -96,14 +97,14 @@ class BaseSchemeService:
         # Language selection
         labels = sw_labels.SCHEME_LABELS if language == "sw" else en_labels.SCHEME_LABELS
         
-        # Get objectives from main competences
+        # MALENGO lists Umahiri Mahususi (specific competences), not the
+        # broader Umahiri Mkuu — every specific competence across all main
+        # competences for this subject_version.
         objectives = []
         try:
-            if hasattr(subject_version, 'main_competences'):
-                # Get first 3 main competences for objectives
-                main_competences = subject_version.main_competences.all()[:3]
-                for comp in main_competences:
-                    objectives.append(comp.description or comp.name)
+            for main_comp in subject_version.main_competences.all().order_by('order'):
+                for spec_comp in main_comp.specific_competences.all().order_by('order'):
+                    objectives.append(spec_comp.name)
         except Exception as e:
             logger.warning(f"Could not get objectives: {str(e)}")
         
@@ -215,12 +216,13 @@ class BaseSchemeService:
             return []
     
     @classmethod
-    def build_scheme(cls, 
+    def build_scheme(cls,
                     subject_version: SubjectVersion,
                     annual_calendar: AnnualCalendar,
                     user,
                     balance_weekly: bool = True,
-                    language: Optional[str] = None) -> Any:
+                    language: Optional[str] = None,
+                    force_exam_prep_schedule: bool = False) -> Any:
         """Build a scheme from models using SchemeTimelineBuilder."""
         try:
             # Determine language
@@ -228,12 +230,25 @@ class BaseSchemeService:
                 lang = language
             else:
                 lang = "en" if getattr(subject_version, "is_english", False) else "sw"
-            
+
             logger.info(f"📋 Building scheme in {lang} language")
-            
+
             # Get contexts
             teacher_info = cls.get_teacher_info(user)
+            # The teacher only ever registers their bare school name — the
+            # Awali/Msingi/Sekondari prefix is derived from the muhtasari's
+            # curriculum family, not typed by hand.
+            teacher_info["school_name"] = get_school_display_name(
+                teacher_info.get("school_name", ""),
+                is_awali=getattr(subject_version, "is_awali", False),
+                is_sekondari=getattr(subject_version, "is_sekondari", False),
+                language=lang,
+            )
             subject_info = cls.get_subject_info(subject_version, annual_calendar, lang)
+            # Teacher-chosen opt-in: only meaningful for national-exam class
+            # levels (see SchemeTimelineBuilder.NATIONAL_EXAM_CLASS_LEVELS) —
+            # ignored otherwise.
+            subject_info["force_exam_prep_schedule"] = force_exam_prep_schedule
             
             # Extract activities from subject version
             logger.info(f"🔍 Extracting activities for: {subject_version.subject.name}")
@@ -392,12 +407,13 @@ class SchemeCreateAPIView(generics.CreateAPIView):
             # Extract other parameters
             balance_weekly = data.get("balance_weekly", True)
             language = data.get("language")
-            
+            force_exam_prep_schedule = bool(data.get("force_exam_prep_schedule", False))
+
             # Log syllabus status (for information only, not for restriction)
             if subject_version.syllabus_version:
                 logger.info(f"📚 Syllabus Version Status: {subject_version.syllabus_version.year} - "
                           f"Current: {subject_version.syllabus_version.is_current}")
-            
+
             # Build scheme
             logger.info("🚀 Starting scheme building...")
             scheme = BaseSchemeService.build_scheme(
@@ -405,7 +421,8 @@ class SchemeCreateAPIView(generics.CreateAPIView):
                 annual_calendar=annual_calendar,
                 user=request.user,
                 balance_weekly=balance_weekly,
-                language=language
+                language=language,
+                force_exam_prep_schedule=force_exam_prep_schedule
             )
             
             # Check format
@@ -456,11 +473,37 @@ class SchemeCreateAPIView(generics.CreateAPIView):
             response_serializer = SchemeResponseSerializer(scheme)
             response_data = response_serializer.data
             
-            # Calculate statistics
+            # Calculate statistics (from the FULL scheme, before any preview truncation)
             schedule_items = response_data.get("schedule_items", [])
             total_weeks = len(set(item.get("week_number", 0) for item in schedule_items))
             total_periods = sum(item.get("periods", 0) for item in schedule_items)
-            
+
+            # Non-subscribers get ~25% of the schedule in the JSON view too
+            # (not just the download) — enough to judge the tool, not
+            # enough to use for free. Full download is still separately
+            # gated by CanDownloadPDF on the ?format=pdf branch above.
+            is_full_access = CanDownloadPDF().has_permission(request, self)
+            preview_week_count = total_weeks
+            if not is_full_access and schedule_items:
+                weeks = {}
+                for item in schedule_items:
+                    weeks.setdefault(item.get("week_number", 0), []).append(item)
+                sorted_weeks = sorted(weeks.keys())
+                preview_week_count = max(1, round(len(sorted_weeks) * 0.25))
+                limited_items = []
+                for week in sorted_weeks[:preview_week_count]:
+                    limited_items.extend(weeks[week])
+                response_data["schedule_items"] = limited_items
+
+            response_data["_preview"] = {
+                "is_preview": not is_full_access,
+                "message": (
+                    None if is_full_access else
+                    f"Muhtasari: unaonesha wiki {preview_week_count} kati ya {total_weeks} (~25%). "
+                    "Jiunge kwa usajili ili kuona na kupakua Azimio kamili."
+                ),
+            }
+
             # Add metadata
             response_data["_meta"] = {
                 "generated_at": datetime.now().isoformat(),
@@ -575,7 +618,8 @@ class SchemePreviewAPIView(generics.CreateAPIView):
                 annual_calendar=annual_calendar,
                 user=request.user,
                 balance_weekly=data.get("balance_weekly", True),
-                language=data.get("language")
+                language=data.get("language"),
+                force_exam_prep_schedule=bool(data.get("force_exam_prep_schedule", False))
             )
             
             # Convert to response
@@ -583,8 +627,12 @@ class SchemePreviewAPIView(generics.CreateAPIView):
             preview_data = response_serializer.data
             
             # ====================
-            # LIMIT DATA FOR PREVIEW
+            # LIMIT DATA FOR PREVIEW — non-subscribers get ~25% of the
+            # content (at least 1 week, never more than a subscriber
+            # would see) so they can judge the tool before paying, but
+            # can't read the whole scheme for free.
             # ====================
+            PREVIEW_FRACTION = 0.25
             if "schedule_items" in preview_data and preview_data["schedule_items"]:
                 # Get unique weeks
                 weeks = {}
@@ -593,16 +641,16 @@ class SchemePreviewAPIView(generics.CreateAPIView):
                     if week_num not in weeks:
                         weeks[week_num] = []
                     weeks[week_num].append(item)
-                
-                # Show only first 2 weeks for preview
+
                 sorted_weeks = sorted(weeks.keys())
-                preview_weeks = sorted_weeks[:2] if sorted_weeks else []
+                preview_week_count = max(1, round(len(sorted_weeks) * PREVIEW_FRACTION)) if sorted_weeks else 0
+                preview_weeks = sorted_weeks[:preview_week_count]
                 limited_items = []
                 for week in preview_weeks:
                     limited_items.extend(weeks[week])
-                
+
                 preview_data["schedule_items"] = limited_items
-                
+
                 # Add week statistics
                 total_weeks = len(weeks)
                 preview_weeks_count = len(preview_weeks)
@@ -630,7 +678,10 @@ class SchemePreviewAPIView(generics.CreateAPIView):
                 "syllabus_info": syllabus_info,
                 "total_weeks": total_weeks,
                 "preview_weeks": preview_weeks_count,
-                "message": f"Preview showing first {preview_weeks_count} of {total_weeks} weeks.",
+                "message": (
+                    f"Muhtasari: unaonesha wiki {preview_weeks_count} kati ya {total_weeks} (~25%). "
+                    "Jiunge kwa usajili ili kupakua Azimio kamili."
+                ),
                 "generated_at": datetime.now().isoformat(),
                 "full_scheme_available": True,
                 "pdf_available": CanDownloadPDF().has_permission(request, self),
@@ -680,33 +731,29 @@ class SchemePDFDownloadAPIView(generics.CreateAPIView):
         """
         Generate and download PDF safely.
         """
-        import copy
         from rest_framework.response import Response
         from rest_framework import status
 
         try:
             logger.info(f"📄 PDF download request from user: {request.user.username}")
-            
-            # Copy the request so we don't modify the original
-            pdf_request = copy.deepcopy(request)
-            pdf_request.method = 'POST'
 
-            # Add format=pdf to query parameters
-            if hasattr(pdf_request, 'query_params'):
-                pdf_request.query_params = pdf_request.query_params.copy()
-                pdf_request.query_params['format'] = 'pdf'
-            else:
-                pdf_request.GET = pdf_request.GET.copy()
-                pdf_request.GET['format'] = 'pdf'
+            # Force format=pdf on the query params. Note: we deliberately
+            # mutate request._request.GET in place rather than
+            # copy.deepcopy(request) — a real, already-routed Django
+            # request carries a `resolver_match` attribute that isn't
+            # picklable, so deepcopy raises "Cannot pickle ResolverMatch"
+            # on any real HTTP call (only ever worked with mocked requests).
+            request._request.GET = request._request.GET.copy()
+            request._request.GET['format'] = 'pdf'
 
             # Call the main create view
             main_view = SchemeCreateAPIView()
-            main_view.request = pdf_request
+            main_view.request = request
             main_view.format_kwarg = None
 
             # Call create and return its response
             logger.info("🔧 Calling main SchemeCreateAPIView for PDF generation...")
-            return main_view.create(pdf_request, *args, **kwargs)
+            return main_view.create(request, *args, **kwargs)
 
         except Exception as e:
             logger.error(f"❌ PDF download failed: {str(e)}", exc_info=True)

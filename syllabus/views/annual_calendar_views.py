@@ -1,15 +1,18 @@
 # syllabus/views/annual_calendar_views.py
 
 from rest_framework import viewsets, filters
-from rest_framework.permissions import IsAdminUser
 from syllabus.models.annual_calendar import AnnualCalendar
 from syllabus.serializers.annual_calendar_serializer import AnnualCalendarSerializer
+from syllabus.permissions import IsAdminOrReadOnly
 
 
 class AnnualCalendarViewSet(viewsets.ModelViewSet):
     """
-    CRUD kwa AnnualCalendar – superuser/admin pekee anaweza kufanya operesheni zote.
-    
+    CRUD kwa AnnualCalendar - kusoma (list/retrieve) kunaruhusiwa kwa
+    mtumiaji yeyote aliyeingia (walimu wanahitaji hii kuchagua kalenda
+    wakati wa kuzalisha Azimio la Kazi); kuhariri/kuunda ni kwa Admin
+    pekee, kama ilivyokusudiwa awali.
+
     Features:
     - Filter kwa 'year' na 'institute' kupitia query params
     - Search kwa institute (case-insensitive)
@@ -17,7 +20,7 @@ class AnnualCalendarViewSet(viewsets.ModelViewSet):
     """
     queryset = AnnualCalendar.objects.all().order_by('-year', 'institute')
     serializer_class = AnnualCalendarSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminOrReadOnly]
 
     # DRF Search Filter backend
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]

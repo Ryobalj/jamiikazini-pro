@@ -34,7 +34,17 @@ class SubjectVersion(UUIDModel, TimeStampedModel):
     )
     is_awali = models.BooleanField(
         default=False,
-        help_text="Marks if this subject version is for Awali curriculum"
+        help_text="Marks if this subject version is for Awali (pre-primary) curriculum"
+    )
+    is_sekondari = models.BooleanField(
+        default=False,
+        help_text=(
+            "Marks if this subject version is for Sekondari (secondary) curriculum. "
+            "Neither is_awali nor is_sekondari set means Msingi (primary) — the "
+            "default and, currently, only seeded curriculum family. Used to derive "
+            "the school-type prefix (Shule ya Awali/Msingi/Sekondari) shown in "
+            "generated documents, so teachers only register their bare school name."
+        )
     )
 
     order = models.PositiveIntegerField(

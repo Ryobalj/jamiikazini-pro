@@ -26,12 +26,26 @@ export default function TimetableFormModal({
     "disabled:bg-gray-100 disabled:cursor-not-allowed dark:disabled:bg-gray-800 " +
     "transition-colors duration-200";
 
+  const DAYS_OF_WEEK = [
+    { value: 1, label: t("timetable.days.monday") },
+    { value: 2, label: t("timetable.days.tuesday") },
+    { value: 3, label: t("timetable.days.wednesday") },
+    { value: 4, label: t("timetable.days.thursday") },
+    { value: 5, label: t("timetable.days.friday") },
+    { value: 6, label: t("timetable.days.saturday") },
+  ];
+  const PERIOD_OPTIONS = Array.from({ length: 10 }, (_, i) => i + 1);
+
   const [form, setForm] = useState({
     workstation: "",
     subject_version: "",
     subject_name: "",
     class_level: "",
     syllabus_year: "",
+    day_of_week: "",
+    period: "",
+    timestart: "",
+    timefinish: "",
     registeredboys: "",
     registeredgirls: "",
     status: false,
@@ -55,6 +69,10 @@ export default function TimetableFormModal({
         subject_name: initialData.subject_display || initialData.subject_version?.subject?.name || "",
         class_level: initialData.class_level_display || initialData.subject_version?.class_level?.name || "",
         syllabus_year: initialData.subject_version?.syllabus_version?.year || "",
+        day_of_week: initialData.day_of_week || "",
+        period: initialData.period || "",
+        timestart: (initialData.timestart || "").slice(0, 5),
+        timefinish: (initialData.timefinish || "").slice(0, 5),
         registeredboys: initialData.registeredboys || "",
         registeredgirls: initialData.registeredgirls || "",
       });
@@ -65,6 +83,10 @@ export default function TimetableFormModal({
         subject_name: "",
         class_level: "",
         syllabus_year: "",
+        day_of_week: "",
+        period: "",
+        timestart: "",
+        timefinish: "",
         registeredboys: "",
         registeredgirls: "",
         status: false,
@@ -267,6 +289,14 @@ export default function TimetableFormModal({
       errors.subject_version = "Chagua somo kutoka kwenye orodha";
     }
 
+    if (!form.day_of_week) {
+      errors.day_of_week = t("timetable.select_day") || "Chagua siku ya wiki";
+    }
+
+    if (!form.period) {
+      errors.period = t("timetable.select_period") || "Chagua kipindi";
+    }
+
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -287,6 +317,10 @@ export default function TimetableFormModal({
       const submitData = {
         workstation: form.workstation,
         subject_version: form.subject_version,
+        day_of_week: form.day_of_week ? parseInt(form.day_of_week) : null,
+        period: form.period ? parseInt(form.period) : null,
+        timestart: form.timestart || null,
+        timefinish: form.timefinish || null,
         registeredboys: form.registeredboys ? parseInt(form.registeredboys) : null,
         registeredgirls: form.registeredgirls ? parseInt(form.registeredgirls) : null,
         status: Boolean(form.status),
@@ -500,6 +534,70 @@ export default function TimetableFormModal({
             </div>
           </div>
 
+          {/* DAY & PERIOD */}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t("timetable.day_of_week")} *</label>
+              <select
+                name="day_of_week"
+                value={form.day_of_week}
+                onChange={handleChange}
+                className={`${inputClass} ${formErrors.day_of_week ? 'border-red-300 dark:border-red-600' : ''}`}
+                required
+              >
+                <option value="">{t("common.select") || "Chagua..."}</option>
+                {DAYS_OF_WEEK.map((d) => (
+                  <option key={d.value} value={d.value}>{d.label}</option>
+                ))}
+              </select>
+              {formErrors.day_of_week && (
+                <p className="text-red-500 dark:text-red-400 text-sm mt-1">{formErrors.day_of_week}</p>
+              )}
+            </div>
+            <div>
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t("timetable.period")} *</label>
+              <select
+                name="period"
+                value={form.period}
+                onChange={handleChange}
+                className={`${inputClass} ${formErrors.period ? 'border-red-300 dark:border-red-600' : ''}`}
+                required
+              >
+                <option value="">{t("common.select") || "Chagua..."}</option>
+                {PERIOD_OPTIONS.map((p) => (
+                  <option key={p} value={p}>{p}</option>
+                ))}
+              </select>
+              {formErrors.period && (
+                <p className="text-red-500 dark:text-red-400 text-sm mt-1">{formErrors.period}</p>
+              )}
+            </div>
+          </div>
+
+          {/* TIME */}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t("timetable.time_start")}</label>
+              <input
+                type="time"
+                name="timestart"
+                value={form.timestart}
+                onChange={handleChange}
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t("timetable.time_finish")}</label>
+              <input
+                type="time"
+                name="timefinish"
+                value={form.timefinish}
+                onChange={handleChange}
+                className={inputClass}
+              />
+            </div>
+          </div>
+
           {/* STUDENTS */}
           <div className="grid grid-cols-2 gap-3">
             <div>
@@ -553,7 +651,7 @@ export default function TimetableFormModal({
             </button>
             <button 
               type="submit" 
-              disabled={loading || !form.workstation || !form.subject_version}
+              disabled={loading || !form.workstation || !form.subject_version || !form.day_of_week || !form.period}
               className="px-4 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 flex items-center gap-2 transition-colors"
             >
               {loading ? (

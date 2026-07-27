@@ -6,10 +6,39 @@
       "my_subjects": "Masomo Yangu",
       "timetable": "Ratiba Yangu",
       "scheme": "Azimio la Kazi",
-      "lesson_plan": "Andalio la Somo"
+      "lesson_plan": "Andalio la Somo",
+      "exam_results": "Matokeo ya Mtihani"
     }
   },
-
+  "exam_results": {
+    "title": "Matokeo ya Mtihani",
+    "subtitle": "Andaa na upakue matokeo ya mtihani kwa somo moja au masomo yote ya darasa",
+    "select_exam": "Chagua Mtihani",
+    "class_level": "Darasa",
+    "subjects": "Masomo (bonyeza kushikilia Ctrl kuchagua zaidi ya moja)",
+    "exam_name": "Jina la Mtihani",
+    "term1": "Muhula wa Kwanza",
+    "term2": "Muhula wa Pili",
+    "create_exam": "Unda Mtihani",
+    "exam_created": "Mtihani umeundwa.",
+    "students": "Wanafunzi",
+    "student_name": "Jina la Mwanafunzi",
+    "female": "Msichana",
+    "male": "Mvulana",
+    "add_student": "Ongeza Mwanafunzi",
+    "save_marks": "Hifadhi Alama",
+    "marks_saved": "Alama zimehifadhiwa.",
+    "results_preview": "Muhtasari wa Matokeo",
+    "total": "Jumla",
+    "average": "Wastani",
+    "grade": "Daraja",
+    "rank": "Nafasi",
+    "subject_for_pdf": "Somo la PDF",
+    "download_subject_pdf": "Pakua Matokeo ya Somo (PDF)",
+    "download_subject_xlsx": "Pakua Matokeo ya Somo (XLS)",
+    "download_class_pdf": "Pakua Matokeo ya Darasa Zima (PDF)",
+    "download_class_xlsx": "Pakua Matokeo ya Darasa Zima (XLS)"
+  },
   "my_subjects": {
     "subjects": "Masomo",
     "title": "Masomo Yangu",
@@ -36,16 +65,14 @@
     "subject": "Somo",
     "timetable_id": "Kitambulisho cha Ratiba",
     "more_entries": "... na viingilio {{count}} zaidi",
-    
     "boys": "Wavulana",
-    "girls": "Wasichana", 
+    "girls": "Wasichana",
     "total_students": "Jumla ya Wanafunzi",
     "generate_lesson_plan": "Tengeneza Andalio la Somo",
     "lesson_plan": "Andalio",
     "generate_scheme": "Tengeneza Azimio la Kazi",
     "scheme": "Azimio",
     "edit_workstation": "Hariri Kituo cha Kazi",
-    
     "students_statistics": "Takwimu za Wanafunzi",
     "registered_boys": "Wavulana Waliosajiliwa",
     "registered_girls": "Wasichana Waliosajiliwa",
@@ -61,7 +88,6 @@
     "period_balance": "Usawa wa Vipindi",
     "no_subjects": "Hakuna masomo"
   },
-
   "my_timetable": {
     "title": "Ratiba Yangu",
     "subtitle": "Ratiba yako ya kufundisha kulingana na masomo yaliyoratibiwa",
@@ -94,14 +120,13 @@
     "export_timetable": "Hamisha Ratiba",
     "share_timetable": "Shiriki Ratiba"
   },
-
   "lesson_plan": {
     "title": "Andalio la Somo",
     "subtitle": "Tengeneza andalio la somo kiotomatiki",
     "subject": "Somo",
     "select_subject": "Chagua Somo",
     "select_learning_activity": "Chagua shughuli ya kujifunza",
-    "specific_activity": "Shughuli Maalum ya Kujifunza",
+    "specific_activity": "Shughuli Maalum",
     "search_placeholder": "Tafuta shughuli...",
     "date": "Tarehe",
     "period": "Kipindi",
@@ -121,7 +146,6 @@
     "repeat_next": "Rudia somo hili wakati ujao",
     "download_pdf": "Pakua PDF",
     "pdf_error": "Hitilafu ilitokea wakati wa kupakua PDF",
-    
     "lesson_details": "Maelezo ya Somo",
     "lesson_objectives": "Malengo ya Somo",
     "teaching_methods": "Mbinu za Kufundisha",
@@ -149,7 +173,6 @@
     "quick_generate": "Tengeneza Haraka",
     "fill_from_template": "Jaza Kutoka Kwa Kiolezo",
     "clear_form": "Futa Fomu",
-    
     "actions": "Vitendo",
     "no_activities_found": "Hakuna shughuli zilizopatikana",
     "select_learning_activity_first": "Chagua shughuli ya kujifunza kwanza",
@@ -191,8 +214,6 @@
     "attended": "Waliokuwepo",
     "total": "Jumla",
     "specific_competence": "Uwezo Maalum",
-    "main_activity": "Shughuli Kuu",
-    "specific_activity": "Shughuli Maalum",
     "teaching_aids": "Vifaa vya Kufundishia",
     "reference": "Marejeo",
     "loading": "Inapakia...",
@@ -304,14 +325,11 @@
     "select_activities": "Chagua Shughuli",
     "found_learning_activities": "Shughuli {{count}} za kujifunza zimepatikana",
     "all_specific_activities": "Shughuli zote maalum ({{count}})",
-    "learning_activity": "Shughuli ya Kujifunza",
     "specific_activities": "Shughuli Maalum",
     "search_dropdown": "Tafuta kwenye orodha"
   },
-  
   "scheme": {
     "full_scheme": "Azimio Lote",
-    
     "title": "Azimio la Kazi",
     "subtitle": "Tengeneza azimio la kazi kiotomatiki",
     "subject": "Somo",
@@ -337,7 +355,6 @@
       "assessment_criteria": "Vigezo vya Tathmini",
       "remarks": "Maelezo/Maoni"
     },
-    
     "scheme_details": "Maelezo ya Azimio",
     "term": "Muhula",
     "academic_year": "Mwaka wa Masomo",
@@ -348,7 +365,7 @@
     "resource_allocation": "Ugavi wa Rasilimali",
     "assessment_plan": "Mpango wa Tathmini",
     "generate_scheme": "Tengeneza Azimio",
-    "preview_scheme": "Hakiki Azimio",
+    "preview_scheme": "Angalio la Azimio",
     "edit_scheme": "Hariri Azimio",
     "save_scheme": "Hifadhi Azimio",
     "export_scheme": "Hamisha Azimio",
@@ -359,7 +376,6 @@
     "weekly_distribution": "Usambazaji wa Wiki",
     "period_distribution": "Usambazaji wa Vipindi",
     "competence_progress": "Maendeleo ya Uwezo",
-    
     "selection": "Uchaguzi",
     "calendar": "Kalenda",
     "prefilled_from": "Imejazwa kutoka",
@@ -372,23 +388,19 @@
     "generated_success": "Azimio la kazi limeundwa kikamilifu",
     "pdf_downloaded": "PDF ya azimio imepakuliwa",
     "preview": "Hakiki",
-    "total_weeks": "Jumla ya Wiki",
     "period_summary": "Muhtasari wa Vipindi",
     "period_balance": "Usawa wa Vipindi",
     "no_scheme_generated": "Hakuna Azimio Lililotengenezwa",
     "select_subject_and_calendar_to_generate": "Chagua somo na kalenda ili kuanza kutengeneza azimio la kazi",
     "available_weeks": "Wiki Zilizopo",
-    
     "select_first": "Chagua somo na kalenda ya mwaka kwanza",
     "can_start_generating": "Unaweza kuanza kuunda azimio la kazi",
     "ready_to_generate": "Tayari kusimamishwa",
     "waiting_for_selection": "Inasubiri usimamishaji",
     "preview_created": "Angalio limeundwa",
     "full_scheme_created": "Azimio kamili limeundwa",
-    "generating_preview": "Inachukua angalio...",
-    "preview_scheme": "Angalio la Azimio"
+    "generating_preview": "Inachukua angalio..."
   },
-
   "workstation": {
     "add_title": "Ongeza Kituo cha Kazi",
     "edit_title": "Hariri Kituo cha Kazi",
@@ -418,7 +430,6 @@
     "required_message": "Unahitaji kuanzisha kituo chako cha kazi kabla ya kutumia huduma hii.",
     "not_found": "Kituo cha kazi hakijaanzishwa"
   },
-
   "timetable": {
     "add": "Ongeza Ratiba",
     "edit": "Hariri Ratiba",
@@ -430,6 +441,21 @@
     "class_level": "Kiwango cha Darasa",
     "syllabus_year": "Mwaka wa Mtaala",
     "not_selected": "Hajachaguliwa bado",
+    "day_of_week": "Siku ya Wiki",
+    "select_day": "Chagua siku ya wiki",
+    "select_period": "Chagua kipindi",
+    "download_mine": "Pakua Ratiba Yangu (PDF)",
+    "download_mine_xlsx": "Pakua Ratiba Yangu (XLS)",
+    "download_school": "Pakua Ratiba Kuu ya Shule (PDF)",
+    "download_school_xlsx": "Pakua Ratiba Kuu ya Shule (XLS)",
+    "days": {
+      "monday": "Jumatatu",
+      "tuesday": "Jumanne",
+      "wednesday": "Jumatano",
+      "thursday": "Alhamisi",
+      "friday": "Ijumaa",
+      "saturday": "Jumamosi"
+    },
     "period": "Kipindi",
     "period_help": "Weka nambari ya kipindi cha somo kwa darasa hili (1-10).",
     "time_start": "Muda wa Kuanza",
@@ -463,7 +489,6 @@
     "timetable_backup": "Hifadhi ya Ratiba",
     "timetable_restore": "Rejesho la Ratiba"
   },
-
   "validation": {
     "required": "Sehemu hii inahitajika",
     "time_order": "Muda wa kumalizia lazima uwe baada ya muda wa kuanza",
@@ -479,15 +504,13 @@
     "match": "Thamani hazifanani",
     "strong_password": "Nenosiri lazima liwe na angalau herufi 8, nambari, na herufi kubwa"
   },
-
   "common": {
     "days": "Siku za ",
     "learning": "Kudoma",
-    "preview": "Onesha",
+    "preview": "Angalio",
     "language": "Lugha",
-    "entries": "Maingizo",
+    "entries": "maingizo",
     "selected": "Imechaguliwa",
-    
     "clear": "Futa",
     "loading": "Inapakia...",
     "saving": "Inahifadhi...",
@@ -577,7 +600,7 @@
     "success": "Mafanikio",
     "failure": "Kushindwa",
     "pending": "Inasubiri",
-    "completed": "Imekamilika",
+    "completed": "Zilizokamilika",
     "in_progress": "Inaendelea",
     "cancelled": "Imesitishwa",
     "scheduled": "Imeratibiwa",
@@ -591,10 +614,8 @@
     "unshared": "Haijashirikiwa",
     "dismiss": "Futa",
     "not_available": "Haipatikani",
-    
     "activities": "shughuli",
     "periods": "vipindi",
-    "preview": "Angalio",
     "ready_to_generate": "Tayari kusimamishwa",
     "waiting_for_selection": "Inasubiri usimamishaji",
     "preview_created": "Angalio limeundwa",
@@ -604,7 +625,6 @@
     "view_grid": "Onyesha kwa gridi",
     "learning_days": "siku za kujifunza",
     "weeks": "wiki",
-    "entries": "maingizo",
     "copied": "Imenakiliwa!",
     "copy_failed": "Imeshindwa kunakili",
     "full_details": "Maelezo Kamili",
@@ -615,12 +635,10 @@
     "of": "kati ya",
     "activity": "Shughuli",
     "week": "Wiki",
-    "completed": "Zilizokamilika",
     "total_activities": "Jumla ya Shughuli",
     "total_periods": "Jumla ya Vipindi",
     "holidays_exams": "Likizo/Mitihani"
   },
-
   "errors": {
     "failed_to_load_specific_activities": "Imeshindwa kupakia shughuli maalum",
     "rate_limit": "Umezingua idadi ya ombi. Tafadhali subiri kidogo na ujaribu tena.",
@@ -631,6 +649,7 @@
     "failed_to_delete": "Imeshindwa kufuta kipengee. Tafadhali jaribu tena.",
     "failed_to_save": "Imeshindwa kuhifadhi data. Tafadhali jaribu tena.",
     "failed_to_update": "Imeshindwa kusasisha data. Tafadhali jaribu tena.",
+    "failed_to_download": "Imeshindwa kupakua PDF. Tafadhali jaribu tena.",
     "timetable_not_found": "Haikuweza kupata ratiba ya kuhariri. Inaweza kuwa imefutwa.",
     "workstation_not_found": "Haikuweza kupata kituo cha kazi.",
     "subject_not_found": "Haikuweza kupata somo.",
@@ -645,5 +664,20 @@
     "maintenance_mode": "Mfumo upo kwenye hali ya matengenezo. Tafadhali jaribu tena baadaye.",
     "quota_exceeded": "Kikomo cha kuhifadhi kimezidi. Tafadhali futa baadhi ya data.",
     "validation_failed": "Uthibitishaji umeshindwa. Tafadhali angalia maelezo yaliyowekwa."
+  },
+  "subscription": {
+    "title": "Usajili",
+    "required_for_pdf": "Unahitaji kujiunga (kulipia) ili kupakua PDF hii.",
+    "active": "Umewezeshwa",
+    "inactive": "Haujawezeshwa",
+    "expires_on": "Unaisha tarehe",
+    "monthly_fee": "Ada ya mwezi",
+    "subscribe_now": "Lipa Sasa",
+    "renewing": "Inashughulikiwa...",
+    "subscribe_success": "Usajili umefanikiwa!",
+    "insufficient_balance": "Salio la Wallet yako halitoshi. Tafadhali jaza Wallet kisha jaribu tena.",
+    "load_error": "Imeshindikana kupakia hali ya usajili.",
+    "preview_banner": "Unaona muhtasari mdogo tu (~25%). Jiunge kwa usajili ili kuona na kupakua nyaraka kamili.",
+    "go_to_wallet": "Nenda kwenye Wallet"
   }
 }

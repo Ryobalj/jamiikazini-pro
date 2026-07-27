@@ -25,19 +25,21 @@ class PDFGenerator:
     Government official PDF generator - Black & White only.
     """
     def __init__(
-        self, 
-        filename: str = "document.pdf", 
-        orientation: str = "portrait", 
+        self,
+        filename: str = "document.pdf",
+        orientation: str = "portrait",
         pagesize: str = "A4",
         encrypt: bool = True,
         compress: bool = True,
-        metadata: Optional[Dict[str, str]] = None
+        metadata: Optional[Dict[str, str]] = None,
+        language: str = "sw",
     ):
         base = A4 if pagesize.upper() == "A4" else getattr(__import__('reportlab.lib.pagesizes'), pagesize, A4)
         self.pagesize = landscape(base) if orientation.lower() == "landscape" else portrait(base)
         self.filename = filename
         self.encrypt = encrypt
         self.compress = compress
+        self.language = language
 
         # Margins (government standard)
         self.margins = {
@@ -57,13 +59,24 @@ class PDFGenerator:
         self.flowables: List = []
 
         # Metadata
-        self.metadata = metadata or {
-            'title': filename.replace('.pdf', ''),
-            'author': 'Serikalini - Mfumo wa Mitaala',
-            'subject': 'Azimio la Kazi',
-            'keywords': 'elimu, mitaala, azimio',
-            'creator': 'Wizara ya Elimu',
-        }
+        if metadata:
+            self.metadata = metadata
+        elif language == "en":
+            self.metadata = {
+                'title': filename.replace('.pdf', ''),
+                'author': 'Government - Curriculum System',
+                'subject': 'Scheme of Work',
+                'keywords': 'education, curriculum, scheme of work',
+                'creator': 'Ministry of Education',
+            }
+        else:
+            self.metadata = {
+                'title': filename.replace('.pdf', ''),
+                'author': 'Serikalini - Mfumo wa Mitaala',
+                'subject': 'Azimio la Kazi',
+                'keywords': 'elimu, mitaala, azimio',
+                'creator': 'Wizara ya Elimu',
+            }
 
         logger.debug(f"PDFGenerator initialized: {filename}")
 
@@ -231,6 +244,7 @@ class PDFGenerator:
         def __init__(self, *args, **kwargs):
             self.header_text = kwargs.pop('header_text', '')
             self.footer_text = kwargs.pop('footer_text', '')
+            self.page_label = kwargs.pop('page_label', 'Uk.')
             super().__init__(*args, **kwargs)
             self._saved_pages = []
 
@@ -262,7 +276,7 @@ class PDFGenerator:
             
             # Draw page number
             self.setFont("Helvetica", 8)
-            page_text = f"Uk. {self._pageNumber}/{page_count}"
+            page_text = f"{self.page_label} {self._pageNumber}/{page_count}"
             self.drawRightString(width - 25, 25, page_text)
             
             # Draw thin line at bottom
@@ -280,6 +294,10 @@ class PDFGenerator:
         # Setup encryption if enabled
         encryption = None
         if self.encrypt:
+            # Installed reportlab's StandardEncryption only accepts
+            # userPassword/ownerPassword/canPrint/canModify/canCopy/
+            # canAnnotate/strength — canFillForms/canAssemble/canPrintFull
+            # don't exist on this version and raise TypeError.
             encryption = pdfencrypt.StandardEncryption(
                 userPassword="",
                 ownerPassword="serikalini",
@@ -287,9 +305,6 @@ class PDFGenerator:
                 canModify=0,
                 canCopy=0,
                 canAnnotate=0,
-                canFillForms=0,
-                canAssemble=0,
-                canPrintFull=0,
             )
 
         # Create document template
@@ -309,7 +324,7 @@ class PDFGenerator:
         )
 
         # Build document with custom canvas
-        canvas_kwargs = {}
+        canvas_kwargs = {'page_label': "Page" if self.language == "en" else "Uk."}
         if hasattr(self, 'header_text'):
             canvas_kwargs['header_text'] = self.header_text
         if hasattr(self, 'footer_text'):

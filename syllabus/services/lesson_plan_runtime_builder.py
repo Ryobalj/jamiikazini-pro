@@ -28,11 +28,14 @@ class LessonPlanRuntimeBuilder:
     TRANSLATIONS = {
         "intro_step_name": {"sw": "Utangulizi", "en": "Introduction"},
         "development_step_name": {
-            "sw": "Kuendeleza Ujenzi wa Umahiri",
+            # Must match syllabus/i18n/sw.py LESSON_PLAN["steps"][1] exactly —
+            # LessonPlanPDFBuilder looks up steps by this exact string.
+            "sw": "Kuendeleza ujenzi wa umahiri",
             "en": "Development"
         },
         "reinforcement_step_name": {
-            "sw": "Kubuni / Kuimarisha",
+            # Must match syllabus/i18n/sw.py LESSON_PLAN["steps"][2] exactly.
+            "sw": "Kubuni",
             "en": "Reinforcement"
         },
         "conclusion_step_name": {"sw": "Tathimini", "en": "Conclusion"},
@@ -119,6 +122,12 @@ class LessonPlanRuntimeBuilder:
             specific_activity=self.sla.name,
             teaching_aids=self.sla.teaching_aids,
             references=self.sla.references or "",
+            lesson_notes_intro=self.sla.lesson_notes_intro or "",
+            lesson_notes_details=self.sla.lesson_notes_details or "",
+            lesson_notes_illustrations=self.sla.lesson_notes_illustrations or "",
+            lesson_notes_daily_life=self.sla.lesson_notes_daily_life or "",
+            exercise_questions=self.sla.exercise_questions or [],
+            diagram_type=self.sla.diagram_type or "",
         )
 
         steps = self._build_steps(lang)
@@ -165,14 +174,24 @@ class LessonPlanRuntimeBuilder:
     def _build_steps(self, lang: str) -> List[LessonStep]:
         total_minutes = self.ctx.duration_minutes
 
+        # Intro/reinforcement/conclusion get fixed allocations; development
+        # takes whatever remains, so the four steps always sum exactly to
+        # the period's real duration instead of drifting from it.
+        intro_minutes = 5
+        reinforcement_minutes = 10
+        conclusion_minutes = 5
+        dev_minutes = max(
+            1, total_minutes - intro_minutes - reinforcement_minutes - conclusion_minutes
+        )
+
         return [
-            self._intro_step(lang),
-            self._development_step(total_minutes, lang),
-            self._reinforcement_step(lang),
-            self._conclusion_step(lang),
+            self._intro_step(lang, intro_minutes),
+            self._development_step(dev_minutes, lang),
+            self._reinforcement_step(lang, reinforcement_minutes),
+            self._conclusion_step(lang, conclusion_minutes),
         ]
 
-    def _intro_step(self, lang: str) -> LessonStep:
+    def _intro_step(self, lang: str, duration_minutes: int) -> LessonStep:
         competence = (
             self.sla.learning_activity
             .specific_competence
@@ -199,25 +218,25 @@ class LessonPlanRuntimeBuilder:
 
         return LessonStep(
             step_name=self.TRANSLATIONS["intro_step_name"][lang],
-            duration=timedelta(minutes=5),
+            duration=timedelta(minutes=duration_minutes),
             teaching_activity=teaching,
             learning_activity=learning,
             assessment_indicator=indicator,
         )
 
-    def _development_step(self, total_minutes: int, lang: str) -> LessonStep:
-        dev_minutes = int(total_minutes * 0.4)
-        leading_text = self.sla.leading or ""
+    def _development_step(self, duration_minutes: int, lang: str) -> LessonStep:
+        # leading is a Postgres ArrayField(TextField) on SpecificLearningActivity
+        leading_text = ", ".join(self.sla.leading) if self.sla.leading else ""
 
         return LessonStep(
             step_name=self.TRANSLATIONS["development_step_name"][lang],
-            duration=timedelta(minutes=dev_minutes),
-            teaching_activity=f"{leading_text} ({self.sla.method})",
+            duration=timedelta(minutes=duration_minutes),
+            teaching_activity=f"{leading_text} {self.sla.name}",
             learning_activity=self.sla.name,
             assessment_indicator=self.sla.assessment_criteria,
         )
 
-    def _reinforcement_step(self, lang: str) -> LessonStep:
+    def _reinforcement_step(self, lang: str, duration_minutes: int) -> LessonStep:
         sentence = LessonSentence.pick_random(
             LessonSentence.Category.DEVELOPMENT,
             self.ctx,
@@ -225,7 +244,7 @@ class LessonPlanRuntimeBuilder:
 
         return LessonStep(
             step_name=self.TRANSLATIONS["reinforcement_step_name"][lang],
-            duration=timedelta(minutes=10),
+            duration=timedelta(minutes=duration_minutes),
             teaching_activity=f"{sentence.get_teaching(self.ctx)} {self.sla.name}",
             learning_activity=f"{sentence.get_learning(self.ctx)} {self.sla.name}",
             assessment_indicator=(
@@ -233,7 +252,7 @@ class LessonPlanRuntimeBuilder:
             ),
         )
 
-    def _conclusion_step(self, lang: str) -> LessonStep:
+    def _conclusion_step(self, lang: str, duration_minutes: int) -> LessonStep:
         sentence = LessonSentence.pick_random(
             LessonSentence.Category.CONCLUSION,
             self.ctx,
@@ -241,7 +260,7 @@ class LessonPlanRuntimeBuilder:
 
         return LessonStep(
             step_name=self.TRANSLATIONS["conclusion_step_name"][lang],
-            duration=timedelta(minutes=5),
+            duration=timedelta(minutes=duration_minutes),
             teaching_activity=sentence.get_teaching(self.ctx),
             learning_activity=sentence.get_learning(self.ctx),
             assessment_indicator=sentence.get_indicator_secondary(self.ctx),

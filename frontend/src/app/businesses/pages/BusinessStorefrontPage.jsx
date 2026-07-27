@@ -42,6 +42,15 @@ export default function BusinessStorefrontPage() {
 
   const quantityFor = (product) => quantities[product.id] ?? 1;
 
+  const goToLink = (link) => {
+    if (!link) return;
+    if (link.startsWith("/")) {
+      navigate(link);
+    } else {
+      window.open(link, "_blank", "noopener,noreferrer");
+    }
+  };
+
   useDocumentTitle(business?.name);
 
   useEffect(() => {
@@ -163,7 +172,16 @@ export default function BusinessStorefrontPage() {
                   <span className="flex items-center gap-1"><Mail className="w-3.5 h-3.5" /> {business.email}</span>
                 )}
                 {business.website && (
-                  <span className="flex items-center gap-1"><Globe className="w-3.5 h-3.5" /> {business.website}</span>
+                  <button
+                    onClick={() =>
+                      business.website.startsWith("/")
+                        ? navigate(business.website)
+                        : window.open(business.website, "_blank", "noopener,noreferrer")
+                    }
+                    className="flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:underline"
+                  >
+                    <Globe className="w-3.5 h-3.5" /> {business.website}
+                  </button>
                 )}
               </div>
 
@@ -213,7 +231,19 @@ export default function BusinessStorefrontPage() {
                   <p className="text-blue-600 dark:text-blue-400 font-semibold mt-1">
                     {formatCurrency(product.final_price ?? product.price)}
                   </p>
-                  {product.quantity_in_stock > 0 ? (
+                  {product.type !== "physical" ? (
+                    // Digital/service products aren't inventory-constrained -
+                    // clicking starts the actual process of obtaining the
+                    // service (teacher onboarding + subscription flow),
+                    // instead of a cart/stock flow that doesn't apply here.
+                    <Button
+                      size="sm"
+                      className="w-full mt-2"
+                      onClick={() => goToLink(product.external_link || business.website)}
+                    >
+                      {t("storefront.get_started", "Anza")}
+                    </Button>
+                  ) : product.quantity_in_stock > 0 ? (
                     <>
                       <div className="flex items-center gap-2 mt-2">
                         <input

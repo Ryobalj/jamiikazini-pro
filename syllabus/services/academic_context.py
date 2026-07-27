@@ -3,6 +3,7 @@
 from typing import Optional
 from datetime import date, time
 from django.core.exceptions import ValidationError
+from syllabus.services.institution_helpers import get_school_display_name
 
 
 class AcademicContext:
@@ -183,8 +184,18 @@ class AcademicContext:
 
     @property
     def school_name(self) -> str:
-        """School name from workstation."""
-        return self.workstation.school_name or ""
+        """
+        Full school display name: the bare name the teacher registered on
+        their workstation, prefixed with the institution type (Shule ya
+        Awali/Msingi/Sekondari) implied by the muhtasari's curriculum
+        family — never manually typed by the teacher.
+        """
+        return get_school_display_name(
+            self.workstation.school_name,
+            is_awali=self.subject_version.is_awali,
+            is_sekondari=getattr(self.subject_version, "is_sekondari", False),
+            language=self.language,
+        )
 
     @property
     def teacher_name(self) -> str:

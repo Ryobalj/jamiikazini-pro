@@ -9,6 +9,14 @@ from syllabus.models.subject_version import SubjectVersion
 class TimeTable(UUIDModel, TimeStampedModel):
     PERIODS = [(i, i) for i in range(1, 11)]
 
+    class DayOfWeek(models.IntegerChoices):
+        MONDAY = 1, _("Jumatatu")
+        TUESDAY = 2, _("Jumanne")
+        WEDNESDAY = 3, _("Jumatano")
+        THURSDAY = 4, _("Alhamisi")
+        FRIDAY = 5, _("Ijumaa")
+        SATURDAY = 6, _("Jumamosi")
+
     workstation = models.ForeignKey(
         TeacherWorkStation,
         on_delete=models.CASCADE,
@@ -22,12 +30,19 @@ class TimeTable(UUIDModel, TimeStampedModel):
         verbose_name=_("Somo (Version)"),
         help_text=_("Chagua toleo la somo litakalofundishwa katika kipindi hiki. Hii inaonyesha darasa na syllabus version.")
     )
+    day_of_week = models.IntegerField(
+        choices=DayOfWeek.choices,
+        verbose_name=_("Siku ya Wiki"),
+        help_text=_("Chagua siku ambayo kipindi hiki kinafundishwa (Jumatatu-Jumamosi)."),
+        null=True,
+        blank=True,
+    )
     period = models.IntegerField(
         choices=PERIODS,
         default=1,
         verbose_name=_("Kipindi"),
         help_text=_("Chagua kipindi cha siku ambacho somo litafundishwa."),
-        null=True, 
+        null=True,
         blank=True
     )
     timestart = models.TimeField(
@@ -65,14 +80,15 @@ class TimeTable(UUIDModel, TimeStampedModel):
     class Meta:
         verbose_name = _("Ratiba ya Mwalimu")
         verbose_name_plural = _("Ratiba za Walimu")
-        ordering = ["workstation", "subject_version", "-created_at"]
+        ordering = ["workstation", "day_of_week", "period", "-created_at"]
         # ONDOA UNIQUE TOGETHER - INAWEZA KUSABABISHA MATATIZO NA NULL VALUES
         # unique_together = ("workstation", "subject_version", "period")
 
     def __str__(self):
         teacher_name = self.workstation.teacher.get_full_name() if self.workstation.teacher else "Unknown"
         class_level = self.subject_version.class_level.name if self.subject_version.class_level else "Unknown"
-        return f"{teacher_name} @ {self.workstation.school_name} ({class_level})"
+        day = self.get_day_of_week_display() if self.day_of_week else "Siku Haijawekwa"
+        return f"{teacher_name} @ {self.workstation.school_name} ({class_level}) - {day} Kipindi {self.period}"
 
     @property
     def class_level(self):

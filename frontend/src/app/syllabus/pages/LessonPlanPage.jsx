@@ -110,6 +110,7 @@ export default function LessonPlanPage() {
               selectedTimetable={selectedTimetable}
               selectedSpecificActivity={selectedSpecificActivity}
               selectedLearningActivity={selectedLearningActivity}
+              formData={form}
               t={t}
             />
 

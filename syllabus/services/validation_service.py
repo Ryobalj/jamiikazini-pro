@@ -319,13 +319,13 @@ class AcademicValidationService:
             cls._validate_lesson_structure(lesson_plan)
             
             # 2. Time validation
-            cls._validate_lesson_timing(lesson_plan)
-            
+            cls._validate_lesson_timing(lesson_plan, warnings)
+
             # 3. Student attendance validation
-            cls._validate_student_counts(lesson_plan)
-            
+            cls._validate_student_counts(lesson_plan, warnings)
+
             # 4. Lesson steps validation
-            cls._validate_lesson_steps(lesson_plan)
+            cls._validate_lesson_steps(lesson_plan, warnings)
             
             # 5. Cross-validate with scheme if provided
             if scheme_week:
@@ -375,7 +375,7 @@ class AcademicValidationService:
                 )
 
     @staticmethod
-    def _validate_lesson_timing(lesson_plan: Dict):
+    def _validate_lesson_timing(lesson_plan: Dict, warnings: List[str]):
         """Validate lesson timing and duration."""
         time_start = lesson_plan.get("time_start")
         time_finish = lesson_plan.get("time_finish")
@@ -405,7 +405,7 @@ class AcademicValidationService:
                 warnings.append(f"Lesson duration of {duration_minutes} minutes is unusually long")
 
     @staticmethod
-    def _validate_student_counts(lesson_plan: Dict):
+    def _validate_student_counts(lesson_plan: Dict, warnings: List[str]):
         """Validate student attendance counts."""
         registered = lesson_plan.get("registered_students", {})
         attended = lesson_plan.get("attended_students", {})
@@ -437,7 +437,7 @@ class AcademicValidationService:
             warnings.append("Attendance exceeds registered students")
 
     @staticmethod
-    def _validate_lesson_steps(lesson_plan: Dict):
+    def _validate_lesson_steps(lesson_plan: Dict, warnings: List[str]):
         """Validate lesson teaching steps."""
         steps = lesson_plan.get("lesson_steps", [])
         
