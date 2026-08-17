@@ -47,6 +47,17 @@ python manage.py seed_subject_version || echo "seed_subject_version skipped"
 echo "==> Seeding annual calendar (exam-week/term-break reference dates)"
 python manage.py seed_annual_calendar || echo "seed_annual_calendar skipped"
 
+# DRS I/II (Msingi Darasa la I na la II) use a combined multi-subject
+# muhtasari with its own MainCompetence/SpecificCompetence/LearningActivity
+# tree per subject (e.g. "Kuhesabu") but no SpecificLearningActivity
+# content yet - those come from a pupils' book later, same as DRS III-VI's
+# upgrade path. Seed the tree explicitly since seed_specific_learning_activity
+# only auto-creates ancestors when a syllabus/csv/sla_*.csv row exists for them.
+echo "==> Seeding standalone MainCompetence/SpecificCompetence/LearningActivity trees"
+python manage.py seed_main_competence || echo "seed_main_competence skipped"
+python manage.py seed_specific_competence || echo "seed_specific_competence skipped"
+python manage.py seed_learning_activity || echo "seed_learning_activity skipped"
+
 echo "==> Seeding muhtasari SpecificLearningActivity content (all syllabus/csv/sla_*.csv files)"
 python manage.py seed_specific_learning_activity --force || echo "seed_specific_learning_activity skipped"
 
