@@ -60,7 +60,8 @@ class SpecificLearningActivityAdmin(admin.ModelAdmin):
     def leading_preview(self, obj):
         if not obj.leading:
             return "-"
-        return obj.leading[:40] + ("..." if len(obj.leading) > 40 else "")
+        text = ", ".join(obj.leading)
+        return text[:40] + ("..." if len(text) > 40 else "")
     leading_preview.short_description = "Leading"
 
     def name_preview(self, obj):
