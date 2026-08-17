@@ -65,6 +65,7 @@ class MeSerializer(serializers.ModelSerializer):
             'phone_number', 'device_token', 'is_verified', 'is_identity_verified',
             'is_2fa_enabled', 'preferred_otp_method',
             'roles', 'institution', 'domain',
+            'last_dropoff_lat', 'last_dropoff_lng', 'last_dropoff_address_text',
         ]
         read_only_fields = fields
 

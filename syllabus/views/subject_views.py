@@ -1,12 +1,14 @@
 from rest_framework import viewsets, filters
-from rest_framework.permissions import IsAdminUser
 from syllabus.models.subject import Subject
 from syllabus.serializers.subject_serializer import SubjectSerializer
+from syllabus.permissions import IsAdminOrReadOnly
 
 
 class SubjectViewSet(viewsets.ModelViewSet):
     """
-    Subject management (ADMIN ONLY)
+    Subject management - read (list/retrieve) is open to any authenticated
+    user (teachers need this to populate exam-results forms); write
+    operations remain Admin-only.
 
     - Full CRUD
     - Search by name & code
@@ -14,7 +16,7 @@ class SubjectViewSet(viewsets.ModelViewSet):
     """
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminOrReadOnly]
 
     filter_backends = [
         filters.SearchFilter,

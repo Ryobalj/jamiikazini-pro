@@ -1,5 +1,6 @@
 // src/lib/axios.js
 import axios from "axios";
+import i18n from "@/i18n";
 
 // Determine environment (Vite injects these; `process` does not exist in the browser)
 const isProduction = import.meta.env.PROD;
@@ -118,6 +119,12 @@ api.interceptors.request.use(
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value;
     if (csrfToken) {
       config.headers['X-CSRFToken'] = csrfToken;
+    }
+
+    // Tell the backend which language the user picked, so translated model
+    // fields (e.g. category names) match the UI language, not IP geolocation.
+    if (i18n.language) {
+      config.headers['Accept-Language'] = i18n.language;
     }
     
     // Add request ID for tracking

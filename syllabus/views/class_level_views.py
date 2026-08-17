@@ -1,18 +1,20 @@
 # syllabus/views/class_level_views.py
 
 from rest_framework import viewsets
-from rest_framework.permissions import IsAdminUser
 from syllabus.models.class_level import ClassLevel
 from syllabus.serializers.class_level_serializer import ClassLevelSerializer
+from syllabus.permissions import IsAdminOrReadOnly
 
 
 class ClassLevelViewSet(viewsets.ModelViewSet):
     """
-    CRUD kwa ClassLevel – superuser tu anaweza kufanya operesheni zote.
+    CRUD kwa ClassLevel - kusoma (list/retrieve) kunaruhusiwa kwa
+    mtumiaji yeyote aliyeingia (walimu wanahitaji hii kwa fomu za
+    matokeo ya mtihani); kuhariri ni kwa Admin pekee.
     """
     queryset = ClassLevel.objects.all().order_by("order")
     serializer_class = ClassLevelSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminOrReadOnly]
 
     def get_queryset(self):
         qs = super().get_queryset()

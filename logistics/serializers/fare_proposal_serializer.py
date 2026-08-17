@@ -42,6 +42,12 @@ class FareProposalSerializer(serializers.ModelSerializer):
         if vehicle.provider_id != provider.id:
             raise serializers.ValidationError({"vehicle": "Gari hili si lako."})
 
+        vehicle_verification = getattr(vehicle, "verification", None)
+        if not vehicle_verification or vehicle_verification.overall_status != "VERIFIED":
+            raise serializers.ValidationError(
+                {"vehicle": "Gari hili bado halijathibitishwa (TRA/LATRA). Lithibitishe kwanza."}
+            )
+
         return attrs
 
     def create(self, validated_data):

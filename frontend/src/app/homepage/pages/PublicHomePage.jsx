@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import api from "@/lib/axios";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import {
   Loader2,
   Phone,
@@ -21,6 +22,8 @@ export default function PublicHomePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
+
+  useDocumentTitle(data?.name);
 
   useEffect(() => {
     api

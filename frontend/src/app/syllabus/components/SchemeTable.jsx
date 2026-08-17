@@ -28,23 +28,33 @@ export default function SchemeTable({ schemeData }) {
     }
   };
 
-  // Function to get header key from display name
-  const getHeaderKey = (header) => {
-    const mapping = {
-      "Uwezo Mkuu": "main_competence",
-      "Uwezo Maalum": "specific_competence", 
-      "Shughuli za Kufundisha": "learning_activity",
-      "Shughuli za Mwanafunzi": "student_activity",
-      "Mwezi": "month",
-      "Nambari ya Wiki": "week_number",
-      "Vipindi": "periods",
-      "Mbinu": "methodology",
-      "Vyanzo": "references",
-      "Vifaa vya Kufundishia": "teaching_aids",
-      "Vigezo vya Tathmini": "assessment_criteria",
-      "Maelezo/Maoni": "remarks"
-    };
-    return mapping[header] || header.toLowerCase();
+  // Headers are display text (language-dependent, e.g. "UMAHIRI MKUU" or
+  // "MAIN COMPETENCE") and can't be reliably mapped back to a data key by
+  // matching their wording. The backend always sends them in this fixed
+  // order (see SCHEME_LABELS["headers"] in syllabus/i18n/*.py and the row
+  // order built in scheme_pdf_builder.py's _format_teaching_row), so map
+  // positionally instead.
+  const HEADER_KEYS_BY_POSITION = [
+    "main_competence",
+    "specific_competence",
+    "learning_activity",
+    "student_activity",
+    "month",
+    "week_display",
+    "periods",
+    "methodology",
+    "references",
+    "teaching_aids",
+    "assessment_criteria",
+    "remarks",
+  ];
+
+  const getRowValue = (row, index) => {
+    const key = HEADER_KEYS_BY_POSITION[index];
+    if (key === "week_display") {
+      return row.weeks_display || row.week_number || "";
+    }
+    return key ? row[key] : "";
   };
 
   if (!displayItems || displayItems.length === 0) {
@@ -85,9 +95,8 @@ export default function SchemeTable({ schemeData }) {
                   isBreak ? 'bg-yellow-50 dark:bg-yellow-900/10' : ''
                 }`}>
                   {schemeData.headers?.map((header, hIdx) => {
-                    const key = getHeaderKey(header);
-                    const value = row[key] || '';
-                    
+                    const value = getRowValue(row, hIdx) || '';
+
                     return (
                       <td
                         key={hIdx}

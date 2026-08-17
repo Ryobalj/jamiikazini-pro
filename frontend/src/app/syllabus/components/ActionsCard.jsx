@@ -134,7 +134,10 @@ const ActionsCard = ({
         timefinish: formData?.timefinish || selectedTimetable.timefinish || "08:40",
         boys_attended: formData?.boys_attended || selectedTimetable.registeredboys || 0,
         girls_attended: formData?.girls_attended || selectedTimetable.registeredgirls || 0,
-        language: formData?.language || "sw",
+        // Documents follow the selected subject's own medium of
+        // instruction (never a separate manual toggle) — English-medium
+        // subject -> English documents, otherwise Kiswahili.
+        language: selectedTimetable.is_english ? "en" : "sw",
         is_song: formData?.is_song || false,
         repeat_next: formData?.repeat_next || false,
         managed_count: formData?.managed_count || null
@@ -157,18 +160,20 @@ const ActionsCard = ({
       const res = await api.post(url, payload, config);
 
       if (format === "pdf") {
-        // Handle PDF download
-        const blob = new Blob([res.data], { type: "application/pdf" });
+        // Download returns a ZIP containing two separate PDFs: the
+        // Andalio la Somo itself and a standalone Nukuu za Somo (lesson
+        // notes + exercise) document — one click, two documents.
+        const blob = new Blob([res.data], { type: "application/zip" });
         const urlObject = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = urlObject;
-        a.download = `Andalio_${selectedTimetable.subject_name}_${selectedTimetable.class_level_name}_${payload.date}.pdf`;
+        a.download = `Andalio_na_Nukuu_${selectedTimetable.subject_name}_${selectedTimetable.class_level_name}_${payload.date}.zip`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         window.URL.revokeObjectURL(urlObject);
-        
-        toast.success(t("lesson_plan.pdf_downloaded") || "PDF ya andalio imepakuliwa", {
+
+        toast.success(t("lesson_plan.pdf_downloaded") || "Andalio na Nukuu za Somo zimepakuliwa", {
           position: "bottom-right",
           autoClose: 3000,
         });
@@ -288,6 +293,11 @@ const ActionsCard = ({
 
           {/* Preview Content */}
           <div className="p-6">
+            {generatedLessonPlan?._preview?.is_preview && (
+              <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3 mb-4 text-sm text-amber-800 dark:text-amber-300">
+                {generatedLessonPlan._preview.message || t("subscription.preview_banner")}
+              </div>
+            )}
             {/* Meta Information */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">

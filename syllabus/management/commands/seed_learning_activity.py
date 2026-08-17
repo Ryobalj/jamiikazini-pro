@@ -108,7 +108,6 @@ class Command(BaseCommand):
                                 main_competence, created = MainCompetence.objects.get_or_create(
                                     subject_version=subject_version,
                                     name=main_competence_name,
-                                    defaults={'description': ''}
                                 )
                                 self.stdout.write(f"⚠️  Created missing MainCompetence: {main_competence_name}")
                             elif skip_missing:
@@ -133,7 +132,6 @@ class Command(BaseCommand):
                                 specific_competence, created = SpecificCompetence.objects.get_or_create(
                                     main_competence=main_competence,
                                     name=specific_competence_name,
-                                    defaults={'description': ''}
                                 )
                                 self.stdout.write(f"⚠️  Created missing SpecificCompetence: {specific_competence_name}")
                             elif skip_missing:

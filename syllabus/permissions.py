@@ -5,17 +5,39 @@ from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 class CanDownloadPDF(BasePermission):
     """
-    Temporary simple permission.
-    Later this will be replaced with subscription logic.
+    Full document download (Azimio la Kazi, Andalio la Somo, Nukuu za
+    Somo) requires an authenticated teacher with a currently-valid
+    TeacherSubscription — the monthly fee is auto-debited from their
+    JamiiWallet balance each renewal cycle (see subscription_service.py).
+    Admins always have access.
     """
 
-    message = "You are not allowed to download this document."
+    message = "Huna usajili halali wa kupakua nyaraka hii. Tafadhali jaza salio la Wallet yako ili usajili wako uendelee."
 
     def has_permission(self, request, view):
-        return (
-            request.user
-            and request.user.is_authenticated
-        )
+        user = request.user
+        if not user or not user.is_authenticated:
+            return False
+
+        if getattr(user, "role", None) == "ADMIN":
+            return True
+
+        from syllabus.services.subscription_service import has_full_access
+        return has_full_access(user)
+
+
+class IsAdminOrReadOnly(BasePermission):
+    """Reference/lookup data (class levels, subjects) - any authenticated
+    user can read it (needed so teachers can populate exam/timetable
+    forms), but only Admins can create/edit/delete it."""
+
+    def has_permission(self, request, view):
+        user = request.user
+        if not user or not user.is_authenticated:
+            return False
+        if request.method in SAFE_METHODS:
+            return True
+        return getattr(user, "role", None) == "ADMIN"
 
 
 class IsAdminOrClientTeacher(BasePermission):

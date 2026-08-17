@@ -54,7 +54,7 @@ class DeliveryQuoteView(APIView):
             quotes.append({
                 "vehicle_type": vehicle_type,
                 "label": label,
-                "estimated_fare": rate_card.estimate_fare(distance_km),
+                "estimated_fare": rate_card.estimate_fare(distance_km, weight_kg),
             })
 
         return Response({"quotes": quotes, "distance_km": round(distance_km, 2)}, status=status.HTTP_200_OK)

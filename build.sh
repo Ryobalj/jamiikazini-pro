@@ -25,7 +25,48 @@ python manage.py ensure_superuser || echo "ensure_superuser skipped"
 echo "==> Seeding currencies + initial exchange rates (idempotent)"
 python manage.py seed_currencies || echo "seed_currencies skipped"
 
+echo "==> Seeding business categories (idempotent)"
+python manage.py seed_business_categories || echo "seed_business_categories skipped"
+
+echo "==> Ensuring 'Jamiikazini Elimu' business exists (idempotent, first-run only)"
+python manage.py ensure_elimu_business || echo "ensure_elimu_business skipped"
+
+# Muhtasari (TET syllabus) reference data for the syllabus/teaching tools
+# (Azimio/Andalio/Ratiba/Matokeo). Each command is idempotent
+# (get_or_create/update_or_create), safe to run on every deploy. Order
+# matters: syllabus_version/subjects/class_level/subject_version must exist
+# before seed_specific_learning_activity resolves its FKs; --force lets it
+# auto-create the MainCompetence/SpecificCompetence/LearningActivity tree
+# from the names in each syllabus/csv/sla_*.csv file.
+echo "==> Seeding syllabus reference data (SyllabusVersion, Subjects, ClassLevels, SubjectVersions)"
+python manage.py seed_syllabus_version || echo "seed_syllabus_version skipped"
+python manage.py seed_subjects || echo "seed_subjects skipped"
+python manage.py seed_class_level || echo "seed_class_level skipped"
+python manage.py seed_subject_version || echo "seed_subject_version skipped"
+
+echo "==> Seeding annual calendar (exam-week/term-break reference dates)"
+python manage.py seed_annual_calendar || echo "seed_annual_calendar skipped"
+
+echo "==> Seeding muhtasari SpecificLearningActivity content (all syllabus/csv/sla_*.csv files)"
+python manage.py seed_specific_learning_activity --force || echo "seed_specific_learning_activity skipped"
+
 echo "==> Fetching real market exchange rates (ERAPI)"
 python manage.py update_exchange_rates --source ERAPI || echo "update_exchange_rates skipped (using seeded rates)"
+
+echo "==> Seeding transport rate cards (idempotent)"
+python manage.py seed_transport_rate_cards || echo "seed_transport_rate_cards skipped"
+
+# Presentation demo data (users/businesses/products/etc.) - OFF by default so
+# a real production deploy never gets fake accounts seeded in automatically.
+# Set SEED_DEMO_DATA=true in Render's env vars to turn it on for a demo/staging
+# deploy; flip it back to false (or unset it) before going fully live. To
+# permanently remove an already-seeded demo dataset, run this once via Render
+# Shell: python manage.py seed_demo_data --clear-only
+if [ "$SEED_DEMO_DATA" = "true" ]; then
+    echo "==> Seeding demo data (SEED_DEMO_DATA=true)"
+    python manage.py seed_demo_data || echo "seed_demo_data skipped"
+else
+    echo "==> Skipping demo data (SEED_DEMO_DATA not set to true)"
+fi
 
 echo "==> Build complete"

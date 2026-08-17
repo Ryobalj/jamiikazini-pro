@@ -409,7 +409,7 @@ class OrderSerializer(serializers.ModelSerializer):
         if not is_vehicle_suitable(vehicle_type, weight_kg, distance_km, volume_cbm):
             raise serializers.ValidationError({"delivery": "Aina hii ya usafiri haifai kwa uzito/umbali wa mzigo huu."})
 
-        delivery_fee = rate_card.estimate_fare(distance_km)
+        delivery_fee = rate_card.estimate_fare(distance_km, weight_kg)
         order.delivery_fee = delivery_fee
         order.total_amount = order.calculate_total()
         order.save(update_fields=["delivery_fee", "total_amount"])

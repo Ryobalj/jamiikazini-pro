@@ -74,9 +74,11 @@ const ActivitySearchCard = ({
     try {
       console.log("🎯 Loading learning activities for subject version:", subjectVersionId);
       
-      // Check local storage cache first
+      // Check local storage cache first - an empty cached array isn't
+      // trustworthy (could be a stale/poisoned entry from an earlier bug
+      // or failed load), so treat it as a cache miss and refetch.
       const cached = LessonPlanStorage.getCachedActivities(subjectVersionId);
-      if (cached && new Date() - new Date(cached.cachedAt) < 600000) { // 10 minutes cache
+      if (cached?.learningActivities?.length > 0 && new Date() - new Date(cached.cachedAt) < 600000) { // 10 minutes cache
         console.log("📦 Using local storage cache");
         setLearningActivities(cached.learningActivities);
         

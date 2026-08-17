@@ -98,6 +98,12 @@ s3transfer==0.10.4
 jmespath==1.1.0
 
 # ===========================
+# File & Media Storage (Cloudinary - production media backend)
+# ===========================
+cloudinary==1.44.2
+django-cloudinary-storage==0.3.0
+
+# ===========================
 # Geolocation & GIS
 # ===========================
 geoip2==3.0.0

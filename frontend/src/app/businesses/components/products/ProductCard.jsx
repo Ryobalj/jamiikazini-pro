@@ -59,7 +59,7 @@ export function ProductCard({ product, onView, onDelete }) {
         )}
         
         <div className="absolute top-3 left-3">
-          {product.is_available && product.quantity_in_stock > 0 ? (
+          {product.is_available && (product.type !== "physical" || product.quantity_in_stock > 0) ? (
             <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400">
               <CheckCircle className="w-3 h-3" /> {t("products.available")}
             </span>

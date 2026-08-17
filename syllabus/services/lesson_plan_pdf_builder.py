@@ -25,7 +25,8 @@ class LessonPlanPDFBuilder:
 
         self.pdf = PDFGenerator(
             filename=f"LessonPlan_{data.identification.class_level}.pdf",
-            orientation="portrait"
+            orientation="portrait",
+            language=language,
         )
 
         self.text_style = ParagraphStyle(
@@ -65,26 +66,40 @@ class LessonPlanPDFBuilder:
         """
         SEHEMU YA I: TAARIFA ZA UTAMBULISHO (2x3 grid)
         """
+        # Wrap every cell in a Paragraph so long values (e.g. a lengthy
+        # main_competence) wrap within their column instead of overflowing
+        # into the neighboring cell (plain strings in a reportlab Table do
+        # not word-wrap). Label cells are bold, followed by a colon.
+        def cell(text):
+            return Paragraph(str(text), self.text_style)
+
+        def label(text):
+            return Paragraph(f"<b>{text}:</b>", self.text_style)
+
         data = [
             [
-                self.labels["school_name"], self.data.identification.school_name,
-                self.labels["teacher_name"], self.data.identification.teacher_name
+                label(self.labels["school_name"]), cell(self.data.identification.school_name),
+                label(self.labels["teacher_name"]), cell(self.data.identification.teacher_name)
             ],
             [
-                self.labels["main_competence"], self.data.identification.main_competence,
-                self.labels["class_level"], self.data.identification.class_level
+                label(self.labels["main_competence"]), cell(self.data.identification.main_competence),
+                label(self.labels["class_level"]), cell(self.data.identification.class_level)
             ],
             [
-                self.labels["duration"], str(self.data.identification.duration),
-                self.labels["period"], str(self.data.identification.period)
+                label(self.labels["duration"]), cell(self.data.identification.time_range),
+                label(self.labels["period"]), cell(self.data.identification.period)
             ],
             [
-                self.labels["date"], str(self.data.identification.date),
+                label(self.labels["date"]), cell(self.data.identification.date),
                 "", ""
             ],
         ]
 
-        table = Table(data, colWidths=[90, 150, 90, 120])
+        # Column widths sum to the page's real usable width (A4 minus
+        # 25mm/20mm left/right margins, ~460pt) so this table spans edge
+        # to edge instead of defaulting to reportlab's centered narrow
+        # table when colWidths sum to less than the frame width.
+        table = Table(data, colWidths=[80, 155, 80, 145])
         table.setStyle(TableStyle([
             ("GRID", (0, 0), (-1, -1), 0.5, colors.black),
             ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
@@ -96,11 +111,14 @@ class LessonPlanPDFBuilder:
         """
         SEHEMU YA II: IDADI YA WANAFUNZI
         """
+        def header(text):
+            return Paragraph(f"<b>{str(text).upper()}</b>", self.center_style)
+
         data = [
-            [self.labels["registered"], "", "", self.labels["attended"], "", ""],
+            [header(self.labels["registered"]), "", "", header(self.labels["attended"]), "", ""],
             [
-                self.labels["boys"], self.labels["girls"], self.labels["total"],
-                self.labels["boys"], self.labels["girls"], self.labels["total"],
+                header(self.labels["boys"]), header(self.labels["girls"]), header(self.labels["total"]),
+                header(self.labels["boys"]), header(self.labels["girls"]), header(self.labels["total"]),
             ],
             [
                 str(self.data.registered_students.boys),
@@ -111,7 +129,10 @@ class LessonPlanPDFBuilder:
                 str(self.data.attended_students.total),
             ],
         ]
-        table = Table(data, colWidths=[60] * 6)
+        # Sums to the same ~460pt usable width as the other tables in this
+        # document, instead of 360pt (which left it centered with visible
+        # margins on both sides).
+        table = Table(data, colWidths=[77, 77, 77, 77, 76, 76])
         table.setStyle(TableStyle([
             ("GRID", (0, 0), (-1, -1), 0.5, colors.black),
             ("SPAN", (0, 0), (2, 0)),
@@ -130,11 +151,14 @@ class LessonPlanPDFBuilder:
             (self.labels["main_activity"], self.data.subject_info.main_activity),
             (self.labels["specific_activity"], self.data.subject_info.specific_activity),
             (self.labels["teaching_aids"], self.data.subject_info.teaching_aids),
-            # 🔴 FIX: Change 'reference' to 'references' to match dataclass
-            (self.labels.get("reference", "Marejeo"), self.data.subject_info.references),
+            (self.labels["reference"], self.data.subject_info.references),
         ]
 
         for label, value in info:
+            # teaching_aids/references are Postgres ArrayFields on
+            # SpecificLearningActivity, so they may arrive as a list.
+            if isinstance(value, (list, tuple)):
+                value = ", ".join(str(v) for v in value if v)
             self.pdf.flowables.append(
                 Paragraph(f"<b>{label}:</b> {value}", self.text_style)
             )
@@ -154,12 +178,15 @@ class LessonPlanPDFBuilder:
         # -----------------------------
         # HEADER ROW (COLUMNS)
         # -----------------------------
+        def header(text):
+            return Paragraph(f"<b>{str(text).upper()}</b>", self.text_style)
+
         data = [[
-            self.labels["step"],               # Hatua za Ufundishaji
-            self.labels["time"],
-            self.labels["teaching_activity"],
-            self.labels["learning_activity"],
-            self.labels["assessment"],
+            header(self.labels["step"]),               # Hatua za Ufundishaji
+            header(self.labels["time"]),
+            header(self.labels["teaching_activity"]),
+            header(self.labels["learning_activity"]),
+            header(self.labels["assessment"]),
         ]]
     
         # -----------------------------
@@ -194,20 +221,27 @@ class LessonPlanPDFBuilder:
                 learning = ""
                 assessment = ""
     
+            # Wrap in Paragraph so long sentences wrap within the column
+            # width instead of overflowing/overlapping neighboring cells
+            # (plain strings in a reportlab Table do not word-wrap). The
+            # step name acts as a row header, so it's capitalized+bold too.
             data.append([
-                step_label,
-                duration,
-                teaching,
-                learning,
-                assessment,
+                header(step_label),
+                Paragraph(duration, self.text_style),
+                Paragraph(teaching, self.text_style),
+                Paragraph(learning, self.text_style),
+                Paragraph(assessment, self.text_style),
             ])
     
         # -----------------------------
         # TABLE RENDERING
         # -----------------------------
+        # Sums to ~460pt (page's real usable width), same proportions as
+        # before but scaled down — the original [120,55,150,150,100]=575pt
+        # exceeded the ~467pt usable width (A4 minus 25mm/20mm margins).
         table = Table(
             data,
-            colWidths=[120, 55, 150, 150, 100]
+            colWidths=[96, 44, 120, 120, 80]
         )
     
         table.setStyle(TableStyle([
@@ -222,21 +256,15 @@ class LessonPlanPDFBuilder:
 
     def _format_duration(self, duration) -> str:
         """
-        Format timedelta to readable string.
-        Example: timedelta(minutes=5) -> "5:00" or "5 min"
+        Format timedelta as a plain minute count so it can't be misread as
+        a clock time (e.g. "5:00" looks like 5 o'clock, not 5 minutes).
         """
         if not duration:
             return ""
-        
+
         try:
-            total_seconds = int(duration.total_seconds())
-            minutes = total_seconds // 60
-            seconds = total_seconds % 60
-            
-            if seconds == 0:
-                return f"{minutes}:00"
-            else:
-                return f"{minutes}:{seconds:02d}"
+            minutes = int(duration.total_seconds()) // 60
+            return f"{self.labels['minutes']} {minutes}"
         except:
             return str(duration)
 
@@ -265,13 +293,12 @@ class LessonPlanPDFBuilder:
 
     def _footer(self):
         """
-        Footer with multilingual support
+        Pin the school/teacher line to the bottom of every page next to the
+        page number, instead of appending it as a body paragraph (which
+        floats wherever the content flow happens to end).
         """
-        footer_text = f"{self.data.identification.school_name} - {self.labels['lesson_plan']} - {self.data.identification.teacher_name}"
-        self.pdf.add_spacer(12)
-        self.pdf.flowables.append(
-            Paragraph(footer_text.upper(), self.center_style)
-        )
+        footer_text = f"{self.data.identification.school_name} - {self.labels['title']} - {self.data.identification.teacher_name}"
+        self.pdf.set_footer(footer_text.upper())
 
     # ------------------------------------------------------------------
     # ADDITIONAL HELPER METHODS

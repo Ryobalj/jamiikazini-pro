@@ -30,6 +30,7 @@ import MySubjects from "@/app/syllabus/pages/MySubjects";
 import MyTimetable from "@/app/syllabus/pages/MyTimetable";
 import LessonPlanPage from "@/app/syllabus/pages/LessonPlanPage";
 import SchemeOfWorkPage from "@/app/syllabus/pages/SchemeOfWorkPage";
+import ExamResultsPage from "@/app/syllabus/pages/ExamResultsPage";
 
 export const modulePages = {
   businesses: {
@@ -97,6 +98,7 @@ export const modulePages = {
       { path: "timetable", element: <MyTimetable /> }, // ✅ Hapa
       { path: "lesson-plan", element: <LessonPlanPage /> }, // 🟢 Lesson Plan
       { path: "scheme", element: <SchemeOfWorkPage /> }, // 🟢 Scheme of Work
+      { path: "exam-results", element: <ExamResultsPage /> },
     ],
   },
 

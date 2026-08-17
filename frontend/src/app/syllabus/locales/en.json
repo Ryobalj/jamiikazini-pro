@@ -6,10 +6,39 @@
       "my_subjects": "My Subjects",
       "timetable": "My Timetable",
       "scheme": "Scheme of Work",
-      "lesson_plan": "Lesson Plan"
+      "lesson_plan": "Lesson Plan",
+      "exam_results": "Exam Results"
     }
   },
-
+  "exam_results": {
+    "title": "Exam Results",
+    "subtitle": "Prepare and download exam results for a single subject or the whole class",
+    "select_exam": "Select Exam",
+    "class_level": "Class",
+    "subjects": "Subjects (hold Ctrl to select more than one)",
+    "exam_name": "Exam Name",
+    "term1": "First Term",
+    "term2": "Second Term",
+    "create_exam": "Create Exam",
+    "exam_created": "Exam created.",
+    "students": "Students",
+    "student_name": "Student Name",
+    "female": "Female",
+    "male": "Male",
+    "add_student": "Add Student",
+    "save_marks": "Save Marks",
+    "marks_saved": "Marks saved.",
+    "results_preview": "Results Summary",
+    "total": "Total",
+    "average": "Average",
+    "grade": "Grade",
+    "rank": "Rank",
+    "subject_for_pdf": "Subject for PDF",
+    "download_subject_pdf": "Download Subject Results (PDF)",
+    "download_subject_xlsx": "Download Subject Results (XLS)",
+    "download_class_pdf": "Download Whole-Class Results (PDF)",
+    "download_class_xlsx": "Download Whole-Class Results (XLS)"
+  },
   "my_subjects": {
     "subjects": "Subjects",
     "title": "My Subjects",
@@ -37,7 +66,7 @@
     "timetable_id": "Timetable ID",
     "more_entries": "... and {{count}} more entries",
     "boys": "Boys",
-    "girls": "Girls", 
+    "girls": "Girls",
     "total_students": "Total Students",
     "generate_lesson_plan": "Generate Lesson Plan",
     "lesson_plan": "Lesson Plan",
@@ -57,13 +86,8 @@
     "allocated_periods": "Allocated Periods",
     "scheduled_periods": "Scheduled Periods",
     "period_balance": "Period Balance",
-    "subject_performance": "Subject Performance",
-    "allocated_periods": "Allocated Periods",
-    "scheduled_periods": "Scheduled Periods",
-    "period_balance": "Period Balance",
     "no_subjects": "No subjects"
   },
-
   "my_timetable": {
     "title": "My Timetable",
     "subtitle": "Your teaching timetable based on scheduled subjects",
@@ -96,14 +120,13 @@
     "export_timetable": "Export Timetable",
     "share_timetable": "Share Timetable"
   },
-
   "lesson_plan": {
     "title": "Lesson Plan",
     "subtitle": "Generate lesson plan automatically",
     "subject": "Subject",
     "select_subject": "Select Subject",
     "select_learning_activity": "Select Learning Activity",
-    "specific_activity": "Specific Learning Activity",
+    "specific_activity": "Specific Activity",
     "search_placeholder": "Search activities...",
     "date": "Date",
     "period": "Period",
@@ -123,7 +146,6 @@
     "repeat_next": "Repeat this lesson next time",
     "download_pdf": "Download PDF",
     "pdf_error": "An error occurred while downloading PDF",
-    
     "lesson_details": "Lesson Details",
     "lesson_objectives": "Lesson Objectives",
     "teaching_methods": "Teaching Methods",
@@ -192,8 +214,6 @@
     "attended": "Attended",
     "total": "Total",
     "specific_competence": "Specific Competence",
-    "main_activity": "Main Activity",
-    "specific_activity": "Specific Activity",
     "teaching_aids": "Teaching Aids",
     "reference": "Reference",
     "loading": "Loading...",
@@ -305,11 +325,9 @@
     "select_activities": "Select Activities",
     "found_learning_activities": "{{count}} learning activities found",
     "all_specific_activities": "All specific activities ({{count}})",
-    "learning_activity": "Learning Activity",
     "specific_activities": "Specific Activities",
     "search_dropdown": "Search in list"
   },
-
   "scheme": {
     "full_scheme": "Full Scheme",
     "title": "Scheme of Work",
@@ -337,7 +355,6 @@
       "assessment_criteria": "Assessment Criteria",
       "remarks": "Remarks/Notes"
     },
-    
     "scheme_details": "Scheme Details",
     "term": "Term",
     "academic_year": "Academic Year",
@@ -348,7 +365,7 @@
     "resource_allocation": "Resource Allocation",
     "assessment_plan": "Assessment Plan",
     "generate_scheme": "Generate Scheme",
-    "preview_scheme": "Preview Scheme",
+    "preview_scheme": "Scheme Preview",
     "edit_scheme": "Edit Scheme",
     "save_scheme": "Save Scheme",
     "export_scheme": "Export Scheme",
@@ -359,7 +376,6 @@
     "weekly_distribution": "Weekly Distribution",
     "period_distribution": "Period Distribution",
     "competence_progress": "Competence Progress",
-    
     "selection": "Selection",
     "calendar": "Calendar",
     "prefilled_from": "Prefilled from",
@@ -372,25 +388,20 @@
     "generated_success": "Scheme of work generated successfully",
     "pdf_downloaded": "Scheme PDF downloaded",
     "preview": "Preview",
-    "total_weeks": "Total Weeks",
     "period_summary": "Period Summary",
     "period_balance": "Period Balance",
     "no_scheme_generated": "No Scheme Generated",
     "select_subject_and_calendar_to_generate": "Select subject and calendar to start generating scheme of work",
-    "total_periods": "Total Periods",
     "periods_per_week": "Periods per Week",
     "available_weeks": "Available Weeks",
-    
     "select_first": "Select subject and academic year calendar first",
     "can_start_generating": "You can start generating the scheme of work",
     "ready_to_generate": "Ready to generate",
     "waiting_for_selection": "Waiting for selection",
     "preview_created": "Preview created",
     "full_scheme_created": "Full scheme created",
-    "generating_preview": "Generating preview...",
-    "preview_scheme": "Scheme Preview"
+    "generating_preview": "Generating preview..."
   },
-
   "workstation": {
     "add_title": "Add Workstation",
     "edit_title": "Edit Workstation",
@@ -420,7 +431,6 @@
     "required_message": "You need to set up your workstation before using this service.",
     "not_found": "Workstation not found"
   },
-
   "timetable": {
     "add": "Add Timetable",
     "edit": "Edit Timetable",
@@ -432,6 +442,21 @@
     "class_level": "Class Level",
     "syllabus_year": "Syllabus Year",
     "not_selected": "Not selected yet",
+    "day_of_week": "Day of the Week",
+    "select_day": "Select a day of the week",
+    "select_period": "Select a period",
+    "download_mine": "Download My Timetable (PDF)",
+    "download_mine_xlsx": "Download My Timetable (XLS)",
+    "download_school": "Download School Master Timetable (PDF)",
+    "download_school_xlsx": "Download School Master Timetable (XLS)",
+    "days": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday"
+    },
     "period": "Period",
     "period_help": "Enter the period number for this class (1-10).",
     "time_start": "Start Time",
@@ -451,7 +476,6 @@
     "no_subjects_found": "No subjects found",
     "select_workstation": "Select workstation...",
     "too_many_requests": "You have made too many requests. Please wait a while and try again.",
-    
     "timetable_management": "Timetable Management",
     "daily_schedule": "Daily Schedule",
     "weekly_schedule": "Weekly Schedule",
@@ -466,7 +490,6 @@
     "timetable_backup": "Timetable Backup",
     "timetable_restore": "Timetable Restore"
   },
-
   "validation": {
     "required": "This field is required",
     "time_order": "End time must be after start time",
@@ -482,15 +505,13 @@
     "match": "Values do not match",
     "strong_password": "Password must be at least 8 characters, include a number and uppercase letter"
   },
-
   "common": {
     "days": "Days",
     "learning": "Learning",
-    "preview": "Show",
+    "preview": "Preview",
     "language": "Language",
-    "entries": "Entries",
+    "entries": "entries",
     "selected": "Selected",
-
     "clear": "Clear",
     "loading": "Loading...",
     "saving": "Saving...",
@@ -594,10 +615,8 @@
     "unshared": "Unshared",
     "dismiss": "Dismiss",
     "not_available": "Not Available",
-    
     "activities": "activities",
     "periods": "periods",
-    "preview": "Preview",
     "ready_to_generate": "Ready to generate",
     "waiting_for_selection": "Waiting for selection",
     "preview_created": "Preview created",
@@ -607,7 +626,6 @@
     "view_grid": "View as grid",
     "learning_days": "learning days",
     "weeks": "weeks",
-    "entries": "entries",
     "copied": "Copied!",
     "copy_failed": "Failed to copy",
     "full_details": "Full Details",
@@ -618,12 +636,10 @@
     "of": "of",
     "activity": "Activity",
     "week": "Week",
-    "completed": "Completed",
     "total_activities": "Total Activities",
     "total_periods": "Total Periods",
     "holidays_exams": "Holidays/Exams"
   },
-
   "errors": {
     "failed_to_load_specific_activities": "Failed to load specific activities",
     "rate_limit": "Too many requests. Please wait a moment and try again.",
@@ -634,6 +650,7 @@
     "failed_to_delete": "Failed to delete item. Please try again.",
     "failed_to_save": "Failed to save data. Please try again.",
     "failed_to_update": "Failed to update data. Please try again.",
+    "failed_to_download": "Failed to download PDF. Please try again.",
     "timetable_not_found": "Could not find timetable to edit. It may have been deleted.",
     "workstation_not_found": "Could not find workstation.",
     "subject_not_found": "Could not find subject.",
@@ -648,5 +665,20 @@
     "maintenance_mode": "System is in maintenance mode. Please try again later.",
     "quota_exceeded": "Storage limit exceeded. Please delete some data.",
     "validation_failed": "Validation failed. Please check the entered information."
+  },
+  "subscription": {
+    "title": "Subscription",
+    "required_for_pdf": "You need an active subscription to download this PDF.",
+    "active": "Active",
+    "inactive": "Inactive",
+    "expires_on": "Expires on",
+    "monthly_fee": "Monthly fee",
+    "subscribe_now": "Subscribe Now",
+    "renewing": "Processing...",
+    "subscribe_success": "Subscription successful!",
+    "insufficient_balance": "Your Wallet balance is insufficient. Please top up your Wallet then try again.",
+    "load_error": "Failed to load subscription status.",
+    "preview_banner": "You're seeing a limited preview (~25%). Subscribe to view and download the full document.",
+    "go_to_wallet": "Go to Wallet"
   }
 }

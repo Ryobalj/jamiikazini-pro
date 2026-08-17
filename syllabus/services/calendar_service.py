@@ -2,7 +2,7 @@
 
 from datetime import date, timedelta
 from dataclasses import dataclass, asdict, field
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, Tuple
 from django.utils.translation import gettext_lazy as _
 import logging
 
@@ -180,8 +180,21 @@ class CalendarService:
             if end_field:
                 end_date: date = getattr(self.calendar, end_field)
             else:
-                # Default to end of next year for final break
-                end_date = date(self.year + 1, 12, 31)
+                # Final break (Annual Break) has no explicit end date in the
+                # model. Schools reopen a few days into January, not on
+                # 31 Dec — so prefer the following year's real term start
+                # date (if that calendar has been seeded yet) and fall back
+                # to the same early-January convention used when seeding
+                # (e.g. 6 Jan) otherwise.
+                next_year_calendar = (
+                    AnnualCalendar.objects
+                    .filter(institute=self.calendar.institute, year=self.year + 1)
+                    .first()
+                )
+                if next_year_calendar and next_year_calendar.term_start_date:
+                    end_date = next_year_calendar.term_start_date - timedelta(days=1)
+                else:
+                    end_date = date(self.year + 1, 1, 6)
 
             if start_date > end_date:
                 logger.warning(
@@ -310,31 +323,80 @@ class CalendarService:
         """Check if a week is a break week."""
         return week_number in self.get_break_weeks()
 
+    # Exam weeks immediately before each break type, per real Tanzanian
+    # school calendar convention: Robo Muhula (midterm/midannual) breaks
+    # each have 1 week of exams; the end-of-Term-I break and the annual
+    # break are both full end-of-term/end-of-year examination periods,
+    # each with 2 weeks of exams.
+    _EXAM_WEEKS_BY_HOLIDAY_TYPE = {
+        "midterm": 1,
+        "midannual": 1,
+        "terminal": 2,
+        "annual": 2,
+    }
+
     def get_exam_weeks_before_break(self) -> Dict[str, List[int]]:
         """Get exam weeks that come before break blocks."""
         exam_weeks = {}
-        
+
         for block in self.get_break_blocks():
             if block.block_type == "break" and block.week_numbers:
-                first_break_week = min(block.week_numbers)
-                
-                # Determine holiday type from block name
-                block_name = block.block_name.lower()
-                
-                if "annual" in block_name:
-                    # Annual break: 2 exam weeks before
-                    exam_weeks[block.block_name] = [
-                        week for week in [first_break_week - 2, first_break_week - 1]
-                        if week > 0
-                    ]
-                else:
-                    # Other breaks: 1 exam week before
-                    exam_week = first_break_week - 1
-                    if exam_week > 0:
-                        exam_weeks[block.block_name] = [exam_week]
-        
+                # Use the ISO week of the block's actual start date rather
+                # than min(week_numbers): the Annual Break now runs into
+                # January of the next year (schools reopen a few days after
+                # New Year, not on 31 Dec), so week_numbers mixes late-year
+                # week numbers (e.g. 49-52) with early-year ones (1-2) from
+                # the January tail — min() would wrongly pick the January
+                # week as the block's "first" week.
+                first_break_week = block.start_date.isocalendar()[1]
+
+                # _determine_holiday_type() checks "midterm"/"midannual"
+                # before the generic "annual" substring, unlike a naive
+                # `"annual" in block_name` check here (which would wrongly
+                # match "Midannual Break" too, since "annual" is a
+                # substring of "midannual").
+                holiday_type = self._determine_holiday_type(block)
+                count = self._EXAM_WEEKS_BY_HOLIDAY_TYPE.get(holiday_type, 1)
+
+                weeks = [
+                    week for week in range(first_break_week - count, first_break_week)
+                    if week > 0
+                ]
+                if weeks:
+                    exam_weeks[block.block_name] = weeks
+
         logger.debug(f"Found exam weeks before breaks: {exam_weeks}")
         return exam_weeks
+
+    def get_pre_break_exclusion_ranges(self) -> List[Tuple[date, date]]:
+        """Real date ranges (inclusive) that must not receive new teaching
+        content: from the start of the exam period through the day before
+        the break actually begins.
+
+        Real schools stop new instruction once exams start for a block and
+        don't resume before the holiday — but ISO week numbers alone can't
+        reliably capture this at a block boundary: when a break doesn't
+        start on a Monday, the days between the end of the (single) ISO
+        exam week and the break's real start_date still belong to the
+        study block's own week_numbers, so week-number matching alone
+        leaves a few real days (and sometimes a whole extra week) where
+        new content would otherwise still get scheduled between the exam
+        and the holiday.
+        """
+        ranges: List[Tuple[date, date]] = []
+        for block in self.get_break_blocks():
+            # Same holiday_type -> exam-week-count mapping used by
+            # get_exam_weeks_before_break() (a naive `"annual" in
+            # block_name` check here would wrongly match "Midannual Break"
+            # too, since "annual" is a substring of "midannual").
+            holiday_type = self._determine_holiday_type(block)
+            exam_weeks_count = self._EXAM_WEEKS_BY_HOLIDAY_TYPE.get(holiday_type, 1)
+            exam_days = exam_weeks_count * 7
+            start = block.start_date - timedelta(days=exam_days)
+            end = block.start_date - timedelta(days=1)
+            if start <= end:
+                ranges.append((start, end))
+        return ranges
 
     def get_holiday_info_for_week(self, week_number: int) -> Dict[str, Any]:
         """Get holiday information for a specific week."""
@@ -379,10 +441,13 @@ class CalendarService:
                 return "terminal"
 
     def _get_holiday_label(self, holiday_type: str) -> str:
-        """Get holiday label based on type."""
+        """Get holiday label based on type. "midterm"/"midannual" are the
+        structurally equivalent mid-term breaks of Muhula I and Muhula II
+        respectively, labelled "I"/"II" for consistency (matches the
+        "Muhula wa I & II" convention) instead of unrelated terms."""
         labels = {
-            "midterm": "LIKIZO YA ROBO MUHULA",
-            "midannual": "LIKIZO YA NUSU MUHULA",
+            "midterm": "LIKIZO YA ROBO MUHULA I",
+            "midannual": "LIKIZO YA ROBO MUHULA II",
             "annual": "LIKIZO YA MWISHO WA MWAKA",
             "terminal": "LIKIZO YA MWISHO WA MUHULA"
         }
@@ -391,8 +456,8 @@ class CalendarService:
     def _get_exam_label(self, holiday_type: str) -> str:
         """Get exam label based on holiday type."""
         labels = {
-            "midterm": "MITIHANI YA ROBO MUHULA",
-            "midannual": "MITIHANI YA NUSU MUHULA",
+            "midterm": "MITIHANI YA ROBO MUHULA I",
+            "midannual": "MITIHANI YA ROBO MUHULA II",
             "annual": "MITIHANI YA MWISHO WA MWAKA",
             "terminal": "MITIHANI YA MWISHO WA MUHULA"
         }

@@ -13,6 +13,7 @@ export default function TimetableGroup({ group, t, onEdit, onDelete }) {
         <table className="min-w-full text-sm border-collapse">
           <thead className="bg-gray-100 dark:bg-gray-800">
             <tr>
+              <th className="border px-2 py-1">{t("timetable.day_of_week")}</th>
               <th className="border px-2 py-1">{t("my_timetable.period")}</th>
               <th className="border px-2 py-1">{t("my_timetable.start_time")}</th>
               <th className="border px-2 py-1">{t("my_timetable.end_time")}</th>
@@ -25,6 +26,7 @@ export default function TimetableGroup({ group, t, onEdit, onDelete }) {
           <tbody>
             {group.rows.map((row) => (
               <tr key={row.id} className="hover:bg-gray-50 dark:hover:bg-gray-900">
+                <td className="border px-2 py-1">{row.day_of_week_display || "—"}</td>
                 <td className="border px-2 py-1">{row.period}</td>
                 <td className="border px-2 py-1">{row.timestart}</td>
                 <td className="border px-2 py-1">{row.timefinish}</td>

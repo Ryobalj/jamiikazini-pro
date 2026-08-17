@@ -14,6 +14,18 @@ from syllabus.models.subject import Subject
 from syllabus.models.class_level import ClassLevel
 
 
+def _parse_array_field(value: str) -> list:
+    """
+    leading / teaching_aids / references are Postgres ArrayField(TextField)
+    on SpecificLearningActivity. CSV cells for these columns use '|' as the
+    item separator.
+    """
+    value = (value or "").strip()
+    if not value:
+        return []
+    return [item.strip() for item in value.split("|") if item.strip()]
+
+
 class Command(BaseCommand):
     help = "Seed SpecificLearningActivity data for Awali from CSV"
     
@@ -61,7 +73,7 @@ class Command(BaseCommand):
                         # SyllabusVersion
                         syllabus_version, sv_created = SyllabusVersion.objects.get_or_create(
                             year=year,
-                            defaults={'name': f'Syllabus {year}'}
+                            defaults={'is_current': False}
                         )
                         if sv_created:
                             self.stdout.write(f"   ✅ Created SyllabusVersion: {year}")
@@ -87,7 +99,7 @@ class Command(BaseCommand):
                             syllabus_version=syllabus_version,
                             subject=subject,
                             class_level=class_level,
-                            defaults={'version': '1.0', 'is_awali': True}
+                            defaults={'is_awali': True}
                         )
                         if sv_created:
                             self.stdout.write(f"   ✅ Created SubjectVersion: {subject_code}-{class_level_name}")
@@ -131,10 +143,12 @@ class Command(BaseCommand):
                             except ValueError:
                                 self.stdout.write(f"   ⚠️  Invalid period value '{periods_str}', using default 1")
                         
-                        # Handle optional fields
-                        references = row.get("sla_references", "").strip() or None
-                        leading = row.get("sla_leading", "").strip() or None
-                        method = row.get("sla_method", "").strip() or None
+                        # Handle optional fields (ArrayField columns are '|'-delimited)
+                        references = _parse_array_field(row.get("sla_references", ""))
+                        leading = _parse_array_field(row.get("sla_leading", ""))
+                        teaching_aids = _parse_array_field(row.get("sla_teaching_aids", ""))
+                        # method is a non-nullable TextField, so fall back to ""
+                        method = row.get("sla_method", "").strip()
 
                         # Get or create SpecificLearningActivity
                         sla, sla_created = SpecificLearningActivity.objects.get_or_create(
@@ -144,7 +158,7 @@ class Command(BaseCommand):
                                 'method': method,
                                 'leading': leading,
                                 'assessment_criteria': row.get("sla_assessment_criteria", "").strip(),
-                                'teaching_aids': row.get("sla_teaching_aids", "").strip(),
+                                'teaching_aids': teaching_aids,
                                 'references': references,
                                 'periods': periods,
                             }
@@ -155,7 +169,7 @@ class Command(BaseCommand):
                             sla.method = method
                             sla.leading = leading
                             sla.assessment_criteria = row.get("sla_assessment_criteria", "").strip()
-                            sla.teaching_aids = row.get("sla_teaching_aids", "").strip()
+                            sla.teaching_aids = teaching_aids
                             sla.references = references
                             sla.periods = periods
                             sla.save()

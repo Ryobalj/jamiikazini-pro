@@ -4,12 +4,36 @@ from rest_framework import serializers
 from logistics.models import Vehicle, Driver, TransportProvider
 from logistics.choices import TransportTypeChoices
 from logistics.models.vehicle import VerificationStatus
+from logistics.models.vehicle_verification import VehicleVerification
+from gov_integration.models.verification_request import VerificationRequest
+
+
+class VerificationRequestStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VerificationRequest
+        fields = ['id', 'status', 'created_at', 'updated_at']
+        # ref_name ya kipekee - inagongana na VerificationRequestStatusSerializer
+        # ndani ya transport_provider_serializer.py
+        ref_name = "VehicleVerificationRequestStatus"
+
+
+class VehicleVerificationSerializer(serializers.ModelSerializer):
+    tra_registration_verification = VerificationRequestStatusSerializer(read_only=True)
+    latra_permit_verification = VerificationRequestStatusSerializer(read_only=True)
+
+    class Meta:
+        model = VehicleVerification
+        fields = [
+            "id", "tra_registration_verification", "latra_permit_verification",
+            "overall_status", "notes", "created_at", "updated_at",
+        ]
+        read_only_fields = fields
 
 
 class DriverSerializer(serializers.ModelSerializer):
     class Meta:
         model = Driver
-        fields = ["id", "full_name", "phone_number", "license_number"]
+        fields = ["id", "full_name", "phone_number", "license_number", "license_photo", "profile_image"]
         # ref_name ya kipekee - inagongana na driver_serializer.DriverSerializer
         ref_name = "VehicleDriver"
 
@@ -17,7 +41,7 @@ class DriverSerializer(serializers.ModelSerializer):
 class TransportProviderSerializer(serializers.ModelSerializer):
     class Meta:
         model = TransportProvider
-        fields = ["id", "user", "institution", "provider_type", "is_approved"]
+        fields = ["id", "user", "institution", "provider_type", "country_code", "is_approved"]
         # ref_name ya kipekee - vinginevyo inagongana na transport_provider_serializer
         # na shipment_serializer zenye TransportProviderSerializer kwenye drf_yasg schema
         ref_name = "VehicleTransportProvider"
@@ -35,7 +59,8 @@ class VehicleWriteSerializer(serializers.ModelSerializer):
         model = Vehicle
         fields = [
             "id", "provider", "vehicle_type", "registration_number", "model_name",
-            "capacity_kg", "volume_cbm", "image", "is_active",
+            "capacity_kg", "volume_cbm", "image", "registration_photo",
+            "latra_permit_number", "latra_permit_photo", "is_active",
             "driver_ids", "active_driver_id",
             "verification_statuses", "notes"
         ]
@@ -70,6 +95,7 @@ class VehicleSerializer(serializers.ModelSerializer):
     drivers = DriverSerializer(many=True, read_only=True)
     active_driver = DriverSerializer(read_only=True)
     is_fully_verified = serializers.BooleanField(read_only=True)
+    verification = VehicleVerificationSerializer(read_only=True)
 
     class Meta:
         model = Vehicle
@@ -82,11 +108,15 @@ class VehicleSerializer(serializers.ModelSerializer):
             "capacity_kg",
             "volume_cbm",
             "image",
+            "registration_photo",
+            "latra_permit_number",
+            "latra_permit_photo",
             "is_active",
             "drivers",
             "active_driver",
             "verification_statuses",
             "is_fully_verified",
+            "verification",
             "notes",
             "created_at",
             "updated_at",

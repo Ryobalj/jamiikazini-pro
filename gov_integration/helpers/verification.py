@@ -29,10 +29,27 @@ BUSINESS_LICENSE_AUTHORITY_BY_COUNTRY = {
     "SS": "trade",   # Ministry of Trade -> SS_TRADE
 }
 
+# Tanzania pekee ina njia mbili tofauti za uthibitisho wa biashara: TIN
+# (TRA - mamlaka ya kodi) na namba ya usajili wa BRELA (msajili wa
+# makampuni) - ni namba mbili tofauti kabisa, sio sawa. Nchi nyingine bado
+# zina mamlaka moja tu iliyounganishwa (angalia BUSINESS_LICENSE_AUTHORITY_BY_COUNTRY
+# hapo juu), hivyo id_type inapuuzwa kwao kwa sasa.
+TZ_BUSINESS_ID_AUTHORITY_BY_TYPE = {
+    "tin": "tra_business",
+    "brela": "brela",
+}
 
-def business_license_authority_for(country_code):
-    """Rudisha authority_code sahihi ya usajili wa biashara kwa nchi husika."""
-    return BUSINESS_LICENSE_AUTHORITY_BY_COUNTRY.get((country_code or "").upper(), "trade")
+
+def business_license_authority_for(country_code, id_type=None):
+    """
+    Rudisha authority_code sahihi ya usajili wa biashara kwa nchi husika.
+    kwa Tanzania, id_type ("tin" au "brela") huchagua kati ya TRA na BRELA -
+    nchi nyingine zina mamlaka moja tu, hivyo id_type hazina athari kwao.
+    """
+    country = (country_code or "").upper()
+    if country == "TZ":
+        return TZ_BUSINESS_ID_AUTHORITY_BY_TYPE.get((id_type or "tin").lower(), "tra_business")
+    return BUSINESS_LICENSE_AUTHORITY_BY_COUNTRY.get(country, "trade")
 
 
 # Mamlaka sahihi ya kitambulisho cha taifa (NIDA-equivalent) kwa kila nchi.
@@ -65,6 +82,24 @@ DRIVER_LICENSE_AUTHORITY_BY_COUNTRY = {
 def driver_license_authority_for(country_code):
     """Rudisha authority_code sahihi ya leseni ya udereva kwa nchi husika."""
     return DRIVER_LICENSE_AUTHORITY_BY_COUNTRY.get((country_code or "").upper(), "driver")
+
+
+# Mamlaka sahihi ya usajili wa gari (TRA-equivalent) kwa kila nchi - hii ni
+# tofauti na usajili wa biashara (BUSINESS_LICENSE_AUTHORITY_BY_COUNTRY):
+# inathibitisha namba ya usajili wa GARI mahususi, si biashara/kampuni.
+VEHICLE_REGISTRATION_AUTHORITY_BY_COUNTRY = {
+    "TZ": "tra_vehicle",
+    "KE": "ntsa",
+    "UG": "ura_driver",
+    "RW": "rnp_driver",
+    "BI": "vehicle",   # -> BI_VEHICLE
+    "SS": "vehicle",   # -> SS_VEHICLE
+}
+
+
+def vehicle_registration_authority_for(country_code):
+    """Rudisha authority_code sahihi ya usajili wa gari kwa nchi husika."""
+    return VEHICLE_REGISTRATION_AUTHORITY_BY_COUNTRY.get((country_code or "").upper(), "vehicle")
 
 
 # Mamlaka sahihi ya leseni ya usafirishaji (LATRA-equivalent) kwa kila nchi.
@@ -137,10 +172,17 @@ def verify_entity(country_code, authority_code, payload, user=None):
 
 def mock_response(authority_code, payload):
     """
-    Returns mock response based on the type of authority.
-    Extend as needed.
+    Returns mock response based on the type of check being performed.
+
+    Baadhi ya mamlaka (mf. NTSA nchini Kenya) zinahusika na aina kadhaa za
+    uthibitisho (leseni ya udereva, usajili wa gari, na kibali cha usafirishaji
+    yote chini ya mamlaka moja) - hivyo authority_code pekee haitoshi
+    kubainisha aina ya ukaguzi. Tunatumia funguo za payload kubainisha kwanza,
+    na authority_code kama nyongeza/fallback pale payload haina utata.
     """
-    if authority_code.lower() in ["nida", "nrb", "nira", "oni", "nia"]:
+    authority = authority_code.lower()
+
+    if "national_id_number" in payload or authority in ["nida", "nrb", "nira", "oni", "nia"]:
         return {
             "status": "success",
             "message": f"National ID verification successful for {payload.get('national_id_number')}",
@@ -151,7 +193,30 @@ def mock_response(authority_code, payload):
                 "national_id": payload.get("national_id_number"),
             }
         }
-    elif authority_code.lower() in ["tra_driver", "rnp_driver", "ntsa", "ura_driver"]:
+    elif "registration_number" in payload or authority in ["tra_vehicle", "vehicle"]:
+        return {
+            "status": "success",
+            "message": f"Vehicle registration verified for {payload.get('registration_number')}",
+            "data": {
+                "registration_number": payload.get("registration_number"),
+                "make_model": "Unknown",
+                "registered_owner": "Unknown",
+                "registration_status": "Active",
+            }
+        }
+    elif "latra_license_number" in payload or "transport_license_number" in payload or authority in ["latra", "transport"]:
+        return {
+            "status": "success",
+            "message": f"Transport License verified for {payload.get('latra_license_number') or payload.get('transport_license_number')}",
+            "data": {
+                "operator_name": "Express Transport Ltd",
+                "route": "Dar es Salaam - Kigali",
+                "vehicle_type": "Coach Bus",
+                "valid_until": (datetime.now() + timedelta(days=730)).strftime('%Y-%m-%d'),
+                "status": "Active",
+            }
+        }
+    elif "license_number" in payload or authority in ["tra_driver", "rnp_driver", "ntsa", "ura_driver"]:
         return {
             "status": "success",
             "message": f"Driver License verification successful for {payload.get('license_number')}",
@@ -163,7 +228,18 @@ def mock_response(authority_code, payload):
                 "holder_name": "Jane Doe",
             }
         }
-    elif authority_code.lower() in ["tra_business", "brs", "rdb", "ursb", "trade"]:
+    elif authority == "brela":
+        return {
+            "status": "success",
+            "message": f"BRELA registration verification successful for {payload.get('business_license_number')}",
+            "data": {
+                "business_name": "ABC Group Ltd",
+                "registration_number": payload.get("business_license_number"),
+                "certificate_type": "Certificate of Incorporation",
+                "registered_date": "2022-03-14",
+            }
+        }
+    elif "business_license_number" in payload or authority in ["tra_business", "brs", "rdb", "ursb", "trade"]:
         return {
             "status": "success",
             "message": f"Business License verification successful for {payload.get('business_license_number')}",
@@ -172,18 +248,6 @@ def mock_response(authority_code, payload):
                 "license_number": payload.get("business_license_number"),
                 "license_valid_until": "2027-08-30",
                 "registered_activity": "General Trading",
-            }
-        }
-    elif authority_code.lower() in ["latra", "transport"]:
-        return {
-            "status": "success",
-            "message": f"Transport License verified for {payload.get('latra_license_number') or payload.get('transport_license_number')}",
-            "data": {
-                "operator_name": "Express Transport Ltd",
-                "route": "Dar es Salaam - Kigali",
-                "vehicle_type": "Coach Bus",
-                "valid_until": (datetime.now() + timedelta(days=730)).strftime('%Y-%m-%d'),
-                "status": "Active",
             }
         }
     # Add more mocks as needed per authority

@@ -1,44 +1,82 @@
 # businesses/admin/product_admin.py
 
 from django.contrib import admin
+from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from businesses.models.product import Product, UnitChoices, LanguageChoices
+from businesses.models.product_image import ProductImage
+
+
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+    extra = 0
+    fields = ('image', 'image_preview', 'caption', 'order')
+    readonly_fields = ('image_preview',)
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="width:60px;height:60px;object-fit:cover;border-radius:4px;" />',
+                obj.image.url,
+            )
+        return "-"
+    image_preview.short_description = _("Preview")
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
-        'name', 
-        'business', 
-        'type', 
-        'price_display', 
-        'stock_status', 
-        'is_available', 
-        'is_featured', 
+        'image_thumbnail',
+        'name',
+        'business',
+        'type',
+        'price_display',
+        'stock_status',
+        'is_available',
+        'is_featured',
         'created_at'
     )
     list_filter = (
-        'type', 
-        'is_available', 
-        'is_featured', 
+        'type',
+        'is_available',
+        'is_featured',
         'business',
         'currency',
         'language_code',
         'created_at'
     )
     search_fields = (
-        'name', 
-        'business__name', 
-        'tags', 
+        'name',
+        'business__name',
+        'tags',
         'description',
         'slug'
     )
     prepopulated_fields = {'slug': ('name',)}
-    readonly_fields = ('created_at', 'updated_at', 'final_price_display', 'stock_status')
+    readonly_fields = ('created_at', 'updated_at', 'final_price_display', 'stock_status', 'image_preview_large')
     ordering = ('-created_at',)
     list_per_page = 25
     list_select_related = ('business', 'currency')
-    
+    inlines = [ProductImageInline]
+
+    def image_thumbnail(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;" />',
+                obj.image.url,
+            )
+        return "-"
+    image_thumbnail.short_description = _("Image")
+
+    def image_preview_large(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="max-width:300px;max-height:300px;border-radius:6px;" />',
+                obj.image.url,
+            )
+        return _("No image uploaded.")
+    image_preview_large.short_description = _("Current Image")
+
     fieldsets = (
         (_('Basic Information'), {
             'fields': (
@@ -74,11 +112,12 @@ class ProductAdmin(admin.ModelAdmin):
         }),
         (_('Media'), {
             'fields': (
-                'image', 
-                'additional_images', 
-                'digital_file', 
+                'image',
+                'image_preview_large',
+                'digital_file',
                 'external_link'
-            )
+            ),
+            'description': _("Extra gallery photos are managed below under Product Images."),
         }),
         (_('Tags & Language'), {
             'fields': (

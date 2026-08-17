@@ -1,6 +1,8 @@
 # syllabus/management/commands/seed_specific_learning_activity.py
 
 import csv
+import glob
+import os
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
@@ -14,13 +16,61 @@ from syllabus.models.subject import Subject
 from syllabus.models.class_level import ClassLevel
 
 
-CSV_PATH = "syllabus/csv/specific_learning_activity.csv"
+# Each subject's muhtasari content lives in its own file
+# (syllabus/csv/sla_<subject>_<year>.csv, e.g. sla_hisabati_2023.csv) so no
+# single file grows to hold every subject's content. Without --csv-file,
+# every file matching this pattern is seeded in one run.
+CSV_GLOB = "syllabus/csv/sla_*.csv"
+
+
+def _parse_array_field(value: str) -> list:
+    """
+    leading / teaching_aids / references are Postgres ArrayField(TextField)
+    on SpecificLearningActivity. CSV cells for these columns use '|' as the
+    item separator (e.g. "Kuhesabu kwa vidole|Kuhesabu kwa vitu").
+    """
+    value = (value or "").strip()
+    if not value:
+        return []
+    return [item.strip() for item in value.split("|") if item.strip()]
+
+
+def _parse_exercise_field(value: str) -> list:
+    """
+    exercise_questions is a JSONField holding a list of
+    {"question": str, "answer": str}. The CSV cell packs this as
+    "question1::answer1||question2::answer2||..." ('::' separates a
+    question from its answer, '||' separates question/answer pairs).
+    """
+    value = (value or "").strip()
+    if not value:
+        return []
+    pairs = []
+    for chunk in value.split("||"):
+        chunk = chunk.strip()
+        if not chunk or "::" not in chunk:
+            continue
+        question, answer = chunk.split("::", 1)
+        question, answer = question.strip(), answer.strip()
+        if question and answer:
+            pairs.append({"question": question, "answer": answer})
+    return pairs
 
 
 class Command(BaseCommand):
-    help = "Seed SpecificLearningActivity using FK resolution by name only"
-    
+    help = (
+        "Seed SpecificLearningActivity using FK resolution by name only. "
+        "Without --csv-file, seeds every syllabus/csv/sla_*.csv file found "
+        "(one file per subject) in a single run."
+    )
+
     def add_arguments(self, parser):
+        parser.add_argument(
+            '--csv-file',
+            type=str,
+            default=None,
+            help='Seed only this one CSV file, instead of every syllabus/csv/sla_*.csv file.',
+        )
         parser.add_argument(
             '--force',
             action='store_true',
@@ -48,13 +98,44 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         force = options['force']
         skip_missing = options['skip_missing']
-        
-        with open(CSV_PATH, newline="", encoding="utf-8") as csvfile:
+        csv_file = options['csv_file']
+
+        if csv_file:
+            paths = [csv_file]
+        else:
+            paths = sorted(glob.glob(CSV_GLOB))
+            if not paths:
+                self.stdout.write(self.style.WARNING(f"No files matched {CSV_GLOB}"))
+                return
+
+        grand_count = grand_skipped = grand_errors = 0
+
+        for path in paths:
+            self.stdout.write(f"\n=== Seeding {os.path.basename(path)} ===")
+            count, skipped, errors = self._seed_file(path, force, skip_missing)
+            grand_count += count
+            grand_skipped += skipped
+            grand_errors += errors
+            self.stdout.write(
+                f"  Created/Updated: {count}  Skipped: {skipped}  Errors: {errors}"
+            )
+
+        self.stdout.write(self.style.SUCCESS(
+            f"\n📊 Grand total across {len(paths)} file(s):\n"
+            f"  ✅ Created/Updated: {grand_count}\n"
+            f"  ⏭️  Skipped: {grand_skipped}\n"
+            f"  ❌ Errors: {grand_errors}\n"
+            f"  📄 Total rows processed: {grand_count + grand_skipped + grand_errors}"
+        ))
+
+    def _seed_file(self, csv_path, force, skip_missing):
+        count = 0
+        skipped = 0
+        errors = 0
+
+        with open(csv_path, newline="", encoding="utf-8") as csvfile:
             reader = csv.DictReader(csvfile)
-            count = 0
-            skipped = 0
-            errors = 0
-            
+
             with transaction.atomic():
                 for row in reader:
                     try:
@@ -65,10 +146,10 @@ class Command(BaseCommand):
 
                         syllabus_version = SyllabusVersion.objects.get(year=year)
                         subject = Subject.objects.get(code=subject_code)
-                        
+
                         # Safisha class_level_name kwa kuondoa whitespace
                         class_level_name = class_level_name.strip()
-                        
+
                         try:
                             class_level = ClassLevel.objects.get(name=class_level_name)
                         except ClassLevel.DoesNotExist:
@@ -109,7 +190,6 @@ class Command(BaseCommand):
                                 main_competence, created = MainCompetence.objects.get_or_create(
                                     subject_version=subject_version,
                                     name=main_competence_name,
-                                    defaults={'description': ''}
                                 )
                                 self.stdout.write(f"⚠️  Created missing MainCompetence: {main_competence_name}")
                             elif skip_missing:
@@ -134,7 +214,6 @@ class Command(BaseCommand):
                                 specific_competence, created = SpecificCompetence.objects.get_or_create(
                                     main_competence=main_competence,
                                     name=specific_competence_name,
-                                    defaults={'description': ''}
                                 )
                                 self.stdout.write(f"⚠️  Created missing SpecificCompetence: {specific_competence_name}")
                             elif skip_missing:
@@ -172,7 +251,7 @@ class Command(BaseCommand):
 
                         # 5️⃣ Create / Update SpecificLearningActivity
                         sla_name = row["sla_name"].strip()
-                        
+
                         # Clean up period field - convert to integer, handle empty values
                         periods_str = row.get("sla_periods", "").strip()
                         periods = 1  # default
@@ -181,17 +260,13 @@ class Command(BaseCommand):
                                 periods = int(periods_str)
                             except ValueError:
                                 self.stdout.write(f"⚠️  Invalid period value '{periods_str}', using default 1")
-                        
-                        # Handle empty references
-                        references = row.get("sla_references", "").strip()
-                        if not references:
-                            references = None
-                        
-                        # Handle empty leading field
-                        leading = row.get("sla_leading", "").strip()
-                        if not leading:
-                            leading = None
-                        
+
+                        # ArrayField columns: '|'-delimited in the CSV
+                        leading = _parse_array_field(row.get("sla_leading", ""))
+                        teaching_aids = _parse_array_field(row.get("sla_teaching_aids", ""))
+                        references = _parse_array_field(row.get("sla_references", ""))
+                        exercise_questions = _parse_exercise_field(row.get("sla_exercise", ""))
+
                         sla, created = SpecificLearningActivity.objects.update_or_create(
                             learning_activity=learning_activity,
                             name=sla_name,
@@ -199,9 +274,15 @@ class Command(BaseCommand):
                                 'method': row.get("sla_method", "").strip(),
                                 'leading': leading,
                                 'assessment_criteria': row.get("sla_assessment_criteria", "").strip(),
-                                'teaching_aids': row.get("sla_teaching_aids", "").strip(),
+                                'teaching_aids': teaching_aids,
                                 'references': references,
                                 'periods': periods,
+                                'lesson_notes_intro': row.get("sla_notes_intro", "").strip(),
+                                'lesson_notes_details': row.get("sla_notes_details", "").strip(),
+                                'lesson_notes_illustrations': row.get("sla_notes_illustrations", "").strip(),
+                                'lesson_notes_daily_life': row.get("sla_notes_daily_life", "").strip(),
+                                'exercise_questions': exercise_questions,
+                                'diagram_type': row.get("sla_diagram_type", "").strip(),
                             }
                         )
 
@@ -219,10 +300,4 @@ class Command(BaseCommand):
                         if not skip_missing and not force:
                             raise
 
-            self.stdout.write(self.style.SUCCESS(
-                f"\n📊 Summary:\n"
-                f"  ✅ Created/Updated: {count}\n"
-                f"  ⏭️  Skipped: {skipped}\n"
-                f"  ❌ Errors: {errors}\n"
-                f"  📄 Total rows processed: {count + skipped + errors}"
-            ))
+        return count, skipped, errors

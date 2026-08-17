@@ -3,6 +3,7 @@
 from .transport_provider import TransportProvider
 from .transport_provider_verification import TransportProviderVerification
 from .driver import Driver
+from .vehicle_verification import VehicleVerification
 from .shipment import Shipment, ShipmentStatus
 from .location import Location
 from .transport_assignment import TransportAssignment

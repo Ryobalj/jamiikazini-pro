@@ -154,14 +154,6 @@ class Product(UUIDModel, TimeStampedModel):
         help_text=_("Picha kuu ya bidhaa.")
     )
 
-    additional_images = ArrayField(
-        base_field=models.URLField(),
-        blank=True,
-        null=True,
-        verbose_name=_("Additional Images"),
-        help_text=_("Picha nyingine za bidhaa (URL links).")
-    )
-
     category = models.ForeignKey(
         ProductCategory,
         on_delete=models.SET_NULL,
@@ -278,6 +270,5 @@ class Product(UUIDModel, TimeStampedModel):
         images = []
         if self.image:
             images.append(self.image.url)
-        if self.additional_images:
-            images.extend(self.additional_images)
+        images.extend(img.image.url for img in self.images.all())
         return images

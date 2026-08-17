@@ -15,6 +15,7 @@ class TimeTableSerializer(serializers.ModelSerializer):
     workstation_display = serializers.SerializerMethodField()
     subject_display = serializers.SerializerMethodField()
     class_level_display = serializers.SerializerMethodField()
+    day_of_week_display = serializers.CharField(source="get_day_of_week_display", read_only=True)
 
     class Meta:
         model = TimeTable
@@ -29,6 +30,8 @@ class TimeTableSerializer(serializers.ModelSerializer):
             "is_english",
             "is_awali",
             "periods_per_week",
+            "day_of_week",
+            "day_of_week_display",
             "period",
             "timestart",
             "timefinish",
@@ -84,7 +87,27 @@ class TimeTableSerializer(serializers.ModelSerializer):
             })
 
         # Period, timestart, timefinish sio required - validation imeondolewa
-        
+
+        # Zuia mgongano: mwalimu hawezi kuwa kwenye kipindi kimoja siku
+        # moja kwa masomo/madarasa mawili tofauti kwa wakati mmoja.
+        workstation = data.get("workstation", getattr(self.instance, "workstation", None))
+        day_of_week = data.get("day_of_week", getattr(self.instance, "day_of_week", None))
+        period = data.get("period", getattr(self.instance, "period", None))
+
+        if workstation and day_of_week and period:
+            clash = TimeTable.objects.filter(
+                workstation=workstation, day_of_week=day_of_week, period=period,
+            )
+            if self.instance:
+                clash = clash.exclude(pk=self.instance.pk)
+            if clash.exists():
+                raise serializers.ValidationError({
+                    "period": (
+                        f"Tayari kuna kipindi kingine {clash.first().get_day_of_week_display()} "
+                        f"Kipindi {period} kwenye kituo hiki cha kazi."
+                    )
+                })
+
         return data
 
     # -----------------------------

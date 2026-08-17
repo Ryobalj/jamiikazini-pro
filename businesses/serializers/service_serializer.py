@@ -81,6 +81,20 @@ class ServiceSerializer(serializers.ModelSerializer):
         return rep
 
 
+class TrendingServiceSerializer(serializers.ModelSerializer):
+    business_id = serializers.UUIDField(source='business.id', read_only=True)
+    business_name = serializers.CharField(source='business.name', read_only=True)
+    billing_type_display = serializers.CharField(source="get_billing_type_display", read_only=True)
+    order_count = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Service
+        fields = [
+            "id", "name", "description", "price", "billing_type", "billing_type_display",
+            "business_id", "business_name", "order_count",
+        ]
+
+
 class ServiceListSerializer(serializers.ModelSerializer):
     """Serializer nyepesi kwa ajili ya orodha ya huduma (list view)."""
     distance = serializers.SerializerMethodField(

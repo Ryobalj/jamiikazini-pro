@@ -7,21 +7,24 @@ const SubjectSelectionCard = ({
   setSelectedTimetable,
   setForm,
   currentSubjectInfo,
-  loadActivitiesForTimetable,
   t
 }) => {
   const handleTimetableChange = (e) => {
-    const timetable = timetables.find(t => t.id === Number(e.target.value));
+    // TimeTable.id is a UUID string, not a numeric id - comparing with
+    // Number(e.target.value) always produces NaN and never matches,
+    // silently leaving selectedTimetable unset no matter what the
+    // teacher picks (breaking every downstream Learning Activity load).
+    const timetable = timetables.find(t => t.id === e.target.value);
     setSelectedTimetable(timetable);
-    
+
     if (timetable) {
       setForm(prev => ({
         ...prev,
         boys_attended: timetable.registeredboys || "",
         girls_attended: timetable.registeredgirls || "",
       }));
-      
-      loadActivitiesForTimetable(timetable.id);
+      // Learning/specific activities are loaded independently by
+      // ActivitySearchCard's own useEffect (watches selectedTimetable).
     }
   };
 

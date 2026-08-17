@@ -60,6 +60,29 @@ class Vehicle(models.Model):
         verbose_name=_("Vehicle Image")
     )
 
+    registration_photo = models.ImageField(
+        upload_to='vehicles/registration_cards/',
+        null=True,
+        blank=True,
+        verbose_name=_("Registration Card Photo"),
+        help_text=_("Picha ya cheti/kadi ya usajili wa gari."),
+    )
+
+    latra_permit_number = models.CharField(
+        max_length=50,
+        blank=True,
+        verbose_name=_("LATRA Permit Number"),
+        help_text=_("Namba ya kibali cha usafirishaji kutoka LATRA (au mamlaka husika) kwa gari hili mahususi."),
+    )
+
+    latra_permit_photo = models.ImageField(
+        upload_to='vehicles/latra_permits/',
+        null=True,
+        blank=True,
+        verbose_name=_("LATRA Permit Photo"),
+        help_text=_("Picha ya kibali cha LATRA cha gari hili."),
+    )
+
     is_active = models.BooleanField(default=True, verbose_name=_("Is Active"))
 
     # Drivers

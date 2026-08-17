@@ -50,6 +50,57 @@ class SpecificLearningActivity(UUIDModel, TimeStampedModel):
         default=1,
         help_text="Number of periods allocated for this activity"
     )
+    # Nukuu za Somo follows a real teaching flow, not one undifferentiated
+    # block of text: (1) introduction — meaning/concept, (2) further
+    # details — explains the concept in depth, (3) mifano — worked
+    # examples illustrating the concept itself, (4) daily-life uses —
+    # where the concept shows up day-to-day — then the exercise
+    # (exercise_questions) closes the flow.
+    lesson_notes_intro = models.TextField(
+        blank=True,
+        default="",
+        help_text="Utangulizi — the meaning and concept of the topic"
+    )
+    lesson_notes_details = models.TextField(
+        blank=True,
+        default="",
+        help_text="Maelezo zaidi — explains the concept in depth (types/parts, only if it has several)"
+    )
+    lesson_notes_illustrations = models.TextField(
+        blank=True,
+        default="",
+        help_text="Mifano — worked examples illustrating the concept itself"
+    )
+    lesson_notes_daily_life = models.TextField(
+        blank=True,
+        default="",
+        help_text="Matumizi ya kila siku — real-life applications of this concept"
+    )
+    exercise_questions = models.JSONField(
+        default=list,
+        blank=True,
+        help_text=(
+            "Practice exercise for this activity: a list of "
+            "{'question': str, 'answer': str} objects, at least 3. "
+            "'answer' holds the worked solution for computational questions."
+        )
+    )
+    DIAGRAM_CHOICES = [
+        ("", "None"),
+        ("roman_numerals_chart", "Roman numerals value chart"),
+        ("unit_conversion_ladder", "Unit conversion ladder (km/m/cm etc.)"),
+        ("rectangle_diagram", "Labelled rectangle/square (perimeter & area)"),
+        ("fraction_bar", "Fraction bar comparison"),
+        ("clock_face", "Clock face"),
+        ("place_value_chart", "Decimal place-value chart"),
+    ]
+    diagram_type = models.CharField(
+        max_length=32,
+        choices=DIAGRAM_CHOICES,
+        blank=True,
+        default="",
+        help_text="Which illustrative diagram (drawn programmatically, no image upload needed) to show in the Nukuu za Somo document, if any."
+    )
     order = models.PositiveIntegerField(
         editable=False,
         blank=True,

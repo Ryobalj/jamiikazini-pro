@@ -15,6 +15,7 @@ from syllabus.views.timetable_views import TimeTableViewSet
 from syllabus.views.lesson_sentence_views import LessonSentenceViewSet
 from syllabus.views.annual_calendar_views import AnnualCalendarViewSet
 from syllabus.views.class_level_views import ClassLevelViewSet
+from syllabus.views.exam_views import StudentViewSet, ExamViewSet
 
 
 router = DefaultRouter()
@@ -35,6 +36,8 @@ router.register(r"class-levels", ClassLevelViewSet, basename="classlevel")
 # ===== AUTHENTICATED USERS =====
 router.register(r"teacher-workstations", TeacherWorkStationViewSet, basename="teacherworkstation")
 router.register(r"timetables", TimeTableViewSet, basename="timetable")
+router.register(r"students", StudentViewSet, basename="student")
+router.register(r"exams", ExamViewSet, basename="exam")
 
 router.register(
     r"subject-versions-readonly",

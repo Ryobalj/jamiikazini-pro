@@ -52,6 +52,10 @@ export default function SchemeOfWorkPage() {
   
   const selectedSubjectInfo = timetableSubjects.find(s => s.id === selectedSubject);
   const selectedCalendarInfo = calendars.find(c => c.id === selectedCalendar);
+  // Documents follow the selected subject's own medium of instruction —
+  // an English-medium subject always produces English documents, never a
+  // separate manual toggle.
+  const documentLanguage = selectedSubjectInfo?.is_english ? "en" : "sw";
 
   /* ===================== FETCH WORKSTATION ===================== */
   const fetchWorkstation = useCallback(async () => {
@@ -265,37 +269,37 @@ export default function SchemeOfWorkPage() {
   }, [t]);
 
   /* ===================== GENERATE SCHEME ===================== */
-  const handleFetchScheme = useCallback(async (language = "sw") => {
+  const handleFetchScheme = useCallback(async () => {
     if (!isFormValid) {
       toast.warning(t("scheme.select_subject_and_calendar"));
       return;
     }
-    
+
     if (!hasWorkstation) {
       toast.error(t("workstation.required_message"));
       return;
     }
-    
+
     setLoading(true);
     setSchemeData(null);
     setPreviewMode(false);
     setError(null);
-    
+
     console.log("Generating scheme with:", {
       subject_version_id: selectedSubject,
       annual_calendar_id: selectedCalendar,
-      language,
+      language: documentLanguage,
       workstation: workstation?.id
     });
-    
+
     try {
       const response = await api.post("/syllabus/schemes/", {
         subject_version_id: selectedSubject, // STRING ID
         annual_calendar_id: selectedCalendar, // STRING ID
-        language: language || "sw",
+        language: documentLanguage,
         balance_weekly: true
       });
-      
+
       console.log("Scheme generated:", response.data);
       setSchemeData(response.data);
       toast.success(t("scheme.generated_success"));
@@ -306,15 +310,15 @@ export default function SchemeOfWorkPage() {
           const previewResponse = await api.post("/syllabus/schemes/preview/", {
             subject_version_id: selectedSubject,
             annual_calendar_id: selectedCalendar,
-            language: language || "sw",
+            language: documentLanguage,
             balance_weekly: true
           });
-          
+
           setSchemeData({
             ...previewResponse.data,
             _preview: { is_preview: false }
           });
-          
+
           toast.success(t("scheme.generated_success"));
           return;
         } catch (previewErr) {
@@ -326,38 +330,38 @@ export default function SchemeOfWorkPage() {
     } finally {
       setLoading(false);
     }
-  }, [isFormValid, hasWorkstation, selectedSubject, selectedCalendar, workstation, handleApiError, t]);
+  }, [isFormValid, hasWorkstation, selectedSubject, selectedCalendar, workstation, documentLanguage, handleApiError, t]);
 
   /* ===================== PREVIEW SCHEME ===================== */
-  const handlePreviewScheme = useCallback(async (language = "sw") => {
+  const handlePreviewScheme = useCallback(async () => {
     if (!isFormValid) {
       toast.warning(t("scheme.select_subject_and_calendar"));
       return;
     }
-    
+
     if (!hasWorkstation) {
       toast.error(t("workstation.required_message"));
       return;
     }
-    
+
     setPreviewLoading(true);
     setSchemeData(null);
     setError(null);
-    
+
     console.log("Generating preview with:", {
       subject_version_id: selectedSubject,
       annual_calendar_id: selectedCalendar,
-      language
+      language: documentLanguage
     });
-    
+
     try {
       const response = await api.post("/syllabus/schemes/preview/", {
         subject_version_id: selectedSubject,
         annual_calendar_id: selectedCalendar,
-        language: language || "sw",
+        language: documentLanguage,
         balance_weekly: true
       });
-      
+
       setSchemeData(response.data);
       setPreviewMode(true);
       toast.success(t("scheme.preview_generated") || "Preview generated");
@@ -366,35 +370,35 @@ export default function SchemeOfWorkPage() {
     } finally {
       setPreviewLoading(false);
     }
-  }, [isFormValid, hasWorkstation, selectedSubject, selectedCalendar, handleApiError, t]);
+  }, [isFormValid, hasWorkstation, selectedSubject, selectedCalendar, documentLanguage, handleApiError, t]);
 
   /* ===================== DOWNLOAD PDF ===================== */
-  const handleDownloadPDF = useCallback(async (language = "sw") => {
+  const handleDownloadPDF = useCallback(async () => {
     if (!schemeData) {
       toast.warning(t("scheme.generate_first"));
       return;
     }
-    
+
     if (!hasWorkstation) {
       toast.error(t("workstation.required_message"));
       return;
     }
-    
+
     setPdfLoading(true);
     setError(null);
-    
+
     try {
       const response = await api.post(
         "/syllabus/schemes/pdf/",
         {
           subject_version_id: selectedSubject,
           annual_calendar_id: selectedCalendar,
-          language: language || "sw",
+          language: documentLanguage,
           balance_weekly: true
         },
-        { 
+        {
           responseType: "blob",
-          timeout: 60000 
+          timeout: 60000
         }
       );
       
@@ -419,7 +423,7 @@ export default function SchemeOfWorkPage() {
     } finally {
       setPdfLoading(false);
     }
-  }, [schemeData, hasWorkstation, selectedSubject, selectedCalendar, selectedSubjectInfo, selectedCalendarInfo, handleApiError, t]);
+  }, [schemeData, hasWorkstation, selectedSubject, selectedCalendar, selectedSubjectInfo, selectedCalendarInfo, documentLanguage, handleApiError, t]);
 
   /* ===================== CLEAR SCHEME ===================== */
   const clearScheme = useCallback(() => {
@@ -612,6 +616,11 @@ export default function SchemeOfWorkPage() {
         )}
 
         {/* Preview/Results */}
+        {schemeData?._preview?.is_preview && (
+          <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 mb-4 text-sm text-amber-800 dark:text-amber-300">
+            {schemeData._preview.message || t("subscription.preview_banner")}
+          </div>
+        )}
         {schemeData && (
           <SchemePreview
             schemeData={schemeData}

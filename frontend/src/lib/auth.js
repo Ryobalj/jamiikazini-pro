@@ -51,18 +51,16 @@ export async function registerUser(data) {
   try {
     const { email, password, recaptcha_token, setUser, setUserMenu, ...rest } = data;
 
-    await api.post("/auth/register/", {
+    // /auth/register/ verifies recaptcha_token itself and now returns JWTs
+    // directly - do NOT also call /security/login/ with the same token:
+    // it's already consumed here, and that endpoint verifies via reCAPTCHA
+    // v3 anyway, so a reused v2 checkbox token would always fail there.
+    const res = await api.post("/auth/register/", {
       email,
       password,
       full_name: data.full_name,
       recaptcha_token,
       ...rest,
-    });
-
-    const res = await api.post("/security/login/", {
-      email,
-      password,
-      recaptcha_token,
     });
 
     const { access, refresh } = res.data;

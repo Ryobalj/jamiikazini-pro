@@ -5,7 +5,7 @@ from datetime import datetime
 from django.core.management.base import BaseCommand
 from syllabus.models.annual_calendar import AnnualCalendar
 
-CSV_PATH = "syllabus/csv/annual_calendar_2026.csv"  # badilisha path kama inahitajika
+CSV_PATH = "syllabus/csv/annual_calendar.csv"
 
 class Command(BaseCommand):
     help = "Seed AnnualCalendar from CSV"

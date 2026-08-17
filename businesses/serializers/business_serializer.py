@@ -112,7 +112,7 @@ class BusinessSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        
+
         # FORCE ID - override whatever DRF did
         if hasattr(instance, 'id'):
             data['id'] = str(instance.id)
@@ -131,6 +131,15 @@ class BusinessSerializer(serializers.ModelSerializer):
             validated_data["location"] = Point(lon, lat)
 
         return super().update(instance, validated_data)
+
+
+class VerifiedBusinessCardSerializer(serializers.ModelSerializer):
+    """Serializer nyepesi kwa ajili ya sehemu ya 'Biashara Zilizothibitishwa' kwenye homepage."""
+    category_name = serializers.CharField(source="category.name", read_only=True)
+
+    class Meta:
+        model = Business
+        fields = ["id", "name", "description", "category_name", "is_verified"]
 
 
 class BusinessListSerializer(serializers.ModelSerializer):

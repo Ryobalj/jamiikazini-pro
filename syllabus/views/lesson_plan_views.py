@@ -1,4 +1,5 @@
 # syllabus/views/lesson_plan_views.py
+from django.http import HttpResponse
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -9,8 +10,15 @@ from syllabus.serializers.lesson_plan_serializers import (
     LessonPlanResponseSerializer,
 )
 from syllabus.services.lesson_plan_runtime_builder import LessonPlanRuntimeBuilder
+from syllabus.services.lesson_plan_pdf_builder import LessonPlanPDFBuilder
+from syllabus.services.lesson_notes_pdf_builder import LessonNotesPDFBuilder
 from syllabus.services.academic_context import AcademicContext
 from syllabus.models.teacher_workstation import TeacherWorkStation
+from syllabus.permissions import CanDownloadPDF
+from syllabus.services.subscription_service import has_full_access
+from datetime import datetime
+import io
+import zipfile
 import logging
 
 logger = logging.getLogger(__name__)
@@ -29,7 +37,7 @@ class AutoLessonPlanCreateAPIView(generics.CreateAPIView):
         """
         try:
             user = self.request.user
-            logger.info(f"Creating lesson plan for user: {user.username}")
+            logger.info(f"Creating lesson plan for user: {user.email}")
             
             # Fetch user's active workstation
             try:
@@ -39,7 +47,7 @@ class AutoLessonPlanCreateAPIView(generics.CreateAPIView):
                 )
                 logger.debug(f"Found workstation: {workstation.school_name}")
             except TeacherWorkStation.DoesNotExist:
-                logger.error(f"No active workstation found for user: {user.username}")
+                logger.error(f"No active workstation found for user: {user.email}")
                 raise ValidationError({
                     "workstation": "Active teacher workstation not found. Please set up your workstation first."
                 })
@@ -92,12 +100,32 @@ class AutoLessonPlanCreateAPIView(generics.CreateAPIView):
             logger.error(f"Error building lesson plan: {str(e)}", exc_info=True)
             raise
 
+    @staticmethod
+    def _apply_preview_truncation(lesson_plan):
+        """
+        Limit an unsubscribed teacher to ~25% of the generated content:
+        only the first lesson step in full, and only the lesson notes
+        introduction (no details/illustrations/daily-life examples or
+        exercise questions) — enough to judge the tool, not enough to use
+        it for free.
+        """
+        preview_step_count = max(1, round(len(lesson_plan.lesson_steps) * 0.25))
+        lesson_plan.lesson_steps = lesson_plan.lesson_steps[:preview_step_count]
+
+        lesson_plan.subject_info.lesson_notes_details = ""
+        lesson_plan.subject_info.lesson_notes_illustrations = ""
+        lesson_plan.subject_info.lesson_notes_daily_life = ""
+        lesson_plan.subject_info.exercise_questions = []
+
+        lesson_plan.reflection = None
+        return lesson_plan
+
     def create(self, request, *args, **kwargs):
         """
         Handle POST request to generate lesson plan.
         """
         try:
-            logger.info(f"Lesson plan creation request from {request.user.username}")
+            logger.info(f"Lesson plan creation request from {request.user.email}")
             
             # Validate input
             serializer = self.get_serializer(data=request.data)
@@ -106,14 +134,64 @@ class AutoLessonPlanCreateAPIView(generics.CreateAPIView):
             # Build lesson plan runtime data
             self.perform_create(serializer)
             lesson_plan = self.lesson_plan
-            
+
+            # ====================
+            # PDF FORMAT
+            # ====================
+            if request.query_params.get("format", "json").lower() == "pdf":
+                logger.info("Generating PDF format...")
+                if not CanDownloadPDF().has_permission(request, self):
+                    return Response(
+                        {"detail": "PDF download permission required."},
+                        status=status.HTTP_403_FORBIDDEN
+                    )
+
+                language = lesson_plan.identification.language
+                pdf_builder = LessonPlanPDFBuilder(data=lesson_plan, language=language)
+                pdf_bytes = pdf_builder.build()
+
+                class_clean = lesson_plan.identification.class_level.replace(" ", "_")
+                timestamp = datetime.now().strftime('%Y%m%d_%H%M')
+                if language == "sw":
+                    filename = f"Andalio_la_Somo_{class_clean}_{timestamp}.pdf"
+                else:
+                    filename = f"Lesson_Plan_{class_clean}_{timestamp}.pdf"
+
+                response = HttpResponse(pdf_bytes, content_type="application/pdf")
+                response["Content-Disposition"] = f'attachment; filename="{filename}"'
+                response["X-Filename"] = filename
+                response["X-Class-Level"] = lesson_plan.identification.class_level
+
+                logger.info(f"PDF generated: {filename}")
+                return response
+
+            # ====================
+            # JSON FORMAT (DEFAULT)
+            # ====================
+            # Non-subscribers can generate and view a limited (~25%)
+            # preview on-screen, but not the full content — full content
+            # and PDF download both require CanDownloadPDF (active
+            # subscription). See _apply_preview_truncation().
+            is_full_access = has_full_access(request.user)
+            if not is_full_access:
+                lesson_plan = self._apply_preview_truncation(lesson_plan)
+
             # 🔴 FIXED: Now lesson_plan has meta field, so serializer won't fail
             response_serializer = LessonPlanResponseSerializer(lesson_plan)
-            
-            logger.info(f"Successfully generated lesson plan for user: {request.user.username}")
-            
+            response_data = response_serializer.data
+            response_data["_preview"] = {
+                "is_preview": not is_full_access,
+                "message": (
+                    None if is_full_access else
+                    "Muhtasari: unaonesha sehemu ndogo tu ya andalio (~25%). "
+                    "Jiunge kwa usajili ili kuona na kupakua andalio kamili."
+                ),
+            }
+
+            logger.info(f"Successfully generated lesson plan for user: {request.user.email}")
+
             return Response(
-                response_serializer.data,
+                response_data,
                 status=status.HTTP_201_CREATED
             )
             
@@ -140,10 +218,10 @@ class AutoLessonPlanCreateAPIView(generics.CreateAPIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
-        
+
         # Log internal server errors
         logger.error(f"Internal server error in lesson plan view: {str(exc)}", exc_info=True)
-        
+
         return Response(
             {
                 "error": "INTERNAL_SERVER_ERROR",
@@ -152,3 +230,81 @@ class AutoLessonPlanCreateAPIView(generics.CreateAPIView):
             },
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
+
+
+class LessonPlanPDFDownloadAPIView(generics.CreateAPIView):
+    """
+    Download endpoint for Andalio la Somo — returns a ZIP containing TWO
+    separate PDFs: the Andalio la Somo (lesson plan) itself and a
+    standalone Nukuu za Somo (lesson notes + exercise) document. They're
+    deliberately kept as two documents rather than merged into one PDF,
+    but bundled into a single download so the teacher gets both from one
+    click.
+
+    DRF's default content negotiation treats `?format=` as a reserved
+    override for renderer selection and raises Http404 for any value that
+    isn't a registered renderer (e.g. "pdf") *before* create() ever runs.
+    Hitting AutoLessonPlanCreateAPIView directly with `?format=pdf` would
+    therefore 404. This view sidesteps DRF's URL-routed dispatch/content
+    negotiation entirely and calls create() directly, mirroring
+    SchemePDFDownloadAPIView in scheme_views.py.
+    """
+    permission_classes = [IsAuthenticated, CanDownloadPDF]
+    serializer_class = LessonPlanRequestSerializer
+
+    def create(self, request, *args, **kwargs):
+        # Note: deliberately not proxying to AutoLessonPlanCreateAPIView via
+        # a deep-copied request (as the analogous SchemePDFDownloadAPIView
+        # in scheme_views.py does) — a real, already-routed Django request
+        # carries a `resolver_match` attribute that isn't picklable, so
+        # copy.deepcopy(request) raises "Cannot pickle ResolverMatch" on
+        # any real HTTP call. Building the PDF directly here avoids that.
+        try:
+            logger.info(f"PDF download request from user: {request.user.email}")
+
+            main_view = AutoLessonPlanCreateAPIView()
+            main_view.request = request
+            main_view.format_kwarg = None
+
+            serializer = main_view.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            main_view.perform_create(serializer)
+            lesson_plan = main_view.lesson_plan
+
+            language = lesson_plan.identification.language
+            andalio_bytes = LessonPlanPDFBuilder(data=lesson_plan, language=language).build()
+            notes_bytes = LessonNotesPDFBuilder(data=lesson_plan, language=language).build()
+
+            class_clean = lesson_plan.identification.class_level.replace(" ", "_")
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M')
+            if language == "sw":
+                andalio_name = f"Andalio_la_Somo_{class_clean}_{timestamp}.pdf"
+                notes_name = f"Nukuu_za_Somo_{class_clean}_{timestamp}.pdf"
+                zip_name = f"Andalio_na_Nukuu_{class_clean}_{timestamp}.zip"
+            else:
+                andalio_name = f"Lesson_Plan_{class_clean}_{timestamp}.pdf"
+                notes_name = f"Lesson_Notes_{class_clean}_{timestamp}.pdf"
+                zip_name = f"Lesson_Plan_and_Notes_{class_clean}_{timestamp}.zip"
+
+            zip_buffer = io.BytesIO()
+            with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zf:
+                zf.writestr(andalio_name, andalio_bytes)
+                zf.writestr(notes_name, notes_bytes)
+            zip_bytes = zip_buffer.getvalue()
+
+            response = HttpResponse(zip_bytes, content_type="application/zip")
+            response["Content-Disposition"] = f'attachment; filename="{zip_name}"'
+            response["X-Filename"] = zip_name
+            response["X-Class-Level"] = lesson_plan.identification.class_level
+
+            logger.info(f"Lesson plan ZIP generated: {zip_name} ({andalio_name} + {notes_name})")
+            return response
+
+        except ValidationError:
+            raise
+        except Exception as e:
+            logger.error(f"PDF download failed: {str(e)}", exc_info=True)
+            return Response(
+                {"detail": "Failed to generate PDF.", "error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

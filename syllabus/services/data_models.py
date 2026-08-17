@@ -60,6 +60,10 @@ class ScheduleItem:
     week_date: Optional[date] = None
     remarks: Optional[str] = ""
     week_numbers: List[int] = field(default_factory=list)  # List ya week numbers zote
+    # "normal" | "exam" | "holiday" — lets PDF builders identify banner
+    # rows explicitly instead of pattern-matching Kiswahili keywords in
+    # student_activity, which breaks for English-language schemes.
+    row_type: str = "normal"
 
     def __post_init__(self):
         """Initialize weeks_display if not provided."""
@@ -182,6 +186,17 @@ class LessonIdentification:
         # Simple readable format
         return f"{minutes} min"
 
+    @property
+    def time_range(self) -> str:
+        """
+        The period's actual start-end clock time, e.g. "05:50:00-06:30:00"
+        — matches the real reference Andalio's "Muda" field, which shows
+        the clock time range rather than a computed minute count.
+        """
+        if not self.time_start or not self.time_finish:
+            return ""
+        return f"{self.time_start}-{self.time_finish}"
+
 
 # ==================================================
 # LESSON PLAN META (NEW - FOR BACKWARD COMPATIBILITY)
@@ -209,6 +224,21 @@ class LessonSubjectInfo:
     specific_activity: str
     teaching_aids: str
     references: str
+    # Nukuu za Somo follows a real teaching flow: introduction (meaning &
+    # concept), further details (explains the concept in depth), mifano
+    # (worked examples illustrating the concept itself), then daily-life
+    # uses — the exercise below closes the flow.
+    lesson_notes_intro: str = ""
+    lesson_notes_details: str = ""
+    lesson_notes_illustrations: str = ""
+    lesson_notes_daily_life: str = ""
+    # List of {"question": str, "answer": str} dicts — at least 3 per
+    # activity, "answer" holds the worked solution for computational
+    # questions rather than just a bare final value.
+    exercise_questions: List[Dict[str, str]] = field(default_factory=list)
+    # Matches SpecificLearningActivity.diagram_type — which illustrative
+    # diagram (if any) the Nukuu za Somo document should draw.
+    diagram_type: str = ""
 
 
 # ==================================================
@@ -294,16 +324,19 @@ def create_merged_schedule_item(
     references: Optional[str] = None,
     week_date: Optional[date] = None,
     remarks: str = "",
-    is_special: bool = False
+    is_special: bool = False,
+    row_type: str = "normal"
 ) -> ScheduleItem:
     """
     Helper function to create a ScheduleItem with merged weeks.
-    
+
     Args:
         months: List of month names ["Januari"] or ["Januari", "Februari"]
         weeks: List of week numbers [3, 4] or [1, 2, 3]
         total_periods: Total periods for the merged weeks
         is_special: True for holiday/exam rows
+        row_type: "normal" | "exam" | "holiday" — explicit row kind for
+            PDF builders, independent of student_activity's language
     """
     logger.debug(f"Creating merged schedule item: months={months}, weeks={weeks}, periods={total_periods}, special={is_special}")
     
@@ -352,8 +385,9 @@ def create_merged_schedule_item(
         teaching_aids=teaching_aids,
         references=references,
         week_date=week_date,
-        remarks=remarks
+        remarks=remarks,
+        row_type=row_type
     )
-    
+
     logger.debug(f"Created item: month={item.month}, weeks={item.weeks_display}, activity={item.student_activity[:30]}")
     return item

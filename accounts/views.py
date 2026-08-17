@@ -43,6 +43,30 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [AllowAny]
 
+    def create(self, request, *args, **kwargs):
+        # Registration already verifies reCAPTCHA (v2, via RegisterSerializer).
+        # Issue JWTs directly here instead of making the frontend immediately
+        # call /security/login/ with the same (now-consumed, v2) token - that
+        # second call verifies with v3 and always fails, since a v2 token can
+        # never pass v3's siteverify check under the v3 secret key.
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        user = serializer.instance
+
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            "detail": "Registration successful.",
+            "access": str(refresh.access_token),
+            "refresh": str(refresh),
+            "user": {
+                "id": user.id,
+                "email": user.email,
+                "full_name": user.full_name,
+                "role": user.role,
+            }
+        }, status=status.HTTP_201_CREATED)
+
     def perform_create(self, serializer):
         user = serializer.save(role='CLIENT')  # Force CLIENT role
         request = self.request
