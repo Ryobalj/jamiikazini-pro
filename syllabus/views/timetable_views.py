@@ -31,18 +31,18 @@ class TimeTableViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        qs = TimeTable.objects.all().select_related(
-            "workstation", 
-            "subject_version", 
+        # Always scope to the logged-in teacher's own timetable, regardless
+        # of role - the earlier "only if CLIENT" check let any other role
+        # (e.g. ADMIN) see every teacher's classes/subjects unfiltered,
+        # which defeats lesson-plan/scheme tooling that assumes "my
+        # timetable" means the logged-in teacher's own schedule.
+        return TimeTable.objects.filter(workstation__teacher=user).select_related(
+            "workstation",
+            "subject_version",
             "subject_version__subject",
             "subject_version__class_level",
             "subject_version__syllabus_version"
-        ).prefetch_related(
-            # Add any prefetch relationships if needed
         )
-        if user.role == "CLIENT":
-            qs = qs.filter(workstation__teacher=user)
-        return qs
 
     def perform_create(self, serializer):
         user = self.request.user

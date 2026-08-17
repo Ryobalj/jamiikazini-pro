@@ -17,7 +17,11 @@ class SpecificLearningActivityAdmin(admin.ModelAdmin):
         "updated_at",
     )
 
-    list_filter = ("learning_activity",)
+    list_filter = (
+        "learning_activity__specific_competence__main_competence__subject_version__class_level",
+        "learning_activity__specific_competence__main_competence__subject_version__subject",
+        "learning_activity",
+    )
 
     search_fields = (
         "leading",
