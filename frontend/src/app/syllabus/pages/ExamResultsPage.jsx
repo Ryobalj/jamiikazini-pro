@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { Plus, Download, Save } from "lucide-react";
 import api from "../../../lib/axios.js";
+import WorkstationFormModal from "../components/WorkstationFormModal.jsx";
 
 export default function ExamResultsPage() {
   const { t } = useTranslation("syllabus");
@@ -209,7 +210,11 @@ export default function ExamResultsPage() {
   if (loading) return <p className="p-6 text-sm text-gray-500">{t("common.loading")}...</p>;
 
   if (!workstation) {
-    return <p className="p-6 text-sm text-gray-500">{t("workstation.required_message")}</p>;
+    // The syllabus-wide route guard should already prevent reaching this page
+    // without a workstation; this is a defensive fallback (e.g. workstation
+    // deleted mid-session) that still lets the teacher set one up here
+    // instead of stranding them on a dead-end message.
+    return <WorkstationFormModal open={true} onSubmit={() => loadBaseData()} />;
   }
 
   return (

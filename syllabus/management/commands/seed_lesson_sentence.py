@@ -76,33 +76,35 @@ class Command(BaseCommand):
                         reflection_sw = ""
                         reflection_comment_sw = ""
 
-                    # ---- create record ----
-                    sentence = LessonSentence.objects.create(
+                    # ---- create record (idempotent: content itself is the
+                    # natural key, since multiple sentences intentionally
+                    # share category/language/is_awali) ----
+                    sentence, created = LessonSentence.objects.get_or_create(
                         category=category,
                         language=language,
                         is_awali=is_awali,
-                        is_active=is_active,
-
                         teaching_sw=teaching_sw,
                         learning_sw=learning_sw,
-                        indicator_primary_sw=indicator_primary_sw,
-                        indicator_secondary_sw=indicator_secondary_sw,
-
                         teaching_en=teaching_en,
                         learning_en=learning_en,
-                        indicator_primary_en=indicator_primary_en,
-                        indicator_secondary_en=indicator_secondary_en,
-
                         reflection_sw=reflection_sw,
-                        reflection_comment_sw=reflection_comment_sw,
                         reflection_en=reflection_en,
-                        reflection_comment_en=reflection_comment_en,
+                        defaults=dict(
+                            is_active=is_active,
+                            indicator_primary_sw=indicator_primary_sw,
+                            indicator_secondary_sw=indicator_secondary_sw,
+                            indicator_primary_en=indicator_primary_en,
+                            indicator_secondary_en=indicator_secondary_en,
+                            reflection_comment_sw=reflection_comment_sw,
+                            reflection_comment_en=reflection_comment_en,
+                        ),
                     )
 
-                    created_count += 1
+                    if created:
+                        created_count += 1
                     self.stdout.write(
                         self.style.SUCCESS(
-                            f"{index}. Created [{sentence.category}] ({sentence.language})"
+                            f"{index}. {'Created' if created else 'Skipped (exists)'} [{sentence.category}] ({sentence.language}, awali={sentence.is_awali})"
                         )
                     )
 
