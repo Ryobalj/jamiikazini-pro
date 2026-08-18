@@ -31,6 +31,7 @@ import MyTimetable from "@/app/syllabus/pages/MyTimetable";
 import LessonPlanPage from "@/app/syllabus/pages/LessonPlanPage";
 import SchemeOfWorkPage from "@/app/syllabus/pages/SchemeOfWorkPage";
 import ExamResultsPage from "@/app/syllabus/pages/ExamResultsPage";
+import SyllabusWorkstationGuard from "@/app/syllabus/components/SyllabusWorkstationGuard";
 
 export const modulePages = {
   businesses: {
@@ -94,11 +95,11 @@ export const modulePages = {
     path: "/teaching",
     pages: [
       { index: true, element: <TeachingHome /> },
-      { path: "my-subjects", element: <MySubjects /> },
-      { path: "timetable", element: <MyTimetable /> }, // ✅ Hapa
-      { path: "lesson-plan", element: <LessonPlanPage /> }, // 🟢 Lesson Plan
-      { path: "scheme", element: <SchemeOfWorkPage /> }, // 🟢 Scheme of Work
-      { path: "exam-results", element: <ExamResultsPage /> },
+      { path: "my-subjects", element: <SyllabusWorkstationGuard><MySubjects /></SyllabusWorkstationGuard> },
+      { path: "timetable", element: <SyllabusWorkstationGuard><MyTimetable /></SyllabusWorkstationGuard> }, // ✅ Hapa
+      { path: "lesson-plan", element: <SyllabusWorkstationGuard><LessonPlanPage /></SyllabusWorkstationGuard> }, // 🟢 Lesson Plan
+      { path: "scheme", element: <SyllabusWorkstationGuard><SchemeOfWorkPage /></SyllabusWorkstationGuard> }, // 🟢 Scheme of Work
+      { path: "exam-results", element: <SyllabusWorkstationGuard><ExamResultsPage /></SyllabusWorkstationGuard> },
     ],
   },
 
