@@ -32,13 +32,18 @@ def _get_revenue_owner():
     return User.objects.filter(email=email).first()
 
 
-def charge_subscription(subscription: TeacherSubscription) -> bool:
+def charge_subscription(subscription: TeacherSubscription, amount_override=None) -> bool:
     """
     Debit one month's fee from the teacher's JamiiWallet balance. Returns
     True and extends current_period_end by 30 days on success; returns
     False (subscription left inactive) if the wallet balance is
     insufficient or the charge otherwise fails. Idempotent per calendar
     cycle via idempotency_key, so a retried task can't double-charge.
+
+    `amount_override`: charges this amount instead of subscription.monthly_fee
+    - used only for the ADMIN test-price path (see subscription_views.py).
+    Kept on a separate idempotency-key lane so it never collides with a
+    real charge for the same subscription/cycle.
     """
     teacher = subscription.workstation.teacher
     wallet = getattr(teacher, "wallet", None)
@@ -66,6 +71,16 @@ def charge_subscription(subscription: TeacherSubscription) -> bool:
 
     cycle_key = timezone.localdate().strftime("%Y-%m")
     idempotency_key = f"syllabus-subscription-{subscription.id}-{cycle_key}"
+    if amount_override is not None:
+        idempotency_key += "-admintest"
+
+    charge_amount = amount_override if amount_override is not None else subscription.monthly_fee
+    metadata = {
+        "purpose": "syllabus_subscription",
+        "subscription_id": str(subscription.id),
+        "workstation_id": str(subscription.workstation_id),
+        **({"admin_test_price": True} if amount_override is not None else {}),
+    }
 
     # PAYMENT (not WITHDRAWAL): the fee stays inside the platform, credited
     # to the revenue owner's wallet — matches the pattern used everywhere
@@ -73,17 +88,42 @@ def charge_subscription(subscription: TeacherSubscription) -> bool:
     # release), rather than sending it "outside" like a bill payment.
     txn = TransactionEngine.initiate(
         wallet=wallet,
-        amount=subscription.monthly_fee,
+        amount=charge_amount,
         transaction_type=Transaction.TransactionType.PAYMENT,
         initiated_by=teacher,
         counterparty=revenue_owner,
         idempotency_key=idempotency_key,
-        metadata={
-            "purpose": "syllabus_subscription",
-            "subscription_id": str(subscription.id),
-            "workstation_id": str(subscription.workstation_id),
-        },
+        metadata=metadata,
     )
+
+    if txn.status == Transaction.TransactionStatus.COMPLETED:
+        # Idempotent retry of a charge that already succeeded this cycle
+        # (e.g. the deposit-resume flow firing twice) - nothing left to do,
+        # NOT a failure. TransactionEngine.process() would reject this
+        # (it requires PENDING), so never call it on an already-terminal txn.
+        subscription.last_charge_status = TeacherSubscription.ChargeStatus.SUCCESS
+        subscription.last_failure_reason = ""
+        subscription.save(update_fields=["last_charge_attempt_at", "last_charge_status", "last_failure_reason"])
+        return True
+
+    if txn.status == Transaction.TransactionStatus.FAILED:
+        # A previous attempt this cycle failed (e.g. insufficient balance)
+        # and permanently claimed this idempotency_key on a dead
+        # transaction - process() can never revive it. Retry under a
+        # derived key so a genuine retry (e.g. right after the teacher
+        # tops up their wallet) isn't blocked forever by one earlier
+        # failure, while still preventing a real double-charge of a
+        # transaction that actually succeeded.
+        idempotency_key = f"{idempotency_key}-retry-{txn.id}"
+        txn = TransactionEngine.initiate(
+            wallet=wallet,
+            amount=charge_amount,
+            transaction_type=Transaction.TransactionType.PAYMENT,
+            initiated_by=teacher,
+            counterparty=revenue_owner,
+            idempotency_key=idempotency_key,
+            metadata=metadata,
+        )
 
     try:
         TransactionEngine.process(txn)

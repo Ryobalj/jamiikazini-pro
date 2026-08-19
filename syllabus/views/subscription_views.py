@@ -1,6 +1,8 @@
 # syllabus/views/subscription_views.py
 
 import logging
+from decimal import Decimal
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -13,6 +15,11 @@ from syllabus.services.subscription_service import (
 )
 
 logger = logging.getLogger(__name__)
+
+# ADMIN-only test-price charge, so the whole buy -> insufficient-balance ->
+# deposit -> resume flow can be verified end-to-end without spending the
+# real monthly fee. Never applies to any other role.
+ADMIN_TEST_PRICE = Decimal("100.00")
 
 
 class SubscriptionStatusAPIView(APIView):
@@ -57,13 +64,19 @@ class SubscriptionStatusAPIView(APIView):
             )
 
         subscription = get_or_create_subscription(workstation)
-        success = charge_subscription(subscription)
+
+        use_test_price = bool(request.data.get("admin_test_price")) and request.user.role == "ADMIN"
+        amount_override = ADMIN_TEST_PRICE if use_test_price else None
+        amount_needed = amount_override if amount_override is not None else subscription.monthly_fee
+
+        success = charge_subscription(subscription, amount_override=amount_override)
 
         if not success:
             return Response(
                 {
                     "detail": "Malipo hayajafanikiwa. Hakikisha salio la Wallet yako linatosha kisha jaribu tena.",
                     "last_failure_reason": subscription.last_failure_reason,
+                    "amount_needed": str(amount_needed),
                 },
                 status=status.HTTP_402_PAYMENT_REQUIRED
             )
@@ -72,4 +85,5 @@ class SubscriptionStatusAPIView(APIView):
             "detail": "Usajili umefanikiwa.",
             "is_valid": subscription.is_valid,
             "current_period_end": subscription.current_period_end,
+            "amount_charged": str(amount_needed),
         }, status=status.HTTP_200_OK)
