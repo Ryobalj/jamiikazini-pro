@@ -24,6 +24,46 @@
     "format_label": "Paper Format",
     "choose_format": "Choose format...",
     "no_formats_for_type": "No format available for this type yet.",
+    "mode": {
+      "auto": "Automated",
+      "manual": "Manual"
+    },
+    "mode_hint": {
+      "auto": "Pick a pre-built format, then optionally choose topics for each of its sections.",
+      "manual": "Build the paper yourself: add sections, question types, and topics for each section."
+    },
+    "section_topics_label": "Topics per Section (optional)",
+    "topics_label": "Topics (optional)",
+    "topics_hint": "Restrict questions to specific topics (e.g. for a short Quiz). Leave empty to draw from every topic in this subject.",
+    "topics_selected_count": "{{count}} selected",
+    "no_topics": "No topics found for this subject.",
+    "select_group": "Select all",
+    "clear_group": "Clear all",
+    "clear_all_topics": "Clear all selected topics",
+    "add_section": "Add Section",
+    "remove_section": "Remove Section",
+    "add_slot": "Add Question Type",
+    "slot_count": "Count",
+    "slot_marks": "Marks each",
+    "time_minutes_label": "Time (minutes)",
+    "instructions_label": "Instructions",
+    "manual_totals": "Total: {{questions}} questions, {{marks}} marks",
+    "question_type": {
+      "mcq": "Multiple Choice",
+      "matching": "Matching",
+      "fill_blank": "Fill in the Blank",
+      "short_answer": "Short Answer",
+      "calculation": "Calculation",
+      "sequencing": "Sequencing",
+      "true_false": "True/False",
+      "map_diagram": "Map/Diagram",
+      "comprehension": "Comprehension"
+    },
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
     "title_label": "Paper Title (optional)",
     "title_placeholder": "e.g. Term One Quiz",
     "year_label": "Year",

@@ -24,6 +24,46 @@
     "format_label": "Muundo wa Karatasi",
     "choose_format": "Chagua muundo...",
     "no_formats_for_type": "Hakuna muundo uliopo kwa aina hii bado.",
+    "mode": {
+      "auto": "Otomatiki",
+      "manual": "Mwenyewe"
+    },
+    "mode_hint": {
+      "auto": "Chagua muundo uliotayarishwa awali, kisha chagua mada za kila sehemu (hiari).",
+      "manual": "Jenga karatasi yako mwenyewe: ongeza sehemu, aina za maswali, na mada za kila sehemu."
+    },
+    "section_topics_label": "Mada za kila Sehemu (hiari)",
+    "topics_label": "Mada (hiari)",
+    "topics_hint": "Chagua mada mahususi kwa maswali (mfano kwa Jaribio fupi). Ukiacha bila kuchagua, maswali yatatoka mada zote za somo hili.",
+    "topics_selected_count": "{{count}} zimechaguliwa",
+    "no_topics": "Hakuna mada zilizopatikana kwa somo hili.",
+    "select_group": "Chagua zote",
+    "clear_group": "Ondoa zote",
+    "clear_all_topics": "Futa mada zote ulizochagua",
+    "add_section": "Ongeza Sehemu",
+    "remove_section": "Ondoa Sehemu",
+    "add_slot": "Ongeza Aina ya Swali",
+    "slot_count": "Idadi",
+    "slot_marks": "Alama kila moja",
+    "time_minutes_label": "Muda (dakika)",
+    "instructions_label": "Maelekezo",
+    "manual_totals": "Jumla: maswali {{questions}}, alama {{marks}}",
+    "question_type": {
+      "mcq": "Chaguo la Majibu",
+      "matching": "Kuoanisha",
+      "fill_blank": "Kujaza Nafasi",
+      "short_answer": "Jibu Fupi",
+      "calculation": "Hesabu",
+      "sequencing": "Kupanga Mpangilio",
+      "true_false": "Kweli/Si Kweli",
+      "map_diagram": "Ramani/Mchoro",
+      "comprehension": "Ufahamu"
+    },
+    "difficulty": {
+      "easy": "Rahisi",
+      "medium": "Wastani",
+      "hard": "Ngumu"
+    },
     "title_label": "Kichwa cha Karatasi (hiari)",
     "title_placeholder": "Mfano: Jaribio la Muhula wa Kwanza",
     "year_label": "Mwaka",

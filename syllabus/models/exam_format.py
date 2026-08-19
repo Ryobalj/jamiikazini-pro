@@ -52,6 +52,24 @@ class ExamFormat(UUIDModel, TimeStampedModel):
         help_text="Sum of all sections' marks - kept in sync by recompute_total_marks().",
     )
     is_active = models.BooleanField(default=True)
+    is_custom = models.BooleanField(
+        default=False,
+        help_text=(
+            "True if a teacher built this format ad-hoc for one generation "
+            "(the 'manual' paper-builder flow), rather than an admin-curated "
+            "library template. Custom formats are excluded from the "
+            "browsable format list - they exist only so generation can "
+            "reuse the normal ExamFormat/Section/Slot pipeline."
+        ),
+    )
+    created_by_workstation = models.ForeignKey(
+        "syllabus.TeacherWorkStation",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="custom_exam_formats",
+        help_text="Set only for is_custom=True formats.",
+    )
 
     class Meta:
         verbose_name = "Exam Format"

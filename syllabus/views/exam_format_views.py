@@ -22,9 +22,14 @@ class ExamFormatViewSet(viewsets.ModelViewSet):
         return ExamFormatSerializer
 
     def get_queryset(self):
+        # Custom (teacher-built, "mwenyewe") formats are scratch objects
+        # that exist only so a manually-built paper can reuse the normal
+        # generation pipeline - they're never meant to be browsed/reused,
+        # by their creator or anyone else, so exclude them here regardless
+        # of who's asking.
         qs = ExamFormat.objects.select_related("subject", "class_level").prefetch_related(
             "sections__slots"
-        ).filter(is_active=True)
+        ).filter(is_active=True, is_custom=False)
         subject = self.request.query_params.get("subject")
         class_level = self.request.query_params.get("class_level")
         if subject:

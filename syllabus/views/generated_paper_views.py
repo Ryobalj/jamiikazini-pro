@@ -19,7 +19,7 @@ from syllabus.serializers.generated_paper_serializers import (
     GeneratePaperRequestSerializer,
     GeneratedPaperSerializer,
 )
-from syllabus.services.quiz_generation_service import generate_paper
+from syllabus.services.quiz_generation_service import build_custom_exam_format, generate_paper
 
 
 def _verify_subject_in_timetable(user, subject_version) -> None:
@@ -72,11 +72,34 @@ class GeneratePaperAPIView(generics.CreateAPIView):
         subject_version = data["subject_version"]
         _verify_subject_in_timetable(request.user, subject_version)
 
+        if data.get("exam_format"):
+            exam_format = data["exam_format"]
+            section_topic_ids = {
+                str(scope["section"].id): [t.id for t in scope.get("topic_ids", [])]
+                for scope in data.get("section_topics", [])
+            }
+        else:
+            exam_format, section_topic_ids = build_custom_exam_format(
+                workstation=workstation,
+                paper_type=data["paper_type"],
+                custom_sections=[
+                    {
+                        "name": section["name"],
+                        "topic_ids": [t.id for t in section.get("topic_ids", [])],
+                        "slots": section["slots"],
+                    }
+                    for section in data["custom_sections"]
+                ],
+                title=data.get("title", ""),
+                time_allowed_minutes=data.get("time_allowed_minutes"),
+                instructions=data.get("instructions", ""),
+            )
+
         paper = generate_paper(
-            exam_format=data["exam_format"],
+            exam_format=exam_format,
             subject_version=subject_version,
             workstation=workstation,
-            topic_ids=[t.id for t in data.get("topic_ids", [])],
+            section_topic_ids=section_topic_ids,
             title=data.get("title", ""),
             year=data.get("year"),
             term=data.get("term"),

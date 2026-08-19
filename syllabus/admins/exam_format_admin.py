@@ -20,8 +20,11 @@ class ExamFormatSectionInline(nested_admin.NestedTabularInline):
 
 @admin.register(ExamFormat)
 class ExamFormatAdmin(nested_admin.NestedModelAdmin):
-    list_display = ("name", "paper_type", "subject", "class_level", "total_marks", "time_allowed_minutes", "is_active")
-    list_filter = ("paper_type", "class_level", "subject", "is_active")
+    list_display = (
+        "name", "paper_type", "subject", "class_level", "total_marks", "time_allowed_minutes",
+        "is_active", "is_custom",
+    )
+    list_filter = ("paper_type", "class_level", "subject", "is_active", "is_custom")
     search_fields = ("name", "subject__name", "class_level__name")
     autocomplete_fields = ("subject", "class_level")
     readonly_fields = ("total_marks",)
