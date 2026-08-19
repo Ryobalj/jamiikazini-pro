@@ -53,11 +53,24 @@ class TransactionEngine:
 
     # -----------------------------------------------------------------------------------
     @staticmethod
-    @db_transaction.atomic
     def process(transaction: Transaction) -> Transaction:
         """
         Shughulikia transaction ikiwa bado ipo PENDING, kwa kufanya mabadiliko ya salio la wallet
         kwa njia salama, na kuweka status kuwa COMPLETED au FAILED kulingana na matokeo.
+
+        NOT wrapped in @db_transaction.atomic at this outer level on
+        purpose: only the balance-mutation + success-save below runs
+        inside its own atomic block, so that when it fails and raises,
+        the except handler's FAILED-status save runs in a fresh,
+        independent transaction instead of being silently rolled back
+        along with everything else the atomic block did. Previously the
+        whole method (including the except handler) was one atomic block,
+        so a failed payment's `status = FAILED` save was always undone by
+        the same rollback triggered by the exception it was reacting to -
+        every failed transaction stayed stuck at PENDING forever instead
+        of being correctly recorded as FAILED (visible e.g. as "Pending"
+        forever in a user's transaction history for a payment that
+        actually failed).
         """
         if not transaction.pk:
             raise ValidationError("Transaction must be saved before processing.")
@@ -66,49 +79,50 @@ class TransactionEngine:
             raise ValidationError("Transaction must be in pending state before processing.")
 
         try:
-            match transaction.transaction_type:
-                case Transaction.TransactionType.TOP_UP:
-                    TransactionEngine._top_up(transaction)
-                case Transaction.TransactionType.WITHDRAWAL:
-                    TransactionEngine._withdraw(transaction)
-                case Transaction.TransactionType.TRANSFER:
-                    TransactionEngine._transfer(transaction)
-                case Transaction.TransactionType.PAYMENT:
-                    TransactionEngine._payment(transaction)
-                case Transaction.TransactionType.REFUND:
-                    TransactionEngine._refund(transaction)
-                case Transaction.TransactionType.HOLD:
-                    TransactionEngine._hold(transaction)
-                case Transaction.TransactionType.CAPTURE:
-                    TransactionEngine._capture(transaction)
-                case Transaction.TransactionType.VOID:
-                    TransactionEngine._void(transaction)
-                case _:
-                    raise ValidationError("Unsupported transaction type.")
+            with db_transaction.atomic():
+                match transaction.transaction_type:
+                    case Transaction.TransactionType.TOP_UP:
+                        TransactionEngine._top_up(transaction)
+                    case Transaction.TransactionType.WITHDRAWAL:
+                        TransactionEngine._withdraw(transaction)
+                    case Transaction.TransactionType.TRANSFER:
+                        TransactionEngine._transfer(transaction)
+                    case Transaction.TransactionType.PAYMENT:
+                        TransactionEngine._payment(transaction)
+                    case Transaction.TransactionType.REFUND:
+                        TransactionEngine._refund(transaction)
+                    case Transaction.TransactionType.HOLD:
+                        TransactionEngine._hold(transaction)
+                    case Transaction.TransactionType.CAPTURE:
+                        TransactionEngine._capture(transaction)
+                    case Transaction.TransactionType.VOID:
+                        TransactionEngine._void(transaction)
+                    case _:
+                        raise ValidationError("Unsupported transaction type.")
 
-            # âœ… Ikiwa hakuna error â€” mark as completed
-            transaction.status = Transaction.TransactionStatus.COMPLETED
-            transaction.updated_at = timezone.now()
-            transaction.save(update_fields=["status", "updated_at"])
+                # âœ… Ikiwa hakuna error â€” mark as completed
+                transaction.status = Transaction.TransactionStatus.COMPLETED
+                transaction.updated_at = timezone.now()
+                transaction.save(update_fields=["status", "updated_at"])
 
-            # ðŸ”¹ Audit log
-            AuditLog.log_action(
-                user=transaction.initiated_by,
-                action=AuditAction.PAYMENT if transaction.transaction_type in [
-                    Transaction.TransactionType.PAYMENT,
-                    Transaction.TransactionType.TRANSFER,
-                    Transaction.TransactionType.CAPTURE,
-                ] else AuditAction.OTHER,
-                target_obj=transaction,
-                description=f"Transaction processed successfully: {transaction.amount} ({transaction.transaction_type})",
-                metadata={
-                    "wallet_id": str(transaction.wallet_id),
-                    "txn_type": transaction.transaction_type,
-                    "amount": float(transaction.amount),
-                    "status": transaction.status,
-                    **(transaction.metadata or {}),
-                },
-            )
+                # ðŸ”¹ Audit log
+                AuditLog.log_action(
+                    user=transaction.initiated_by,
+                    action=AuditAction.PAYMENT if transaction.transaction_type in [
+                        Transaction.TransactionType.PAYMENT,
+                        Transaction.TransactionType.TRANSFER,
+                        Transaction.TransactionType.CAPTURE,
+                    ] else AuditAction.OTHER,
+                    target_obj=transaction,
+                    description=f"Transaction processed successfully: {transaction.amount} ({transaction.transaction_type})",
+                    metadata={
+                        "wallet_id": str(transaction.wallet_id),
+                        "txn_type": transaction.transaction_type,
+                        "amount": float(transaction.amount),
+                        "status": transaction.status,
+                        **(transaction.metadata or {}),
+                    },
+                )
 
             logger.info(f"âœ… Transaction processed successfully: id={transaction.id}")
             return transaction

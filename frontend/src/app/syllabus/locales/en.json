@@ -750,6 +750,8 @@
     "insufficient_balance": "Your Wallet balance is insufficient. Please top up your Wallet then try again.",
     "load_error": "Failed to load subscription status.",
     "preview_banner": "You're seeing a limited preview (~25%). Subscribe to view and download the full document.",
-    "go_to_wallet": "Go to Wallet"
+    "go_to_wallet": "Go to Wallet",
+    "admin_test_price_button": "Test for TSh 100",
+    "admin_test_price_hint": "Admin only: test the full purchase flow at a small test price."
   }
 }

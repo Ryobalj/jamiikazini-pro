@@ -749,6 +749,8 @@
     "insufficient_balance": "Salio la Wallet yako halitoshi. Tafadhali jaza Wallet kisha jaribu tena.",
     "load_error": "Imeshindikana kupakia hali ya usajili.",
     "preview_banner": "Unaona muhtasari mdogo tu (~25%). Jiunge kwa usajili ili kuona na kupakua nyaraka kamili.",
-    "go_to_wallet": "Nenda kwenye Wallet"
+    "go_to_wallet": "Nenda kwenye Wallet",
+    "admin_test_price_button": "Jaribu kwa TSh 100",
+    "admin_test_price_hint": "Kwa admin pekee: jaribu mchakato mzima wa malipo kwa bei ndogo ya majaribio."
   }
 }

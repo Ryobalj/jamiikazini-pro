@@ -1,5 +1,8 @@
 {
   "title": "My Wallet",
+  "pending_purchase_waiting": "You have a purchase waiting on sufficient balance. It will complete automatically as soon as you top up your Wallet.",
+  "pending_purchase_completed": "Your purchase is complete!",
+  "pending_purchase_failed": "Failed to complete the purchase that was waiting.",
   "available_balance": "Available Balance",
   "this_month": "This Month",
   "income": "Income",

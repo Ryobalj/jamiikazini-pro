@@ -35,6 +35,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { toast } from "react-toastify";
 import { useAppContext } from "@/context/AppContext";
 import { useCurrency } from "@/context/CurrencyContext";
+import { getPendingPurchase, clearPendingPurchase } from "@/lib/pendingPurchase";
 
 export default function JamiiWalletPage() {
   const { t } = useTranslation("jamiiwallet");
@@ -72,6 +73,8 @@ export default function JamiiWalletPage() {
   const [withdrawCountryCode, setWithdrawCountryCode] = useState("255");
   const [withdrawPhone, setWithdrawPhone] = useState("");
   const [monthlyStats, setMonthlyStats] = useState({ income: 0, expenses: 0 });
+  const [pendingPurchase, setPendingPurchase] = useState(() => getPendingPurchase());
+  const [resuming, setResuming] = useState(false);
 
   useEffect(() => {
     fetchWalletData();
@@ -80,13 +83,56 @@ export default function JamiiWalletPage() {
 
   // Auto-refresh: sasisha salio + miamala kila sekunde 12 (bila usumbufu) ili
   // ongezeko la salio (mfano baada ya deposit ya PawaPay kufaulu) lionekane lenyewe.
+  // Kila mzunguko pia hujaribu kukamilisha ununuzi uliokuwa unasubiri salio
+  // (mfano usajili uliokataliwa kwa sababu ya salio pungufu) - teacher haitaji
+  // kurudi mwenyewe kubofya "Nunua" tena baada ya kuweka pesa.
   useEffect(() => {
     const id = setInterval(() => {
       fetchWalletData({ silent: true });
       fetchTransactions({ silent: true });
+      attemptResumePendingPurchase();
     }, 12000);
     return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Ununuzi uliosubiri unaweza kukamilika mara moja pia (mfano akiwa tayari
+  // na salio la kutosha lakini alielekezwa hapa kwa bahati mbaya) - jaribu
+  // mara moja kwenye kupakia ukurasa, bila kusubiri mzunguko wa kwanza.
+  useEffect(() => {
+    if (pendingPurchase) {
+      attemptResumePendingPurchase();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const attemptResumePendingPurchase = async () => {
+    const pending = getPendingPurchase();
+    if (!pending) return;
+    setResuming(true);
+    try {
+      await api.request({ method: pending.method || "post", url: pending.url, data: pending.data });
+      clearPendingPurchase();
+      setPendingPurchase(null);
+      toast.success(t("pending_purchase_completed") || "Manunuzi yako yamekamilika!");
+      if (pending.successPath) {
+        navigate(pending.successPath);
+      }
+    } catch (error) {
+      if (error.response?.status === 402) {
+        // Salio bado haitoshi - itajaribiwa tena kwenye mzunguko unaofuata.
+      } else {
+        // Hitilafu isiyohusiana na salio (mfano data batili) - haina maana
+        // kuendelea kujaribu kimyakimya milele.
+        console.error("Failed to resume pending purchase:", error);
+        clearPendingPurchase();
+        setPendingPurchase(null);
+        toast.error(t("pending_purchase_failed") || "Imeshindikana kukamilisha ununuzi uliokuwa unasubiri.");
+      }
+    } finally {
+      setResuming(false);
+    }
+  };
 
   useEffect(() => {
     if (transactions.length > 0) {
@@ -340,6 +386,18 @@ export default function JamiiWalletPage() {
           )}
         </div>
       </div>
+
+      {pendingPurchase && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+          <div className="rounded-xl border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-900/20 px-4 py-3 flex items-center gap-3">
+            <Loader2 className={`w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 ${resuming ? "animate-spin" : ""}`} />
+            <p className="text-sm text-amber-800 dark:text-amber-300">
+              {t("pending_purchase_waiting") ||
+                "Una ununuzi unaosubiri salio la kutosha. Utakamilika moja kwa moja mara tu utakapoweka pesa kwenye Wallet."}
+            </p>
+          </div>
+        </div>
+      )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

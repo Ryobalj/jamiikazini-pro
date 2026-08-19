@@ -70,9 +70,10 @@ def charge_subscription(subscription: TeacherSubscription, amount_override=None)
         return False
 
     cycle_key = timezone.localdate().strftime("%Y-%m")
-    idempotency_key = f"syllabus-subscription-{subscription.id}-{cycle_key}"
+    base_idempotency_key = f"syllabus-subscription-{subscription.id}-{cycle_key}"
     if amount_override is not None:
-        idempotency_key += "-admintest"
+        base_idempotency_key += "-admintest"
+    idempotency_key = base_idempotency_key
 
     charge_amount = amount_override if amount_override is not None else subscription.monthly_fee
     metadata = {
@@ -106,15 +107,23 @@ def charge_subscription(subscription: TeacherSubscription, amount_override=None)
         subscription.save(update_fields=["last_charge_attempt_at", "last_charge_status", "last_failure_reason"])
         return True
 
-    if txn.status == Transaction.TransactionStatus.FAILED:
-        # A previous attempt this cycle failed (e.g. insufficient balance)
-        # and permanently claimed this idempotency_key on a dead
-        # transaction - process() can never revive it. Retry under a
-        # derived key so a genuine retry (e.g. right after the teacher
-        # tops up their wallet) isn't blocked forever by one earlier
-        # failure, while still preventing a real double-charge of a
-        # transaction that actually succeeded.
-        idempotency_key = f"{idempotency_key}-retry-{txn.id}"
+    # A previous attempt this cycle may have failed (e.g. insufficient
+    # balance) and permanently claimed this idempotency_key on a dead
+    # transaction - process() can never revive a FAILED transaction.
+    # Retry under a key derived from the BASE key + that dead
+    # transaction's own id (never chained onto the previous derived key -
+    # that grew unboundedly with each retry and eventually overflowed the
+    # column's max_length after ~6 attempts in one cycle, a real failure
+    # mode hit while testing the deposit-resume flow's polling). Looped,
+    # not a single if-check: the freshly-derived key itself may already
+    # belong to ANOTHER earlier failed retry (if this is the 3rd+ attempt
+    # this cycle) - deriving from whichever failed transaction was most
+    # recently seen guarantees a never-before-used key within at most a
+    # couple of hops, since a brand-new transaction is always born
+    # PENDING. Never risks a double-charge: a COMPLETED transaction is
+    # handled above and never reaches this loop.
+    while txn.status == Transaction.TransactionStatus.FAILED:
+        idempotency_key = f"{base_idempotency_key}-r{txn.id}"
         txn = TransactionEngine.initiate(
             wallet=wallet,
             amount=charge_amount,
@@ -124,6 +133,15 @@ def charge_subscription(subscription: TeacherSubscription, amount_override=None)
             idempotency_key=idempotency_key,
             metadata=metadata,
         )
+
+    if txn.status == Transaction.TransactionStatus.COMPLETED:
+        # Guards a theoretical race: a concurrent request completed a
+        # transaction under this exact derived retry key between our
+        # initiate() call above and here.
+        subscription.last_charge_status = TeacherSubscription.ChargeStatus.SUCCESS
+        subscription.last_failure_reason = ""
+        subscription.save(update_fields=["last_charge_attempt_at", "last_charge_status", "last_failure_reason"])
+        return True
 
     try:
         TransactionEngine.process(txn)

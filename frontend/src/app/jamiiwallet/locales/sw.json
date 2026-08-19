@@ -1,5 +1,8 @@
 {
   "title": "Pochi Yangu",
+  "pending_purchase_waiting": "Una ununuzi unaosubiri salio la kutosha. Utakamilika moja kwa moja mara tu utakapoweka pesa kwenye Wallet.",
+  "pending_purchase_completed": "Manunuzi yako yamekamilika!",
+  "pending_purchase_failed": "Imeshindikana kukamilisha ununuzi uliokuwa unasubiri.",
   "available_balance": "Salio Linalopatikana",
   "this_month": "Mwezi Huu",
   "income": "Mapato",

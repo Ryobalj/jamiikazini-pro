@@ -3,12 +3,16 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { CheckCircle, XCircle, Wallet } from "lucide-react";
+import { CheckCircle, XCircle, Wallet, FlaskConical } from "lucide-react";
 import api from "@/lib/axios";
+import { useAppContext } from "@/context/AppContext";
+import { runWalletGatedRequest } from "@/lib/pendingPurchase";
 
 export default function SubscriptionStatusCard() {
   const { t } = useTranslation("syllabus");
   const navigate = useNavigate();
+  const { user } = useAppContext();
+  const isAdmin = user?.role === "ADMIN";
 
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -31,18 +35,23 @@ export default function SubscriptionStatusCard() {
     fetchStatus();
   }, [fetchStatus]);
 
-  const handleSubscribe = async () => {
+  const handleSubscribe = async (adminTestPrice = false) => {
     setSubscribing(true);
     try {
-      await api.post("/syllabus/subscription/");
-      toast.success(t("subscription.subscribe_success"));
-      await fetchStatus();
-    } catch (err) {
-      if (err.response?.status === 402) {
-        toast.error(t("subscription.insufficient_balance"));
-      } else {
-        toast.error(t("subscription.load_error"));
+      const result = await runWalletGatedRequest(
+        api,
+        navigate,
+        { url: "/syllabus/subscription/", data: adminTestPrice ? { admin_test_price: true } : {} },
+        { successPath: "/teaching", successMessageKey: "syllabus:subscription.subscribe_success" }
+      );
+      if (result.ok) {
+        toast.success(t("subscription.subscribe_success"));
+        await fetchStatus();
       }
+      // insufficientBalance case: runWalletGatedRequest already redirected
+      // to /jamiiwallet and stashed this exact request to resume after top-up.
+    } catch (err) {
+      toast.error(t("subscription.load_error"));
     } finally {
       setSubscribing(false);
     }
@@ -91,11 +100,22 @@ export default function SubscriptionStatusCard() {
         </button>
         {!isActive && (
           <button
-            onClick={handleSubscribe}
+            onClick={() => handleSubscribe(false)}
             disabled={subscribing}
             className="text-xs px-3 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 disabled:opacity-60 text-white font-medium"
           >
             {subscribing ? t("subscription.renewing") : t("subscription.subscribe_now")}
+          </button>
+        )}
+        {!isActive && isAdmin && (
+          <button
+            onClick={() => handleSubscribe(true)}
+            disabled={subscribing}
+            title={t("subscription.admin_test_price_hint")}
+            className="text-xs px-3 py-2 rounded-lg border border-purple-300 dark:border-purple-700 text-purple-700 dark:text-purple-300 hover:bg-purple-50 dark:hover:bg-purple-900/20 disabled:opacity-60 font-medium flex items-center gap-1"
+          >
+            <FlaskConical size={14} />
+            {t("subscription.admin_test_price_button")}
           </button>
         )}
       </div>
