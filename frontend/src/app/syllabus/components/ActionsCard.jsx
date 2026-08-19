@@ -145,11 +145,14 @@ const ActionsCard = ({
 
       console.log("📤 Sending lesson plan payload:", payload);
 
-      // Build URL
-      let url = "/syllabus/lesson-plans/auto/";
-      if (format === "pdf") {
-        url += "?format=pdf";
-      }
+      // Build URL - the PDF download is a distinct endpoint
+      // (/lesson-plans/auto/pdf/), not the JSON one with a ?format=pdf
+      // query param. DRF's content negotiation 404s on an unrecognized
+      // ?format= before the view's own create() ever runs, which this
+      // view's custom handle_exception then mis-reports as a 500.
+      const url = format === "pdf"
+        ? "/syllabus/lesson-plans/auto/pdf/"
+        : "/syllabus/lesson-plans/auto/";
 
       // Make API request
       const config = format === "pdf" ? { 

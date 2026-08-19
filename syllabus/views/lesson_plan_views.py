@@ -1,10 +1,10 @@
 # syllabus/views/lesson_plan_views.py
 from django.conf import settings as django_settings
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from rest_framework import generics, status
+from rest_framework.exceptions import APIException, ValidationError
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.exceptions import ValidationError
 
 from syllabus.serializers.lesson_plan_serializers import (
     LessonPlanRequestSerializer,
@@ -219,6 +219,14 @@ class AutoLessonPlanCreateAPIView(generics.CreateAPIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+        # Http404 (e.g. DRF's content negotiation rejecting an unknown
+        # ?format=) and other recognized DRF exceptions (permission denied,
+        # not authenticated, throttled, etc.) carry their own correct
+        # status code - let DRF's default handling produce that instead of
+        # masking every one of them as a generic 500 below.
+        if isinstance(exc, (Http404, APIException)):
+            return super().handle_exception(exc)
 
         # Log internal server errors
         logger.error(f"Internal server error in lesson plan view: {str(exc)}", exc_info=True)
