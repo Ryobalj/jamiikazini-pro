@@ -33,6 +33,19 @@ const ActivitySearchCard = ({
   
   const hasLoadedRef = useRef(new Set());
   const searchTimerRef = useRef(null);
+  const specificActivityBoxRef = useRef(null);
+
+  // Close the dropdown on an outside click - without this it only ever
+  // closed by picking an activity, so clicking away left it open.
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (specificActivityBoxRef.current && !specificActivityBoxRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   // 🔄 Load Learning Activities - ONE TIME ONLY per subject
   useEffect(() => {
@@ -523,41 +536,54 @@ const ActivitySearchCard = ({
           {t ? t('lesson_plan.specific_activity') : "Shughuli Maalum ya Kujifunza"} *
         </label>
         
-        <div className="relative">
+        <div className="relative" ref={specificActivityBoxRef}>
           {/* Search Input with Advanced Options */}
           <div className="relative mb-2">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
             <input
               type="text"
               placeholder={t ? t('lesson_plan.search_placeholder') : "Tafuta shughuli..."}
-              className="w-full border border-gray-300 dark:border-gray-600 rounded-lg pl-10 pr-20 py-3 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
+              className="w-full border border-gray-300 dark:border-gray-600 rounded-lg pl-10 pr-28 py-3 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
               value={searchQuery}
               onChange={handleSearchChange}
               onFocus={() => specificActivities.length > 0 && setShowDropdown(true)}
               disabled={!selectedLearningActivity || loadingSpecific || rateLimitWarning}
             />
-            
+
             {/* Advanced Search Button */}
             <button
               onClick={toggleAdvancedSearch}
-              className="absolute right-10 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              className="absolute right-16 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
               type="button"
               title={t ? t('lesson_plan.advanced_search') : "Utafutaji wa Juu"}
             >
               <Filter size={16} />
             </button>
-            
+
             {/* Clear Button */}
             {searchQuery && (
               <button
                 onClick={clearSearch}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-9 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 type="button"
                 title={t ? t('common.clear') : "Futa"}
               >
                 ✕
               </button>
             )}
+
+            {/* Dropdown Toggle - makes it visually obvious (like the
+                native <select> above it) that clicking opens a list of
+                every specific activity, not just a plain search box. */}
+            <button
+              onClick={() => specificActivities.length > 0 && setShowDropdown((prev) => !prev)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 disabled:opacity-40"
+              type="button"
+              disabled={!selectedLearningActivity || loadingSpecific || rateLimitWarning}
+              title={t ? t('lesson_plan.select_from_list') : "Chagua kutoka orodha"}
+            >
+              <ChevronDown size={18} className={`transition-transform ${showDropdown ? "rotate-180" : ""}`} />
+            </button>
           </div>
 
           {/* Search Stats */}
