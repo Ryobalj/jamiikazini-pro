@@ -104,7 +104,9 @@ export default function HomePage() {
                   </p>
                   {f.business_description && (
                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">
-                      {f.business_description}
+                      {f.business_name === "JamiiShule"
+                        ? t("home.jamiishule_description", f.business_description)
+                        : f.business_description}
                     </p>
                   )}
                 </div>
@@ -133,28 +135,44 @@ export default function HomePage() {
           </p>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {trending.map((p) => (
-              <button
-                key={p.id}
-                onClick={() => goToProduct(p)}
-                className="text-left rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-md transition bg-white dark:bg-gray-800"
-              >
-                {p.image ? (
-                  <img src={p.image} alt={p.name} className="w-full h-24 object-cover" />
-                ) : (
-                  <div className="w-full h-24 bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
-                    <Store className="w-6 h-6 text-gray-300 dark:text-gray-600" />
+            {trending.map((p) => {
+              // The platform's own first-party product (JamiiShule's
+              // "Teaching Services") gets a fully translated name/
+              // description across all 15 locales - other businesses'
+              // products keep whatever single-language text they were
+              // entered in, since that's user-generated content we can't
+              // machine-translate reliably.
+              const isTeachingServices = p.external_link === "/teaching";
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => goToProduct(p)}
+                  className="text-left rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-md transition bg-white dark:bg-gray-800"
+                >
+                  {p.image ? (
+                    <img src={p.image} alt={p.name} className="w-full h-24 object-cover" />
+                  ) : (
+                    <div className="w-full h-24 bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                      <Store className="w-6 h-6 text-gray-300 dark:text-gray-600" />
+                    </div>
+                  )}
+                  <div className="p-2">
+                    <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                      {isTeachingServices ? t("home.teaching_services_name", p.name) : p.name}
+                    </p>
+                    {isTeachingServices && (
+                      <p className="text-[11px] text-gray-500 dark:text-gray-400 line-clamp-2 mt-0.5">
+                        {t("home.jamiishule_description", p.description)}
+                      </p>
+                    )}
+                    <p className="text-xs text-blue-600 dark:text-blue-400 font-semibold mt-0.5">
+                      {p.is_subscription ? t("home.get_label", "Pata") : formatCurrency(p.final_price ?? p.price)}
+                    </p>
+                    <p className="text-[11px] text-gray-400 dark:text-gray-500 truncate">{p.business_name}</p>
                   </div>
-                )}
-                <div className="p-2">
-                  <p className="text-sm font-medium text-gray-900 dark:text-white truncate">{p.name}</p>
-                  <p className="text-xs text-blue-600 dark:text-blue-400 font-semibold">
-                    {p.is_subscription ? t("home.get_label", "Pata") : formatCurrency(p.final_price ?? p.price)}
-                  </p>
-                  <p className="text-[11px] text-gray-400 dark:text-gray-500 truncate">{p.business_name}</p>
-                </div>
-              </button>
-            ))}
+                </button>
+              );
+            })}
           </div>
         )}
       </div>

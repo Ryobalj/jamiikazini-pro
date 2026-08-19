@@ -194,56 +194,78 @@ export default function MyTimetable() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-semibold">{t("my_timetable.title")}</h1>
-          <p className="text-sm text-gray-600 dark:text-gray-300">{t("my_timetable.subtitle")}</p>
-        </div>
-
-        {hasWorkstation && (
-          <div className="flex flex-wrap items-center gap-2">
-            <button
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50"
-              onClick={() => downloadTimetableFile("mine", "pdf")}
-              disabled={pdfLoading !== null || timetables.length === 0}
-            >
-              <Download size={16} />
-              {pdfLoading === "mine_pdf" ? t("common.loading") : t("timetable.download_mine")}
-            </button>
-            <button
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50"
-              onClick={() => downloadTimetableFile("mine", "xlsx")}
-              disabled={pdfLoading !== null || timetables.length === 0}
-            >
-              <Download size={16} />
-              {pdfLoading === "mine_xlsx" ? t("common.loading") : t("timetable.download_mine_xlsx")}
-            </button>
-            <button
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50"
-              onClick={() => downloadTimetableFile("school", "pdf")}
-              disabled={pdfLoading !== null}
-            >
-              <Download size={16} />
-              {pdfLoading === "school_pdf" ? t("common.loading") : t("timetable.download_school")}
-            </button>
-            <button
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50"
-              onClick={() => downloadTimetableFile("school", "xlsx")}
-              disabled={pdfLoading !== null}
-            >
-              <Download size={16} />
-              {pdfLoading === "school_xlsx" ? t("common.loading") : t("timetable.download_school_xlsx")}
-            </button>
-            <button
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
-              onClick={openAddModal}
-            >
-              <Plus size={16} />
-              {t("my_timetable.add")}
-            </button>
-          </div>
-        )}
+      <div>
+        <h1 className="text-xl font-semibold">{t("my_timetable.title")}</h1>
+        <p className="text-sm text-gray-600 dark:text-gray-300">{t("my_timetable.subtitle")}</p>
       </div>
+
+      {hasWorkstation && (
+        <>
+          {/* Class timetable: adding a period here builds both your own
+              schedule and your class's timetable at once - subject_version
+              already carries the class level. */}
+          <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 space-y-3">
+            <div>
+              <h2 className="font-semibold">{t("timetable.class_section_heading")}</h2>
+              <p className="text-xs text-gray-500 dark:text-gray-400">{t("timetable.class_section_help")}</p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+                onClick={openAddModal}
+              >
+                <Plus size={16} />
+                {t("timetable.add_class_period")}
+              </button>
+              <button
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50"
+                onClick={() => downloadTimetableFile("mine", "pdf")}
+                disabled={pdfLoading !== null || timetables.length === 0}
+              >
+                <Download size={16} />
+                {pdfLoading === "mine_pdf" ? t("common.loading") : t("timetable.download_mine")}
+              </button>
+              <button
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50"
+                onClick={() => downloadTimetableFile("mine", "xlsx")}
+                disabled={pdfLoading !== null || timetables.length === 0}
+              >
+                <Download size={16} />
+                {pdfLoading === "mine_xlsx" ? t("common.loading") : t("timetable.download_mine_xlsx")}
+              </button>
+            </div>
+          </div>
+
+          {/* School timetable: not separately created - it's the union of
+              every teacher's periods at the same school, so this section
+              just surfaces it (via download, same as before) with copy
+              that explains where it comes from. */}
+          <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 space-y-3">
+            <div>
+              <h2 className="font-semibold">{t("timetable.school_section_heading")}</h2>
+              <p className="text-xs text-gray-500 dark:text-gray-400">{t("timetable.school_section_help")}</p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50"
+                onClick={() => downloadTimetableFile("school", "pdf")}
+                disabled={pdfLoading !== null}
+              >
+                <Download size={16} />
+                {pdfLoading === "school_pdf" ? t("common.loading") : t("timetable.download_school")}
+              </button>
+              <button
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50"
+                onClick={() => downloadTimetableFile("school", "xlsx")}
+                disabled={pdfLoading !== null}
+              >
+                <Download size={16} />
+                {pdfLoading === "school_xlsx" ? t("common.loading") : t("timetable.download_school_xlsx")}
+              </button>
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Loading / Error */}
       {loading && <p className="text-sm text-gray-500">{t("common.loading")}...</p>}

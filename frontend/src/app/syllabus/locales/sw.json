@@ -6,7 +6,7 @@
       "my_subjects": "Masomo Yangu",
       "timetable": "Ratiba Yangu",
       "scheme": "Azimio la Kazi",
-      "lesson_plan": "Andalio la Somo",
+      "lesson_plan": "Andalio na Nukuu za Somo",
       "exam_results": "Matokeo ya Mtihani",
       "quiz": "Jaribio/Mtihani"
     }
@@ -519,6 +519,11 @@
     "download_mine_xlsx": "Pakua Ratiba Yangu (XLS)",
     "download_school": "Pakua Ratiba Kuu ya Shule (PDF)",
     "download_school_xlsx": "Pakua Ratiba Kuu ya Shule (XLS)",
+    "class_section_heading": "Ratiba ya Darasa Lako",
+    "class_section_help": "Kila kipindi unachoongeza huunda ratiba yako binafsi na ratiba ya darasa unalofundisha.",
+    "school_section_heading": "Ratiba Kuu ya Shule",
+    "school_section_help": "Inajumuisha vipindi vya walimu wote wenye kituo cha kazi shuleni kwako - inajengwa kiotomatiki unapoongeza vipindi vyako.",
+    "add_class_period": "Unda Ratiba ya Darasa",
     "days": {
       "monday": "Jumatatu",
       "tuesday": "Jumanne",

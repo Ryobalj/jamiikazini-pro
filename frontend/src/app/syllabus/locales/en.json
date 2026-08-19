@@ -6,7 +6,7 @@
       "my_subjects": "My Subjects",
       "timetable": "My Timetable",
       "scheme": "Scheme of Work",
-      "lesson_plan": "Lesson Plan",
+      "lesson_plan": "Lesson Plan & Notes",
       "exam_results": "Exam Results",
       "quiz": "Quiz/Exam"
     }
@@ -520,6 +520,11 @@
     "download_mine_xlsx": "Download My Timetable (XLS)",
     "download_school": "Download School Master Timetable (PDF)",
     "download_school_xlsx": "Download School Master Timetable (XLS)",
+    "class_section_heading": "Your Class Timetable",
+    "class_section_help": "Every period you add builds both your own timetable and your class's timetable.",
+    "school_section_heading": "School Master Timetable",
+    "school_section_help": "Made up of every teacher's periods at your school - it grows automatically as everyone adds theirs.",
+    "add_class_period": "Build Class Timetable",
     "days": {
       "monday": "Monday",
       "tuesday": "Tuesday",
