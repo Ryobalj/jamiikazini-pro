@@ -3,7 +3,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { CheckCircle, XCircle, Wallet, FlaskConical } from "lucide-react";
+import { CheckCircle, XCircle, Wallet, FlaskConical, ClipboardList } from "lucide-react";
 import api from "@/lib/axios";
 import { useAppContext } from "@/context/AppContext";
 import { runWalletGatedRequest } from "@/lib/pendingPurchase";
@@ -17,6 +17,10 @@ export default function SubscriptionStatusCard() {
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(true);
   const [subscribing, setSubscribing] = useState(false);
+  // The API 404s with "no workstation registered" until the teacher sets
+  // one up - that's an expected, common state (not an error), so it gets
+  // its own prompt instead of silently vanishing like a real failure would.
+  const [needsWorkstation, setNeedsWorkstation] = useState(false);
 
   const fetchStatus = useCallback(async () => {
     if (!localStorage.getItem("access_token")) {
@@ -30,9 +34,10 @@ export default function SubscriptionStatusCard() {
     try {
       const res = await api.get("/syllabus/subscription/");
       setStatus(res.data);
+      setNeedsWorkstation(false);
     } catch (err) {
-      // No workstation yet, or another error — just hide the card quietly.
       setStatus(null);
+      setNeedsWorkstation(err.response?.status === 404);
     } finally {
       setLoading(false);
     }
@@ -64,7 +69,33 @@ export default function SubscriptionStatusCard() {
     }
   };
 
-  if (loading || !status) return null;
+  if (loading) return null;
+
+  if (needsWorkstation) {
+    return (
+      <div className="rounded-xl border p-4 mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+        <div className="flex items-center gap-3">
+          <ClipboardList className="text-blue-600 dark:text-blue-400 shrink-0" size={22} />
+          <div>
+            <p className="font-medium text-sm text-gray-800 dark:text-gray-100">
+              {t("subscription.needs_workstation_title")}
+            </p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              {t("subscription.needs_workstation_message")}
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={() => navigate("/teaching/my-subjects")}
+          className="text-xs px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium shrink-0"
+        >
+          {t("subscription.needs_workstation_cta")}
+        </button>
+      </div>
+    );
+  }
+
+  if (!status) return null;
 
   const isActive = status.is_valid;
 

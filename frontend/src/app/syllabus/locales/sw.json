@@ -756,6 +756,9 @@
     "preview_banner": "Unaona muhtasari mdogo tu (~25%). Jiunge kwa usajili ili kuona na kupakua nyaraka kamili.",
     "go_to_wallet": "Nenda kwenye Wallet",
     "admin_test_price_button": "Jaribu kwa TSh 100",
-    "admin_test_price_hint": "Kwa admin pekee: jaribu mchakato mzima wa malipo kwa bei ndogo ya majaribio."
+    "admin_test_price_hint": "Kwa admin pekee: jaribu mchakato mzima wa malipo kwa bei ndogo ya majaribio.",
+    "needs_workstation_title": "Weka Kituo Chako cha Kazi Kwanza",
+    "needs_workstation_message": "Hali ya usajili itaonekana hapa mara tu utakapoweka shule, somo na darasa unalofundisha.",
+    "needs_workstation_cta": "Weka Kituo cha Kazi"
   }
 }
