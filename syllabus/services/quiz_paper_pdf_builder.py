@@ -258,7 +258,7 @@ def build_quiz_pdf(paper, language: str = "sw", show_answers: bool = False) -> b
             group_letter_index += 1
             instruction = type_instructions.get(current_type, "")
             if instruction:
-                pdf.add_paragraph(f"<b>({letter})</b> {instruction}", small=True)
+                pdf.add_paragraph(f"<b>({letter}) {instruction}</b>", small=True)
 
         # A question's own content (prompt, options, word bank, answer) must
         # never be split across a page break - wrap what it appends in a

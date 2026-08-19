@@ -10,11 +10,10 @@
       "name": "SEHEMU A",
       "order": 1,
       "slots": [
-        {"order": 1, "question_type": "mcq", "difficulty": "easy", "count": 3, "marks_per_item": 1},
-        {"order": 2, "question_type": "true_false", "difficulty": "easy", "count": 2, "marks_per_item": 1},
-        {"order": 3, "question_type": "matching", "difficulty": "medium", "count": 2, "marks_per_item": 1},
-        {"order": 4, "question_type": "fill_blank", "difficulty": "easy", "count": 1, "marks_per_item": 1},
-        {"order": 5, "question_type": "short_answer", "difficulty": "medium", "count": 1, "marks_per_item": 2}
+        {"order": 1, "question_type": "fill_blank", "difficulty": "easy", "count": 2, "marks_per_item": 1},
+        {"order": 2, "question_type": "matching", "difficulty": "medium", "count": 2, "marks_per_item": 1},
+        {"order": 3, "question_type": "short_answer", "difficulty": "medium", "count": 2, "marks_per_item": 2},
+        {"order": 4, "question_type": "calculation", "difficulty": "easy", "count": 1, "marks_per_item": 2}
       ]
     }
   ]
