@@ -146,6 +146,17 @@ class Product(UUIDModel, TimeStampedModel):
         help_text=_("Inaonesha kama bidhaa ni ya kipekee (featured).")
     )
 
+    is_subscription = models.BooleanField(
+        default=False,
+        verbose_name=_("Is Subscription"),
+        help_text=_(
+            "Bidhaa hii ni huduma ya usajili unaoendelea (si manunuzi ya "
+            "mara moja) - `price` bado inaonesha ada halisi, lakini "
+            "kwenye orodha za umma (Sponsored Ads, Trending) inaonyeshwa "
+            "kitufe cha 'Pata'/'Omba' badala ya bei moja kwa moja."
+        )
+    )
+
     image = models.ImageField(
         upload_to='products/images/',
         null=True,

@@ -89,7 +89,7 @@ export default function HomePage() {
                   </p>
                   {f.product_price != null && (
                     <p className="text-sm text-blue-600 dark:text-blue-400 font-semibold mt-0.5">
-                      {formatCurrency(f.product_price)}
+                      {f.product_is_subscription ? t("home.get_label", "Pata") : formatCurrency(f.product_price)}
                     </p>
                   )}
                   <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 truncate">{f.business_name}</p>
@@ -135,7 +135,7 @@ export default function HomePage() {
                 <div className="p-2">
                   <p className="text-sm font-medium text-gray-900 dark:text-white truncate">{p.name}</p>
                   <p className="text-xs text-blue-600 dark:text-blue-400 font-semibold">
-                    {formatCurrency(p.final_price ?? p.price)}
+                    {p.is_subscription ? t("home.get_label", "Pata") : formatCurrency(p.final_price ?? p.price)}
                   </p>
                   <p className="text-[11px] text-gray-400 dark:text-gray-500 truncate">{p.business_name}</p>
                 </div>

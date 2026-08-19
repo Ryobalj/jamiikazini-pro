@@ -109,12 +109,16 @@ class FeaturedListingPublicSerializer(serializers.ModelSerializer):
     product_name = serializers.CharField(source="product.name", read_only=True, default=None)
     product_image = serializers.ImageField(source="product.image", read_only=True, default=None)
     product_price = serializers.SerializerMethodField()
+    product_is_subscription = serializers.BooleanField(
+        source="product.is_subscription", read_only=True, default=False
+    )
 
     class Meta:
         model = FeaturedListing
         fields = [
             "id", "business_id", "business_name", "business_description",
             "product_id", "product_name", "product_image", "product_price",
+            "product_is_subscription",
         ]
 
     def get_product_price(self, obj):

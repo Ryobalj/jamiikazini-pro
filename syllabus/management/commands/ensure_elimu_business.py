@@ -19,58 +19,33 @@ ELIMU_BUSINESS_NAME = "JamiiShule"
 # get_or_create spawning a duplicate business under the new name.
 ELIMU_BUSINESS_NAME_LEGACY = "Jamiikazini Elimu"
 
-# Bidhaa (tools) zinazotolewa na Jamiikazini Elimu kwa sasa. Bei ni ya
-# kumbukumbu tu (inaonesha thamani ya huduma) - malipo halisi hupitia
-# TeacherSubscription + JamiiWallet, si Product hii moja kwa moja. Zote ni
-# DIGITAL (si physical) hivyo hazina stock - `external_link` ni njia ya
-# ndani (route) inayoanzisha mchakato mzima wa kupata huduma husika
-# (usajili wa workstation -> usajili wa malipo -> matumizi ya zana).
-ELIMU_PRODUCTS = [
-    {
-        "name": "Azimio la Kazi (Scheme of Work)",
-        "description": (
-            "Zana ya kuzalisha Azimio la Kazi (scheme of work) moja kwa moja "
-            "kutoka kwa muhtasari (syllabus) rasmi wa TET, kwa somo na darasa "
-            "lolote ulilonalo."
-        ),
-        "external_link": "/teaching/scheme",
-    },
-    {
-        "name": "Andalio la Somo (Lesson Plan)",
-        "description": (
-            "Zana ya kuzalisha Andalio la Somo na Nukuu za Somo moja kwa moja "
-            "kutoka kwa Azimio la Kazi, ikiwa na muda, hatua za ufundishaji, na "
-            "maudhui kamili."
-        ),
-        "external_link": "/teaching/lesson-plan",
-    },
-    {
-        "name": "Ratiba ya Vipindi (Timetable)",
-        "description": (
-            "Zana ya kumsaidia mwalimu kuunda ratiba ya vipindi ya darasa lake "
-            "na kupata ratiba kuu ya shule nzima, ikiwa na siku, muda na "
-            "walimu wenzake, tayari kwa kupakuliwa kama PDF."
-        ),
-        "external_link": "/teaching/timetable",
-    },
-    {
-        "name": "Matokeo ya Mtihani (Exam Results)",
-        "description": (
-            "Zana ya kuandaa na kutoa matokeo ya mtihani kwa somo moja au "
-            "kwa masomo yote ya darasa, ikiwa na daraja, wastani na nafasi, "
-            "tayari kwa kupakuliwa kama PDF."
-        ),
-        "external_link": "/teaching/exam-results",
-    },
-    {
-        "name": "Jaribio/Mtihani (Quiz)",
-        "description": (
-            "Zana ya kutengeneza jaribio, mtihani wa mazoezi au mtihani "
-            "moja kwa moja kutoka kwa muhtasari rasmi, ikiwa na maswali "
-            "yaliyopangwa kwa kiwango cha ugumu na mwongozo wa majibu."
-        ),
-        "external_link": "/teaching/quiz",
-    },
+# JamiiShule's first product: ONE subscription covering every teaching
+# tool (Scheme of Work, Lesson Plan, Timetable, Exam Results, Quiz - all
+# listed inside /teaching itself), not five separate storefront listings.
+# Bei ni ya kumbukumbu tu (inaonesha thamani ya huduma) - malipo halisi
+# hupitia TeacherSubscription + JamiiWallet, si Product hii moja kwa moja.
+TEACHING_SERVICES_PRODUCT = {
+    "name": "Huduma za Kufundishia (Teaching Services)",
+    "description": (
+        "Usajili mmoja unaomsaidia mwalimu kupata zana zote za kufundishia "
+        "moja kwa moja kutoka kwa muhtasari rasmi wa TET: Azimio la Kazi, "
+        "Andalio la Somo, Ratiba ya Vipindi, Matokeo ya Mtihani, na "
+        "Majaribio/Mitihani."
+    ),
+    "external_link": "/teaching",
+}
+
+# Names this business used to list as five separate products (one per
+# tool), before they were collapsed into the single subscription product
+# above - kept here only so a prior deploy's rows (and their standing
+# FeaturedListings, which cascade-delete with the product) can be cleaned
+# up automatically rather than lingering as stale duplicate listings.
+LEGACY_PER_TOOL_PRODUCT_NAMES = [
+    "Azimio la Kazi (Scheme of Work)",
+    "Andalio la Somo (Lesson Plan)",
+    "Ratiba ya Vipindi (Timetable)",
+    "Matokeo ya Mtihani (Exam Results)",
+    "Jaribio/Mtihani (Quiz)",
 ]
 
 
@@ -144,41 +119,58 @@ class Command(BaseCommand):
                 business.description = new_description
                 business.save(update_fields=["description"])
 
-        currency = self._get_tzs_currency()
-        products_created = 0
-        products = []
-        for spec in ELIMU_PRODUCTS:
-            product, product_created = Product.objects.get_or_create(
-                business=business,
-                name=spec["name"],
-                defaults=dict(
-                    description=spec["description"],
-                    type=ProductType.DIGITAL,
-                    price=self._get_monthly_fee(),
-                    currency=currency,
-                    is_available=True,
-                    is_featured=True,
-                    language_code="sw",
-                    external_link=spec["external_link"],
-                ),
-            )
-            if not product_created and not product.is_featured:
-                # get_or_create's defaults only apply on creation - an
-                # already-existing row needs is_featured set explicitly.
-                product.is_featured = True
-                product.save(update_fields=["is_featured"])
-            products.append(product)
-            if product_created:
-                products_created += 1
-
-        if products_created:
+        # Drop any leftover one-product-per-tool rows from before the
+        # 2026-08-19 collapse into a single subscription product -
+        # FeaturedListing rows pointing at them cascade-delete too.
+        removed, _ = Product.objects.filter(
+            business=business, name__in=LEGACY_PER_TOOL_PRODUCT_NAMES
+        ).delete()
+        if removed:
             self.stdout.write(self.style.SUCCESS(
-                f"Imeundwa bidhaa {products_created} mpya za '{business.name}'."
+                f"Imeondolewa bidhaa {removed} za zamani (moja-kwa-kila-zana) za '{business.name}'."
+            ))
+
+        currency = self._get_tzs_currency()
+        spec = TEACHING_SERVICES_PRODUCT
+        product, product_created = Product.objects.get_or_create(
+            business=business,
+            name=spec["name"],
+            defaults=dict(
+                description=spec["description"],
+                type=ProductType.DIGITAL,
+                price=self._get_monthly_fee(),
+                currency=currency,
+                is_available=True,
+                is_featured=True,
+                is_subscription=True,
+                language_code="sw",
+                external_link=spec["external_link"],
+            ),
+        )
+        if not product_created:
+            # get_or_create's defaults only apply on creation - an
+            # already-existing row needs these refreshed explicitly.
+            update_fields = []
+            if not product.is_featured:
+                product.is_featured = True
+                update_fields.append("is_featured")
+            if not product.is_subscription:
+                product.is_subscription = True
+                update_fields.append("is_subscription")
+            if product.description != spec["description"]:
+                product.description = spec["description"]
+                update_fields.append("description")
+            if update_fields:
+                product.save(update_fields=update_fields)
+
+        if product_created:
+            self.stdout.write(self.style.SUCCESS(
+                f"Imeundwa bidhaa '{product.name}' ya '{business.name}'."
             ))
         else:
-            self.stdout.write(f"Bidhaa za '{business.name}' tayari zipo.")
+            self.stdout.write(f"Bidhaa '{product.name}' ya '{business.name}' tayari ipo.")
 
-        self._ensure_featured_listings(business, products)
+        self._ensure_featured_listings(business, [product])
 
     def _ensure_featured_listings(self, business, products):
         """JamiiShule is the platform's own storefront, not a paying

@@ -84,6 +84,10 @@ class ProductSerializer(serializers.ModelSerializer):
         default=False,
         help_text="Inaonesha kama bidhaa ni maalum/iliyopendekezwa."
     )
+    is_subscription = serializers.BooleanField(
+        default=False,
+        help_text="Bidhaa hii ni huduma ya usajili unaoendelea, si manunuzi ya mara moja."
+    )
 
     image = serializers.ImageField(
         required=False,
@@ -137,7 +141,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "price", "discount_price", "currency", "currency_symbol", "currency_code",
             "category", "category_name",
             "quantity_in_stock", "unit", "unit_display",
-            "is_available", "is_featured", "image", "images", "tags",
+            "is_available", "is_featured", "is_subscription", "image", "images", "tags",
             "tax_inclusive", "tax_rate", "external_link", "digital_file",
             "language_code", "language_display",
             "created_at", "updated_at",
@@ -183,7 +187,7 @@ class ProductListSerializer(serializers.ModelSerializer):
             "currency", "currency_symbol", "currency_code",
             "category", "category_name",
             "quantity_in_stock", "unit", "unit_display",
-            "image", "images", "is_featured", "is_available", "tags",
+            "image", "images", "is_featured", "is_subscription", "is_available", "tags",
             "external_link",
             "language_code", "language_display",
             "created_at"
@@ -210,7 +214,7 @@ class TrendingProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = [
             "id", "name", "slug", "price", "discount_price", "final_price",
-            "currency_symbol", "image", "is_featured",
+            "currency_symbol", "image", "is_featured", "is_subscription",
             "business_id", "business_name", "order_count",
         ]
 
@@ -241,7 +245,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
             "price", "discount_price", "currency", "currency_symbol", "currency_code",
             "category", "category_name",
             "quantity_in_stock", "unit", "unit_display",
-            "is_available", "is_featured", "image", "images", "tags",
+            "is_available", "is_featured", "is_subscription", "image", "images", "tags",
             "tax_inclusive", "tax_rate", "external_link", "digital_file",
             "language_code", "language_display",
             "created_at", "updated_at",
@@ -282,6 +286,7 @@ class ProductMinimalSerializer(serializers.ModelSerializer):
             "currency_symbol",
             "is_available",
             "is_featured",
+            "is_subscription",
             "image",
             "language_code",
         ]

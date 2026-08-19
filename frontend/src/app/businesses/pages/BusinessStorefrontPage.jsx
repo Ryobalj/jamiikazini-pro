@@ -229,7 +229,9 @@ export default function BusinessStorefrontPage() {
                 <CardContent className="p-3">
                   <p className="font-medium text-gray-900 dark:text-white truncate">{product.name}</p>
                   <p className="text-blue-600 dark:text-blue-400 font-semibold mt-1">
-                    {formatCurrency(product.final_price ?? product.price)}
+                    {product.is_subscription
+                      ? t("storefront.get_label", "Pata")
+                      : formatCurrency(product.final_price ?? product.price)}
                   </p>
                   {product.type !== "physical" ? (
                     // Digital/service products aren't inventory-constrained -
