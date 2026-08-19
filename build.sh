@@ -78,6 +78,7 @@ if [ "$SEED_DEMO_DATA" = "true" ]; then
     python manage.py seed_demo_data || echo "seed_demo_data skipped"
 else
     echo "==> Skipping demo data (SEED_DEMO_DATA not set to true)"
+    python manage.py seed_demo_data --clear-only
 fi
 
 echo "==> Build complete"
