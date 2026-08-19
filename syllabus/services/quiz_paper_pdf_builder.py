@@ -2,10 +2,23 @@
 
 import random
 
-from reportlab.platypus import KeepTogether, TableStyle
+from reportlab.lib.enums import TA_CENTER
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.platypus import KeepTogether, Paragraph, Spacer, TableStyle
 
 from syllabus.models.question import Question
 from syllabus.services.pdf_base import PDFGenerator
+
+# The council/school/subject/term/time block above "KARATASI YA MASWALI"
+# is the paper's actual heading - it must be bold and centered like the
+# title itself, not left-aligned plain text.
+_HEADING_LINE_STYLE = ParagraphStyle(
+    name="QuizHeadingLine", fontName="Helvetica-Bold", fontSize=11, leading=13,
+    alignment=TA_CENTER, spaceAfter=2,
+)
+_NAME_DATE_STYLE = ParagraphStyle(
+    name="QuizNameDateField", fontName="Helvetica-Bold", fontSize=10, leading=12,
+)
 
 LABELS = {
     "sw": {
@@ -76,18 +89,22 @@ def _marks_text(language: str, marks: int) -> str:
     return f"(Alama {marks})"
 
 
+def _add_centered_bold(pdf: PDFGenerator, text: str) -> None:
+    pdf.flowables.append(Paragraph(text, _HEADING_LINE_STYLE))
+    pdf.flowables.append(Spacer(1, 2))
+
+
 def _add_name_date_row(pdf: PDFGenerator, labels: dict) -> None:
     """Placeholder line beneath the (capitalized, centered) title: the
-    student's name starting from the left, the date at the right."""
+    student's name starting from the left, the date at the right. Field
+    labels are bold, same as every other heading on the paper."""
     avail_width = pdf.pagesize[0] - pdf.margins["left"] - pdf.margins["right"]
-    data = [[
-        f"{labels['name_field']}: " + "_" * 32,
-        f"{labels['date_field']}: " + "_" * 14,
-    ]]
+    left = Paragraph(f"{labels['name_field']}: " + "_" * 32, _NAME_DATE_STYLE)
+    right = Paragraph(f"{labels['date_field']}: " + "_" * 14, _NAME_DATE_STYLE)
+    data = [[left, right]]
     style = TableStyle([
         ("ALIGN", (0, 0), (0, 0), "LEFT"),
         ("ALIGN", (1, 0), (1, 0), "RIGHT"),
-        ("FONTSIZE", (0, 0), (-1, -1), 10),
         ("TOPPADDING", (0, 0), (-1, -1), 0),
         ("BOTTOMPADDING", (0, 0), (-1, -1), 14),
         ("LEFTPADDING", (0, 0), (-1, -1), 0),
@@ -190,14 +207,23 @@ def build_quiz_pdf(paper, language: str = "sw", show_answers: bool = False) -> b
         language=language,
     )
     pdf.set_header(workstation.school_name)
-    pdf.add_paragraph(
-        f"{exam_format.get_paper_type_display()} - {subject_version.subject.name} - {subject_version.class_level.name}",
-        small=True,
-    )
+
+    # The heading block - council, school, subject/class, term & year,
+    # time - sits right where the title itself appears: bold and
+    # centered, exactly like the title, not left-aligned plain text.
+    if workstation.district:
+        _add_centered_bold(pdf, workstation.district.upper())
+    _add_centered_bold(pdf, workstation.school_name.upper())
+    _add_centered_bold(pdf, (
+        f"{exam_format.get_paper_type_display()} - {subject_version.subject.name} - "
+        f"{subject_version.class_level.name}"
+    ).upper())
     if paper.year or paper.term:
-        pdf.add_paragraph(f"{paper.year or ''} {'Muhula ' + str(paper.term) if paper.term else ''}".strip(), small=True)
+        term_word = "Term" if language == "en" else "Muhula"
+        _add_centered_bold(pdf, f"{paper.year or ''} {term_word.upper() + ' ' + str(paper.term) if paper.term else ''}".strip())
     if exam_format.time_allowed_minutes:
-        pdf.add_paragraph(f"{labels['time']}: {exam_format.time_allowed_minutes} min", small=True)
+        time_unit = "MIN" if language == "en" else "DAKIKA"
+        _add_centered_bold(pdf, f"{labels['time'].upper()}: {exam_format.time_allowed_minutes} {time_unit}")
 
     pdf.add_title(labels["key_title"] if show_answers else labels["paper_title"])
 
