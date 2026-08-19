@@ -12,6 +12,35 @@ export default function MainLayout({ children, layout = "default", hideSidebar =
   const [sidebarOpen, setSidebarOpen] = useState(!hideSidebar);
   const layoutRef = useRef();
   const topBarRef = useRef();
+  const fixedBarRef = useRef();
+  // The fixed TopBar+TabBar's real height, measured live instead of
+  // guessed via a hardcoded pt-[80px]/[88px] - a guess that can drift out
+  // of sync (font rendering, zoom, content changes) and let page content
+  // render partly underneath the fixed bar. Starts at the old guessed
+  // value so there's no flash of 0 padding before the first measurement.
+  const [fixedBarHeight, setFixedBarHeight] = useState(88);
+
+  useEffect(() => {
+    // TopBar and TabBar are each independently position:fixed, so their
+    // shared wrapper div collapses to 0 height (out-of-flow children never
+    // contribute to a parent's auto height) - measuring the wrapper itself
+    // would always read 0. TabBar is the lower of the two, so its own
+    // bottom edge (in viewport coordinates, which already accounts for
+    // TopBar's height via TabBar's own "top" offset) is the real total to
+    // reserve. It's the wrapper's last DOM child regardless of the fixed
+    // positioning, so no ref needs to be threaded through TabBar itself.
+    const tabBarEl = fixedBarRef.current?.lastElementChild;
+    if (!tabBarEl) return;
+    const measure = () => setFixedBarHeight(tabBarEl.getBoundingClientRect().bottom);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(tabBarEl);
+    window.addEventListener("resize", measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
 
   const isModal = location.state?.modal;
   const backgroundLocation = location.state?.backgroundLocation || null;
@@ -51,13 +80,17 @@ export default function MainLayout({ children, layout = "default", hideSidebar =
     <>
       <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 relative">
         {/* Fixed TopBar + TabBar */}
-        <div className="fixed top-0 left-0 right-0 z-50">
+        <div ref={fixedBarRef} className="fixed top-0 left-0 right-0 z-50">
           <TopBar onLogoClick={handleLogoClick} ref={topBarRef} />
           <TabBar layout={layout} />
         </div>
 
         {/* Main Layout */}
-        <div className="flex flex-1 overflow-x-hidden pt-[80px] sm:pt-[88px]" ref={layoutRef}>
+        <div
+          className="flex flex-1 overflow-x-hidden"
+          style={{ paddingTop: fixedBarHeight }}
+          ref={layoutRef}
+        >
           {!hideSidebar && (
             <div className="relative z-40">
               <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} layout={layout} />
