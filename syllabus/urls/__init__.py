@@ -11,6 +11,7 @@ from syllabus.urls.my_subject_urls import urlpatterns as my_subject_routes
 from syllabus.urls.subscription_urls import urlpatterns as subscription_routes
 from syllabus.urls.timetable_pdf_urls import urlpatterns as timetable_pdf_routes
 from syllabus.urls.exam_pdf_urls import urlpatterns as exam_pdf_routes
+from syllabus.urls.quiz_urls import urlpatterns as quiz_routes
 
 urlpatterns = [
     # ===== TIMETABLE / EXAM PDF =====
@@ -35,4 +36,7 @@ urlpatterns = [
 
     # ===== SUBSCRIPTION =====
     path("", include(subscription_routes)),
+
+    # ===== QUIZ / TEST / EXAMINATION GENERATOR =====
+    path("", include(quiz_routes)),
 ]

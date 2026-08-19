@@ -7,8 +7,36 @@
       "timetable": "Ratiba Yangu",
       "scheme": "Azimio la Kazi",
       "lesson_plan": "Andalio la Somo",
-      "exam_results": "Matokeo ya Mtihani"
+      "exam_results": "Matokeo ya Mtihani",
+      "quiz": "Jaribio/Mtihani"
     }
+  },
+  "quiz": {
+    "title": "Tengeneza Jaribio, Mtihani wa Mazoezi au Mtihani",
+    "subtitle": "Chagua somo, aina ya karatasi na muundo ili kutengeneza karatasi mpya kwa hazina ya maswali",
+    "paper_type": {
+      "quiz": "Jaribio",
+      "test": "Mtihani wa Mazoezi",
+      "examination": "Mtihani"
+    },
+    "subject_label": "Somo",
+    "choose_subject": "Chagua somo...",
+    "format_label": "Muundo wa Karatasi",
+    "choose_format": "Chagua muundo...",
+    "no_formats_for_type": "Hakuna muundo uliopo kwa aina hii bado.",
+    "title_label": "Kichwa cha Karatasi (hiari)",
+    "title_placeholder": "Mfano: Jaribio la Muhula wa Kwanza",
+    "year_label": "Mwaka",
+    "term_label": "Muhula",
+    "marks": "alama",
+    "generate_button": "Tengeneza Karatasi",
+    "generating": "Inatengeneza...",
+    "download_button": "Pakua PDF",
+    "select_subject_and_format": "Tafadhali chagua somo na muundo wa karatasi",
+    "generated_success": "Karatasi imetengenezwa kikamilifu!",
+    "pdf_downloaded": "Karatasi na Mwongozo wa Majibu zimepakuliwa",
+    "not_enough_questions": "Hazina ya maswali haina maswali ya kutosha kwa muundo huu",
+    "error_generic": "Hitilafu ilitokea. Tafadhali jaribu tena."
   },
   "exam_results": {
     "title": "Matokeo ya Mtihani",

@@ -7,8 +7,36 @@
       "timetable": "My Timetable",
       "scheme": "Scheme of Work",
       "lesson_plan": "Lesson Plan",
-      "exam_results": "Exam Results"
+      "exam_results": "Exam Results",
+      "quiz": "Quiz/Exam"
     }
+  },
+  "quiz": {
+    "title": "Generate Quiz, Test, or Examination",
+    "subtitle": "Choose a subject, paper type, and format to generate a new paper from the question bank",
+    "paper_type": {
+      "quiz": "Quiz",
+      "test": "Test",
+      "examination": "Examination"
+    },
+    "subject_label": "Subject",
+    "choose_subject": "Choose subject...",
+    "format_label": "Paper Format",
+    "choose_format": "Choose format...",
+    "no_formats_for_type": "No format available for this type yet.",
+    "title_label": "Paper Title (optional)",
+    "title_placeholder": "e.g. Term One Quiz",
+    "year_label": "Year",
+    "term_label": "Term",
+    "marks": "marks",
+    "generate_button": "Generate Paper",
+    "generating": "Generating...",
+    "download_button": "Download PDF",
+    "select_subject_and_format": "Please select a subject and paper format",
+    "generated_success": "Paper generated successfully!",
+    "pdf_downloaded": "Paper and answer key downloaded",
+    "not_enough_questions": "The question bank doesn't have enough questions for this format",
+    "error_generic": "An error occurred. Please try again."
   },
   "exam_results": {
     "title": "Exam Results",

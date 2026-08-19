@@ -11,6 +11,7 @@ const teachingServices = [
   { id: "scheme", route: "/teaching/scheme", icon: "📑" },
   { id: "lesson_plan", route: "/teaching/lesson-plan", icon: "📝" },
   { id: "exam_results", route: "/teaching/exam-results", icon: "📊" },
+  { id: "quiz", route: "/teaching/quiz", icon: "🧠" },
 ];
 
 export default function TeachingHome() {

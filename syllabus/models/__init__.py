@@ -8,3 +8,6 @@ from .teacher_subscription import TeacherSubscription
 from .student import Student
 from .exam import Exam
 from .mark import Mark
+from .question import Passage, Question
+from .exam_format import ExamFormat, ExamFormatSection, ExamFormatSlot
+from .generated_paper import GeneratedPaper, GeneratedPaperQuestion

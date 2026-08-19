@@ -16,6 +16,9 @@ from syllabus.views.lesson_sentence_views import LessonSentenceViewSet
 from syllabus.views.annual_calendar_views import AnnualCalendarViewSet
 from syllabus.views.class_level_views import ClassLevelViewSet
 from syllabus.views.exam_views import StudentViewSet, ExamViewSet
+from syllabus.views.question_views import PassageViewSet, QuestionViewSet
+from syllabus.views.exam_format_views import ExamFormatViewSet
+from syllabus.views.generated_paper_views import GeneratedPaperViewSet
 
 
 router = DefaultRouter()
@@ -31,6 +34,9 @@ router.register(r"syllabus-versions", SyllabusVersionViewSet, basename="syllabus
 router.register(r"lesson-sentences", LessonSentenceViewSet, basename="lesson-sentences")
 router.register(r"annual-calendars", AnnualCalendarViewSet, basename="annualcalendar")
 router.register(r"class-levels", ClassLevelViewSet, basename="classlevel")
+router.register(r"passages", PassageViewSet, basename="passage")
+router.register(r"questions", QuestionViewSet, basename="question")
+router.register(r"exam-formats", ExamFormatViewSet, basename="examformat")
 
 
 # ===== AUTHENTICATED USERS =====
@@ -38,6 +44,7 @@ router.register(r"teacher-workstations", TeacherWorkStationViewSet, basename="te
 router.register(r"timetables", TimeTableViewSet, basename="timetable")
 router.register(r"students", StudentViewSet, basename="student")
 router.register(r"exams", ExamViewSet, basename="exam")
+router.register(r"generated-papers", GeneratedPaperViewSet, basename="generatedpaper")
 
 router.register(
     r"subject-versions-readonly",

@@ -31,6 +31,7 @@ import MyTimetable from "@/app/syllabus/pages/MyTimetable";
 import LessonPlanPage from "@/app/syllabus/pages/LessonPlanPage";
 import SchemeOfWorkPage from "@/app/syllabus/pages/SchemeOfWorkPage";
 import ExamResultsPage from "@/app/syllabus/pages/ExamResultsPage";
+import QuizGeneratorPage from "@/app/syllabus/pages/QuizGeneratorPage";
 import SyllabusWorkstationGuard from "@/app/syllabus/components/SyllabusWorkstationGuard";
 
 export const modulePages = {
@@ -100,6 +101,7 @@ export const modulePages = {
       { path: "lesson-plan", element: <SyllabusWorkstationGuard requireTimetable><LessonPlanPage /></SyllabusWorkstationGuard> }, // 🟢 Lesson Plan
       { path: "scheme", element: <SyllabusWorkstationGuard requireTimetable><SchemeOfWorkPage /></SyllabusWorkstationGuard> }, // 🟢 Scheme of Work
       { path: "exam-results", element: <SyllabusWorkstationGuard><ExamResultsPage /></SyllabusWorkstationGuard> },
+      { path: "quiz", element: <SyllabusWorkstationGuard requireTimetable><QuizGeneratorPage /></SyllabusWorkstationGuard> },
     ],
   },
 

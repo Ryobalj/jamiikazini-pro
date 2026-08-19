@@ -1,0 +1,33 @@
+{
+  "name": "Muundo wa Mtihani wa Taifa - Maarifa ya Jamii (Generic, from Std VII Mock 2026)",
+  "paper_type": "examination",
+  "time_allowed_minutes": 90,
+  "instructions": "Karatasi hii ina sehemu A, B na C zenye jumla ya maswali saba (7)\nJibu maswali yote kwenye nafasi ulizopewa\nSehemu A na B zina alama ishirini (20) kila moja na sehemu C ina alama kumi (10)\nMajibu yote yaandikwe kwa kalamu ya wino wa bluu au mweusi, isipokuwa katika michoro ambapo ni lazima kutumia penseli\nVifaa vya mawasiliano visivyo ruhusiwa havitakiwi katika chumba cha mtihani\nAndika Namba yako ya mtihani na taarifa nyingine zote muhimu katika kila ukurasa sehemu ya juu upande wa kulia",
+  "sections": [
+    {
+      "name": "SEHEMU A",
+      "order": 1,
+      "slots": [
+        {"order": 1, "question_type": "mcq", "difficulty": "easy", "count": 8, "marks_per_item": 1},
+        {"order": 2, "question_type": "mcq", "difficulty": "medium", "count": 7, "marks_per_item": 1},
+        {"order": 3, "question_type": "matching", "difficulty": "medium", "count": 5, "marks_per_item": 1}
+      ]
+    },
+    {
+      "name": "SEHEMU B",
+      "order": 2,
+      "slots": [
+        {"order": 1, "question_type": "short_answer", "difficulty": "easy", "count": 4, "marks_per_item": 2},
+        {"order": 2, "question_type": "short_answer", "difficulty": "medium", "count": 4, "marks_per_item": 2},
+        {"order": 3, "question_type": "calculation", "difficulty": "hard", "count": 2, "marks_per_item": 2}
+      ]
+    },
+    {
+      "name": "SEHEMU C",
+      "order": 3,
+      "slots": [
+        {"order": 1, "question_type": "map_diagram", "difficulty": "hard", "count": 5, "marks_per_item": 2}
+      ]
+    }
+  ]
+}

@@ -17,3 +17,6 @@ from .annual_calendar_admin import *
 from .lesson_sentence_admin import *
 from .main_competence_admin import *
 from .exam_admin import *
+from .question_admin import *
+from .exam_format_admin import *
+from .generated_paper_admin import *
