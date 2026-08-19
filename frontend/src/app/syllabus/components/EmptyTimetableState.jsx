@@ -4,7 +4,7 @@ import React from "react";
 export default function EmptyTimetableState({ t, onAdd }) {
   return (
     <div className="border border-dashed rounded-lg p-6 text-center text-gray-500">
-      <p>{t("my_timetable.no_data")}</p>
+      <p>{t("my_timetable.empty_state_message")}</p>
       {onAdd && (
         <button
           onClick={onAdd}

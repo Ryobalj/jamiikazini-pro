@@ -1,11 +1,27 @@
 # syllabus/services/exam_results_pdf_builder.py
 
-from reportlab.platypus import Table, TableStyle, Spacer
+from reportlab.platypus import Table, TableStyle, Spacer, Paragraph
 from reportlab.lib import colors
 from reportlab.lib.units import mm
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib.enums import TA_CENTER
 
 from syllabus.services.pdf_base import PDFGenerator
 from syllabus.services.exam_results_service import compute_class_results
+
+# Subject names (e.g. "Demonstrate Mastery of Basic English Language
+# Skills") are squeezed into a header cell only as wide as its 3
+# score/grade/rank sub-columns combined. Plain strings in a reportlab
+# Table don't wrap - they just overflow into the row below, which is
+# exactly what happened here. Wrapping in a Paragraph makes the header
+# grow downward instead.
+_SUBJECT_HEADER_STYLE = ParagraphStyle(
+    name="ExamSubjectHeader",
+    fontName="Helvetica-Bold",
+    fontSize=6.5,
+    leading=7.5,
+    alignment=TA_CENTER,
+)
 
 LABELS = {
     "sw": {
@@ -108,7 +124,7 @@ def build_class_report_pdf(exam, language: str = "sw") -> bytes:
 
     header_row_1 = [labels["na"], labels["student"]]
     for subject in subjects:
-        header_row_1.extend([subject.name, "", ""])
+        header_row_1.extend([Paragraph(subject.name, _SUBJECT_HEADER_STYLE), "", ""])
     header_row_1.extend([labels["total"], labels["average"], labels["grade"], labels["rank"]])
 
     header_row_2 = ["", ""]

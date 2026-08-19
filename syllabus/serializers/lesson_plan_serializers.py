@@ -85,6 +85,19 @@ class LessonPlanRequestSerializer(serializers.Serializer):
     # --------------------
     # VALIDATION
     # --------------------
+    def validate_timetable(self, value):
+        # The queryset above is deliberately unscoped (a plain Serializer's
+        # PrimaryKeyRelatedField can't see request.user at class-definition
+        # time), so ownership is enforced here instead - otherwise any
+        # authenticated user could reference another teacher's TimeTable
+        # row by guessing/enumerating its id. Admins bypass, matching
+        # IsAdminOrClientTeacher's object-level ownership pattern elsewhere.
+        request = self.context.get("request")
+        user = getattr(request, "user", None)
+        if user and getattr(user, "role", None) != "ADMIN" and value.workstation.teacher_id != user.id:
+            raise serializers.ValidationError("Ratiba hii siyo yako.")
+        return value
+
     def validate(self, data):
         timetable = data["timetable"]
         activity = data["specific_activity"]

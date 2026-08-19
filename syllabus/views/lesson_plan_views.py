@@ -1,4 +1,5 @@
 # syllabus/views/lesson_plan_views.py
+from django.conf import settings as django_settings
 from django.http import HttpResponse
 from rest_framework import generics, status
 from rest_framework.response import Response
@@ -226,7 +227,12 @@ class AutoLessonPlanCreateAPIView(generics.CreateAPIView):
             {
                 "error": "INTERNAL_SERVER_ERROR",
                 "message": "An unexpected error occurred while generating the lesson plan.",
-                "details": str(exc) if getattr(self, 'settings', None) and self.settings.DEBUG else None,
+                # NOTE: `self.settings` on a DRF view is `rest_framework.settings.api_settings`,
+                # not Django's settings - it has no DEBUG attribute, so the previous
+                # `self.settings.DEBUG` check raised AttributeError here on every
+                # non-ValidationError exception, crashing this handler itself and
+                # surfacing a raw 500 traceback instead of the intended JSON error.
+                "details": str(exc) if django_settings.DEBUG else None,
             },
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )

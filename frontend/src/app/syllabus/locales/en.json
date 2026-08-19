@@ -432,6 +432,9 @@
     "not_found": "Workstation not found"
   },
   "timetable": {
+    "timetable_required": "Timetable Required",
+    "timetable_required_message": "Before using this service, please fill in your period timetable listing the subjects you teach.",
+    "go_to_timetable": "Go to My Timetable",
     "add": "Add Timetable",
     "edit": "Edit Timetable",
     "workstation": "Teacher Workstation",

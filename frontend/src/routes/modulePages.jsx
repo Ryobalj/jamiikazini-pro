@@ -97,8 +97,8 @@ export const modulePages = {
       { index: true, element: <TeachingHome /> },
       { path: "my-subjects", element: <SyllabusWorkstationGuard><MySubjects /></SyllabusWorkstationGuard> },
       { path: "timetable", element: <SyllabusWorkstationGuard><MyTimetable /></SyllabusWorkstationGuard> }, // ✅ Hapa
-      { path: "lesson-plan", element: <SyllabusWorkstationGuard><LessonPlanPage /></SyllabusWorkstationGuard> }, // 🟢 Lesson Plan
-      { path: "scheme", element: <SyllabusWorkstationGuard><SchemeOfWorkPage /></SyllabusWorkstationGuard> }, // 🟢 Scheme of Work
+      { path: "lesson-plan", element: <SyllabusWorkstationGuard requireTimetable><LessonPlanPage /></SyllabusWorkstationGuard> }, // 🟢 Lesson Plan
+      { path: "scheme", element: <SyllabusWorkstationGuard requireTimetable><SchemeOfWorkPage /></SyllabusWorkstationGuard> }, // 🟢 Scheme of Work
       { path: "exam-results", element: <SyllabusWorkstationGuard><ExamResultsPage /></SyllabusWorkstationGuard> },
     ],
   },

@@ -59,6 +59,25 @@ class BaseSchemeService:
             })
     
     @staticmethod
+    def verify_subject_in_timetable(user, subject_version: SubjectVersion) -> None:
+        """Scheme of Work is only offered for subjects the teacher has
+        actually put on their own timetable (see TimeTable model) - without
+        this, subject_version_id was accepted unscoped, so any authenticated
+        teacher could generate a scheme for any subject in the system.
+        Admins bypass, matching IsAdminOrClientTeacher's ownership pattern
+        elsewhere in this app."""
+        if getattr(user, "role", None) == "ADMIN":
+            return
+        from syllabus.models.timetable import TimeTable
+        exists = TimeTable.objects.filter(
+            workstation__teacher=user, subject_version=subject_version
+        ).exists()
+        if not exists:
+            raise ValidationError({
+                "subject_version_id": "Somo hili halipo kwenye ratiba yako. Tafadhali liongeze kwenye ratiba yako kwanza."
+            })
+
+    @staticmethod
     def get_teacher_info(user) -> Dict:
         """Get teacher information."""
         try:
@@ -391,7 +410,9 @@ class SchemeCreateAPIView(generics.CreateAPIView):
                     {"detail": f"Subject version with ID {subject_version_id} not found."},
                     status=status.HTTP_404_NOT_FOUND
                 )
-            
+
+            BaseSchemeService.verify_subject_in_timetable(request.user, subject_version)
+
             # Get annual calendar
             logger.info(f"🔍 Looking for AnnualCalendar: {calendar_uuid}")
             try:
@@ -603,7 +624,9 @@ class SchemePreviewAPIView(generics.CreateAPIView):
                     {"detail": f"Subject version not found."},
                     status=status.HTTP_404_NOT_FOUND
                 )
-            
+
+            BaseSchemeService.verify_subject_in_timetable(request.user, subject_version)
+
             try:
                 annual_calendar = AnnualCalendar.objects.get(id=calendar_uuid)
             except AnnualCalendar.DoesNotExist:

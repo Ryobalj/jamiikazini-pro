@@ -431,6 +431,9 @@
     "not_found": "Kituo cha kazi hakijaanzishwa"
   },
   "timetable": {
+    "timetable_required": "Ratiba Inahitajika",
+    "timetable_required_message": "Kabla ya kutumia huduma hii, tafadhali jaza ratiba yako ya vipindi ukieleza masomo unayofundisha.",
+    "go_to_timetable": "Nenda kwenye Ratiba Yangu",
     "add": "Ongeza Ratiba",
     "edit": "Hariri Ratiba",
     "workstation": "Kituo cha Kazi cha Mwalimu",
