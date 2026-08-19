@@ -92,7 +92,7 @@ def generate_paper(
 
     if shortfalls:
         raise ValidationError({
-            "detail": "Hazina ya maswali haina maswali ya kutosha kwa muundo huu wa mtihani:",
+            "detail": "Hakuna maswali ya kutosha kwa muundo huu wa mtihani:",
             "shortfalls": shortfalls,
         })
 

@@ -13,7 +13,7 @@
   },
   "quiz": {
     "title": "Generate Quiz, Test, or Examination",
-    "subtitle": "Choose a subject, paper type, and format to generate a new paper from the question bank",
+    "subtitle": "Choose a subject, paper type, and format to generate a new paper",
     "paper_type": {
       "quiz": "Quiz",
       "test": "Test",
@@ -75,7 +75,7 @@
     "select_subject_and_format": "Please select a subject and paper format",
     "generated_success": "Paper generated successfully!",
     "pdf_downloaded": "Paper and answer key downloaded",
-    "not_enough_questions": "The question bank doesn't have enough questions for this format",
+    "not_enough_questions": "There aren't enough questions available yet for this format",
     "error_generic": "An error occurred. Please try again."
   },
   "exam_results": {
