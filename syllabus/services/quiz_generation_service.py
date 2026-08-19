@@ -33,11 +33,16 @@ def generate_paper(
     term: Optional[int] = None,
 ) -> GeneratedPaper:
     """Randomly assemble a paper from the question bank per exam_format's
-    sections/slots, order each section's picks easiest-first, and persist
-    the result as a GeneratedPaper. Raises ValidationError with a clear
-    per-slot shortfall message if the bank doesn't have enough matching
-    questions yet - this must fail loudly rather than silently generate a
-    short or wrong paper, since the bank is authored incrementally.
+    sections/slots, and persist the result as a GeneratedPaper. Within each
+    section, picks are grouped by question_type (in the order that type's
+    slot first appears in the section) and ordered easiest-first within
+    each group - this lets the paper introduce each question-type group
+    with its own instruction line ("Chagua herufi sahihi...", "Andika
+    Kweli au Si Kweli...") instead of interleaving types. Raises
+    ValidationError with a clear per-slot shortfall message if the bank
+    doesn't have enough matching questions yet - this must fail loudly
+    rather than silently generate a short or wrong paper, since the bank
+    is authored incrementally.
     """
     sections = list(exam_format.sections.prefetch_related("slots").order_by("order"))
     if not sections:
@@ -56,7 +61,13 @@ def generate_paper(
     for section in sections:
         picked_for_section = []
         already_picked_ids = set()
-        for slot in section.slots.order_by("order"):
+        # First-seen slot index per question_type, used below to keep
+        # same-type questions grouped together in the rendered paper (each
+        # group gets its own instruction line, e.g. "Chagua herufi sahihi
+        # ...") instead of interleaving types within a section.
+        type_group_order = {}
+        for slot_index, slot in enumerate(section.slots.order_by("order")):
+            type_group_order.setdefault(slot.question_type, slot_index)
             candidates = list(
                 base_qs.filter(question_type=slot.question_type, difficulty=slot.difficulty)
                 .exclude(id__in=already_picked_ids)
@@ -70,7 +81,7 @@ def generate_paper(
             for question in candidates:
                 picked_for_section.append((question, slot.marks_per_item))
                 already_picked_ids.add(question.id)
-        picks_by_section[section] = picked_for_section
+        picks_by_section[section] = (picked_for_section, type_group_order)
 
     if shortfalls:
         raise ValidationError({
@@ -90,8 +101,11 @@ def generate_paper(
             term=term,
             seed=seed,
         )
-        for section, picks in picks_by_section.items():
-            picks.sort(key=lambda pair: DIFFICULTY_ORDER.get(pair[0].difficulty, 1))
+        for section, (picks, type_group_order) in picks_by_section.items():
+            picks.sort(key=lambda pair: (
+                type_group_order.get(pair[0].question_type, len(type_group_order)),
+                DIFFICULTY_ORDER.get(pair[0].difficulty, 1),
+            ))
             for order, (question, marks) in enumerate(picks, start=1):
                 GeneratedPaperQuestion.objects.create(
                     generated_paper=paper,

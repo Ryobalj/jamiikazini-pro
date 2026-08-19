@@ -2,6 +2,8 @@
 
 import random
 
+from reportlab.platypus import KeepTogether, TableStyle
+
 from syllabus.models.question import Question
 from syllabus.services.pdf_base import PDFGenerator
 
@@ -14,8 +16,9 @@ LABELS = {
         "time": "Muda",
         "answer": "Jibu",
         "solution": "Mahesabu/Ufumbuzi",
-        "marks_label": "alama",
         "word_bank": "Chagua kutoka",
+        "name_field": "Jina la Mwanafunzi",
+        "date_field": "Tarehe",
     },
     "en": {
         "paper_title": "QUESTION PAPER",
@@ -25,15 +28,78 @@ LABELS = {
         "time": "Time",
         "answer": "Answer",
         "solution": "Working/Solution",
-        "marks_label": "marks",
         "word_bank": "Choose from",
+        "name_field": "Student's Name",
+        "date_field": "Date",
     },
 }
 
+# One instruction line introduces each question-type group within a
+# section (e.g. all the MCQ questions together, then all the True/False
+# questions together) - real Tanzanian exam papers always tell the pupil
+# what to do before a block of same-type questions, never assume it's
+# obvious from the question itself.
+TYPE_INSTRUCTIONS = {
+    "sw": {
+        Question.QuestionType.MCQ: "Chagua herufi ya jibu sahihi kati ya A, B, C na D kisha andika herufi hiyo kwenye mabano uliyopewa.",
+        Question.QuestionType.MATCHING: "Oanisha vipengele vya Sehemu A na Sehemu B.",
+        Question.QuestionType.FILL_BLANK: "Jaza nafasi zilizoachwa wazi kwa kutumia maneno yaliyotolewa.",
+        Question.QuestionType.SHORT_ANSWER: "Jibu maswali yafuatayo kwa ufupi.",
+        Question.QuestionType.CALCULATION: "Onesha hesabu zako kikamilifu kisha andika jibu sahihi.",
+        Question.QuestionType.SEQUENCING: "Panga hatua/vitu vifuatavyo kwa mpangilio sahihi.",
+        Question.QuestionType.TRUE_FALSE: "Andika Kweli au Si Kweli kwa kila kauli ifuatayo.",
+        Question.QuestionType.MAP_DIAGRAM: "Angalia mchoro/ramani kisha jibu maswali yafuatayo.",
+        Question.QuestionType.COMPREHENSION: "Soma kifungu kifuatacho kisha jibu maswali yafuatayo.",
+    },
+    "en": {
+        Question.QuestionType.MCQ: "Choose the letter of the correct answer among A, B, C and D and write it in the bracket provided.",
+        Question.QuestionType.MATCHING: "Match the items in Column A with those in Column B.",
+        Question.QuestionType.FILL_BLANK: "Fill in the blanks using the words provided.",
+        Question.QuestionType.SHORT_ANSWER: "Answer the following questions briefly.",
+        Question.QuestionType.CALCULATION: "Show your working clearly and write the correct answer.",
+        Question.QuestionType.SEQUENCING: "Arrange the following steps/items in the correct order.",
+        Question.QuestionType.TRUE_FALSE: "Write True or False for each of the following statements.",
+        Question.QuestionType.MAP_DIAGRAM: "Study the map/diagram then answer the following questions.",
+        Question.QuestionType.COMPREHENSION: "Read the following passage then answer the questions that follow.",
+    },
+}
 
-def _render_question(pdf, labels, index, gpq, show_answers, paper_seed):
+GROUP_LETTERS = "abcdefgh"
+
+
+def _marks_text(language: str, marks: int) -> str:
+    """(Alama 1) in Kiswahili - word then number; (1 Mark) in English -
+    number then word, pluralized. Always placed at the END of a question,
+    never before it."""
+    if language == "en":
+        return f"({marks} Mark{'s' if marks != 1 else ''})"
+    return f"(Alama {marks})"
+
+
+def _add_name_date_row(pdf: PDFGenerator, labels: dict) -> None:
+    """Placeholder line beneath the (capitalized, centered) title: the
+    student's name starting from the left, the date at the right."""
+    avail_width = pdf.pagesize[0] - pdf.margins["left"] - pdf.margins["right"]
+    data = [[
+        f"{labels['name_field']}: " + "_" * 32,
+        f"{labels['date_field']}: " + "_" * 14,
+    ]]
+    style = TableStyle([
+        ("ALIGN", (0, 0), (0, 0), "LEFT"),
+        ("ALIGN", (1, 0), (1, 0), "RIGHT"),
+        ("FONTSIZE", (0, 0), (-1, -1), 10),
+        ("TOPPADDING", (0, 0), (-1, -1), 0),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 14),
+        ("LEFTPADDING", (0, 0), (-1, -1), 0),
+        ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+    ])
+    pdf.add_table(data, col_widths=[avail_width * 0.62, avail_width * 0.38], header_row=False, style=style)
+
+
+def _render_question(pdf, labels, language, index, gpq, show_answers, paper_seed):
     question = gpq.question
-    line = f"{index}. ({gpq.marks} {labels['marks_label']}) {question.prompt}"
+    marks_text = _marks_text(language, gpq.marks)
+    line = f"<b>{index}.</b> {question.prompt} {marks_text}"
     pdf.add_paragraph(line)
 
     if question.passage_id and question.passage.text:
@@ -41,10 +107,23 @@ def _render_question(pdf, labels, index, gpq, show_answers, paper_seed):
 
     if question.question_type == Question.QuestionType.MCQ and question.options:
         letters = "ABCDEFGH"
+        # Shuffled (deterministically, per paper+question) - authors
+        # overwhelmingly write the correct choice as the first option, so
+        # displaying options in authored order made the correct answer's
+        # position trivially guessable (option A, almost every time).
+        indices = list(range(min(len(question.options), len(letters))))
+        random.Random(f"{paper_seed}:{gpq.id}:mcq").shuffle(indices)
         opts = " &nbsp;&nbsp; ".join(
-            f"{letters[i]}. {opt}" for i, opt in enumerate(question.options) if i < len(letters)
+            f"{letters[pos]}. {question.options[orig_i]}" for pos, orig_i in enumerate(indices)
         )
-        pdf.add_paragraph(opts, small=True)
+        correct_letter = ""
+        if show_answers:
+            for pos, orig_i in enumerate(indices):
+                if question.options[orig_i].strip() == question.correct_answer.strip():
+                    correct_letter = letters[pos]
+                    break
+        bracket = f"[ {correct_letter} ]" if show_answers else "[     ]"
+        pdf.add_paragraph(f"{opts} &nbsp;&nbsp;&nbsp; {bracket}", small=True)
 
     elif question.question_type == Question.QuestionType.MATCHING and question.options:
         pairs = question.options
@@ -122,22 +201,46 @@ def build_quiz_pdf(paper, language: str = "sw", show_answers: bool = False) -> b
 
     pdf.add_title(labels["key_title"] if show_answers else labels["paper_title"])
 
+    if not show_answers:
+        _add_name_date_row(pdf, labels)
+
     if exam_format.instructions and not show_answers:
         pdf.add_subsection(labels["instructions"])
         for line in exam_format.instructions.splitlines():
             if line.strip():
                 pdf.add_paragraph(line, small=True)
 
+    type_instructions = TYPE_INSTRUCTIONS.get(language, TYPE_INSTRUCTIONS["sw"])
     current_section = None
+    current_type = None
+    group_letter_index = 0
     for gpq in paper.paper_questions.select_related(
         "question", "question__passage"
     ).order_by("section_name", "order_in_section"):
         if gpq.section_name != current_section:
             current_section = gpq.section_name
+            current_type = None
+            group_letter_index = 0
             section_marks = sum(
                 q.marks for q in paper.paper_questions.filter(section_name=current_section)
             )
             pdf.add_section(f"{current_section} ({labels['section_marks']} {section_marks})")
-        _render_question(pdf, labels, gpq.order_in_section, gpq, show_answers, paper.seed)
+
+        if gpq.question.question_type != current_type:
+            current_type = gpq.question.question_type
+            letter = GROUP_LETTERS[group_letter_index] if group_letter_index < len(GROUP_LETTERS) else str(group_letter_index + 1)
+            group_letter_index += 1
+            instruction = type_instructions.get(current_type, "")
+            if instruction:
+                pdf.add_paragraph(f"<b>({letter})</b> {instruction}", small=True)
+
+        # A question's own content (prompt, options, word bank, answer) must
+        # never be split across a page break - wrap what it appends in a
+        # single KeepTogether unit.
+        start = len(pdf.flowables)
+        _render_question(pdf, labels, language, gpq.order_in_section, gpq, show_answers, paper.seed)
+        question_flowables = pdf.flowables[start:]
+        del pdf.flowables[start:]
+        pdf.flowables.append(KeepTogether(question_flowables))
 
     return pdf.build()
