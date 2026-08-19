@@ -15,6 +15,7 @@ LABELS = {
         "answer": "Jibu",
         "solution": "Mahesabu/Ufumbuzi",
         "marks_label": "alama",
+        "word_bank": "Chagua kutoka",
     },
     "en": {
         "paper_title": "QUESTION PAPER",
@@ -25,6 +26,7 @@ LABELS = {
         "answer": "Answer",
         "solution": "Working/Solution",
         "marks_label": "marks",
+        "word_bank": "Choose from",
     },
 }
 
@@ -67,7 +69,13 @@ def _render_question(pdf, labels, index, gpq, show_answers, paper_seed):
         return
 
     elif question.question_type == Question.QuestionType.FILL_BLANK and question.word_bank:
-        pdf.add_paragraph(", ".join(question.word_bank), small=True)
+        # Shuffled (deterministically, per paper+question) so the correct
+        # word isn't suspiciously first every time - a plain join() in
+        # authored order tended to list the answer first, since authors
+        # naturally write the correct word before the decoys.
+        words = list(question.word_bank)
+        random.Random(f"{paper_seed}:{gpq.id}:wb").shuffle(words)
+        pdf.add_paragraph(f"{labels['word_bank']}: {', '.join(words)}", small=True)
 
     elif question.question_type == Question.QuestionType.MAP_DIAGRAM and question.diagram_image:
         try:
