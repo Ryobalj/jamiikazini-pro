@@ -44,6 +44,14 @@ python manage.py seed_subjects || echo "seed_subjects skipped"
 python manage.py seed_class_level || echo "seed_class_level skipped"
 python manage.py seed_subject_version || echo "seed_subject_version skipped"
 
+# LessonSentence rows (intro/development/conclusion/reflection phrasing
+# used to fill in lesson-plan steps) were never seeded on deploy - without
+# them LessonSentence.pick_random() returns None and the lesson plan
+# builder crashes with a 500 the moment it tries to read a sentence field
+# off it. Idempotent (get_or_create on content), safe on every deploy.
+echo "==> Seeding lesson sentence phrasing (LessonSentence)"
+python manage.py seed_lesson_sentence || echo "seed_lesson_sentence skipped"
+
 echo "==> Seeding annual calendar (exam-week/term-break reference dates)"
 python manage.py seed_annual_calendar || echo "seed_annual_calendar skipped"
 
