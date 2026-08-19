@@ -95,7 +95,7 @@ export const modulePages = {
     dynamic: false,
     path: "/teaching",
     pages: [
-      { index: true, element: <TeachingHome /> },
+      { index: true, public: true, element: <TeachingHome /> },
       { path: "my-subjects", element: <SyllabusWorkstationGuard><MySubjects /></SyllabusWorkstationGuard> },
       { path: "timetable", element: <SyllabusWorkstationGuard><MyTimetable /></SyllabusWorkstationGuard> }, // ✅ Hapa
       { path: "lesson-plan", element: <SyllabusWorkstationGuard requireTimetable><LessonPlanPage /></SyllabusWorkstationGuard> }, // 🟢 Lesson Plan

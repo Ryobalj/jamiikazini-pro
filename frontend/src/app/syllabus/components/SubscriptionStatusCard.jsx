@@ -19,6 +19,13 @@ export default function SubscriptionStatusCard() {
   const [subscribing, setSubscribing] = useState(false);
 
   const fetchStatus = useCallback(async () => {
+    if (!localStorage.getItem("access_token")) {
+      // Anonymous visitor (e.g. on the public /teaching page) — skip the
+      // authenticated call entirely so it can't trigger a login redirect.
+      setStatus(null);
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     try {
       const res = await api.get("/syllabus/subscription/");

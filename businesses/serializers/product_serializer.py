@@ -215,7 +215,7 @@ class TrendingProductSerializer(serializers.ModelSerializer):
         fields = [
             "id", "name", "slug", "price", "discount_price", "final_price",
             "currency_symbol", "image", "is_featured", "is_subscription",
-            "business_id", "business_name", "order_count",
+            "business_id", "business_name", "order_count", "external_link",
         ]
 
     def get_final_price(self, obj):

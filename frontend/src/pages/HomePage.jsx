@@ -23,6 +23,21 @@ export default function HomePage() {
   const [categories, setCategories] = useState([]);
   const [loadingCategories, setLoadingCategories] = useState(true);
 
+  // Trending Products link straight to the service itself (e.g. /teaching)
+  // when the product has an internal external_link, instead of routing
+  // through the business storefront page as an extra click.
+  const goToProduct = (p) => {
+    if (p.external_link) {
+      if (p.external_link.startsWith("/")) {
+        navigate(p.external_link);
+      } else {
+        window.open(p.external_link, "_blank", "noopener,noreferrer");
+      }
+      return;
+    }
+    navigate(`/store/${p.business_id}`);
+  };
+
   useEffect(() => {
     api
       .get("/products/trending/")
@@ -74,7 +89,7 @@ export default function HomePage() {
                 className="text-left rounded-xl border border-amber-200 dark:border-amber-900/50 bg-amber-50 dark:bg-amber-900/10 overflow-hidden hover:shadow-md transition"
               >
                 {f.product_image ? (
-                  <img src={f.product_image} alt={f.product_name || f.business_name} className="w-full h-28 object-cover" />
+                  <img src={f.product_image} alt={f.business_name} className="w-full h-28 object-cover" />
                 ) : (
                   <div className="w-full h-28 bg-amber-100 dark:bg-amber-900/20 flex items-center justify-center">
                     <Store className="w-8 h-8 text-amber-400" />
@@ -82,17 +97,16 @@ export default function HomePage() {
                 )}
                 <div className="p-3">
                   <p className="text-xs uppercase tracking-wide text-amber-600 dark:text-amber-400 font-medium">
-                    {t("home.sponsored_tag", "Tangazo")}
+                    {t("home.sponsored_tag", "Imedhaminiwa")}
                   </p>
-                  <p className="font-medium text-gray-900 dark:text-white truncate">
-                    {f.product_name || f.business_name}
+                  <p className="font-semibold text-gray-900 dark:text-white truncate">
+                    {f.business_name}
                   </p>
-                  {f.product_price != null && (
-                    <p className="text-sm text-blue-600 dark:text-blue-400 font-semibold mt-0.5">
-                      {f.product_is_subscription ? t("home.get_label", "Pata") : formatCurrency(f.product_price)}
+                  {f.business_description && (
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">
+                      {f.business_description}
                     </p>
                   )}
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 truncate">{f.business_name}</p>
                 </div>
               </button>
             ))}
@@ -122,7 +136,7 @@ export default function HomePage() {
             {trending.map((p) => (
               <button
                 key={p.id}
-                onClick={() => navigate(`/store/${p.business_id}`)}
+                onClick={() => goToProduct(p)}
                 className="text-left rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-md transition bg-white dark:bg-gray-800"
               >
                 {p.image ? (
