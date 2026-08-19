@@ -161,7 +161,11 @@ export default function BusinessStorefrontPage() {
                 </button>
               )}
               {business.description && (
-                <p className="text-gray-600 dark:text-gray-300 mt-2">{business.description}</p>
+                <p className="text-gray-600 dark:text-gray-300 mt-2">
+                  {business.name === "JamiiShule"
+                    ? t("common:home.jamiishule_description", business.description)
+                    : business.description}
+                </p>
               )}
 
               <div className="flex flex-wrap gap-4 mt-3 text-sm text-gray-500 dark:text-gray-400">
@@ -217,7 +221,9 @@ export default function BusinessStorefrontPage() {
             {t("storefront.products_heading", "Bidhaa")}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {business.products.map((product) => (
+            {business.products.map((product) => {
+              const isTeachingServices = product.external_link === "/teaching";
+              return (
               <Card key={product.id} className="overflow-hidden">
                 {product.image ? (
                   <img src={product.image} alt={product.name} className="w-full h-40 object-cover" />
@@ -227,7 +233,14 @@ export default function BusinessStorefrontPage() {
                   </div>
                 )}
                 <CardContent className="p-3">
-                  <p className="font-medium text-gray-900 dark:text-white truncate">{product.name}</p>
+                  <p className="font-medium text-gray-900 dark:text-white truncate">
+                    {isTeachingServices ? t("common:home.teaching_services_name", product.name) : product.name}
+                  </p>
+                  {isTeachingServices && product.description && (
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-2">
+                      {t("common:home.jamiishule_description", product.description)}
+                    </p>
+                  )}
                   <p className="text-blue-600 dark:text-blue-400 font-semibold mt-1">
                     {product.is_subscription
                       ? t("storefront.get_label", "Pata")
@@ -303,7 +316,8 @@ export default function BusinessStorefrontPage() {
                   )}
                 </CardContent>
               </Card>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
