@@ -62,6 +62,49 @@ const parseJwt = (token) => {
   }
 };
 
+// Single-flight token refresh: the backend rotates AND blacklists the
+// refresh token on every use (ROTATE_REFRESH_TOKENS + BLACKLIST_AFTER_ROTATION
+// in SIMPLE_JWT), so it's single-use. If several requests 401 around the
+// same time (very common - a page firing off several API calls at once),
+// each independently calling /security/token/refresh/ with the same stale
+// token meant only the FIRST succeeded; every other one got rejected
+// (already blacklisted) and was wrongly treated as "session expired",
+// wiping tokens and hard-redirecting to login mid-task even though a
+// valid new access token already existed. All concurrent 401s now await
+// the same in-flight refresh instead of each spending their own attempt.
+let refreshPromise = null;
+
+const performTokenRefresh = async () => {
+  const refreshToken = localStorage.getItem("refresh_token");
+  if (!refreshToken) {
+    throw new Error("No refresh token");
+  }
+
+  const decoded = parseJwt(refreshToken);
+  const now = Date.now() / 1000;
+
+  if (!decoded?.exp || decoded.exp < now) {
+    throw new Error("Refresh token expired");
+  }
+
+  const refreshResponse = await axios({
+    method: 'post',
+    url: `${BASE_URL}/security/token/refresh/`,
+    data: { refresh: refreshToken },
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  const newAccessToken = refreshResponse.data.access;
+  localStorage.setItem("access_token", newAccessToken);
+  if (refreshResponse.data.refresh) {
+    localStorage.setItem("refresh_token", refreshResponse.data.refresh);
+  }
+
+  return newAccessToken;
+};
+
 // Store rate limit info
 let rateLimitInfo = {
   isLimited: false,
@@ -257,32 +300,12 @@ api.interceptors.response.use(
       originalRequest._retry = true;
       
       try {
-        const refreshToken = localStorage.getItem("refresh_token");
-        if (!refreshToken) {
-          throw new Error("No refresh token");
+        if (!refreshPromise) {
+          refreshPromise = performTokenRefresh().finally(() => {
+            refreshPromise = null;
+          });
         }
-        
-        const decoded = parseJwt(refreshToken);
-        const now = Date.now() / 1000;
-        
-        if (!decoded?.exp || decoded.exp < now) {
-          throw new Error("Refresh token expired");
-        }
-        
-        const refreshResponse = await axios({
-          method: 'post',
-          url: `${BASE_URL}/security/token/refresh/`,
-          data: { refresh: refreshToken },
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        
-        const newAccessToken = refreshResponse.data.access;
-        localStorage.setItem("access_token", newAccessToken);
-        if (refreshResponse.data.refresh) {
-          localStorage.setItem("refresh_token", refreshResponse.data.refresh);
-        }
+        const newAccessToken = await refreshPromise;
 
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return api(originalRequest);

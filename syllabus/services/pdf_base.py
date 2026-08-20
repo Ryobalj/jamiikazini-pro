@@ -29,7 +29,7 @@ class PDFGenerator:
         filename: str = "document.pdf",
         orientation: str = "portrait",
         pagesize: str = "A4",
-        encrypt: bool = True,
+        encrypt: bool = False,
         compress: bool = True,
         metadata: Optional[Dict[str, str]] = None,
         language: str = "sw",
@@ -291,7 +291,10 @@ class PDFGenerator:
         
         buffer = io.BytesIO()
 
-        # Setup encryption if enabled
+        # Setup encryption if enabled - defaults to off (see encrypt=False
+        # above): these documents (Andalio, Nukuu, Azimio, Matokeo, etc.)
+        # are meant for teachers/students to copy, edit, and reuse on any
+        # device, not locked-down output. No caller currently opts in.
         encryption = None
         if self.encrypt:
             # Installed reportlab's StandardEncryption only accepts
