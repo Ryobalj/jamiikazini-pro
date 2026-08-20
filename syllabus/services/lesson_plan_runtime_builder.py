@@ -223,7 +223,11 @@ class LessonPlanRuntimeBuilder:
             )
             teaching = f"{sentence.get_teaching(self.ctx)} {competence}"
             learning = f"{sentence.get_learning(self.ctx)} {competence}"
-            indicator = f"{sentence.get_indicator_primary(self.ctx)} {competence}"
+            # Match the is_song branch above: VIGEZO VYA UPIMAJI always
+            # confirms the learning_activity was done correctly, not the
+            # separately-worded indicator_primary text (which didn't end
+            # in "kwa usahihi"/"correctly" on its own).
+            indicator = f"{learning} {self.TRANSLATIONS['done_correctly_suffix'][lang]}"
 
         return LessonStep(
             step_name=self.TRANSLATIONS["intro_step_name"][lang],

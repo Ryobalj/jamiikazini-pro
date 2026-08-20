@@ -329,8 +329,11 @@ REST_FRAMEWORK = {
 # ===========================
 SIMPLE_JWT = {
     # Access token FUPI (usalama wa wallet); refresh ndefu ili user asi-login mara kwa mara.
-    # Frontend hufanya silent refresh, kwa hivyo dakika 30 hazileti usumbufu. Env-configurable.
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=config("ACCESS_TOKEN_MINUTES", default=30, cast=int)),
+    # Frontend hufanya silent refresh, lakini muda mfupi (dakika 30) ulikuwa
+    # ukisababisha usumbufu wa kikao katikati ya kazi ndefu (mfano
+    # kutengeneza Azimio/Andalio) - dakika 120 zinapunguza mara ngapi
+    # refresh inahitajika bila kudhoofisha sana usalama. Env-configurable.
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=config("ACCESS_TOKEN_MINUTES", default=120, cast=int)),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=config("REFRESH_TOKEN_DAYS", default=14, cast=int)),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
