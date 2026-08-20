@@ -20,3 +20,4 @@ from .exam_admin import *
 from .question_admin import *
 from .exam_format_admin import *
 from .generated_paper_admin import *
+from .master_timetable_admin import *

@@ -11,3 +11,11 @@ from .mark import Mark
 from .question import Passage, Question
 from .exam_format import ExamFormat, ExamFormatSection, ExamFormatSlot
 from .generated_paper import GeneratedPaper, GeneratedPaperQuestion
+from .master_timetable import (
+    MasterTimetableRoster,
+    TimetablePeriodSlot,
+    ActivityType,
+    TimetableTeacher,
+    TimetableTeacherAssignment,
+    TimetableSlot,
+)

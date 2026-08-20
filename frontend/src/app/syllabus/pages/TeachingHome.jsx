@@ -8,6 +8,7 @@ import SubscriptionStatusCard from "../components/SubscriptionStatusCard";
 const teachingServices = [
   { id: "my_subjects", route: "/teaching/my-subjects", icon: "📘" },
   { id: "timetable", route: "/teaching/timetable", icon: "🗓️" },
+  { id: "master_timetable", route: "/teaching/master-timetable", icon: "🏫" },
   { id: "scheme", route: "/teaching/scheme", icon: "📑" },
   { id: "lesson_plan", route: "/teaching/lesson-plan", icon: "📝" },
   { id: "exam_results", route: "/teaching/exam-results", icon: "📊" },

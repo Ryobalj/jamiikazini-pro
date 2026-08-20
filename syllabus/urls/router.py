@@ -19,6 +19,14 @@ from syllabus.views.exam_views import StudentViewSet, ExamViewSet
 from syllabus.views.question_views import PassageViewSet, QuestionViewSet
 from syllabus.views.exam_format_views import ExamFormatViewSet
 from syllabus.views.generated_paper_views import GeneratedPaperViewSet
+from syllabus.views.master_timetable_views import (
+    MasterTimetableRosterViewSet,
+    TimetablePeriodSlotViewSet,
+    ActivityTypeViewSet,
+    TimetableTeacherViewSet,
+    TimetableTeacherAssignmentViewSet,
+    TimetableSlotViewSet,
+)
 
 
 router = DefaultRouter()
@@ -51,5 +59,13 @@ router.register(
     SubjectVersionReadOnlyViewSet,
     basename="subjectversion-readonly"
 )
+
+# ===== MASTER TIMETABLE (school-wide auto-generated schedule) =====
+router.register(r"master-timetable-rosters", MasterTimetableRosterViewSet, basename="master-timetable-roster")
+router.register(r"master-timetable-period-slots", TimetablePeriodSlotViewSet, basename="master-timetable-period-slot")
+router.register(r"timetable-activity-types", ActivityTypeViewSet, basename="timetable-activity-type")
+router.register(r"master-timetable-teachers", TimetableTeacherViewSet, basename="master-timetable-teacher")
+router.register(r"master-timetable-assignments", TimetableTeacherAssignmentViewSet, basename="master-timetable-assignment")
+router.register(r"master-timetable-slots", TimetableSlotViewSet, basename="master-timetable-slot")
 
 urlpatterns = router.urls

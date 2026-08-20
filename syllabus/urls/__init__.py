@@ -12,6 +12,7 @@ from syllabus.urls.subscription_urls import urlpatterns as subscription_routes
 from syllabus.urls.timetable_pdf_urls import urlpatterns as timetable_pdf_routes
 from syllabus.urls.exam_pdf_urls import urlpatterns as exam_pdf_routes
 from syllabus.urls.quiz_urls import urlpatterns as quiz_routes
+from syllabus.urls.master_timetable_pdf_urls import urlpatterns as master_timetable_pdf_routes
 
 urlpatterns = [
     # ===== TIMETABLE / EXAM PDF =====
@@ -20,6 +21,7 @@ urlpatterns = [
     # 'timetables/<pk>/' / 'exams/<pk>/' detail regex.
     path("", include(timetable_pdf_routes)),
     path("", include(exam_pdf_routes)),
+    path("", include(master_timetable_pdf_routes)),
 
     # ===== BASE ROUTER (CRUD / VIEWSETS) =====
     path("", include(base_routes)),

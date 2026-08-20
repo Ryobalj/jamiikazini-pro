@@ -28,6 +28,7 @@ import AdminAuditPage from "@/app/payments/pages/admin/AdminAuditPage";
 import TeachingHome from "@/app/syllabus/pages/TeachingHome";
 import MySubjects from "@/app/syllabus/pages/MySubjects";
 import MyTimetable from "@/app/syllabus/pages/MyTimetable";
+import MasterTimetablePage from "@/app/syllabus/pages/MasterTimetablePage";
 import LessonPlanPage from "@/app/syllabus/pages/LessonPlanPage";
 import SchemeOfWorkPage from "@/app/syllabus/pages/SchemeOfWorkPage";
 import ExamResultsPage from "@/app/syllabus/pages/ExamResultsPage";
@@ -98,6 +99,7 @@ export const modulePages = {
       { index: true, public: true, element: <TeachingHome /> },
       { path: "my-subjects", element: <SyllabusWorkstationGuard><MySubjects /></SyllabusWorkstationGuard> },
       { path: "timetable", element: <SyllabusWorkstationGuard><MyTimetable /></SyllabusWorkstationGuard> }, // ✅ Hapa
+      { path: "master-timetable", element: <SyllabusWorkstationGuard><MasterTimetablePage /></SyllabusWorkstationGuard> },
       { path: "lesson-plan", element: <SyllabusWorkstationGuard requireTimetable><LessonPlanPage /></SyllabusWorkstationGuard> }, // 🟢 Lesson Plan
       { path: "scheme", element: <SyllabusWorkstationGuard requireTimetable><SchemeOfWorkPage /></SyllabusWorkstationGuard> }, // 🟢 Scheme of Work
       { path: "exam-results", element: <SyllabusWorkstationGuard><ExamResultsPage /></SyllabusWorkstationGuard> },
