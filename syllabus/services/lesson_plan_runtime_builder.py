@@ -39,6 +39,15 @@ class LessonPlanRuntimeBuilder:
             "en": "Reinforcement"
         },
         "conclusion_step_name": {"sw": "Tathimini", "en": "Conclusion"},
+        # VIGEZO VYA UPIMAJI should only confirm that the paired shughuli
+        # ya ujifunzaji (learning_activity) was carried out correctly, not
+        # restate curriculum text or the activity name on its own - see
+        # _development_step/_reinforcement_step, which append this to that
+        # step's own learning_activity string.
+        "done_correctly_suffix": {
+            "sw": "imefanyika kwa usahihi",
+            "en": "was done correctly",
+        },
         "next_plan_repeat": {
             "sw": "Nitarudia umahiri huu kipindi kijacho.",
             "en": "I will repeat this skill in the next session."
@@ -233,7 +242,13 @@ class LessonPlanRuntimeBuilder:
             duration=timedelta(minutes=duration_minutes),
             teaching_activity=f"{leading_text} {self.sla.name}",
             learning_activity=self.sla.name,
-            assessment_indicator=self.sla.assessment_criteria,
+            # VIGEZO VYA UPIMAJI just confirms the learning_activity above
+            # happened correctly - not the muhtasari's own assessment
+            # criteria text, which describes something different (what
+            # mastery looks like, not "was this activity carried out").
+            assessment_indicator=(
+                f"{self.sla.name} {self.TRANSLATIONS['done_correctly_suffix'][lang]}"
+            ),
         )
 
     def _reinforcement_step(self, lang: str, duration_minutes: int) -> LessonStep:
@@ -242,13 +257,18 @@ class LessonPlanRuntimeBuilder:
             self.ctx,
         )
 
+        learning_activity = f"{sentence.get_learning(self.ctx)} {self.sla.name}"
+
         return LessonStep(
             step_name=self.TRANSLATIONS["reinforcement_step_name"][lang],
             duration=timedelta(minutes=duration_minutes),
             teaching_activity=f"{sentence.get_teaching(self.ctx)} {self.sla.name}",
-            learning_activity=f"{sentence.get_learning(self.ctx)} {self.sla.name}",
+            learning_activity=learning_activity,
+            # Confirms the learning_activity above happened correctly,
+            # rather than just restating it under a different label (the
+            # previous indicator_secondary-based phrasing).
             assessment_indicator=(
-                f"{sentence.get_indicator_secondary(self.ctx)} {self.sla.name}"
+                f"{learning_activity} {self.TRANSLATIONS['done_correctly_suffix'][lang]}"
             ),
         )
 

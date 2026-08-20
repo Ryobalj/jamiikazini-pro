@@ -31,6 +31,17 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         created_count = 0
 
+        # This table is entirely CSV-authored boilerplate phrasing (never
+        # user-generated), so a full clear-and-reseed on every run is safe
+        # and keeps it exactly in sync with the CSV - previously
+        # get_or_create()'s content-based lookup meant editing wording in
+        # the CSV (e.g. removing banned "somo"/"mada" terminology) just
+        # created new rows alongside the old ones instead of replacing
+        # them, leaving stale wording live in the database indefinitely.
+        deleted, _ = LessonSentence.objects.all().delete()
+        if deleted:
+            self.stdout.write(f"Cleared {deleted} existing LessonSentence rows before reseeding.")
+
         try:
             with open(CSV_PATH, newline="", encoding="utf-8") as csvfile:
                 reader = csv.DictReader(csvfile)
