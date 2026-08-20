@@ -129,12 +129,12 @@ MONTH_NAMES = {
 # for national-exam class levels (see SchemeTimelineBuilder).
 MARUDIO_CONTENT = {
     "main_competence": "REVISION",
-    "specific_competence": "Review and revision",
-    "learning_activity": "Reviewing topics taught",
-    "student_activity": "Doing revision exercises",
-    "methodology": "Discussion and exercises",
+    "specific_competence": "Revision of challenging topics",
+    "learning_activity": "Reviewing topics students found challenging",
+    "student_activity": "Doing tests and revision exercises on challenging topics",
+    "methodology": "Tests, practice exams and discussion",
     "assessment_criteria": "Participation and accuracy",
-    "teaching_aids": "Practice cards",
+    "teaching_aids": "Test papers, practice cards",
     "references": "Reference materials",
 }
 EXAM_PREP_CONTENT = {

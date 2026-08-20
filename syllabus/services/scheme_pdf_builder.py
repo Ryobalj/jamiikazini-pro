@@ -198,6 +198,10 @@ class SchemePDFBuilder:
         try:
             self._build_header_page()
             self._build_objectives()
+            # The school-info header and MALENGO belong on their own cover
+            # page - the main table always starts fresh on page 2 rather
+            # than wherever it happens to land after the objectives list.
+            self.pdf.add_page_break()
             self._build_main_table()
             self._build_summary_footer()
             

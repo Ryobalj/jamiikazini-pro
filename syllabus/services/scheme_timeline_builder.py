@@ -145,6 +145,18 @@ class SchemeTimelineBuilder:
     # across more of the year, but never below 75% of the nominal rate.
     MIN_PERIODS_PER_WEEK_RATIO = 0.75
 
+    # For a normal (non exam-prep) class, MARUDIO exists to give the class
+    # a short revision tail, not to fill however many weeks happen to be
+    # left over once the syllabus is exhausted at the (already-reduced)
+    # effective pace - a scheme with 8+ weeks of generic "MARUDIO" rows is
+    # not a real teaching plan. When more than this many weeks would be
+    # left over, real topic periods are stretched (see
+    # _adjust_periods_for_available_weeks) to fill the difference instead,
+    # so only a short, genuine revision tail remains. National-exam class
+    # levels are exempt - their long post-syllabus stretch is a deliberate,
+    # dedicated exam-prep period, not overflow filler.
+    MAX_MARUDIO_WEEKS = 3
+
     # DRS IV/VI/VII sit national exams — their syllabus content must be
     # forced to complete by end of August so the remaining term is spent on
     # MARUDIO (revision) and MAANDALIZI YA MTIHANI WA TAIFA (national exam
@@ -241,12 +253,13 @@ class SchemeTimelineBuilder:
     
     def _requires_national_exam_prep(self) -> bool:
         """Whether this scheme should force its syllabus content to finish
-        by end of August. Requires BOTH: (1) the class level is eligible
-        (national-exam classes: DRS IV, VII always; DRS VI only from
-        academic year 2026 onward), AND (2) the teacher explicitly opted
-        in via force_exam_prep_schedule — this is a choice, not something
-        the system imposes automatically."""
-        if not self.subject_info.get("force_exam_prep_schedule", False):
+        by end of August. Applies automatically to every eligible class
+        level (national-exam classes: DRS IV, VII always; DRS VI only
+        from academic year 2026 onward) — those classes must finish
+        content early to leave real time for revision and mock exams
+        before the national exam. A teacher can still explicitly opt out
+        via force_exam_prep_schedule=False for a specific Azimio."""
+        if self.subject_info.get("force_exam_prep_schedule", True) is False:
             return False
 
         return self._is_national_exam_class_level()
@@ -362,7 +375,79 @@ class SchemeTimelineBuilder:
             # Enough weeks at the nominal rate — use the (possibly lower,
             # floored at 75% of nominal) effective rate so content spreads
             # across more of the year instead of finishing early.
-            return self.activities, round(self.effective_periods_per_week, 1)
+            effective_ppw = round(self.effective_periods_per_week, 1)
+
+            # Even at the reduced effective pace, the syllabus may still
+            # finish with far more than MAX_MARUDIO_WEEKS left over (e.g.
+            # a light-content subject in a class with many study weeks).
+            # For non exam-prep classes, stretch every activity's periods
+            # proportionally so real topic content fills the year down to
+            # a short revision tail, instead of leaving a long run of
+            # generic MARUDIO filler weeks.
+            if not self.requires_exam_prep and effective_ppw > 0 and self.total_periods_needed > 0:
+                # Must match _create_study_weeks_schedule()'s own rounding
+                # exactly (it allocates round(effective_periods_per_week)
+                # whole periods per real study week) - using a different
+                # precision here would compute a capacity ceiling that
+                # doesn't match what the distributor can actually place.
+                weekly_capacity = max(1, round(self.effective_periods_per_week))
+                target_content_weeks = self.available_study_weeks - self.MAX_MARUDIO_WEEKS
+                target_total_periods = target_content_weeks * weekly_capacity
+
+                if target_total_periods > self.total_periods_needed:
+                    stretch_ratio = target_total_periods / self.total_periods_needed
+
+                    # Largest-remainder apportionment: scaling every
+                    # activity independently and rounding each one (up or
+                    # down) drifts the summed total away from
+                    # target_total_periods - with enough small activities
+                    # that drift can overshoot the real weekly capacity by
+                    # a lot, and _distribute_activities_to_weeks() silently
+                    # drops whatever doesn't fit in the last week rather
+                    # than erroring. Floor every activity first (keeping at
+                    # least 1 period each so no topic vanishes), then hand
+                    # out the remaining budget one period at a time to the
+                    # activities with the largest fractional remainder,
+                    # so the summed total lands exactly on budget.
+                    exact = [a.periods_needed * stretch_ratio for a in self.activities]
+                    floored = [max(1, math.floor(x)) for x in exact]
+                    remainder_budget = max(0, round(target_total_periods) - sum(floored))
+                    order = sorted(
+                        range(len(exact)),
+                        key=lambda i: exact[i] - math.floor(exact[i]),
+                        reverse=True,
+                    )
+                    for i in order[:remainder_budget]:
+                        floored[i] += 1
+
+                    stretched_activities = [
+                        Activity(
+                            index=a.index,
+                            main_competence=a.main_competence,
+                            main_order=a.main_order,
+                            specific_competence=a.specific_competence,
+                            specific_order=a.specific_order,
+                            learning_activity=a.learning_activity,
+                            learning_order=a.learning_order,
+                            specific_learning=a.specific_learning,
+                            specific_learning_order=a.specific_learning_order,
+                            periods_needed=periods,
+                            method=a.method,
+                            assessment_criteria=a.assessment_criteria,
+                            teaching_aids=a.teaching_aids,
+                            references=a.references,
+                        )
+                        for a, periods in zip(self.activities, floored)
+                    ]
+                    stretched_total = sum(floored)
+                    logger.info(
+                        f"🔧 Stretched periods to cap MARUDIO at {self.MAX_MARUDIO_WEEKS} weeks: "
+                        f"{self.total_periods_needed} → {stretched_total} "
+                        f"(target {round(target_total_periods)}, x{round(stretch_ratio, 2)})"
+                    )
+                    return stretched_activities, effective_ppw
+
+            return self.activities, effective_ppw
 
         # Not enough weeks, need to adjust
         logger.warning(f"⚠️ Not enough weeks! Required: {self.required_weeks}, Available: {self.available_study_weeks}")

@@ -241,7 +241,7 @@ class BaseSchemeService:
                     user,
                     balance_weekly: bool = True,
                     language: Optional[str] = None,
-                    force_exam_prep_schedule: bool = False) -> Any:
+                    force_exam_prep_schedule: bool = True) -> Any:
         """Build a scheme from models using SchemeTimelineBuilder."""
         try:
             # Determine language
@@ -264,9 +264,12 @@ class BaseSchemeService:
                 language=lang,
             )
             subject_info = cls.get_subject_info(subject_version, annual_calendar, lang)
-            # Teacher-chosen opt-in: only meaningful for national-exam class
-            # levels (see SchemeTimelineBuilder.NATIONAL_EXAM_CLASS_LEVELS) —
-            # ignored otherwise.
+            # Only meaningful for national-exam class levels (see
+            # SchemeTimelineBuilder.NATIONAL_EXAM_CLASS_LEVELS) — ignored
+            # otherwise. Defaults to True: those classes must finish
+            # syllabus content early to leave real time for revision and
+            # mock exams before the national exam, so this is opt-OUT
+            # (pass force_exam_prep_schedule=False) rather than opt-in.
             subject_info["force_exam_prep_schedule"] = force_exam_prep_schedule
             
             # Extract activities from subject version
@@ -428,7 +431,7 @@ class SchemeCreateAPIView(generics.CreateAPIView):
             # Extract other parameters
             balance_weekly = data.get("balance_weekly", True)
             language = data.get("language")
-            force_exam_prep_schedule = bool(data.get("force_exam_prep_schedule", False))
+            force_exam_prep_schedule = bool(data.get("force_exam_prep_schedule", True))
 
             # Log syllabus status (for information only, not for restriction)
             if subject_version.syllabus_version:
@@ -642,7 +645,7 @@ class SchemePreviewAPIView(generics.CreateAPIView):
                 user=request.user,
                 balance_weekly=data.get("balance_weekly", True),
                 language=data.get("language"),
-                force_exam_prep_schedule=bool(data.get("force_exam_prep_schedule", False))
+                force_exam_prep_schedule=bool(data.get("force_exam_prep_schedule", True))
             )
             
             # Convert to response

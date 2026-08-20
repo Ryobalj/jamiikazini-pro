@@ -114,12 +114,12 @@ MONTH_NAMES = {
 # for national-exam class levels (see SchemeTimelineBuilder).
 MARUDIO_CONTENT = {
     "main_competence": "MARUDIO",
-    "specific_competence": "Kukagua na kufanya marudio",
-    "learning_activity": "Kukagua mada zilizofunzwa",
-    "student_activity": "Kufanya mazoezi ya marudio",
-    "methodology": "Majadiliano na mazoezi",
+    "specific_competence": "Marudio ya mada zenye changamoto",
+    "learning_activity": "Kukagua na kurudia mada zilizowapa wanafunzi changamoto",
+    "student_activity": "Kufanya majaribio na mazoezi ya marudio ya mada zenye changamoto",
+    "methodology": "Majaribio, mitihani ya mazoezi na majadiliano",
     "assessment_criteria": "Ushiriki na usahihi",
-    "teaching_aids": "Kadi za mazoezi",
+    "teaching_aids": "Karatasi za majaribio, kadi za mazoezi",
     "references": "Vyanzo vya kumbukumbu",
 }
 EXAM_PREP_CONTENT = {

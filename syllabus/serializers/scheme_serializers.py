@@ -21,11 +21,11 @@ class SchemeRequestSerializer(serializers.Serializer):
     annual_calendar_id = serializers.UUIDField()
     balance_weekly = serializers.BooleanField(default=True)
     # Only meaningful for national-exam class levels (DRS IV/VII always,
-    # DRS VI from 2026) — lets the teacher choose whether this Azimio
-    # should force all content to finish by end of August (leaving
-    # September onward for MARUDIO/exam prep) or use the normal full-year
-    # distribution. Defaults to the normal full-year behavior.
-    force_exam_prep_schedule = serializers.BooleanField(default=False, required=False)
+    # DRS VI from 2026) — those classes must finish syllabus content by
+    # end of August by default (leaving September onward for MARUDIO/exam
+    # prep), so this is opt-OUT rather than opt-in. Ignored for every
+    # other class level regardless of its value.
+    force_exam_prep_schedule = serializers.BooleanField(default=True, required=False)
     language = serializers.ChoiceField(
         choices=[("sw", "Swahili"), ("en", "English")],
         required=False
