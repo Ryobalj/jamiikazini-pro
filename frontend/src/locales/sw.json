@@ -442,14 +442,55 @@
         "note": "Kikoa kidogo maalum si cha lazima kabisa — duka lako pia linabaki kufikika kwenye kiungo chake cha kawaida cha /store/ au /institutions/ kwenye tovuti kuu."
       },
       "teaching": {
-        "p1": "Sehemu ya Ufundishaji ni kwa walimu, ikiwaruhusu kusimamia masomo na madarasa wanayofundisha na kutengeneza kiotomatiki mipango ya somo na mipango ya kazi badala ya kuandika kutoka mwanzo.",
-        "steps": [
-          "Nyumbani kwa Ufundishaji — kizinduzi chenye vigae vinne: Masomo Yangu, Ratiba, Mpango wa Somo, na Mpango wa Kazi.",
-          "Masomo Yangu — kwanza sanidi kituo chako cha kazi (shule, wilaya, kata), kisha ona masomo unayofundisha ukiwa na idadi ya wanafunzi kutoka ratiba yako, na uende moja kwa moja kutengeneza mpango wa somo au mpango wa kazi kwa lolote kati yao.",
-          "Ratiba Yangu — ongeza, hariri, au ondoa masomo unayofundisha, kwa darasa gani, na vipindi vingapi kwa wiki.",
-          "Mpango wa Somo — chagua somo na shughuli ya kujifunza, jaza maelezo ya somo, na utengeneze mpango wa somo tayari.",
-          "Mpango wa Kazi — chagua somo na kalenda ya kitaaluma, kisha onyesha kwa muhtasari, tengeneza, au pakua ratiba nzima ya muhula wa ufundishaji kama PDF."
-        ]
+        "p1": "Sehemu ya Huduma za Kufundishia ni kwa walimu, ikiwaruhusu kusimamia masomo na madarasa wanayofundisha na kutengeneza kiotomatiki mipango ya somo, ratiba, na matokeo badala ya kuandika kutoka mwanzo. Fuata mpangilio hapa chini kwa mara yako ya kwanza - kila zana inajengwa juu ya iliyotangulia.",
+        "subheading1": "Hatua ya 1: Weka Kituo chako cha Kazi",
+        "steps1": [
+          "Fungua 'Huduma za Kufundishia' kutoka ukurasa wa nyumbani - hii ndiyo kizinduzi cha zana zote za ufundishaji.",
+          "Mara ya kwanza, utaombwa kuweka Kituo chako cha Kazi: jina la shule, wilaya, kata, na mkoa. Hii inahitajika kabla ya zana yoyote nyingine kufanya kazi."
+        ],
+        "subheading2": "Hatua ya 2: Ratiba Yangu (lazima kabla ya kuendelea)",
+        "steps2": [
+          "Bofya 'Ratiba Yangu' - hapa ndipo unapoongeza kila kipindi unachofundisha: chagua somo (kutoka muhtasari rasmi wa TET), darasa, siku ya wiki, na namba ya kipindi.",
+          "Muhimu: zana za Azimio la Kazi na Andalio na Nukuu za Somo hazitafunguka hadi uwe na angalau kipindi kimoja kilichowekwa - usiruke hatua hii.",
+          "Kutoka hapa unaweza pia kupakua ratiba yako binafsi (PDF au Excel), au ratiba kuu ya shule ikiwa walimu wenzako pia wana vituo vya kazi shuleni hapo hapo."
+        ],
+        "subheading3": "Masomo Yangu",
+        "steps3": [
+          "Baada ya kujaza ratiba yako, fungua 'Masomo Yangu' kuona muhtasari wa kila somo unalofundisha, idadi ya wanafunzi, na vipindi vilivyopangwa.",
+          "Kutoka hapa unaweza kwenda moja kwa moja kutengeneza Azimio la Kazi au Andalio la Somo kwa somo lolote, bila kutafuta upya."
+        ],
+        "subheading4": "Ratiba Kuu ya Shule (hiari - kwa kujenga ratiba ya shule nzima)",
+        "steps4": [
+          "Hii ni tofauti na 'Ratiba Yangu' - tumia hii ukitaka kujenga ratiba ya shule nzima, siyo yako binafsi tu.",
+          "Ongeza walimu wenzako (jina kamili na herufi za awali, mfano 'DR') na ugawe kila mmoja masomo na madarasa anayofundisha - hawahitaji akaunti yao wenyewe.",
+          "Weka shughuli za shule nzima kama mapumziko au dini kwa siku/kipindi maalum, kisha bofya 'Tengeneza Ratiba' - mfumo hupanga vipindi vyote kiotomatiki bila kumgonganisha mwalimu yeyote kati ya madarasa mawili kwa wakati mmoja.",
+          "Angalia, chuja kwa mwalimu au darasa, kisha pakua kama PDF au Excel."
+        ],
+        "subheading5": "Azimio la Kazi (Scheme of Work)",
+        "steps5": [
+          "Chagua somo (kutoka Masomo Yangu au moja kwa moja kwenye 'Azimio la Kazi'), kisha bofya 'Tengeneza.'",
+          "Mfumo hugawa mada za muhtasari rasmi katika wiki za mwaka wa masomo kiotomatiki, ukizingatia likizo na mitihani ya shule.",
+          "Kagua matokeo, kisha pakua kama PDF au Excel kuwasilisha shuleni."
+        ],
+        "subheading6": "Andalio na Nukuu za Somo (Lesson Plan & Notes)",
+        "steps6": [
+          "Chagua somo, kisha shughuli mahususi ya kujifunza kutoka muhtasari.",
+          "Jaza maelezo ya somo (idadi ya wanafunzi waliohudhuria, muda, n.k.), kisha bofya 'Tengeneza.'",
+          "Utapata nyaraka mbili: Andalio la Somo (mpango wako wa jinsi utakavyofundisha) na Nukuu za Somo (maelezo ya kina kwa wanafunzi kuyahifadhi na kujisomea baadaye) - zote mbili zinapakuliwa pamoja."
+        ],
+        "subheading7": "Matokeo ya Mtihani (Exam Results)",
+        "steps7": [
+          "Bofya 'Unda Mtihani' - chagua darasa kwanza; masomo yanayoonekana kwenye kisanduku cha kuchagua yatabadilika kulingana na darasa hilo, kisha jaza jina la mtihani, muhula, na mwaka.",
+          "Ongeza wanafunzi wa darasa hilo mmoja mmoja (jina na jinsia). Unaweza kuhariri jina au kumfuta mwanafunzi wakati wowote kwa vitufe vilivyo kwenye kila mstari wake.",
+          "Jaza alama za kila mwanafunzi kwa kila somo kwenye jedwali, kisha bofya 'Hifadhi Alama.'",
+          "Muhtasari wa matokeo (jumla, wastani, daraja, nafasi) huonekana papo hapo. Pakua matokeo ya somo moja au darasa zima kama PDF au Excel."
+        ],
+        "subheading8": "Jaribio/Mtihani (Quiz Generator)",
+        "steps8": [
+          "Chagua somo, aina ya karatasi (Jaribio fupi, Mtihani wa Mazoezi, au Mtihani kamili), na muundo: Otomatiki (muundo uliotayarishwa awali) au Mwenyewe (unajenga sehemu na aina za maswali mwenyewe).",
+          "Bofya 'Tengeneza Karatasi' kupata karatasi ya maswali pamoja na mwongozo wa majibu, tayari kupakuliwa kama PDF."
+        ],
+        "note": "Mpangilio wa mara ya kwanza: Kituo cha Kazi → Ratiba Yangu → kisha zana nyingine yoyote. Azimio la Kazi na Andalio na Nukuu za Somo havitafunguka bila ratiba iliyojazwa."
       }
     },
     "contact_label": "Wasiliana na Msaada"

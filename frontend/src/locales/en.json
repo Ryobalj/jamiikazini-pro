@@ -462,14 +462,55 @@
         "note": "The custom subdomain is entirely optional — your storefront also stays reachable at its regular /store/ or /institutions/ link on the main site."
       },
       "teaching": {
-        "p1": "The Teaching module is for teachers, letting them manage the subjects and classes they teach and automatically generate lesson plans and schemes of work instead of writing them from scratch.",
-        "steps": [
-          "Teaching Home — a launcher with four tiles: My Subjects, Timetable, Lesson Plan, and Scheme of Work.",
-          "My Subjects — first set up your workstation (school, district, ward), then see the subjects you teach with student counts pulled from your timetable, and jump straight to generating a lesson plan or scheme of work for any of them.",
-          "My Timetable — add, edit, or remove which subjects you teach, for which class, and how many periods a week.",
-          "Lesson Plan — pick a subject and a learning activity, fill in the lesson details, and generate a ready lesson plan.",
-          "Scheme of Work — pick a subject and academic calendar, then preview, generate, or download a full term's teaching schedule as a PDF."
-        ]
+        "p1": "The Teaching Services section is for teachers, letting you manage the subjects and classes you teach and auto-generate lesson plans, timetables, and results instead of writing them from scratch. Follow this order the first time - each tool builds on the one before it.",
+        "subheading1": "Step 1: Set up your Workstation",
+        "steps1": [
+          "Open 'Teaching Services' from the home page - this is the launcher for every teaching tool.",
+          "The first time, you'll be asked to set up your Workstation: school name, district, ward, and region. This is required before any other tool will work."
+        ],
+        "subheading2": "Step 2: My Timetable (required before continuing)",
+        "steps2": [
+          "Click 'My Timetable' - this is where you add every period you teach: pick a subject (from the official TET syllabus), a class, a day of the week, and a period number.",
+          "Important: the Scheme of Work and Lesson Plan & Notes tools won't open until you have at least one period set - don't skip this step.",
+          "From here you can also download your own timetable (PDF or Excel), or the school's master timetable if your colleagues also have workstations at the same school."
+        ],
+        "subheading3": "My Subjects",
+        "steps3": [
+          "Once your timetable is filled in, open 'My Subjects' to see a summary of every subject you teach, student counts, and scheduled periods.",
+          "From here you can jump straight into generating a Scheme of Work or Lesson Plan for any subject, without searching again."
+        ],
+        "subheading4": "School Master Timetable (optional - for building a whole-school schedule)",
+        "steps4": [
+          "This is different from 'My Timetable' - use it if you need to build a schedule for the whole school, not just yourself.",
+          "Add your fellow teachers (full name and initials, e.g. 'DR') and assign each one the subjects and classes they teach - they don't need their own account.",
+          "Set whole-school activities like breaks or religious periods for specific days/periods, then click 'Generate Timetable' - the system schedules every period automatically without ever double-booking a teacher across two classes at once.",
+          "View it filtered by teacher or class, then download as PDF or Excel."
+        ],
+        "subheading5": "Scheme of Work",
+        "steps5": [
+          "Select a subject (from My Subjects or directly in 'Scheme of Work'), then click 'Generate.'",
+          "The system spreads the official syllabus topics across the weeks of the school year automatically, accounting for school holidays and exams.",
+          "Review the result, then download it as PDF or Excel to submit at school."
+        ],
+        "subheading6": "Lesson Plan & Notes",
+        "steps6": [
+          "Select a subject, then a specific learning activity from the syllabus.",
+          "Fill in the lesson details (number of students present, duration, etc.), then click 'Generate.'",
+          "You'll get two documents: the Lesson Plan (your plan for how you'll teach) and the Lesson Notes (detailed content for students to keep and study from later) - both download together."
+        ],
+        "subheading7": "Exam Results",
+        "steps7": [
+          "Click 'Create Exam' - choose the class first; the subjects shown in the picker will change to match that class - then fill in the exam name, term, and year.",
+          "Add the class's students one at a time (name and gender). You can edit a name or delete a student at any time using the buttons on their row.",
+          "Enter each student's score per subject in the table, then click 'Save Marks.'",
+          "A results summary (total, average, grade, rank) appears immediately. Download results for a single subject or the whole class as PDF or Excel."
+        ],
+        "subheading8": "Quiz/Exam Generator",
+        "steps8": [
+          "Choose a subject, paper type (Quiz, Practice Test, or full Examination), and format: Automated (pre-built structure) or Manual (you build the sections and question types yourself).",
+          "Click 'Generate Paper' to get the question paper plus an answer key, ready to download as PDF."
+        ],
+        "note": "First-time order: Workstation → My Timetable → then any other tool. Scheme of Work and Lesson Plan & Notes won't open without a filled-in timetable."
       }
     },
     "contact_label": "Contact Support"

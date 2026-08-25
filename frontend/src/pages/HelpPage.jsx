@@ -201,7 +201,23 @@ export default function HelpPage() {
 
       <Section id="teaching" num={12} label={t("help.toc.teaching")}>
         <p>{b("teaching.p1")}</p>
-        <Steps items={arr("teaching.steps")} />
+        <SubHeading>{b("teaching.subheading1")}</SubHeading>
+        <Steps items={arr("teaching.steps1")} />
+        <SubHeading>{b("teaching.subheading2")}</SubHeading>
+        <Steps items={arr("teaching.steps2")} />
+        <SubHeading>{b("teaching.subheading3")}</SubHeading>
+        <Steps items={arr("teaching.steps3")} />
+        <SubHeading>{b("teaching.subheading4")}</SubHeading>
+        <Steps items={arr("teaching.steps4")} />
+        <SubHeading>{b("teaching.subheading5")}</SubHeading>
+        <Steps items={arr("teaching.steps5")} />
+        <SubHeading>{b("teaching.subheading6")}</SubHeading>
+        <Steps items={arr("teaching.steps6")} />
+        <SubHeading>{b("teaching.subheading7")}</SubHeading>
+        <Steps items={arr("teaching.steps7")} />
+        <SubHeading>{b("teaching.subheading8")}</SubHeading>
+        <Steps items={arr("teaching.steps8")} />
+        <Note kind={t("help.note_label", { defaultValue: "Note" })}>{b("teaching.note")}</Note>
       </Section>
 
       <Section id="payments" num={13} label={t("help.toc.payments")}>
