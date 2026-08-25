@@ -1,7 +1,8 @@
 // src/app/syllabus/components/LessonDetailsForm.jsx
 import React from "react";
+import RegisteredPupilsEditor from "./RegisteredPupilsEditor";
 
-const LessonDetailsForm = ({ form, setForm, currentSubjectInfo, t }) => {
+const LessonDetailsForm = ({ form, setForm, currentSubjectInfo, selectedTimetable, setSelectedTimetable, t }) => {
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm((prev) => ({ 
@@ -15,7 +16,18 @@ const LessonDetailsForm = ({ form, setForm, currentSubjectInfo, t }) => {
       <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
         {t("lesson_plan.lesson_details")}
       </h2>
-      
+
+      {currentSubjectInfo && (
+        <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+          <RegisteredPupilsEditor
+            selectedTimetable={selectedTimetable}
+            setSelectedTimetable={setSelectedTimetable}
+            currentSubjectInfo={currentSubjectInfo}
+            t={t}
+          />
+        </div>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Date */}
         <div>

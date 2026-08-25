@@ -100,6 +100,8 @@ export default function LessonPlanPage() {
               form={form}
               setForm={setForm}
               currentSubjectInfo={currentSubjectInfo}
+              selectedTimetable={selectedTimetable}
+              setSelectedTimetable={setSelectedTimetable}
               t={t}
             />
           </div>
