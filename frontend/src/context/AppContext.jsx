@@ -135,7 +135,7 @@ export const AppContextProvider = ({ children }) => {
 
       setShowConsentModal(true);
       setAwaitingConsent(true);
-    }, 5 * 60 * 1000); // every 5 minutes
+    }, 15 * 60 * 1000); // every 15 minutes
 
     return () => clearInterval(interval);
   }, [awaitingConsent]);

@@ -338,7 +338,7 @@
         "p1": "Muhtasari · Bidhaa/Huduma (zenye ngazi za picha) · Matawi · Oda · Maombi/Ofa · Uagizaji · Mavuno · Zabuni · Tangaza · Mipangilio.",
         "subheading3": "Uthibitisho (TIN / BRELA)",
         "p2": "Biashara zilizothibitishwa hupata alama ya uaminifu na kuonekana katika \"Biashara Zilizothibitishwa\" kwenye ukurasa wa nyumbani. Kutoka Mipangilio ya Biashara → \"Omba Uthibitisho,\" chagua TIN kuthibitisha Namba yako ya Utambulisho wa Kodi dhidi ya rekodi za TRA, au BRELA kuthibitisha usajili wako rasmi wa kampuni — zote mbili ni huru na si za lazima.",
-        "note": "Uthibitisho si wa lazima kabisa — biashara zisizothibitishwa zinaweza kusajili, kuorodhesha, na kuuza kawaida. Huongeza tu alama ya uaminifu inayoonekana kwa wanunuzi.",
+        "note": "Uthibitisho hauhitajiki kusajili biashara wala kuorodhesha bidhaa/huduma — hilo linawezekana kawaida. Hata hivyo MANUNUZI hayakamiliki kwa biashara isiyothibitishwa: mfumo huzuia oda hadi biashara ithibitishwe (TIN au BRELA). Uthibitisho pia huongeza alama ya uaminifu inayoonekana kwa wanunuzi.",
         "subheading4": "Kutangaza biashara yako",
         "p3": "Kutoka kichupo cha \"Tangaza,\" lipa ili kuonyesha biashara yako yote au bidhaa moja kwenye ukurasa wa nyumbani kwa idadi maalum ya siku (7, 14, au 30). Ombi linabaki \"Linasubiri Malipo\" hadi ankara itakapolipwa, kisha linakuwa hai kwa muda uliochaguliwa.",
         "subheading5": "Maombi, ofa, na uagizaji",
@@ -404,7 +404,7 @@
         "items": [
           {
             "q": "Je, nahitaji kuthibitisha utambulisho wangu ili kutumia JamiiKazini?",
-            "a": "Hapana. Usajili, uvinjari, ununuzi, na uuzaji vyote hufanya kazi bila hiyo. Uthibitisho si wa lazima na huongeza alama ya uaminifu."
+            "a": "Kwa usajili na uvinjari — hapana. Lakini kwa KUNUNUA na KUUZA — ndiyo: mnunuzi lazima athibitishe kitambulisho chake (NIDA) na namba ya simu, na biashara anayonunua kutoka lazima iwe imethibitishwa (TIN/BRELA), kabla oda haijakamilika. Bila hivyo unaweza tu kuorodhesha bidhaa/huduma na kuvinjari."
           },
           {
             "q": "Je, ninaweza kutumia JamiiKazini kwa lugha yangu mwenyewe?",

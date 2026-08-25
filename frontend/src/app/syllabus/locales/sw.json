@@ -106,7 +106,10 @@
     "download_subject_pdf": "Pakua Matokeo ya Somo (PDF)",
     "download_subject_xlsx": "Pakua Matokeo ya Somo (XLS)",
     "download_class_pdf": "Pakua Matokeo ya Darasa Zima (PDF)",
-    "download_class_xlsx": "Pakua Matokeo ya Darasa Zima (XLS)"
+    "download_class_xlsx": "Pakua Matokeo ya Darasa Zima (XLS)",
+    "no_exams_yet": "Bado hujaunda mtihani",
+    "no_subjects_for_class": "Hakuna masomo yaliyopatikana kwa darasa hili.",
+    "confirm_delete_student": "Una uhakika unataka kumfuta {{name}}? Alama zake pia zitafutwa."
   },
   "my_subjects": {
     "subjects": "Masomo",

@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import { Plus, Download, Save } from "lucide-react";
+import { Plus, Download, Save, Pencil, Trash2, Check, X } from "lucide-react";
 import api from "../../../lib/axios.js";
 import WorkstationFormModal from "../components/WorkstationFormModal.jsx";
 
@@ -30,6 +30,12 @@ export default function ExamResultsPage() {
   });
   const [studentForm, setStudentForm] = useState({ full_name: "", gender: "F" });
   const [marksGrid, setMarksGrid] = useState({});
+  // Subjects for the exam-creation form are scoped to whichever class is
+  // selected there - a subject only belongs to a class via SubjectVersion,
+  // the plain Subject list has no class_level of its own.
+  const [classSubjects, setClassSubjects] = useState([]);
+  const [editingStudentId, setEditingStudentId] = useState(null);
+  const [editingName, setEditingName] = useState("");
 
   const selectedExam = exams.find((e) => e.id === selectedExamId) || null;
 
@@ -58,6 +64,30 @@ export default function ExamResultsPage() {
       setLoading(false);
     }
   }, [t]);
+
+  // The exam-creation form's subject picker only shows subjects that
+  // actually belong to the selected class (via SubjectVersion) - not
+  // every subject in the syllabus, most of which don't apply to this class.
+  useEffect(() => {
+    if (!examForm.class_level) {
+      setClassSubjects([]);
+      return;
+    }
+    let cancelled = false;
+    api
+      .get("/syllabus/subject-versions-readonly/", { params: { class_level: examForm.class_level } })
+      .then((res) => {
+        if (cancelled) return;
+        const rows = Array.isArray(res.data) ? res.data : res.data?.results || [];
+        const seen = new Map();
+        rows.forEach((r) => {
+          if (!seen.has(r.subject_id)) seen.set(r.subject_id, r.subject);
+        });
+        setClassSubjects(Array.from(seen, ([id, name]) => ({ id, name })));
+      })
+      .catch(() => setClassSubjects([]));
+    return () => { cancelled = true; };
+  }, [examForm.class_level]);
 
   useEffect(() => {
     loadBaseData();
@@ -133,6 +163,43 @@ export default function ExamResultsPage() {
     } catch (err) {
       console.error(err);
       toast.error(t("errors.failed_to_save"));
+    }
+  };
+
+  const startEditStudent = (student) => {
+    setEditingStudentId(student.id);
+    setEditingName(student.full_name);
+  };
+
+  const cancelEditStudent = () => {
+    setEditingStudentId(null);
+    setEditingName("");
+  };
+
+  const saveEditStudent = async (studentId) => {
+    if (!editingName.trim()) return;
+    try {
+      const res = await api.patch(`/syllabus/students/${studentId}/`, { full_name: editingName.trim() });
+      setStudents((prev) => prev.map((s) => (s.id === studentId ? res.data : s)));
+      cancelEditStudent();
+    } catch (err) {
+      console.error(err);
+      toast.error(t("errors.failed_to_save"));
+    }
+  };
+
+  const handleDeleteStudent = async (student) => {
+    if (!window.confirm(t("exam_results.confirm_delete_student", { name: student.full_name }))) return;
+    try {
+      await api.delete(`/syllabus/students/${student.id}/`);
+      setStudents((prev) => prev.filter((s) => s.id !== student.id));
+      if (selectedExam) {
+        const resultsRes = await api.get(`/syllabus/exams/${selectedExam.id}/results/`);
+        setResults(resultsRes.data);
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error(t("errors.failed_to_delete"));
     }
   };
 
@@ -229,8 +296,15 @@ export default function ExamResultsPage() {
         <div className="flex flex-wrap items-end gap-3">
           <div>
             <label className="text-sm font-medium">{t("exam_results.select_exam")}</label>
-            <select className={inputClass} value={selectedExamId} onChange={(e) => setSelectedExamId(e.target.value)}>
-              <option value="">{t("common.select")}</option>
+            <select
+              className={`${inputClass} disabled:opacity-50 disabled:cursor-not-allowed`}
+              value={selectedExamId}
+              onChange={(e) => setSelectedExamId(e.target.value)}
+              disabled={exams.length === 0}
+            >
+              <option value="">
+                {exams.length === 0 ? t("exam_results.no_exams_yet") : t("common.select")}
+              </option>
               {exams.map((ex) => (
                 <option key={ex.id} value={ex.id}>{ex.name} - {ex.class_level_name} ({ex.term_display} {ex.year})</option>
               ))}
@@ -241,7 +315,12 @@ export default function ExamResultsPage() {
         <form onSubmit={handleCreateExam} className="grid grid-cols-1 sm:grid-cols-3 gap-3 border-t pt-3">
           <div>
             <label className="text-sm font-medium">{t("exam_results.class_level")}</label>
-            <select className={inputClass} value={examForm.class_level} onChange={(e) => setExamForm((p) => ({ ...p, class_level: e.target.value }))} required>
+            <select
+              className={inputClass}
+              value={examForm.class_level}
+              onChange={(e) => setExamForm((p) => ({ ...p, class_level: e.target.value, subjects: [] }))}
+              required
+            >
               <option value="">{t("common.select")}</option>
               {classLevels.map((cl) => <option key={cl.id} value={cl.id}>{cl.name}</option>)}
             </select>
@@ -250,13 +329,17 @@ export default function ExamResultsPage() {
             <label className="text-sm font-medium">{t("exam_results.subjects")}</label>
             <select
               multiple
-              className={inputClass}
+              className={`${inputClass} disabled:opacity-50 disabled:cursor-not-allowed`}
               value={examForm.subjects}
               onChange={(e) => setExamForm((p) => ({ ...p, subjects: Array.from(e.target.selectedOptions, (o) => o.value) }))}
+              disabled={!examForm.class_level}
               required
             >
-              {subjects.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
+              {classSubjects.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
             </select>
+            {examForm.class_level && classSubjects.length === 0 && (
+              <p className="text-xs text-amber-600 mt-1">{t("exam_results.no_subjects_for_class")}</p>
+            )}
           </div>
           <div className="flex flex-col gap-2">
             <div>
@@ -311,12 +394,32 @@ export default function ExamResultsPage() {
                           {subjects.find((s) => s.id === subjId)?.name || subjId}
                         </th>
                       ))}
+                      <th className="border px-2 py-1">{t("common.actions")}</th>
                     </tr>
                   </thead>
                   <tbody>
                     {students.map((s) => (
                       <tr key={s.id}>
-                        <td className="border px-2 py-1">{s.full_name}</td>
+                        <td className="border px-2 py-1">
+                          {editingStudentId === s.id ? (
+                            <div className="flex items-center gap-1">
+                              <input
+                                className="rounded border px-1 py-0.5 bg-white dark:bg-gray-700 w-full"
+                                value={editingName}
+                                onChange={(e) => setEditingName(e.target.value)}
+                                autoFocus
+                              />
+                              <button onClick={() => saveEditStudent(s.id)} className="text-green-600 hover:text-green-800" title={t("common.save")}>
+                                <Check size={16} />
+                              </button>
+                              <button onClick={cancelEditStudent} className="text-gray-400 hover:text-gray-600" title={t("common.cancel")}>
+                                <X size={16} />
+                              </button>
+                            </div>
+                          ) : (
+                            s.full_name
+                          )}
+                        </td>
                         {(selectedExam.subjects || []).map((subjId) => (
                           <td key={subjId} className="border px-1 py-1">
                             <input
@@ -330,6 +433,18 @@ export default function ExamResultsPage() {
                             />
                           </td>
                         ))}
+                        <td className="border px-2 py-1">
+                          {editingStudentId !== s.id && (
+                            <div className="flex items-center gap-2">
+                              <button onClick={() => startEditStudent(s)} className="text-blue-600 hover:text-blue-800" title={t("common.edit")}>
+                                <Pencil size={15} />
+                              </button>
+                              <button onClick={() => handleDeleteStudent(s)} className="text-red-600 hover:text-red-800" title={t("common.delete")}>
+                                <Trash2 size={15} />
+                              </button>
+                            </div>
+                          )}
+                        </td>
                       </tr>
                     ))}
                   </tbody>

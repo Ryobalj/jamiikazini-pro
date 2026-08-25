@@ -42,3 +42,10 @@ class SubjectVersionReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
     search_fields = ["subject__name", "class_level__name"]
     ordering_fields = ["syllabus_version__year", "class_level__order", "order"]
     ordering = ["syllabus_version__year", "class_level__order", "order"]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        class_level = self.request.query_params.get("class_level")
+        if class_level:
+            qs = qs.filter(class_level_id=class_level)
+        return qs

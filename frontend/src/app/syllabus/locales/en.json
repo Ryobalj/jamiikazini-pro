@@ -106,7 +106,10 @@
     "download_subject_pdf": "Download Subject Results (PDF)",
     "download_subject_xlsx": "Download Subject Results (XLS)",
     "download_class_pdf": "Download Whole-Class Results (PDF)",
-    "download_class_xlsx": "Download Whole-Class Results (XLS)"
+    "download_class_xlsx": "Download Whole-Class Results (XLS)",
+    "no_exams_yet": "You haven't created an exam yet",
+    "no_subjects_for_class": "No subjects found for this class.",
+    "confirm_delete_student": "Are you sure you want to delete {{name}}? Their scores will be deleted too."
   },
   "my_subjects": {
     "subjects": "Subjects",

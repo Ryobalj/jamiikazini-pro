@@ -358,7 +358,7 @@
         "p1": "Overview · Products/Services (with photo galleries) · Branches · Orders · Requests/Offers · Imports · Harvest · Tenders · Advertise · Settings.",
         "subheading3": "Verification (TIN / BRELA)",
         "p2": "Verified businesses get a trust badge and appear in \"Verified Businesses\" on the home page. From Business Settings → \"Request Verification,\" choose TIN to verify your Tax Identification Number against TRA records, or BRELA to verify your official company registration — both are independent and optional.",
-        "note": "Verification is entirely optional — unverified businesses can register, list, and sell normally. It only adds a visible trust signal for buyers.",
+        "note": "Verification isn't required to register a business or list products/services — that works normally either way. However, PURCHASES cannot complete for an unverified business: the system blocks orders until the business is verified (TIN or BRELA). Verification also adds a visible trust signal for buyers.",
         "subheading4": "Advertising your business",
         "p3": "From the \"Advertise\" tab, pay to feature your whole business or a single product on the home page for a set number of days (7, 14, or 30). A request stays \"Pending Payment\" until the invoice is settled, then becomes active for its chosen duration.",
         "subheading5": "Requests, offers & imports",
@@ -424,7 +424,7 @@
         "items": [
           {
             "q": "Do I need to verify my identity to use JamiiKazini?",
-            "a": "No. Registration, browsing, buying, and selling all work without it. Verification is optional and adds a trust badge."
+            "a": "For registering and browsing — no. But for BUYING and SELLING — yes: you (the buyer) must verify your identity (NIDA) and phone number, and the business you're buying from must be verified (TIN/BRELA), before an order can complete. Without that, you can still list products/services and browse."
           },
           {
             "q": "Can I use JamiiKazini in my own language?",
