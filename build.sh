@@ -69,6 +69,11 @@ python manage.py seed_learning_activity || echo "seed_learning_activity skipped"
 echo "==> Seeding muhtasari SpecificLearningActivity content (all syllabus/csv/sla_*.csv files)"
 python manage.py seed_specific_learning_activity --force || echo "seed_specific_learning_activity skipped"
 
+# Idempotent (update_or_create keyed on learning_activity+prompt), unlike the
+# old seed_lesson_sentence gap above - safe to run on every deploy.
+echo "==> Seeding quiz/test/examination question bank (all syllabus/csv/questions_*.csv files)"
+python manage.py seed_questions || echo "seed_questions skipped"
+
 echo "==> Fetching real market exchange rates (ERAPI)"
 python manage.py update_exchange_rates --source ERAPI || echo "update_exchange_rates skipped (using seeded rates)"
 
