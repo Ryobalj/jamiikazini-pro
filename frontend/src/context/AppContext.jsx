@@ -6,6 +6,8 @@ import api from "@/lib/axios";
 import { logoutUser } from "@/lib/auth";
 import { parseJwt, getTokenStage, isTokenExpiringSoon } from "@/lib/jwt";
 import ConsentModal from "@/components/modals/ConsentModal";
+import PlatformLockOverlay from "@/components/modals/PlatformLockOverlay";
+import { PLATFORM_LOCKED_EVENT } from "@/lib/platformLock";
 import { useTranslation } from "react-i18next";
 
 const AppContext = createContext();
@@ -24,12 +26,32 @@ export const AppContextProvider = ({ children }) => {
   const [currentBusinessId, setCurrentBusinessId] = useState(null);
   const [showConsentModal, setShowConsentModal] = useState(false);
   const [awaitingConsent, setAwaitingConsent] = useState(false);
+  const [platformLock, setPlatformLock] = useState({ isLocked: false, message: "" });
 
   // 🔍 Detect businessId from URL
   useEffect(() => {
     const match = location.pathname.match(/\/dashboard\/([a-zA-Z0-9-]+)/);
     setCurrentBusinessId(match ? match[1] : null);
   }, [location]);
+
+  // 🔒 Platform lock status - fetched regardless of login state, since a
+  // locked-out ANONYMOUS visitor needs to see the notice too, not just
+  // authenticated users. AllowAny endpoint, safe to call before /auth/me/.
+  useEffect(() => {
+    api
+      .get("/kiini/platform-status/")
+      .then((res) => setPlatformLock({ isLocked: !!res.data?.is_locked, message: res.data?.message || "" }))
+      .catch(() => {});
+  }, []);
+
+  // If the lock gets flipped ON while someone is already mid-session, the
+  // axios interceptor catches the first 423 and fires this event so the
+  // overlay appears immediately instead of waiting for another poll.
+  useEffect(() => {
+    const onLocked = (e) => setPlatformLock({ isLocked: true, message: e.detail?.message || "" });
+    window.addEventListener(PLATFORM_LOCKED_EVENT, onLocked);
+    return () => window.removeEventListener(PLATFORM_LOCKED_EVENT, onLocked);
+  }, []);
 
   // 📡 Fetch user & menu
   useEffect(() => {
@@ -207,6 +229,10 @@ export const AppContextProvider = ({ children }) => {
         open={showConsentModal}
         onConfirm={handleConsentConfirm}
         onCancel={handleConsentCancel}
+      />
+      <PlatformLockOverlay
+        locked={platformLock.isLocked && user?.role !== "ADMIN"}
+        message={platformLock.message}
       />
     </AppContext.Provider>
   );

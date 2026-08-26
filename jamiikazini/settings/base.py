@@ -179,6 +179,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "security.middleware.conditional_2fa.Conditional2FAMiddleware",
+    "kiini.middleware.platform_lock.PlatformLockMiddleware",
     "kiini.middleware.institution.InstitutionMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",

@@ -9,6 +9,7 @@ from kiini.views.institution_type_views import InstitutionTypeViewSet
 from kiini.views.staff_views import StaffProfileViewSet
 from kiini.views.institution_public_views import PublicInstitutionDetailView, InstitutionResolveDomainView
 from kiini.views.referral_code_views import MyReferralCodeView
+from kiini.views.platform_lock_views import PlatformLockStatusView
 
 app_name = "kiini"
 
@@ -32,6 +33,7 @@ urlpatterns = [
     path('institutions/<uuid:pk>/public/', PublicInstitutionDetailView.as_view(), name='institution-public-detail'),
     path('institutions/resolve-domain/', InstitutionResolveDomainView.as_view(), name='institution-resolve-domain'),
     path('referral-code/mine/', MyReferralCodeView.as_view(), name='referral-code-mine'),
+    path('platform-status/', PlatformLockStatusView.as_view(), name='platform-lock-status'),
     path('', include(router.urls)),                      # Main
     path('', include(institutions_router.urls)),           # Nested
     path('', include('kiini.urls.user_menu_urls')),

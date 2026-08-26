@@ -83,6 +83,12 @@
     "cancel": "Hapana",
     "confirm": "Ndiyo, niko hapa"
   },
+  "platform_lock": {
+    "title": "Jukwaa Limefungwa Muda",
+    "default_message": "Jamiikazini iko chini ya matengenezo ya muda mfupi tunapokamilisha uunganisho na mifumo ya serikali. JamiiShule inaendelea kupatikana kama kawaida.",
+    "go_to_jamiishule": "Nenda JamiiShule",
+    "logout": "Toka"
+  },
   "auth": {
     "password": "Nenosiri",
     "password_placeholder": "Weka nenosiri",

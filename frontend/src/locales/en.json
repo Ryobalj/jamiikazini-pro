@@ -78,6 +78,12 @@
     "cancel": "No",
     "confirm": "Yes, I'm here"
   },
+  "platform_lock": {
+    "title": "Platform Temporarily Locked",
+    "default_message": "Jamiikazini is under brief maintenance while we complete required government-linking integrations. JamiiShule remains fully available.",
+    "go_to_jamiishule": "Go to JamiiShule",
+    "logout": "Log Out"
+  },
   "auth": {
     "password": "Password",
     "password_placeholder": "Enter password",

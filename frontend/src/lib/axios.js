@@ -1,6 +1,7 @@
 // src/lib/axios.js
 import axios from "axios";
 import i18n from "@/i18n";
+import { notifyPlatformLocked } from "@/lib/platformLock";
 
 // Determine environment (Vite injects these; `process` does not exist in the browser)
 const isProduction = import.meta.env.PROD;
@@ -261,7 +262,15 @@ api.interceptors.response.use(
       console.error("Network error:", error.message);
       return Promise.reject(error);
     }
-    
+
+    // Platform-lock middleware rejected this request server-side - tell
+    // AppContext immediately instead of waiting for its next status poll,
+    // so the overlay appears right away if the lock was flipped on mid-session.
+    if (error.response?.status === 423) {
+      notifyPlatformLocked(error.response.data?.detail);
+      return Promise.reject(error);
+    }
+
     // Handle 401 for login - DON'T try to refresh token
     if (error.response?.status === 401 && originalRequest?.url?.includes('/security/login/')) {
       return Promise.reject(error);
