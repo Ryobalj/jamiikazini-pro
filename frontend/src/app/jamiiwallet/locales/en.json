@@ -136,7 +136,21 @@
     "reference": "Reference",
     "reference_copied": "Reference copied.",
     "date": "Date",
-    "note": "Note"
+    "note": "Note",
+    "filters": {
+      "all": "All",
+      "topup": "Top Up",
+      "withdraw": "Withdraw",
+      "transfer": "Transfer"
+    },
+    "types": {
+      "topup": "Top Up",
+      "withdraw": "Withdraw",
+      "transfer": "Transfer",
+      "payment": "Payment",
+      "refund": "Refund",
+      "other": "Other"
+    }
   },
   "send": {
     "title": "Send Money",
@@ -173,6 +187,12 @@
       "amount_required": "Enter a valid amount.",
       "failed": "Failed to send request. Please try again.",
       "action_failed": "Failed."
+    },
+    "status": {
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "declined": "Declined",
+      "cancelled": "Cancelled"
     }
   }
 }

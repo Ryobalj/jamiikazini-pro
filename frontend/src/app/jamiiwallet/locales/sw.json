@@ -136,7 +136,21 @@
     "reference": "Reference",
     "reference_copied": "Reference imenakiliwa.",
     "date": "Tarehe",
-    "note": "Ujumbe"
+    "note": "Ujumbe",
+    "filters": {
+      "all": "Zote",
+      "topup": "Kuweka Fedha",
+      "withdraw": "Kutoa Fedha",
+      "transfer": "Kuhamisha"
+    },
+    "types": {
+      "topup": "Kuweka Fedha",
+      "withdraw": "Kutoa Fedha",
+      "transfer": "Kuhamisha",
+      "payment": "Malipo",
+      "refund": "Kurejesha",
+      "other": "Nyingine"
+    }
   },
   "send": {
     "title": "Tuma Pesa",
@@ -173,6 +187,12 @@
       "amount_required": "Weka kiasi sahihi.",
       "failed": "Imeshindwa kutuma ombi. Jaribu tena.",
       "action_failed": "Imeshindwa."
+    },
+    "status": {
+      "pending": "Inasubiri",
+      "accepted": "Imekubaliwa",
+      "declined": "Imekataliwa",
+      "cancelled": "Imeghairiwa"
     }
   }
 }
