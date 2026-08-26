@@ -1,0 +1,40 @@
+{
+  "name": "Historia ya Tanzania na Maadili DRS III - Jaribio Fupi (Quiz)",
+  "paper_type": "quiz",
+  "subject_code": "JSS019",
+  "class_level_name": "DRS III",
+  "time_allowed_minutes": 15,
+  "instructions": "Jibu maswali yote.",
+  "sections": [
+    {
+      "name": "SEHEMU A",
+      "order": 1,
+      "slots": [
+        {
+          "question_type": "mcq",
+          "difficulty": "easy",
+          "count": 3,
+          "marks_per_item": 1
+        },
+        {
+          "question_type": "fill_blank",
+          "difficulty": "easy",
+          "count": 2,
+          "marks_per_item": 1
+        },
+        {
+          "question_type": "true_false",
+          "difficulty": "medium",
+          "count": 2,
+          "marks_per_item": 1
+        },
+        {
+          "question_type": "short_answer",
+          "difficulty": "medium",
+          "count": 1,
+          "marks_per_item": 3
+        }
+      ]
+    }
+  ]
+}

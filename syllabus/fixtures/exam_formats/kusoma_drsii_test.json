@@ -1,0 +1,58 @@
+{
+  "name": "Kusoma DRS II - Mtihani wa Mazoezi (Test)",
+  "paper_type": "test",
+  "subject_code": "JSS004",
+  "class_level_name": "DRS II",
+  "time_allowed_minutes": 40,
+  "instructions": "Karatasi hii ina sehemu A na B.\nJibu maswali yote.\nUtumie kalamu ya wino wa bluu au mweusi.",
+  "sections": [
+    {
+      "name": "SEHEMU A",
+      "order": 1,
+      "slots": [
+        {
+          "question_type": "mcq",
+          "difficulty": "easy",
+          "count": 8,
+          "marks_per_item": 1
+        },
+        {
+          "question_type": "mcq",
+          "difficulty": "medium",
+          "count": 6,
+          "marks_per_item": 1
+        },
+        {
+          "question_type": "fill_blank",
+          "difficulty": "medium",
+          "count": 4,
+          "marks_per_item": 1
+        }
+      ]
+    },
+    {
+      "name": "SEHEMU B",
+      "order": 2,
+      "slots": [
+        {
+          "question_type": "matching",
+          "difficulty": "medium",
+          "count": 5,
+          "marks_per_item": 1
+        },
+        {
+          "question_type": "true_false",
+          "difficulty": "medium",
+          "count": 5,
+          "marks_per_item": 1
+        },
+        {
+          "question_type": "short_answer",
+          "difficulty": "medium",
+          "count": 4,
+          "marks_per_item": 3
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "name": "English DRS III - Mtihani (Examination)",
+  "paper_type": "examination",
+  "subject_code": "JSS014",
+  "class_level_name": "DRS III",
+  "time_allowed_minutes": 90,
+  "instructions": "Karatasi hii ina sehemu A, B na C.\nJibu maswali yote kwenye nafasi ulizopewa.\nSehemu A na B zina alama ishirini (20) kila moja na sehemu C ina alama kumi (10).\nMajibu yote yaandikwe kwa kalamu ya wino wa bluu au mweusi.\nAndika Namba yako ya mtihani sehemu ya juu ya kila ukurasa.",
+  "sections": [
+    {
+      "name": "SEHEMU A",
+      "order": 1,
+      "slots": [
+        {
+          "question_type": "mcq",
+          "difficulty": "easy",
+          "count": 8,
+          "marks_per_item": 1
+        },
+        {
+          "question_type": "mcq",
+          "difficulty": "medium",
+          "count": 7,
+          "marks_per_item": 1
+        },
+        {
+          "question_type": "matching",
+          "difficulty": "medium",
+          "count": 5,
+          "marks_per_item": 1
+        }
+      ]
+    },
+    {
+      "name": "SEHEMU B",
+      "order": 2,
+      "slots": [
+        {
+          "question_type": "short_answer",
+          "difficulty": "easy",
+          "count": 4,
+          "marks_per_item": 2
+        },
+        {
+          "question_type": "short_answer",
+          "difficulty": "medium",
+          "count": 4,
+          "marks_per_item": 2
+        },
+        {
+          "question_type": "sequencing",
+          "difficulty": "hard",
+          "count": 2,
+          "marks_per_item": 2
+        }
+      ]
+    },
+    {
+      "name": "SEHEMU C",
+      "order": 3,
+      "slots": [
+        {
+          "question_type": "fill_blank",
+          "difficulty": "hard",
+          "count": 5,
+          "marks_per_item": 2
+        }
+      ]
+    }
+  ]
+}
