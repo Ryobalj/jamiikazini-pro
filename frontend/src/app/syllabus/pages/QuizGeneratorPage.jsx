@@ -459,7 +459,14 @@ export default function QuizGeneratorPage() {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t("quiz.instructions_label")}</label>
-                    <input type="text" value={manualInstructions} onChange={(e) => setManualInstructions(e.target.value)} className="w-full rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white p-2" />
+                    <textarea
+                      rows={3}
+                      value={manualInstructions}
+                      onChange={(e) => setManualInstructions(e.target.value)}
+                      placeholder={t("quiz.instructions_placeholder")}
+                      className="w-full rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white p-2"
+                    />
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{t("quiz.instructions_hint")}</p>
                   </div>
                 </div>
 
@@ -482,6 +489,13 @@ export default function QuizGeneratorPage() {
 
                       {/* Slots */}
                       <div className="space-y-2">
+                        <div className="hidden md:grid grid-cols-5 gap-2 text-xs font-medium text-gray-500 dark:text-gray-400">
+                          <span>{t("quiz.slot_question_type")}</span>
+                          <span>{t("quiz.slot_difficulty")}</span>
+                          <span>{t("quiz.slot_count")}</span>
+                          <span>{t("quiz.slot_marks")}</span>
+                          <span></span>
+                        </div>
                         {section.slots.map((slot) => (
                           <div key={slot.localId} className="grid grid-cols-2 md:grid-cols-5 gap-2 items-center">
                             <select value={slot.question_type} onChange={(e) => updateSlot(section.localId, slot.localId, { question_type: e.target.value })} className="rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white p-1.5 text-sm">
