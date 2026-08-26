@@ -74,6 +74,11 @@ python manage.py seed_specific_learning_activity --force || echo "seed_specific_
 echo "==> Seeding quiz/test/examination question bank (all syllabus/csv/questions_*.csv files)"
 python manage.py seed_questions || echo "seed_questions skipped"
 
+# Idempotent (update_or_create keyed on ExamFormat.name; sections/slots are
+# rebuilt fresh each run since a format is small) - safe on every deploy.
+echo "==> Seeding quiz/test/examination paper-format templates (all syllabus/fixtures/exam_formats/*.json files)"
+python manage.py seed_exam_formats || echo "seed_exam_formats skipped"
+
 echo "==> Fetching real market exchange rates (ERAPI)"
 python manage.py update_exchange_rates --source ERAPI || echo "update_exchange_rates skipped (using seeded rates)"
 
