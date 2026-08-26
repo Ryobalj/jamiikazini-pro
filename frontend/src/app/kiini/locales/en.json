@@ -8,6 +8,11 @@
     "institution-tiers": "Institution Tiers",
     "institution-types": "Institution Types"
   },
+  "institutions": {
+    "title": "My Institutions",
+    "create": "Create Institution",
+    "create_new": "Create Another Institution"
+  },
   "institution": {
     "title": "Institution Profile",
     "description": "View and manage your institution details",

@@ -8,6 +8,11 @@
     "institution-tiers": "Ngazi za Taasisi",
     "institution-types": "Aina za Taasisi"
   },
+  "institutions": {
+    "title": "Taasisi Zangu",
+    "create": "Unda Taasisi",
+    "create_new": "Unda Taasisi Nyingine"
+  },
   "institution": {
     "title": "Wasifu wa Taasisi",
     "description": "Angalia na simamia taarifa za taasisi yako",
