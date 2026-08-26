@@ -9,8 +9,8 @@
   "expenses": "Matumizi",
   "quick_actions": "Vitendo vya Haraka",
   "topup": "Weka Fedha",
-  "send": "Tuma",
-  "request": "Omba",
+  "send_action": "Tuma",
+  "request_action": "Omba",
   "refresh": "Sasisha",
   "refreshing": "Inasasisha...",
   "refreshed": "Pochi imesasishwa",
@@ -19,7 +19,7 @@
   "no_transactions": "Hakuna miamala bado",
   "payment_methods": "Njia za Malipo",
   "no_cards": "Hakuna kadi za malipo bado",
-  "add_card": "Ongeza Kadi",
+  "add_card_action": "Ongeza Kadi",
   "saved_beneficiaries": "Wanufaika Waliohifadhiwa",
   "no_beneficiaries": "Hakuna wanufaika waliohifadhiwa",
   "add_beneficiary": "Ongeza Mnufaika",
@@ -32,6 +32,15 @@
   "topup_initiated": "Uwekaji fedha umeanzishwa",
   "topup_failed": "Uwekaji fedha umeshindwa. Tafadhali jaribu tena.",
   "copied": "Imenakiliwa kwenye ubao wa kunakili",
+  "back": "Rudi",
+  "select_mno": "Chagua mtandao (MNO).",
+  "invalid_phone": "Weka namba sahihi ya simu.",
+  "mobile_network": "Mtandao (MNO)",
+  "phone_number": "Namba ya simu",
+  "withdraw_wallet": "Toa Salio",
+  "confirm_withdraw": "Thibitisha",
+  "withdraw_initiated": "Ombi la kutoa limetumwa.",
+  "withdraw_failed": "Kutoa kumeshindwa.",
   "tabs": {
     "transactions": "Miamala",
     "cards": "Kadi",
@@ -76,6 +85,94 @@
   },
   "withdraw": "Toa",
   "accounts": {
-    "title": "Hesabu"
+    "title": "Hesabu",
+    "income": "Mapato",
+    "expense": "Matumizi",
+    "net": "Salio la Hesabu",
+    "load_failed": "Imeshindwa kupakia hesabu.",
+    "add_expense": "Andika Gharama",
+    "amount": "Kiasi",
+    "note": "Ujumbe (hiari)",
+    "save": "Hifadhi",
+    "budgets": "Bajeti Zangu",
+    "budget_amount": "Kiwango cha juu",
+    "all_categories": "Makundi Yote",
+    "set_budget": "Weka Bajeti",
+    "budget_added": "Bajeti imewekwa.",
+    "expense_added": "Gharama imeandikwa.",
+    "errors": {
+      "amount_required": "Weka kiasi sahihi.",
+      "failed": "Imeshindwa."
+    }
+  },
+  "add_card": {
+    "title": "Ongeza Kadi",
+    "unavailable_title": "Malipo ya kadi bado hayajawezeshwa",
+    "unavailable_body": "Kwa usalama wako, tunasubiri kuunganisha huduma ya malipo ya kadi (Stripe/Flutterwave) kikamilifu kabla ya kufungua kipengele hiki. Kwa sasa, tumia PawaPay (Tigo/Yas, Airtel, Halotel) kwa kuweka na kutoa pesa."
+  },
+  "beneficiary": {
+    "title": "Ongeza Mpokeaji",
+    "name": "Jina la kumbukumbu",
+    "identifier": "Namba ya simu au barua pepe",
+    "saving": "Inahifadhi...",
+    "submit": "Hifadhi",
+    "saved": "Wapokeaji Waliohifadhiwa",
+    "empty": "Hujahifadhi mpokeaji yeyote bado.",
+    "success": "Mpokeaji ameongezwa.",
+    "errors": {
+      "required": "Jaza jina na namba/email.",
+      "failed": "Imeshindwa.",
+      "delete_failed": "Imeshindwa kufuta."
+    }
+  },
+  "transactions": {
+    "title": "Miamala Yote",
+    "empty": "Hakuna miamala bado.",
+    "not_found": "Muamala haukupatikana.",
+    "details": "Maelezo",
+    "type": "Aina",
+    "from": "Kutoka",
+    "to": "Kwenda",
+    "reference": "Reference",
+    "reference_copied": "Reference imenakiliwa.",
+    "date": "Tarehe",
+    "note": "Ujumbe"
+  },
+  "send": {
+    "title": "Tuma Pesa",
+    "available_balance": "Salio lililopo",
+    "recipient": "Mpokeaji (namba ya simu au barua pepe)",
+    "amount": "Kiasi",
+    "note": "Ujumbe (hiari)",
+    "note_placeholder": "Mfano: malipo ya chakula",
+    "sending": "Inatuma...",
+    "submit": "Tuma Pesa",
+    "success": "Umetuma pesa kwa {{name}} kikamilifu.",
+    "errors": {
+      "recipient_required": "Weka namba ya simu au barua pepe ya mpokeaji.",
+      "amount_required": "Weka kiasi sahihi.",
+      "failed": "Imeshindwa kutuma pesa. Jaribu tena."
+    }
+  },
+  "request": {
+    "title": "Omba Pesa",
+    "payer": "Mlipaji (namba ya simu au barua pepe)",
+    "amount": "Kiasi",
+    "note": "Ujumbe (hiari)",
+    "sending": "Inatuma...",
+    "submit": "Tuma Ombi",
+    "success": "Ombi limetumwa.",
+    "incoming": "Maombi Uliyopokea",
+    "no_incoming": "Hakuna maombi uliyopokea.",
+    "outgoing": "Maombi Uliyotuma",
+    "no_outgoing": "Hujatuma ombi lolote.",
+    "accepted": "Umekubali ombi na pesa imetumwa.",
+    "declined": "Umekataa ombi.",
+    "errors": {
+      "payer_required": "Weka namba ya simu au barua pepe ya mlipaji.",
+      "amount_required": "Weka kiasi sahihi.",
+      "failed": "Imeshindwa kutuma ombi. Jaribu tena.",
+      "action_failed": "Imeshindwa."
+    }
   }
 }

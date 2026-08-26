@@ -468,7 +468,7 @@ export default function JamiiWalletPage() {
                   onClick={() => navigate("/jamiiwallet/send")}
                 >
                   <Send className="w-5 h-5 shrink-0" />
-                  <span className="text-xs leading-tight text-center whitespace-normal break-words">{t("send")}</span>
+                  <span className="text-xs leading-tight text-center whitespace-normal break-words">{t("send_action")}</span>
                 </Button>
                 <Button
                   variant="outline"
@@ -476,7 +476,7 @@ export default function JamiiWalletPage() {
                   onClick={() => navigate("/jamiiwallet/request")}
                 >
                   <ArrowDown className="w-5 h-5 shrink-0" />
-                  <span className="text-xs leading-tight text-center whitespace-normal break-words">{t("request")}</span>
+                  <span className="text-xs leading-tight text-center whitespace-normal break-words">{t("request_action")}</span>
                 </Button>
                 <Button
                   variant="outline"
@@ -628,7 +628,7 @@ export default function JamiiWalletPage() {
                 </p>
                 <Button onClick={() => navigate("/jamiiwallet/add-card")}>
                   <Plus className="w-4 h-4 mr-2" />
-                  {t("add_card")}
+                  {t("add_card_action")}
                 </Button>
               </CardContent>
             </Card>

@@ -9,8 +9,8 @@
   "expenses": "Expenses",
   "quick_actions": "Quick Actions",
   "topup": "Top Up",
-  "send": "Send",
-  "request": "Request",
+  "send_action": "Send",
+  "request_action": "Request",
   "refresh": "Refresh",
   "refreshing": "Refreshing...",
   "refreshed": "Wallet refreshed",
@@ -19,7 +19,7 @@
   "no_transactions": "No transactions yet",
   "payment_methods": "Payment Methods",
   "no_cards": "No payment cards added yet",
-  "add_card": "Add Card",
+  "add_card_action": "Add Card",
   "saved_beneficiaries": "Saved Beneficiaries",
   "no_beneficiaries": "No saved beneficiaries yet",
   "add_beneficiary": "Add Beneficiary",
@@ -32,6 +32,15 @@
   "topup_initiated": "Top up initiated successfully",
   "topup_failed": "Top up failed. Please try again.",
   "copied": "Copied to clipboard",
+  "back": "Back",
+  "select_mno": "Select a mobile network (MNO).",
+  "invalid_phone": "Enter a valid phone number.",
+  "mobile_network": "Mobile Network (MNO)",
+  "phone_number": "Phone Number",
+  "withdraw_wallet": "Withdraw Balance",
+  "confirm_withdraw": "Confirm",
+  "withdraw_initiated": "Withdrawal request submitted.",
+  "withdraw_failed": "Withdrawal failed.",
   "tabs": {
     "transactions": "Transactions",
     "cards": "Cards",
@@ -76,6 +85,94 @@
   },
   "withdraw": "Withdraw",
   "accounts": {
-    "title": "Accounts"
+    "title": "Accounts",
+    "income": "Income",
+    "expense": "Expenses",
+    "net": "Account Balance",
+    "load_failed": "Failed to load accounts.",
+    "add_expense": "Record Expense",
+    "amount": "Amount",
+    "note": "Note (optional)",
+    "save": "Save",
+    "budgets": "My Budgets",
+    "budget_amount": "Limit amount",
+    "all_categories": "All Categories",
+    "set_budget": "Set Budget",
+    "budget_added": "Budget set.",
+    "expense_added": "Expense recorded.",
+    "errors": {
+      "amount_required": "Enter a valid amount.",
+      "failed": "Failed."
+    }
+  },
+  "add_card": {
+    "title": "Add Card",
+    "unavailable_title": "Card payments aren't enabled yet",
+    "unavailable_body": "For your safety, we're waiting to fully integrate card payment providers (Stripe/Flutterwave) before enabling this feature. For now, use PawaPay (Tigo/Yas, Airtel, Halotel) to top up and withdraw."
+  },
+  "beneficiary": {
+    "title": "Add Beneficiary",
+    "name": "Reference name",
+    "identifier": "Phone number or email",
+    "saving": "Saving...",
+    "submit": "Save",
+    "saved": "Saved Beneficiaries",
+    "empty": "You haven't saved any beneficiaries yet.",
+    "success": "Beneficiary added.",
+    "errors": {
+      "required": "Fill in the name and phone/email.",
+      "failed": "Failed.",
+      "delete_failed": "Failed to delete."
+    }
+  },
+  "transactions": {
+    "title": "All Transactions",
+    "empty": "No transactions yet.",
+    "not_found": "Transaction not found.",
+    "details": "Details",
+    "type": "Type",
+    "from": "From",
+    "to": "To",
+    "reference": "Reference",
+    "reference_copied": "Reference copied.",
+    "date": "Date",
+    "note": "Note"
+  },
+  "send": {
+    "title": "Send Money",
+    "available_balance": "Available balance",
+    "recipient": "Recipient (phone number or email)",
+    "amount": "Amount",
+    "note": "Note (optional)",
+    "note_placeholder": "e.g. payment for food",
+    "sending": "Sending...",
+    "submit": "Send Money",
+    "success": "You've successfully sent money to {{name}}.",
+    "errors": {
+      "recipient_required": "Enter the recipient's phone number or email.",
+      "amount_required": "Enter a valid amount.",
+      "failed": "Failed to send money. Please try again."
+    }
+  },
+  "request": {
+    "title": "Request Money",
+    "payer": "Payer (phone number or email)",
+    "amount": "Amount",
+    "note": "Note (optional)",
+    "sending": "Sending...",
+    "submit": "Send Request",
+    "success": "Request sent.",
+    "incoming": "Requests You've Received",
+    "no_incoming": "No requests received.",
+    "outgoing": "Requests You've Sent",
+    "no_outgoing": "You haven't sent any requests.",
+    "accepted": "You accepted the request and the money has been sent.",
+    "declined": "You declined the request.",
+    "errors": {
+      "payer_required": "Enter the payer's phone number or email.",
+      "amount_required": "Enter a valid amount.",
+      "failed": "Failed to send request. Please try again.",
+      "action_failed": "Failed."
+    }
   }
 }
