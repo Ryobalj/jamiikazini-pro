@@ -456,75 +456,67 @@ export default function JamiiWalletPage() {
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 <Button
-                  size="sm"
-                  className="w-full bg-purple-600 hover:bg-purple-700"
+                  className="w-full h-auto flex-col gap-1.5 py-3 px-2 bg-purple-600 hover:bg-purple-700"
                   onClick={() => setShowTopupModal(true)}
                 >
-                  <Plus className="w-4 h-4 mr-1 shrink-0" />
-                  <span className="truncate">{t("topup")}</span>
+                  <Plus className="w-5 h-5 shrink-0" />
+                  <span className="text-xs leading-tight text-center whitespace-normal break-words">{t("topup")}</span>
                 </Button>
                 <Button
-                  size="sm"
                   variant="outline"
-                  className="w-full"
+                  className="w-full h-auto flex-col gap-1.5 py-3 px-2"
                   onClick={() => navigate("/jamiiwallet/send")}
                 >
-                  <Send className="w-4 h-4 mr-1 shrink-0" />
-                  <span className="truncate">{t("send")}</span>
+                  <Send className="w-5 h-5 shrink-0" />
+                  <span className="text-xs leading-tight text-center whitespace-normal break-words">{t("send")}</span>
                 </Button>
                 <Button
-                  size="sm"
                   variant="outline"
-                  className="w-full"
+                  className="w-full h-auto flex-col gap-1.5 py-3 px-2"
                   onClick={() => navigate("/jamiiwallet/request")}
                 >
-                  <ArrowDown className="w-4 h-4 mr-1 shrink-0" />
-                  <span className="truncate">{t("request")}</span>
+                  <ArrowDown className="w-5 h-5 shrink-0" />
+                  <span className="text-xs leading-tight text-center whitespace-normal break-words">{t("request")}</span>
                 </Button>
                 <Button
-                  size="sm"
                   variant="outline"
-                  className="w-full"
+                  className="w-full h-auto flex-col gap-1.5 py-3 px-2"
                   onClick={() => setShowWithdrawModal(true)}
                 >
-                  <Smartphone className="w-4 h-4 mr-1 shrink-0" />
-                  <span className="truncate">{t("withdraw") || "Toa"}</span>
+                  <Smartphone className="w-5 h-5 shrink-0" />
+                  <span className="text-xs leading-tight text-center whitespace-normal break-words">{t("withdraw") || "Toa"}</span>
                 </Button>
                 <Button
-                  size="sm"
                   variant="outline"
-                  className="w-full"
+                  className="w-full h-auto flex-col gap-1.5 py-3 px-2"
                   onClick={() => navigate("/jamiiwallet/accounts")}
                 >
-                  <PiggyBank className="w-4 h-4 mr-1 shrink-0" />
-                  <span className="truncate">{t("accounts.title") || "Hesabu"}</span>
+                  <PiggyBank className="w-5 h-5 shrink-0" />
+                  <span className="text-xs leading-tight text-center whitespace-normal break-words">{t("accounts.title") || "Hesabu"}</span>
                 </Button>
                 <Button
-                  size="sm"
                   variant="outline"
-                  className="w-full"
+                  className="w-full h-auto flex-col gap-1.5 py-3 px-2"
                   onClick={() => navigate("/jamiiwallet/cash-out")}
                 >
-                  <Banknote className="w-4 h-4 mr-1 shrink-0" />
-                  <span className="truncate">{t("cashout.title") || "Toa Taslimu"}</span>
+                  <Banknote className="w-5 h-5 shrink-0" />
+                  <span className="text-xs leading-tight text-center whitespace-normal break-words">{t("cashout.title") || "Toa Taslimu"}</span>
                 </Button>
                 <Button
-                  size="sm"
                   variant="outline"
-                  className="w-full"
+                  className="w-full h-auto flex-col gap-1.5 py-3 px-2"
                   onClick={() => navigate("/billpay")}
                 >
-                  <Zap className="w-4 h-4 mr-1 shrink-0" />
-                  <span className="truncate">{t("billpay.title") || "Malipo ya Huduma"}</span>
+                  <Zap className="w-5 h-5 shrink-0" />
+                  <span className="text-xs leading-tight text-center whitespace-normal break-words">{t("billpay.title") || "Malipo ya Huduma"}</span>
                 </Button>
                 <Button
-                  size="sm"
                   variant="outline"
-                  className="w-full"
+                  className="w-full h-auto flex-col gap-1.5 py-3 px-2"
                   onClick={() => navigate("/savings")}
                 >
-                  <Users className="w-4 h-4 mr-1 shrink-0" />
-                  <span className="truncate">{t("savings.title") || "VICOBA/SACCOS"}</span>
+                  <Users className="w-5 h-5 shrink-0" />
+                  <span className="text-xs leading-tight text-center whitespace-normal break-words">{t("savings.title") || "VICOBA/SACCOS"}</span>
                 </Button>
               </div>
             </CardContent>
