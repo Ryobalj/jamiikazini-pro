@@ -1,4 +1,5 @@
 {
+  "back": "Back",
   "dashboard": {
     "title": "Institution Dashboard",
     "welcomeMessage": "Welcome to the Kiini main dashboard - a system for managing institutions, departments, and staff.",
@@ -6,7 +7,10 @@
     "departments": "Departments",
     "staff-profiles": "Staff Profiles",
     "institution-tiers": "Institution Tiers",
-    "institution-types": "Institution Types"
+    "institution-types": "Institution Types",
+    "your_institution": "Your Institution",
+    "no_institution": "You haven't joined any institution yet.",
+    "create_institution": "Register Institution"
   },
   "institutions": {
     "title": "My Institutions",
@@ -45,19 +49,99 @@
   },
   "departments": {
     "title": "Department Management",
-    "description": "Create, edit, and delete departments within your institution."
+    "description": "Create, edit, and delete departments within your institution.",
+    "no_institution": "You need to have an institution first.",
+    "add": "Add Department",
+    "name": "Department Name",
+    "description_placeholder": "Description (optional)",
+    "submit": "Add",
+    "empty": "No departments yet.",
+    "created": "Department added.",
+    "errors": {
+      "name_required": "Enter the department name.",
+      "failed": "Failed.",
+      "delete_failed": "Failed to delete."
+    }
   },
   "staff": {
     "title": "Staff Members",
-    "description": "View and manage staff information for the institution."
+    "description": "View and manage staff information for the institution.",
+    "no_institution": "You need to have an institution first.",
+    "add": "Add Staff Member",
+    "email": "Staff member's email (must be a registered user)",
+    "title_field": "Title (e.g. Manager)",
+    "submit": "Add",
+    "empty": "No staff members yet.",
+    "no_title": "No title",
+    "created": "Staff member added.",
+    "errors": {
+      "email_required": "Enter the staff member's email.",
+      "failed": "Failed.",
+      "delete_failed": "Failed to delete."
+    }
   },
   "tiers": {
     "title": "Institution Tiers",
-    "description": "List of available tiers for institutions such as Small, Medium, Large."
+    "description": "List of available tiers for institutions such as Small, Medium, Large.",
+    "empty": "No tiers yet."
   },
   "types": {
     "title": "Institution Types",
-    "description": "View or select institution type such as private company, NGO, or government institution."
+    "description": "View or select institution type such as private company, NGO, or government institution.",
+    "empty": "No institution types yet."
+  },
+  "institutions_list": {
+    "title": "My Institutions",
+    "new": "New",
+    "empty": "You haven't registered any institution yet.",
+    "no_type": "No type",
+    "inactive": "Inactive"
+  },
+  "settings": {
+    "title": "Institution Settings",
+    "not_found": "Institution not found.",
+    "no_domain": "No domain",
+    "edit_profile": "Edit Details",
+    "is_active": "Institution Active",
+    "is_active_hint": "If turned off, the institution won't be visible to the public.",
+    "active": "Active",
+    "inactive": "Inactive",
+    "share_venue": "Share Your Institution",
+    "save": "Save",
+    "manage": "Management",
+    "homepage": "Public Homepage",
+    "departments": "Departments",
+    "staff": "Staff",
+    "domain_saved": "Address saved.",
+    "link_copied": "Link copied.",
+    "updated": "Settings updated.",
+    "errors": {
+      "load_failed": "Failed to load institution.",
+      "domain_required": "Enter a subdomain name.",
+      "domain_save_failed": "Failed to save.",
+      "failed": "Failed to update."
+    }
+  },
+  "form": {
+    "create_title": "Register Institution",
+    "edit_title": "Edit Institution",
+    "name": "Institution Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "domain": "Domain (subdomain)",
+    "institution_type": "Institution Type",
+    "tier": "Tier",
+    "select": "Select...",
+    "saving": "Saving...",
+    "save": "Save",
+    "created": "Institution created.",
+    "updated": "Institution updated.",
+    "errors": {
+      "load_failed": "Failed to load institution.",
+      "name_required": "Enter the institution name.",
+      "failed": "Failed."
+    }
   },
   "institution_storefront": {
     "not_found": "Institution not found",

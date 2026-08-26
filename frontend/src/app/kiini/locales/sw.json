@@ -1,4 +1,5 @@
 {
+  "back": "Rudi",
   "dashboard": {
     "title": "Dashboard ya Taasisi",
     "welcomeMessage": "Karibu kwenye dashibodi kuu ya Kiini - mfumo wa kusimamia taasisi, vitengo, na wafanyakazi.",
@@ -6,7 +7,10 @@
     "departments": "Idara",
     "staff-profiles": "Watumishi",
     "institution-tiers": "Ngazi za Taasisi",
-    "institution-types": "Aina za Taasisi"
+    "institution-types": "Aina za Taasisi",
+    "your_institution": "Taasisi Yako",
+    "no_institution": "Bado hujajiunga na taasisi yoyote.",
+    "create_institution": "Sajili Taasisi"
   },
   "institutions": {
     "title": "Taasisi Zangu",
@@ -45,19 +49,99 @@
   },
   "departments": {
     "title": "Usimamizi wa Vitengo",
-    "description": "Unda, hariri, na ondoa vitengo vya ndani ya taasisi yako."
+    "description": "Unda, hariri, na ondoa vitengo vya ndani ya taasisi yako.",
+    "no_institution": "Unahitaji kuwa na taasisi kwanza.",
+    "add": "Ongeza Idara",
+    "name": "Jina la Idara",
+    "description_placeholder": "Maelezo (hiari)",
+    "submit": "Ongeza",
+    "empty": "Hakuna idara bado.",
+    "created": "Idara imeongezwa.",
+    "errors": {
+      "name_required": "Weka jina la idara.",
+      "failed": "Imeshindwa.",
+      "delete_failed": "Imeshindwa kufuta."
+    }
   },
   "staff": {
     "title": "Wafanyakazi",
-    "description": "Angalia na simamia taarifa za watumishi wa taasisi."
+    "description": "Angalia na simamia taarifa za watumishi wa taasisi.",
+    "no_institution": "Unahitaji kuwa na taasisi kwanza.",
+    "add": "Ongeza Mfanyakazi",
+    "email": "Barua pepe ya mfanyakazi (aliyeshajisajili)",
+    "title_field": "Cheo (mfano: Meneja)",
+    "submit": "Ongeza",
+    "empty": "Hakuna wafanyakazi bado.",
+    "no_title": "Bila cheo",
+    "created": "Mfanyakazi ameongezwa.",
+    "errors": {
+      "email_required": "Weka barua pepe ya mfanyakazi.",
+      "failed": "Imeshindwa.",
+      "delete_failed": "Imeshindwa kufuta."
+    }
   },
   "tiers": {
     "title": "Ngazi za Taasisi",
-    "description": "Hii ni orodha ya ngazi zilizopo kwa taasisi kama vile Ndogo, Kati, Kubwa."
+    "description": "Hii ni orodha ya ngazi zilizopo kwa taasisi kama vile Ndogo, Kati, Kubwa.",
+    "empty": "Hakuna viwango bado."
   },
   "types": {
     "title": "Aina za Taasisi",
-    "description": "Angalia au chagua aina ya taasisi kama kampuni binafsi, NGO, au taasisi ya serikali."
+    "description": "Angalia au chagua aina ya taasisi kama kampuni binafsi, NGO, au taasisi ya serikali.",
+    "empty": "Hakuna aina za taasisi bado."
+  },
+  "institutions_list": {
+    "title": "Taasisi Zangu",
+    "new": "Mpya",
+    "empty": "Hujasajili taasisi yoyote bado.",
+    "no_type": "Bila aina",
+    "inactive": "Imezimwa"
+  },
+  "settings": {
+    "title": "Mipangilio ya Taasisi",
+    "not_found": "Taasisi haikupatikana.",
+    "no_domain": "Hakuna domain",
+    "edit_profile": "Hariri Taarifa",
+    "is_active": "Taasisi Inafanya Kazi",
+    "is_active_hint": "Ukizima, taasisi haitaonekana kwa umma.",
+    "active": "Hai",
+    "inactive": "Imezimwa",
+    "share_venue": "Shiriki Taasisi Yako",
+    "save": "Hifadhi",
+    "manage": "Usimamizi",
+    "homepage": "Homepage ya Umma",
+    "departments": "Idara",
+    "staff": "Wafanyakazi",
+    "domain_saved": "Anwani imehifadhiwa.",
+    "link_copied": "Kiungo kimenakiliwa.",
+    "updated": "Mipangilio imesasishwa.",
+    "errors": {
+      "load_failed": "Imeshindwa kupakia taasisi.",
+      "domain_required": "Weka jina la subdomain.",
+      "domain_save_failed": "Imeshindwa kuhifadhi.",
+      "failed": "Imeshindwa kusasisha."
+    }
+  },
+  "form": {
+    "create_title": "Sajili Taasisi",
+    "edit_title": "Hariri Taasisi",
+    "name": "Jina la Taasisi",
+    "email": "Barua Pepe",
+    "phone": "Simu",
+    "address": "Anwani",
+    "domain": "Domain (subdomain)",
+    "institution_type": "Aina ya Taasisi",
+    "tier": "Kiwango (Tier)",
+    "select": "Chagua...",
+    "saving": "Inahifadhi...",
+    "save": "Hifadhi",
+    "created": "Taasisi imeundwa.",
+    "updated": "Taasisi imesasishwa.",
+    "errors": {
+      "load_failed": "Imeshindwa kupakia taasisi.",
+      "name_required": "Weka jina la taasisi.",
+      "failed": "Imeshindwa."
+    }
   },
   "institution_storefront": {
     "not_found": "Jengo/taasisi hii haipatikani.",
