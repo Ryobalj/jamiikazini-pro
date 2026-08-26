@@ -1,7 +1,9 @@
 # syllabus/views/question_views.py
 
 from rest_framework import viewsets
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from syllabus.models.question import Passage, Question
 from syllabus.serializers.question_serializers import PassageSerializer, QuestionSerializer
@@ -37,3 +39,21 @@ class QuestionViewSet(viewsets.ModelViewSet):
                 learning_activity__specific_competence__main_competence__subject_version=subject_version
             )
         return qs
+
+    @action(detail=False, methods=["get"])
+    def available_types(self, request):
+        """Distinct question_type values actually in the bank for a
+        subject_version - lets the Manual paper-builder only offer types
+        that exist, instead of failing at generation time with a
+        shortfall (e.g. a math subject only ever has calculation/
+        short_answer, never mcq/matching/etc)."""
+        subject_version = request.query_params.get("subject_version")
+        if not subject_version:
+            return Response([])
+        # Question.Meta.ordering pulls extra columns into the SELECT, which
+        # breaks .distinct() at the SQL level (every row differs once
+        # created_at is included) - dedupe in Python instead.
+        types = sorted(set(
+            self.get_queryset().filter(is_active=True).values_list("question_type", flat=True)
+        ))
+        return Response(types)

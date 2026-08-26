@@ -12,18 +12,22 @@ const PAPER_TYPES = ["quiz", "test", "examination"];
 const QUESTION_TYPES = [
   "mcq", "matching", "fill_blank", "short_answer", "calculation", "sequencing", "true_false", "map_diagram", "comprehension",
 ];
+// map_diagram/comprehension never have real questions behind them (the
+// seeding pipeline can't create Passage/diagram-image objects) - drop them
+// from the "no subject selected yet" fallback so they're never offered.
+const FALLBACK_TYPES = QUESTION_TYPES.filter((t) => t !== "map_diagram" && t !== "comprehension");
 const DIFFICULTIES = ["easy", "medium", "hard"];
 const SECTION_LETTERS = "ABCDEFGH";
 
 let localIdCounter = 0;
 const nextLocalId = () => `local-${++localIdCounter}`;
 
-const newSlot = () => ({ localId: nextLocalId(), question_type: "calculation", difficulty: "medium", count: 1, marks_per_item: 1 });
-const newSection = (index) => ({
+const newSlot = (defaultType) => ({ localId: nextLocalId(), question_type: defaultType || "calculation", difficulty: "medium", count: 1, marks_per_item: 1 });
+const newSection = (index, defaultType) => ({
   localId: nextLocalId(),
   name: `SEHEMU ${SECTION_LETTERS[index] || index + 1}`,
   topicIds: [],
-  slots: [newSlot()],
+  slots: [newSlot(defaultType)],
 });
 
 export default function QuizGeneratorPage() {
@@ -45,6 +49,11 @@ export default function QuizGeneratorPage() {
   // Shared topic list for the selected subject (fetched once, used by every section's picker)
   const [topics, setTopics] = useState([]);
   const [topicsLoading, setTopicsLoading] = useState(false);
+
+  // Question types that actually exist in the bank for the selected subject
+  // (e.g. math subjects only ever have calculation/short_answer) - keeps
+  // Manual mode's dropdowns from offering a type that would just shortfall.
+  const [availableTypes, setAvailableTypes] = useState(FALLBACK_TYPES);
 
   // Automated mode: chosen format's own sections + per-section topic scope
   const [formatDetail, setFormatDetail] = useState(null);
@@ -121,24 +130,33 @@ export default function QuizGeneratorPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paperType]);
 
-  /* ===================== FETCH TOPICS FOR SELECTED SUBJECT ===================== */
+  /* ===================== FETCH TOPICS + AVAILABLE QUESTION TYPES FOR SELECTED SUBJECT ===================== */
   useEffect(() => {
     setSectionTopics({});
-    setManualSections([newSection(0)]);
     if (!selectedSubject) {
       setTopics([]);
+      setAvailableTypes(FALLBACK_TYPES);
+      setManualSections([newSection(0)]);
       return;
     }
     let cancelled = false;
     setTopicsLoading(true);
-    api
-      .get("/syllabus/learning-activities/", { params: { subject_version: selectedSubject } })
-      .then((res) => {
+    Promise.all([
+      api.get("/syllabus/learning-activities/", { params: { subject_version: selectedSubject } }),
+      api.get("/syllabus/questions/available_types/", { params: { subject_version: selectedSubject } }),
+    ])
+      .then(([topicsRes, typesRes]) => {
         if (cancelled) return;
-        setTopics(Array.isArray(res.data) ? res.data : res.data?.results || []);
+        setTopics(Array.isArray(topicsRes.data) ? topicsRes.data : topicsRes.data?.results || []);
+        const types = Array.isArray(typesRes.data) && typesRes.data.length > 0 ? typesRes.data : FALLBACK_TYPES;
+        setAvailableTypes(types);
+        setManualSections([newSection(0, types[0])]);
       })
       .catch(() => {
-        if (!cancelled) setTopics([]);
+        if (cancelled) return;
+        setTopics([]);
+        setAvailableTypes(FALLBACK_TYPES);
+        setManualSections([newSection(0)]);
       })
       .finally(() => {
         if (!cancelled) setTopicsLoading(false);
@@ -175,8 +193,8 @@ export default function QuizGeneratorPage() {
 
   /* ===================== MANUAL MODE HELPERS ===================== */
   const addSection = useCallback(() => {
-    setManualSections((prev) => [...prev, newSection(prev.length)]);
-  }, []);
+    setManualSections((prev) => [...prev, newSection(prev.length, availableTypes[0])]);
+  }, [availableTypes]);
   const removeSection = useCallback((localId) => {
     setManualSections((prev) => prev.filter((s) => s.localId !== localId));
   }, []);
@@ -185,9 +203,9 @@ export default function QuizGeneratorPage() {
   }, []);
   const addSlot = useCallback((sectionLocalId) => {
     setManualSections((prev) =>
-      prev.map((s) => (s.localId === sectionLocalId ? { ...s, slots: [...s.slots, newSlot()] } : s))
+      prev.map((s) => (s.localId === sectionLocalId ? { ...s, slots: [...s.slots, newSlot(availableTypes[0])] } : s))
     );
-  }, []);
+  }, [availableTypes]);
   const removeSlot = useCallback((sectionLocalId, slotLocalId) => {
     setManualSections((prev) =>
       prev.map((s) => (s.localId === sectionLocalId ? { ...s, slots: s.slots.filter((sl) => sl.localId !== slotLocalId) } : s))
@@ -499,7 +517,7 @@ export default function QuizGeneratorPage() {
                         {section.slots.map((slot) => (
                           <div key={slot.localId} className="grid grid-cols-2 md:grid-cols-5 gap-2 items-center">
                             <select value={slot.question_type} onChange={(e) => updateSlot(section.localId, slot.localId, { question_type: e.target.value })} className="rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white p-1.5 text-sm">
-                              {QUESTION_TYPES.map((qt) => (
+                              {availableTypes.map((qt) => (
                                 <option key={qt} value={qt}>{t(`quiz.question_type.${qt}`)}</option>
                               ))}
                             </select>
