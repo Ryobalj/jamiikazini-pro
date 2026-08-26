@@ -253,6 +253,14 @@ class PaymentWebhookView(APIView):
         st = (event.status or "").upper()
         if st in ("COMPLETED", "SUCCESS", "SUCCESSFUL"):
             withdrawal.mark_completed()
+            # withdrawal.transaction was created PENDING at debit time
+            # (see debit_wallet_for_withdrawal) - this is the only place
+            # that should ever flip it to COMPLETED, since this is the
+            # genuine payout confirmation from PawaPay.
+            if withdrawal.transaction_id:
+                Transaction.objects.filter(
+                    pk=withdrawal.transaction_id, status=Transaction.TransactionStatus.PENDING,
+                ).update(status=Transaction.TransactionStatus.COMPLETED)
             try:
                 AuditLog.log("WEBHOOK_WITHDRAWAL_COMPLETED", user, f"ref={withdrawal.reference}", ip=client_ip)
             except Exception:

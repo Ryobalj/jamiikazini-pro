@@ -271,11 +271,20 @@ def debit_wallet_for_withdrawal(withdrawal) -> Transaction:
         wallet.save(update_fields=["balance"])
 
         metadata = withdrawal.metadata if isinstance(withdrawal.metadata, dict) else {}
+        # PENDING, not COMPLETED: at this point the wallet has only been
+        # debited/held - PawaPay hasn't even been contacted yet (that's the
+        # next step). Marking this COMPLETED here was the root cause of
+        # withdrawals showing "successful" in the UI (which renders
+        # Transaction.status) regardless of whether PawaPay ever actually
+        # paid out. The real completion happens in the webhook handler
+        # (payments/views/webhook_api.py::_handle_withdrawal_event), which
+        # flips this same Transaction to COMPLETED only on a genuine payout
+        # confirmation, or to FAILED via reverse_withdrawal() below.
         txn = Transaction.objects.create(
             wallet=wallet,
             initiated_by=withdrawal.user,
             transaction_type=Transaction.TransactionType.WITHDRAWAL,
-            status=Transaction.TransactionStatus.COMPLETED,
+            status=Transaction.TransactionStatus.PENDING,
             amount=withdrawal.amount,
             reference=withdrawal.reference,
             receipt=metadata,
@@ -315,6 +324,17 @@ def reverse_withdrawal(withdrawal) -> None:
             )
         w.status = Withdrawal.WithdrawalStatus.REVERSED
         w.save(update_fields=["status"])
+
+        # The original WITHDRAWAL transaction was created PENDING (see
+        # debit_wallet_for_withdrawal) and must be flipped to FAILED here -
+        # otherwise it stays PENDING forever even though a separate REFUND
+        # transaction above already reversed it, which is confusing in the
+        # user's transaction history (two entries, neither saying what
+        # actually happened to the original withdrawal attempt).
+        if w.transaction_id:
+            Transaction.objects.filter(
+                pk=w.transaction_id, status=Transaction.TransactionStatus.PENDING,
+            ).update(status=Transaction.TransactionStatus.FAILED)
 
 
 # ============================================================
