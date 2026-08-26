@@ -10,7 +10,13 @@ from kiini.models.platform_lock import PlatformLock
 
 # Njia zinazoruhusiwa hata mfumo ukiwa umefungwa: kuingia/kujiandikisha
 # (bila hizi mtumiaji hawezi hata ku-login kuona kama amefunguliwa), JamiiShule
-# (module pekee inayoachwa wazi), na admin/static/docs za kawaida.
+# (module pekee inayoachwa wazi), admin/static/docs za kawaida, na sehemu
+# ndogo tu ya jamiiwallet inayohitajika kulipia usajili wa JamiiShule (angalia
+# syllabus/services/subscription_service.py - malipo hutolewa moja kwa moja
+# kwenye Wallet ya mwalimu; ikiwa salio halitoshi, mteja huelekezwa
+# jamiiwallet kuweka pesa - njia hizo za kuweka pesa lazima ziendelee
+# kufanya kazi, si Wallet nzima). Webhook ya PawaPay pia lazima ibaki wazi
+# kabisa - inaitwa na seva za PawaPay zenyewe, si mtumiaji wa app.
 EXEMPT_PATH_PATTERNS = getattr(settings, "PLATFORM_LOCK_EXEMPT_PATHS", [
     r"^/$",
     r"^/admin/",
@@ -26,8 +32,14 @@ EXEMPT_PATH_PATTERNS = getattr(settings, "PLATFORM_LOCK_EXEMPT_PATHS", [
     r"^/api/v1/auth/reset-password",
     r"^/api/v1/auth/verify-email",
     r"^/api/v1/kiini/platform-status/?$",
+    r"^/api/v1/kiini/user-menu/?$",
     r"^/api/v1/health/?$",
     r"^/api/v1/syllabus/",
+    r"^/api/v1/jamiiwallet/wallet/?$",
+    r"^/api/v1/jamiiwallet/topup/?$",
+    r"^/api/v1/payments/webhooks/",
+    r"^/api/v1/payments/exchange-rates/?$",
+    r"^/api/v1/payments/currencies/?$",
 ])
 
 
