@@ -211,8 +211,15 @@ class TransactionEngine:
         wallet = Wallet.objects.select_for_update().get(pk=transaction.wallet_id)
 
         # Debit the refunding party (merchant) first, then credit the payer.
+        # If the counterparty IS the payer (same wallet row), reuse the same
+        # Python object for both steps instead of fetching it twice - two
+        # independent copies of the same row would each start from the same
+        # pre-debit balance, so the second .save() would clobber the first
+        # and fabricate `amount` extra balance for free.
         if transaction.counterparty_id:
             refunder_wallet = Wallet.objects.select_for_update().get(user_id=transaction.counterparty_id)
+            if refunder_wallet.pk == wallet.pk:
+                refunder_wallet = wallet
             with _held_lock(acquire_balance_lock(refunder_wallet.user.id)):
                 if refunder_wallet.available_balance < transaction.amount:
                     raise ValidationError("Insufficient balance to issue refund.")
@@ -220,6 +227,7 @@ class TransactionEngine:
                 refunder_wallet.balance -= transaction.amount
                 refunder_wallet.save(update_fields=["balance"])
                 set_cached_balance(refunder_wallet.user.id, refunder_wallet.balance)
+            wallet = refunder_wallet
 
         with _held_lock(acquire_balance_lock(wallet.user.id)):
             invalidate_cached_balance(wallet.user.id)
@@ -268,6 +276,12 @@ class TransactionEngine:
 
         sender_wallet = Wallet.objects.select_for_update().get(pk=transaction.wallet_id)
         recipient_wallet = Wallet.objects.select_for_update().get(user_id=transaction.counterparty_id)
+        # Same wallet on both sides (sender transferring to themselves) must
+        # be a single Python object, not two independent copies - otherwise
+        # the second .save() below clobbers the first and fabricates
+        # `amount` extra balance instead of a net-zero no-op.
+        if recipient_wallet.pk == sender_wallet.pk:
+            recipient_wallet = sender_wallet
 
         with _held_lock(acquire_balance_lock(sender_wallet.user.id)):
             with _held_lock(acquire_balance_lock(recipient_wallet.user.id)):
@@ -311,6 +325,13 @@ class TransactionEngine:
 
         payer_wallet = Wallet.objects.select_for_update().get(pk=transaction.wallet_id)
         merchant_wallet = Wallet.objects.select_for_update().get(user_id=transaction.counterparty_id)
+        # Self-purchase (payer owns the merchant business) means these are
+        # the same wallet row - must be one Python object, not two
+        # independent copies, or the second .save() below clobbers the
+        # first and fabricates `amount` extra balance instead of a
+        # net-zero no-op.
+        if merchant_wallet.pk == payer_wallet.pk:
+            merchant_wallet = payer_wallet
 
         with _held_lock(acquire_balance_lock(payer_wallet.user.id)):
             with _held_lock(acquire_balance_lock(merchant_wallet.user.id)):
@@ -357,8 +378,13 @@ class TransactionEngine:
         wallet = Wallet.objects.select_for_update().get(pk=transaction.wallet_id)
 
         # Debit the refunding party (merchant) first, then credit the payer.
+        # Same same-row guard as _top_up: reuse one Python object when the
+        # refunder is the payer themselves, so the two saves below don't
+        # clobber each other and fabricate `amount` extra balance.
         if transaction.counterparty_id:
             refunder_wallet = Wallet.objects.select_for_update().get(user_id=transaction.counterparty_id)
+            if refunder_wallet.pk == wallet.pk:
+                refunder_wallet = wallet
             with _held_lock(acquire_balance_lock(refunder_wallet.user.id)):
                 if refunder_wallet.available_balance < transaction.amount:
                     raise ValidationError("Insufficient balance to issue refund.")
@@ -366,6 +392,7 @@ class TransactionEngine:
                 refunder_wallet.balance -= transaction.amount
                 refunder_wallet.save(update_fields=["balance"])
                 set_cached_balance(refunder_wallet.user.id, refunder_wallet.balance)
+            wallet = refunder_wallet
 
         with _held_lock(acquire_balance_lock(wallet.user.id)):
             invalidate_cached_balance(wallet.user.id)
@@ -425,6 +452,13 @@ class TransactionEngine:
 
         payer_wallet = Wallet.objects.select_for_update().get(pk=transaction.wallet_id)
         recipient_wallet = Wallet.objects.select_for_update().get(user_id=transaction.counterparty_id)
+        # Self-capture (capturing your own hold, e.g. a self-purchase order
+        # being fulfilled) must use one Python object for both roles -
+        # otherwise recipient_wallet's stale pre-decrement balance
+        # overwrites payer_wallet's held_balance decrement when saved,
+        # fabricating `amount` extra balance instead of a net-zero release.
+        if recipient_wallet.pk == payer_wallet.pk:
+            recipient_wallet = payer_wallet
 
         with _held_lock(acquire_balance_lock(payer_wallet.user.id)):
             with _held_lock(acquire_balance_lock(recipient_wallet.user.id)):
