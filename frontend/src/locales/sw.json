@@ -84,7 +84,7 @@
     "confirm": "Ndiyo, niko hapa"
   },
   "platform_lock": {
-    "title": "Tunaendelea na Maboresho",
+    "title": "Karibu Jamiikazini",
     "default_message": "Kwa sasa tunaendelea na kazi ya kiufundi ya kuunganisha mfumo wetu na baadhi ya huduma za kiserikali, ili kuhakikisha kila kitu kinafanya kazi vizuri na kwa usalama kwa watumiaji wetu wote. Mara kazi hii itakapokamilika, mfumo mzima utaanza kufanya kazi tena kama kawaida. Kwa sasa, unaweza kuendelea kutumia huduma za JamiiShule bila usumbufu wowote. Asante sana kwa uvumilivu wako!",
     "go_to_jamiishule": "Nenda JamiiShule",
     "logout": "Toka"

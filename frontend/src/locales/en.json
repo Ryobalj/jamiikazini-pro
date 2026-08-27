@@ -79,7 +79,7 @@
     "confirm": "Yes, I'm here"
   },
   "platform_lock": {
-    "title": "We're Making Some Improvements",
+    "title": "Welcome to Jamiikazini",
     "default_message": "We're currently doing some behind-the-scenes technical work to connect our platform with certain government systems, so that everything works smoothly and securely for all our users. Once this work is complete, the full system will be back up and running as usual. In the meantime, you can keep using JamiiShule without any interruption. Thank you so much for your patience!",
     "go_to_jamiishule": "Go to JamiiShule",
     "logout": "Log Out"
