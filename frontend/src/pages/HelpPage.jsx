@@ -1,6 +1,7 @@
 // src/pages/HelpPage.jsx
 
-import React from "react";
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import * as Icons from "lucide-react";
 
@@ -84,6 +85,17 @@ function FaqItem({ q, a }) {
 
 export default function HelpPage() {
   const { t } = useTranslation("common");
+  const location = useLocation();
+
+  // React Router doesn't auto-scroll to a #hash on navigation the way a
+  // plain multi-page site does - deep links like /help#teaching (e.g. the
+  // JamiiShule "Help" button) need this to actually land on the section.
+  useEffect(() => {
+    if (!location.hash) return;
+    const el = document.getElementById(location.hash.slice(1));
+    if (el) el.scrollIntoView({ behavior: "instant", block: "start" });
+  }, [location.hash]);
+
   const b = (key) => t(`help.body.${key}`, { defaultValue: "" });
   const arr = (key) => {
     const v = t(`help.body.${key}`, { returnObjects: true, defaultValue: [] });

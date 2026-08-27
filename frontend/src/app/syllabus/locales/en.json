@@ -2,6 +2,7 @@
   "teaching_home": {
     "title": "Teaching Services",
     "subtitle": "Select a teaching service to continue with your academic preparation",
+    "help": "Help",
     "services": {
       "my_subjects": "My Subjects",
       "timetable": "My Timetable",
