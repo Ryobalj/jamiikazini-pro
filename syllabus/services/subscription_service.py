@@ -212,13 +212,16 @@ def has_free_downloads_remaining(user, category: str) -> bool:
     mutates anything, safe to call as many times as a view needs (some
     views check it 2-3 times per request for preview/metadata purposes,
     not just the actual download gate). Actually spending a free download
-    is a separate, explicit step: see consume_free_download()."""
-    from syllabus.models.teacher_workstation import TeacherWorkStation
+    is a separate, explicit step: see consume_free_download().
 
-    workstation = TeacherWorkStation.objects.filter(teacher=user, is_active=True).first()
-    if not workstation:
-        return False
-    used = (workstation.free_downloads_used or {}).get(category, 0)
+    Tracked on TeacherDownloadCredits (keyed directly to the User), NOT
+    TeacherWorkStation - a teacher can legitimately delete and recreate
+    their workstation (e.g. changing schools), and that must not also
+    reset their free-download counters."""
+    from syllabus.models.teacher_download_credits import TeacherDownloadCredits
+
+    credits, _ = TeacherDownloadCredits.objects.get_or_create(teacher=user)
+    used = (credits.free_downloads_used or {}).get(category, 0)
     return used < FREE_DOWNLOAD_LIMITS.get(category, 0)
 
 
@@ -243,17 +246,11 @@ def consume_free_download(user, category: str) -> None:
         return
 
     from django.db import transaction
-    from syllabus.models.teacher_workstation import TeacherWorkStation
+    from syllabus.models.teacher_download_credits import TeacherDownloadCredits
 
     with transaction.atomic():
-        workstation = (
-            TeacherWorkStation.objects.select_for_update()
-            .filter(teacher=user, is_active=True)
-            .first()
-        )
-        if not workstation:
-            return
-        counts = dict(workstation.free_downloads_used or {})
+        credits, _ = TeacherDownloadCredits.objects.select_for_update().get_or_create(teacher=user)
+        counts = dict(credits.free_downloads_used or {})
         counts[category] = counts.get(category, 0) + 1
-        workstation.free_downloads_used = counts
-        workstation.save(update_fields=["free_downloads_used"])
+        credits.free_downloads_used = counts
+        credits.save(update_fields=["free_downloads_used"])

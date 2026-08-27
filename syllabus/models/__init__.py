@@ -5,6 +5,7 @@ from syllabus.models.class_level import *
 from syllabus.models.subject import *
 from .teacher_workstation import TeacherWorkStation
 from .teacher_subscription import TeacherSubscription
+from .teacher_download_credits import TeacherDownloadCredits
 from .student import Student
 from .exam import Exam
 from .mark import Mark
