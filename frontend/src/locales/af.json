@@ -407,5 +407,11 @@
       }
     },
     "contact_label": "Kontak Ondersteuning"
+  },
+  "platform_lock": {
+    "title": "Ons Maak 'n Paar Verbeteringe",
+    "default_message": "Ons doen tans agter-die-skerms tegniese werk om ons platform met sekere regeringstelsels te verbind, sodat alles vlot en veilig vir al ons gebruikers werk. Sodra hierdie werk voltooi is, sal die volledige stelsel weer soos gewoonlik werk. Intussen kan jy steeds sonder enige onderbreking van JamiiShule gebruik maak. Baie dankie vir jou geduld!",
+    "go_to_jamiishule": "Gaan na JamiiShule",
+    "logout": "Teken Uit"
   }
 }

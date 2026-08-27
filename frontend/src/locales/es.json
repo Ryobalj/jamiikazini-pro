@@ -407,5 +407,11 @@
       }
     },
     "contact_label": "Contactar Soporte"
+  },
+  "platform_lock": {
+    "title": "Estamos Haciendo Algunas Mejoras",
+    "default_message": "Actualmente estamos realizando trabajo técnico detrás de escena para conectar nuestra plataforma con ciertos sistemas gubernamentales, de modo que todo funcione de forma fluida y segura para todos nuestros usuarios. Una vez que este trabajo esté completo, todo el sistema volverá a funcionar con normalidad. Mientras tanto, puedes seguir usando JamiiShule sin ninguna interrupción. ¡Muchas gracias por tu paciencia!",
+    "go_to_jamiishule": "Ir a JamiiShule",
+    "logout": "Cerrar Sesión"
   }
 }

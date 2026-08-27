@@ -407,5 +407,11 @@
       }
     },
     "contact_label": "Tuukirira Obuyambi"
+  },
+  "platform_lock": {
+    "title": "Tuli Mu Kulongoosa",
+    "default_message": "Kati tuli mu mulimu gw'ekikugu ogutalabika okuyunga layimu yaffe n'obutebenkevu obumu obwa gavumenti, tulyoke tukakase nti buli kimu kikola bulungi era n'obukuumi eri bakozesa baffe bonna. Omulimu guno bwe gunaggwa, enkola yonna eneddamu okukola nga bulijjo. Mu kiseera kino, oyinza okweyongera okukozesa JamiiShule awatali kutawaanyizibwa. Weebale nnyo olw'okugumiikiriza!",
+    "go_to_jamiishule": "Genda ku JamiiShule",
+    "logout": "Fuluma"
   }
 }

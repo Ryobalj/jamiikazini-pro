@@ -406,5 +406,11 @@
       }
     },
     "contact_label": "Contacter le Support"
+  },
+  "platform_lock": {
+    "title": "Nous Apportons Quelques Améliorations",
+    "default_message": "Nous effectuons actuellement des travaux techniques en coulisses pour connecter notre plateforme à certains systèmes gouvernementaux, afin que tout fonctionne correctement et en toute sécurité pour tous nos utilisateurs. Une fois ce travail terminé, le système complet sera de nouveau opérationnel comme d'habitude. En attendant, vous pouvez continuer à utiliser JamiiShule sans aucune interruption. Merci beaucoup pour votre patience !",
+    "go_to_jamiishule": "Aller à JamiiShule",
+    "logout": "Se Déconnecter"
   }
 }
