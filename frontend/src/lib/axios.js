@@ -267,7 +267,11 @@ api.interceptors.response.use(
     // AppContext immediately instead of waiting for its next status poll,
     // so the overlay appears right away if the lock was flipped on mid-session.
     if (error.response?.status === 423) {
-      notifyPlatformLocked(error.response.data?.detail);
+      // `.message` is the user-facing text (blank unless the admin set a
+      // custom one - PlatformLockOverlay falls back to its own translated
+      // default in that case). `.detail` is a generic technical string,
+      // not meant for display.
+      notifyPlatformLocked(error.response.data?.message);
       return Promise.reject(error);
     }
 

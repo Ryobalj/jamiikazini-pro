@@ -26,6 +26,14 @@ EXEMPT_PATH_PATTERNS = getattr(settings, "PLATFORM_LOCK_EXEMPT_PATHS", [
     r"^/swagger",
     r"^/redoc",
     r"^/api/v1/security/token/",
+    # The actual login/logout endpoints the frontend calls
+    # (security/urls/auth_urls.py::UnifiedLoginView/LogoutView) - NOT the
+    # same as /security/token/ above (that's the separate, currently-unused
+    # simplejwt TokenObtainPairView). Missing this was the real bug: every
+    # login attempt was getting 423'd while locked, so nobody - not even an
+    # ADMIN trying to log in to unlock the platform - could sign in at all.
+    r"^/api/v1/security/login/?$",
+    r"^/api/v1/security/logout/?$",
     r"^/api/v1/auth/me/?$",
     r"^/api/v1/auth/register/?$",
     r"^/api/v1/auth/forgot-password/?$",
@@ -93,7 +101,14 @@ class PlatformLockMiddleware:
 
         return JsonResponse(
             {
-                "detail": lock.message or "Platform is temporarily locked.",
+                # Generic, technical - for API tooling/logs, not shown to users.
+                "detail": "Platform is temporarily locked.",
+                # User-facing text: blank unless the admin set a custom one.
+                # The frontend falls back to its own translated
+                # platform_lock.default_message when this is blank, instead
+                # of always getting one hardcoded language regardless of the
+                # visitor's chosen locale.
+                "message": lock.message,
                 "platform_locked": True,
             },
             status=423,
