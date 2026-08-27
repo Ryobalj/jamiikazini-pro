@@ -8,9 +8,14 @@ import { useTranslation } from "react-i18next";
 import { logoutUser } from "@/lib/auth";
 
 // Njia zinazoendelea kufanya kazi hata jukwaa likiwa limefungwa: JamiiShule
-// (module pekee inayoachwa wazi) na kuingia/kujisajili (bila hizi mtumiaji
-// hawezi hata kuthibitisha kama amefunguliwa au kuomba akaunti ya ADMIN).
-const EXEMPT_PREFIXES = ["/teaching", "/security/login", "/auth/register", "/auth/verify-email"];
+// (module pekee inayoachwa wazi), kuingia/kujisajili (bila hizi mtumiaji
+// hawezi hata kuthibitisha kama amefunguliwa au kuomba akaunti ya ADMIN), na
+// Mwongozo wa Mtumiaji (/help) - mtumiaji anahitaji kusoma sehemu ya
+// "Huduma za Kufundishia" hata akiwa amefungiwa nje; ukurasa huu ni mmoja tu
+// wenye sehemu zote pamoja (hakuna njia tofauti ya sehemu moja peke yake),
+// hivyo kuiruhusu inamaanisha mwongozo mzima unaonekana - haitoi taarifa
+// yoyote ya API iliyofungiwa, ni maandishi tuli tu.
+const EXEMPT_PREFIXES = ["/teaching", "/security/login", "/auth/register", "/auth/verify-email", "/help"];
 
 export default function PlatformLockOverlay({ locked, message }) {
   const { t } = useTranslation("common");
