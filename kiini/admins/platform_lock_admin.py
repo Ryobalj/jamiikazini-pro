@@ -17,6 +17,9 @@ class PlatformLockAdmin(admin.ModelAdmin):
 
     def changelist_view(self, request, extra_context=None):
         # Skip the list page entirely - go straight to editing the single row.
-        obj = PlatformLock.load()
+        # Query the real row directly (not PlatformLock.load(), which returns
+        # a cached SimpleNamespace with no .pk - that's a lightweight read-only
+        # view for the request-path middleware, not a model instance).
+        obj, _ = PlatformLock.objects.get_or_create(pk=1)
         from django.shortcuts import redirect
         return redirect("admin:kiini_platformlock_change", obj.pk)
