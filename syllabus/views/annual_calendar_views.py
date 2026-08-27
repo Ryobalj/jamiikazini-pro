@@ -32,8 +32,20 @@ class AnnualCalendarViewSet(viewsets.ModelViewSet):
         """
         Optionally filter by year or institute from query params:
         ?year=2025&institute=Mzingi
+
+        List results only ever show active (status=True) calendars -
+        teachers use this list to pick which calendar to build a Scheme
+        of Work against, and a calendar an admin marked inactive (e.g.
+        last year's, once the new year's has been seeded) should
+        disappear from that picker rather than just sit there unused.
+        Retrieve/update/delete by id are untouched, so an existing
+        Scheme still tied to a since-deactivated calendar keeps working.
         """
         qs = super().get_queryset()
+
+        if self.action == "list":
+            qs = qs.filter(status=True)
+
         year = self.request.query_params.get("year")
         institute = self.request.query_params.get("institute")
 
