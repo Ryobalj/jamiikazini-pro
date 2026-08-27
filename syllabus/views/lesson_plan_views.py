@@ -16,7 +16,7 @@ from syllabus.services.lesson_notes_pdf_builder import LessonNotesPDFBuilder
 from syllabus.services.academic_context import AcademicContext
 from syllabus.models.teacher_workstation import TeacherWorkStation
 from syllabus.permissions import CanDownloadPDF, FreeDownloadGateMixin
-from syllabus.services.subscription_service import has_full_access, consume_free_download
+from syllabus.services.subscription_service import has_full_access, consume_free_download, DownloadCategory
 from datetime import datetime
 import io
 import zipfile
@@ -30,6 +30,7 @@ class AutoLessonPlanCreateAPIView(generics.CreateAPIView):
     Production-ready API endpoint to generate Lesson Plan automatically.
     """
     permission_classes = [IsAuthenticated]
+    download_category = DownloadCategory.LESSON_PLAN
     serializer_class = LessonPlanRequestSerializer
 
     def perform_create(self, serializer: LessonPlanRequestSerializer) -> None:
@@ -163,7 +164,7 @@ class AutoLessonPlanCreateAPIView(generics.CreateAPIView):
                 response["X-Filename"] = filename
                 response["X-Class-Level"] = lesson_plan.identification.class_level
 
-                consume_free_download(request.user)
+                consume_free_download(request.user, DownloadCategory.LESSON_PLAN)
                 logger.info(f"PDF generated: {filename}")
                 return response
 
@@ -265,6 +266,7 @@ class LessonPlanPDFDownloadAPIView(FreeDownloadGateMixin, generics.CreateAPIView
     SchemePDFDownloadAPIView in scheme_views.py.
     """
     permission_classes = [IsAuthenticated, CanDownloadPDF]
+    download_category = DownloadCategory.LESSON_PLAN
     serializer_class = LessonPlanRequestSerializer
 
     def create(self, request, *args, **kwargs):

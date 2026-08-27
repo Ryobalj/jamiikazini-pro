@@ -44,11 +44,14 @@ class TeacherWorkStation(UUIDModel, TimeStampedModel):
         help_text=_("6. Weka False ikiwa mwalimu hafanyi kazi tena hapa. Mfano: False")
     )
 
-    free_downloads_used = models.PositiveIntegerField(
-        default=0,
+    free_downloads_used = models.JSONField(
+        default=dict,
+        blank=True,
         help_text=_(
-            "Idadi ya nyaraka alizopakua bure kabla ya kuwa na usajili "
-            "(angalia subscription_service.FREE_DOWNLOAD_LIMIT)."
+            "Idadi ya nyaraka alizopakua bure kwa kila aina ya nyaraka "
+            "(mfano {'SCHEME': 1, 'EXAM_RESULTS': 2}) - kila aina ina "
+            "kikomo chake tofauti (angalia "
+            "subscription_service.FREE_DOWNLOAD_LIMITS)."
         ),
     )
 

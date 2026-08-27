@@ -17,6 +17,7 @@ from syllabus.serializers.exam_serializers import (
 )
 from syllabus.services.exam_results_service import compute_class_results
 from syllabus.permissions import CanDownloadPDF, FreeDownloadGateMixin
+from syllabus.services.subscription_service import DownloadCategory
 
 
 class StudentViewSet(viewsets.ModelViewSet):
@@ -128,6 +129,7 @@ class ExamViewSet(viewsets.ModelViewSet):
 class ExamSubjectResultPDFAPIView(FreeDownloadGateMixin, APIView):
     """PDF ya matokeo ya somo moja tu, kwa mtihani fulani."""
     permission_classes = [IsAuthenticated, CanDownloadPDF]
+    download_category = DownloadCategory.EXAM_RESULTS
 
     def get(self, request):
         from syllabus.services.exam_results_pdf_builder import build_subject_result_pdf
@@ -151,6 +153,7 @@ class ExamSubjectResultPDFAPIView(FreeDownloadGateMixin, APIView):
 class ExamClassReportPDFAPIView(FreeDownloadGateMixin, APIView):
     """PDF ya ripoti kamili ya darasa (masomo yote), kwa mtihani fulani."""
     permission_classes = [IsAuthenticated, CanDownloadPDF]
+    download_category = DownloadCategory.EXAM_RESULTS
 
     def get(self, request):
         from syllabus.services.exam_results_pdf_builder import build_class_report_pdf
@@ -175,6 +178,7 @@ XLSX_CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml
 class ExamSubjectResultXLSXAPIView(FreeDownloadGateMixin, APIView):
     """Excel (.xlsx) ya matokeo ya somo moja - thamani tu, hakuna formula."""
     permission_classes = [IsAuthenticated, CanDownloadPDF]
+    download_category = DownloadCategory.EXAM_RESULTS
 
     def get(self, request):
         from syllabus.services.exam_results_xlsx_builder import build_subject_result_xlsx
@@ -198,6 +202,7 @@ class ExamSubjectResultXLSXAPIView(FreeDownloadGateMixin, APIView):
 class ExamClassReportXLSXAPIView(FreeDownloadGateMixin, APIView):
     """Excel (.xlsx) ya ripoti kamili ya darasa (masomo yote) - thamani tu, hakuna formula."""
     permission_classes = [IsAuthenticated, CanDownloadPDF]
+    download_category = DownloadCategory.EXAM_RESULTS
 
     def get(self, request):
         from syllabus.services.exam_results_xlsx_builder import build_class_report_xlsx

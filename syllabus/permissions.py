@@ -10,7 +10,11 @@ class CanDownloadPDF(BasePermission):
     teacher who either has a currently-valid TeacherSubscription (the
     monthly fee is auto-debited from their JamiiWallet balance each
     renewal cycle - see subscription_service.py) or still has free-trial
-    downloads left (subscription_service.FREE_DOWNLOAD_LIMIT). Admins
+    downloads left FOR THAT DOCUMENT TYPE (each of the 6 document
+    categories has its own separate limit - see
+    subscription_service.FREE_DOWNLOAD_LIMITS). The view being checked
+    must declare which category it is via a `download_category` class
+    attribute (one of subscription_service.DownloadCategory.*). Admins
     always have access.
 
     Read-only: this only decides eligibility, it never spends a free
@@ -34,7 +38,8 @@ class CanDownloadPDF(BasePermission):
             return True
 
         from syllabus.services.subscription_service import has_full_access, has_free_downloads_remaining
-        return has_full_access(user) or has_free_downloads_remaining(user)
+        category = getattr(view, "download_category", None)
+        return has_full_access(user) or (category and has_free_downloads_remaining(user, category))
 
 
 class FreeDownloadGateMixin:
@@ -42,9 +47,10 @@ class FreeDownloadGateMixin:
     Mix into any APIView whose ENTIRE job is producing one downloadable
     document (PDF/XLSX) - i.e. it's already gated by
     `permission_classes = [IsAuthenticated, CanDownloadPDF]` and does
-    nothing else. Spends one free-trial download (no-op for admins/paid
-    subscribers) exactly once, right after the response has actually
-    succeeded.
+    nothing else. Requires a `download_category` class attribute (see
+    CanDownloadPDF). Spends one free-trial download for that category
+    (no-op for admins/paid subscribers) exactly once, right after the
+    response has actually succeeded.
 
     Do NOT mix this into a dual-purpose view that also serves a plain
     JSON preview/metadata response from the same handler (e.g.
@@ -55,12 +61,14 @@ class FreeDownloadGateMixin:
     their actual `?format=pdf` branch.
     """
 
+    download_category = None
+
     def finalize_response(self, request, response, *args, **kwargs):
         response = super().finalize_response(request, response, *args, **kwargs)
         user = getattr(request, "user", None)
         if user and getattr(user, "is_authenticated", False) and 200 <= response.status_code < 300:
             from syllabus.services.subscription_service import consume_free_download
-            consume_free_download(user)
+            consume_free_download(user, self.download_category)
         return response
 
 

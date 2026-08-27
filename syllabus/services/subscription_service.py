@@ -12,10 +12,33 @@ from jamiiwallet.services.transaction_engine import TransactionEngine
 
 logger = logging.getLogger(__name__)
 
-# New teachers get this many free document downloads (PDF/XLSX - Azimio,
-# Andalio, ratiba, matokeo, karatasi za mtihani) before a paid subscription
-# is required, so they can judge the tool's quality before paying.
-FREE_DOWNLOAD_LIMIT = 3
+class DownloadCategory:
+    """
+    One counter per document TYPE, not one shared pool - e.g. downloading
+    2 timetables and 2 exam results is fine even though that's 4 total,
+    since timetable and exam-results each have their own limit. Matches
+    the 6 document tiles on the JamiiShule Teaching Services page.
+    """
+    SCHEME = "SCHEME"
+    LESSON_PLAN = "LESSON_PLAN"
+    TIMETABLE = "TIMETABLE"
+    MASTER_TIMETABLE = "MASTER_TIMETABLE"
+    EXAM_RESULTS = "EXAM_RESULTS"
+    QUIZ_EXAM = "QUIZ_EXAM"
+
+
+# New teachers get this many free downloads of each document type (PDF and
+# XLSX exports of the same document share one counter) before a paid
+# subscription is required for that type, so they can judge the tool's
+# quality before paying.
+FREE_DOWNLOAD_LIMITS = {
+    DownloadCategory.SCHEME: 1,
+    DownloadCategory.LESSON_PLAN: 1,
+    DownloadCategory.TIMETABLE: 2,
+    DownloadCategory.MASTER_TIMETABLE: 2,
+    DownloadCategory.EXAM_RESULTS: 2,
+    DownloadCategory.QUIZ_EXAM: 2,
+}
 
 
 def get_or_create_subscription(workstation) -> TeacherSubscription:
@@ -184,37 +207,53 @@ def has_full_access(user) -> bool:
     return bool(subscription and subscription.is_valid)
 
 
-def has_free_downloads_remaining(user) -> bool:
-    """Read-only eligibility check - never mutates anything, safe to call
-    as many times as a view needs (some views check it 2-3 times per
-    request for preview/metadata purposes, not just the actual download
-    gate). Actually spending a free download is a separate, explicit step:
-    see consume_free_download()."""
+def has_free_downloads_remaining(user, category: str) -> bool:
+    """Read-only eligibility check for ONE document category - never
+    mutates anything, safe to call as many times as a view needs (some
+    views check it 2-3 times per request for preview/metadata purposes,
+    not just the actual download gate). Actually spending a free download
+    is a separate, explicit step: see consume_free_download()."""
     from syllabus.models.teacher_workstation import TeacherWorkStation
 
     workstation = TeacherWorkStation.objects.filter(teacher=user, is_active=True).first()
     if not workstation:
         return False
-    return workstation.free_downloads_used < FREE_DOWNLOAD_LIMIT
+    used = (workstation.free_downloads_used or {}).get(category, 0)
+    return used < FREE_DOWNLOAD_LIMITS.get(category, 0)
 
 
-def consume_free_download(user) -> None:
+def consume_free_download(user, category: str) -> None:
     """
-    Spends exactly one free-trial download credit. Call this ONLY at the
-    point a real document has actually been generated and is being handed
-    back to the user - never from inside a permission check (those may run
-    more than once per request for preview/metadata purposes) and never
-    for a JSON preview that isn't itself a download.
+    Spends exactly one free-trial download credit for ONE document
+    category. Call this ONLY at the point a real document has actually
+    been generated and is being handed back to the user - never from
+    inside a permission check (those may run more than once per request
+    for preview/metadata purposes) and never for a JSON preview that
+    isn't itself a download.
 
     No-op for admins and paid subscribers - there's nothing to consume,
     since has_full_access() already grants them unlimited access.
+
+    select_for_update() + read-modify-write (not F()) because this is a
+    per-key update inside a JSONField dict, not a flat integer column -
+    locks the row so two near-simultaneous downloads of the same category
+    can't race and silently lose one of the increments.
     """
     if getattr(user, "role", None) == "ADMIN" or has_full_access(user):
         return
 
+    from django.db import transaction
     from syllabus.models.teacher_workstation import TeacherWorkStation
-    from django.db.models import F
 
-    TeacherWorkStation.objects.filter(teacher=user, is_active=True).update(
-        free_downloads_used=F("free_downloads_used") + 1
-    )
+    with transaction.atomic():
+        workstation = (
+            TeacherWorkStation.objects.select_for_update()
+            .filter(teacher=user, is_active=True)
+            .first()
+        )
+        if not workstation:
+            return
+        counts = dict(workstation.free_downloads_used or {})
+        counts[category] = counts.get(category, 0) + 1
+        workstation.free_downloads_used = counts
+        workstation.save(update_fields=["free_downloads_used"])

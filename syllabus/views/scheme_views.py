@@ -23,7 +23,7 @@ from syllabus.serializers.scheme_serializers import (
 from syllabus.services.scheme_timeline_builder import SchemeTimelineBuilder
 from syllabus.services.scheme_pdf_builder import SchemePDFBuilder
 from syllabus.permissions import CanDownloadPDF, IsAdminOrClientTeacher
-from syllabus.services.subscription_service import consume_free_download
+from syllabus.services.subscription_service import consume_free_download, DownloadCategory
 from syllabus.services.competence_tree_service import CompetenceTreeService
 from syllabus.services.calendar_service import CalendarService
 from syllabus.services.institution_helpers import get_school_display_name
@@ -345,6 +345,7 @@ class SchemeCreateAPIView(generics.CreateAPIView):
     """
     
     permission_classes = [IsAuthenticated, IsAdminOrClientTeacher]
+    download_category = DownloadCategory.SCHEME
     serializer_class = SchemeRequestSerializer
     parser_classes = [JSONParser]
     
@@ -488,7 +489,7 @@ class SchemeCreateAPIView(generics.CreateAPIView):
                 response["X-Class-Level"] = scheme.class_level_name
                 response["X-Syllabus-Year"] = getattr(scheme, 'syllabus_year', annual_calendar.year)
 
-                consume_free_download(request.user)
+                consume_free_download(request.user, DownloadCategory.SCHEME)
                 logger.info(f"✅ PDF generated: {filename}")
                 return response
             
@@ -751,8 +752,18 @@ class SchemePDFDownloadAPIView(generics.CreateAPIView):
     """
     PDF download endpoint.
     Reuses SchemeCreateAPIView but forces PDF output.
+
+    No FreeDownloadGateMixin here - it delegates straight into
+    SchemeCreateAPIView.create(), which already spends the free-download
+    credit itself on the ?format=pdf branch; adding the mixin here too
+    would double-consume. download_category IS still needed below though,
+    since DRF checks THIS class's own permission_classes (via
+    check_permissions in dispatch()) before create() ever runs - without
+    it, CanDownloadPDF would see no category and reject every free-trial
+    user on this specific route even with credits left.
     """
     permission_classes = [IsAuthenticated, CanDownloadPDF]
+    download_category = DownloadCategory.SCHEME
     serializer_class = SchemeRequestSerializer
 
     def create(self, request, *args, **kwargs):

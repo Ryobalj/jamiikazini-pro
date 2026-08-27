@@ -15,6 +15,7 @@ from syllabus.models.generated_paper import GeneratedPaper
 from syllabus.models.teacher_workstation import TeacherWorkStation
 from syllabus.models.timetable import TimeTable
 from syllabus.permissions import CanDownloadPDF, FreeDownloadGateMixin
+from syllabus.services.subscription_service import DownloadCategory
 from syllabus.serializers.generated_paper_serializers import (
     GeneratePaperRequestSerializer,
     GeneratedPaperSerializer,
@@ -113,6 +114,7 @@ class GeneratedPaperPDFDownloadAPIView(FreeDownloadGateMixin, APIView):
     LessonPlanPDFDownloadAPIView's ZIP-of-two-PDFs pattern."""
 
     permission_classes = [IsAuthenticated, CanDownloadPDF]
+    download_category = DownloadCategory.QUIZ_EXAM
 
     def get(self, request, pk=None):
         from syllabus.services.quiz_paper_pdf_builder import build_quiz_pdf

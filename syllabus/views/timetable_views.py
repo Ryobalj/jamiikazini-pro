@@ -12,6 +12,7 @@ from syllabus.models.timetable import TimeTable
 from syllabus.serializers.timetable_serializer import TimeTableSerializer
 from syllabus.models.teacher_workstation import TeacherWorkStation
 from syllabus.permissions import CanDownloadPDF, FreeDownloadGateMixin
+from syllabus.services.subscription_service import DownloadCategory
 
 class TimeTableViewSet(viewsets.ModelViewSet):
     """
@@ -57,6 +58,7 @@ class TimeTableViewSet(viewsets.ModelViewSet):
 class TeacherTimetablePDFAPIView(FreeDownloadGateMixin, APIView):
     """PDF ya ratiba ya kibinafsi ya mwalimu aliyeingia (kutoka workstation yake)."""
     permission_classes = [IsAuthenticated, CanDownloadPDF]
+    download_category = DownloadCategory.TIMETABLE
 
     def get(self, request):
         from syllabus.services.timetable_pdf_builder import build_teacher_timetable_pdf
@@ -78,6 +80,7 @@ class SchoolTimetablePDFAPIView(FreeDownloadGateMixin, APIView):
     wenye workstation shuleni humo. Admin anaweza kuchagua shule kwa
     ?school_name=; mwalimu wa kawaida hupata shule ya workstation yake."""
     permission_classes = [IsAuthenticated, CanDownloadPDF]
+    download_category = DownloadCategory.TIMETABLE
 
     def get(self, request):
         from syllabus.services.school_timetable_pdf_builder import build_school_timetable_pdf
@@ -103,6 +106,7 @@ XLSX_CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml
 class TeacherTimetableXLSXAPIView(FreeDownloadGateMixin, APIView):
     """Excel (.xlsx) ya ratiba ya kibinafsi ya mwalimu - thamani tu, hakuna formula."""
     permission_classes = [IsAuthenticated, CanDownloadPDF]
+    download_category = DownloadCategory.TIMETABLE
 
     def get(self, request):
         from syllabus.services.timetable_xlsx_builder import build_teacher_timetable_xlsx
@@ -122,6 +126,7 @@ class TeacherTimetableXLSXAPIView(FreeDownloadGateMixin, APIView):
 class SchoolTimetableXLSXAPIView(FreeDownloadGateMixin, APIView):
     """Excel (.xlsx) ya ratiba kuu ya shule nzima - thamani tu, hakuna formula."""
     permission_classes = [IsAuthenticated, CanDownloadPDF]
+    download_category = DownloadCategory.TIMETABLE
 
     def get(self, request):
         from syllabus.services.timetable_xlsx_builder import build_school_timetable_xlsx
