@@ -489,13 +489,13 @@
         "steps4": [
           "This is different from 'My Timetable' - use it if you need to build a schedule for the whole school, not just yourself.",
           "Add your fellow teachers (full name and initials, e.g. 'DR') and assign each one the subjects and classes they teach - they don't need their own account.",
-          "Set whole-school activities like breaks or religious periods for specific days/periods, then click 'Generate Timetable' - the system schedules every period automatically without ever double-booking a teacher across two classes at once.",
+          "Set whole-school activities like breaks or religious periods for specific days/periods, then click 'Generate Timetable' to build every teacher's schedule automatically.",
           "View it filtered by teacher or class, then download as PDF or Excel."
         ],
         "subheading5": "Scheme of Work",
         "steps5": [
           "Select a subject (from My Subjects or directly in 'Scheme of Work'), then click 'Generate.'",
-          "The system spreads the official syllabus topics across the weeks of the school year automatically, accounting for school holidays and exams.",
+          "The full-year schedule is generated automatically from the official syllabus.",
           "Review the result, then download it as PDF or Excel to submit at school."
         ],
         "subheading6": "Lesson Plan & Notes",
