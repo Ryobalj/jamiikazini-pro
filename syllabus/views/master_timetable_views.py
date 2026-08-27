@@ -25,7 +25,7 @@ from syllabus.serializers.master_timetable_serializers import (
     TimetableTeacherAssignmentSerializer,
     TimetableSlotSerializer,
 )
-from syllabus.permissions import IsAdminOrReadOnly, CanDownloadPDF
+from syllabus.permissions import IsAdminOrReadOnly, CanDownloadPDF, FreeDownloadGateMixin
 from syllabus.services.master_timetable_generator import MasterTimetableGenerator
 
 # Default day layout matching the sample workbook this feature was built
@@ -190,7 +190,7 @@ def _get_owned_roster(request, roster_id):
     )
 
 
-class MasterTimetablePDFAPIView(APIView):
+class MasterTimetablePDFAPIView(FreeDownloadGateMixin, APIView):
     """Same subscription gate as every other document export in this
     app (CanDownloadPDF) - the master timetable is no exception."""
     permission_classes = [IsAuthenticated, CanDownloadPDF]
@@ -212,7 +212,7 @@ class MasterTimetablePDFAPIView(APIView):
         return response
 
 
-class MasterTimetableXLSXAPIView(APIView):
+class MasterTimetableXLSXAPIView(FreeDownloadGateMixin, APIView):
     permission_classes = [IsAuthenticated, CanDownloadPDF]
 
     def get(self, request, roster_id):

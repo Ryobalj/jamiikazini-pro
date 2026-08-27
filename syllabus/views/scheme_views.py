@@ -23,6 +23,7 @@ from syllabus.serializers.scheme_serializers import (
 from syllabus.services.scheme_timeline_builder import SchemeTimelineBuilder
 from syllabus.services.scheme_pdf_builder import SchemePDFBuilder
 from syllabus.permissions import CanDownloadPDF, IsAdminOrClientTeacher
+from syllabus.services.subscription_service import consume_free_download
 from syllabus.services.competence_tree_service import CompetenceTreeService
 from syllabus.services.calendar_service import CalendarService
 from syllabus.services.institution_helpers import get_school_display_name
@@ -486,7 +487,8 @@ class SchemeCreateAPIView(generics.CreateAPIView):
                 response["X-Subject"] = scheme.subject_name
                 response["X-Class-Level"] = scheme.class_level_name
                 response["X-Syllabus-Year"] = getattr(scheme, 'syllabus_year', annual_calendar.year)
-                
+
+                consume_free_download(request.user)
                 logger.info(f"✅ PDF generated: {filename}")
                 return response
             

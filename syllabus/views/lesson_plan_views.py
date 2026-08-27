@@ -15,8 +15,8 @@ from syllabus.services.lesson_plan_pdf_builder import LessonPlanPDFBuilder
 from syllabus.services.lesson_notes_pdf_builder import LessonNotesPDFBuilder
 from syllabus.services.academic_context import AcademicContext
 from syllabus.models.teacher_workstation import TeacherWorkStation
-from syllabus.permissions import CanDownloadPDF
-from syllabus.services.subscription_service import has_full_access
+from syllabus.permissions import CanDownloadPDF, FreeDownloadGateMixin
+from syllabus.services.subscription_service import has_full_access, consume_free_download
 from datetime import datetime
 import io
 import zipfile
@@ -163,6 +163,7 @@ class AutoLessonPlanCreateAPIView(generics.CreateAPIView):
                 response["X-Filename"] = filename
                 response["X-Class-Level"] = lesson_plan.identification.class_level
 
+                consume_free_download(request.user)
                 logger.info(f"PDF generated: {filename}")
                 return response
 
@@ -246,7 +247,7 @@ class AutoLessonPlanCreateAPIView(generics.CreateAPIView):
         )
 
 
-class LessonPlanPDFDownloadAPIView(generics.CreateAPIView):
+class LessonPlanPDFDownloadAPIView(FreeDownloadGateMixin, generics.CreateAPIView):
     """
     Download endpoint for Andalio la Somo — returns a ZIP containing TWO
     separate PDFs: the Andalio la Somo (lesson plan) itself and a

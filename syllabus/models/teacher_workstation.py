@@ -44,6 +44,14 @@ class TeacherWorkStation(UUIDModel, TimeStampedModel):
         help_text=_("6. Weka False ikiwa mwalimu hafanyi kazi tena hapa. Mfano: False")
     )
 
+    free_downloads_used = models.PositiveIntegerField(
+        default=0,
+        help_text=_(
+            "Idadi ya nyaraka alizopakua bure kabla ya kuwa na usajili "
+            "(angalia subscription_service.FREE_DOWNLOAD_LIMIT)."
+        ),
+    )
+
     class Meta:
         verbose_name = _("Sehemu ya Kazi ya Mwalimu")
         verbose_name_plural = _("Sehemu za Kazi za Walimu")

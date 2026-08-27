@@ -12,6 +12,11 @@ from jamiiwallet.services.transaction_engine import TransactionEngine
 
 logger = logging.getLogger(__name__)
 
+# New teachers get this many free document downloads (PDF/XLSX - Azimio,
+# Andalio, ratiba, matokeo, karatasi za mtihani) before a paid subscription
+# is required, so they can judge the tool's quality before paying.
+FREE_DOWNLOAD_LIMIT = 3
+
 
 def get_or_create_subscription(workstation) -> TeacherSubscription:
     subscription, _ = TeacherSubscription.objects.get_or_create(workstation=workstation)
@@ -177,3 +182,39 @@ def has_full_access(user) -> bool:
 
     subscription = getattr(workstation, "subscription", None)
     return bool(subscription and subscription.is_valid)
+
+
+def has_free_downloads_remaining(user) -> bool:
+    """Read-only eligibility check - never mutates anything, safe to call
+    as many times as a view needs (some views check it 2-3 times per
+    request for preview/metadata purposes, not just the actual download
+    gate). Actually spending a free download is a separate, explicit step:
+    see consume_free_download()."""
+    from syllabus.models.teacher_workstation import TeacherWorkStation
+
+    workstation = TeacherWorkStation.objects.filter(teacher=user, is_active=True).first()
+    if not workstation:
+        return False
+    return workstation.free_downloads_used < FREE_DOWNLOAD_LIMIT
+
+
+def consume_free_download(user) -> None:
+    """
+    Spends exactly one free-trial download credit. Call this ONLY at the
+    point a real document has actually been generated and is being handed
+    back to the user - never from inside a permission check (those may run
+    more than once per request for preview/metadata purposes) and never
+    for a JSON preview that isn't itself a download.
+
+    No-op for admins and paid subscribers - there's nothing to consume,
+    since has_full_access() already grants them unlimited access.
+    """
+    if getattr(user, "role", None) == "ADMIN" or has_full_access(user):
+        return
+
+    from syllabus.models.teacher_workstation import TeacherWorkStation
+    from django.db.models import F
+
+    TeacherWorkStation.objects.filter(teacher=user, is_active=True).update(
+        free_downloads_used=F("free_downloads_used") + 1
+    )

@@ -11,7 +11,7 @@ from django.http import HttpResponse
 from syllabus.models.timetable import TimeTable
 from syllabus.serializers.timetable_serializer import TimeTableSerializer
 from syllabus.models.teacher_workstation import TeacherWorkStation
-from syllabus.permissions import CanDownloadPDF
+from syllabus.permissions import CanDownloadPDF, FreeDownloadGateMixin
 
 class TimeTableViewSet(viewsets.ModelViewSet):
     """
@@ -54,7 +54,7 @@ class TimeTableViewSet(viewsets.ModelViewSet):
         serializer.save()
 
 
-class TeacherTimetablePDFAPIView(APIView):
+class TeacherTimetablePDFAPIView(FreeDownloadGateMixin, APIView):
     """PDF ya ratiba ya kibinafsi ya mwalimu aliyeingia (kutoka workstation yake)."""
     permission_classes = [IsAuthenticated, CanDownloadPDF]
 
@@ -73,7 +73,7 @@ class TeacherTimetablePDFAPIView(APIView):
         return response
 
 
-class SchoolTimetablePDFAPIView(APIView):
+class SchoolTimetablePDFAPIView(FreeDownloadGateMixin, APIView):
     """PDF ya ratiba kuu ya shule nzima, ikijumuisha vipindi vya walimu wote
     wenye workstation shuleni humo. Admin anaweza kuchagua shule kwa
     ?school_name=; mwalimu wa kawaida hupata shule ya workstation yake."""
@@ -100,7 +100,7 @@ class SchoolTimetablePDFAPIView(APIView):
 XLSX_CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
 
-class TeacherTimetableXLSXAPIView(APIView):
+class TeacherTimetableXLSXAPIView(FreeDownloadGateMixin, APIView):
     """Excel (.xlsx) ya ratiba ya kibinafsi ya mwalimu - thamani tu, hakuna formula."""
     permission_classes = [IsAuthenticated, CanDownloadPDF]
 
@@ -119,7 +119,7 @@ class TeacherTimetableXLSXAPIView(APIView):
         return response
 
 
-class SchoolTimetableXLSXAPIView(APIView):
+class SchoolTimetableXLSXAPIView(FreeDownloadGateMixin, APIView):
     """Excel (.xlsx) ya ratiba kuu ya shule nzima - thamani tu, hakuna formula."""
     permission_classes = [IsAuthenticated, CanDownloadPDF]
 

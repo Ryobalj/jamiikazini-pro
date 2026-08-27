@@ -14,7 +14,7 @@ from rest_framework.views import APIView
 from syllabus.models.generated_paper import GeneratedPaper
 from syllabus.models.teacher_workstation import TeacherWorkStation
 from syllabus.models.timetable import TimeTable
-from syllabus.permissions import CanDownloadPDF
+from syllabus.permissions import CanDownloadPDF, FreeDownloadGateMixin
 from syllabus.serializers.generated_paper_serializers import (
     GeneratePaperRequestSerializer,
     GeneratedPaperSerializer,
@@ -107,7 +107,7 @@ class GeneratePaperAPIView(generics.CreateAPIView):
         return Response(GeneratedPaperSerializer(paper).data, status=status.HTTP_201_CREATED)
 
 
-class GeneratedPaperPDFDownloadAPIView(APIView):
+class GeneratedPaperPDFDownloadAPIView(FreeDownloadGateMixin, APIView):
     """Downloads a ZIP containing the blank question paper and the
     separate answer key / marking scheme, mirroring
     LessonPlanPDFDownloadAPIView's ZIP-of-two-PDFs pattern."""
