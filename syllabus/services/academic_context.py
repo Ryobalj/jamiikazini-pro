@@ -3,7 +3,7 @@
 from typing import Optional
 from datetime import date, time
 from django.core.exceptions import ValidationError
-from syllabus.services.institution_helpers import get_school_display_name
+from syllabus.services.institution_helpers import get_school_display_name, get_class_level_display_name
 
 
 class AcademicContext:
@@ -211,8 +211,15 @@ class AcademicContext:
 
     @property
     def class_level(self) -> str:
-        """Class level name."""
-        return self.subject_version.class_level.name or ""
+        """
+        Class level display name: shown in English for English-medium
+        subjects (e.g. "Kidato V" -> "Form V") and left in Kiswahili
+        otherwise - matches ClassLevel.name for a Kiswahili lesson
+        plan/lesson notes, but never the raw stored name for an English one.
+        """
+        return get_class_level_display_name(
+            self.subject_version.class_level.name or "", self.language
+        )
 
     @property
     def subject_name(self) -> str:

@@ -10,6 +10,32 @@ SCHOOL_TYPE_PREFIX = {
     "sekondari": "Shule ya Sekondari",
 }
 
+# Kiswahili school names are prefixed - "Shule ya Msingi Mzingi". See
+# get_school_display_name() in institution_helpers.py.
+SCHOOL_TYPE_ORDER = "prefix"
+
+# -----------------------------
+# CLASS LEVEL DISPLAY NAMES - identity mapping. ClassLevel.name is already
+# stored in Kiswahili (see syllabus/csv/class_level.csv), so Kiswahili
+# documents use it as-is; this exists so get_class_level_display_name()
+# in institution_helpers.py has one consistent lookup for both languages.
+# -----------------------------
+CLASS_LEVEL_NAMES = {
+    "Awali": "Awali",
+    "DRS I": "DRS I",
+    "DRS II": "DRS II",
+    "DRS III": "DRS III",
+    "DRS IV": "DRS IV",
+    "DRS V": "DRS V",
+    "DRS VI": "DRS VI",
+    "Kidato I": "Kidato I",
+    "Kidato II": "Kidato II",
+    "Kidato III": "Kidato III",
+    "Kidato IV": "Kidato IV",
+    "Kidato V": "Kidato V",
+    "Kidato VI": "Kidato VI",
+}
+
 # -----------------------------
 # LESSON PLAN LABELS
 # -----------------------------

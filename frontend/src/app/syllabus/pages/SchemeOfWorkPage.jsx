@@ -19,6 +19,14 @@ import SchemePreview from "../components/SchemePreview";
 import SchemeSelection from "../components/SchemeSelection";
 import SchemeActions from "../components/SchemeActions";
 
+// Kidato V/VI (A-Level) follow a different Ministry academic calendar than
+// Awali-Kidato IV (basic education/O-Level) - mirrors
+// AnnualCalendar.ADVANCED_CLASS_LEVEL_NAMES on the backend
+// (syllabus/models/annual_calendar.py). Keep these two lists in sync.
+const ADVANCED_CLASS_LEVELS = ["Kidato V", "Kidato VI"];
+const getLevelGroupForClassLevel = (className) =>
+  ADVANCED_CLASS_LEVELS.includes(className) ? "advanced" : "basic";
+
 export default function SchemeOfWorkPage() {
   const { t } = useTranslation("syllabus");
   const navigate = useNavigate();
@@ -52,6 +60,15 @@ export default function SchemeOfWorkPage() {
   
   const selectedSubjectInfo = timetableSubjects.find(s => s.id === selectedSubject);
   const selectedCalendarInfo = calendars.find(c => c.id === selectedCalendar);
+  // Only ever offer the calendar that actually matches the selected
+  // subject's class level - a Kidato V/VI subject should never see (or be
+  // able to pick) the Awali-Kidato IV calendar in the dropdown, and vice
+  // versa. Falls back to the full list until a subject is chosen.
+  const filteredCalendars = selectedSubjectInfo
+    ? calendars.filter(
+        c => c.level_group === getLevelGroupForClassLevel(selectedSubjectInfo.className)
+      )
+    : calendars;
   // Documents follow the selected subject's own medium of instruction —
   // an English-medium subject always produces English documents, never a
   // separate manual toggle.
@@ -238,12 +255,19 @@ export default function SchemeOfWorkPage() {
         console.log("Auto-selected subject from prefill:", match);
       }
       
-      // Auto-select latest calendar
+      // Auto-select latest calendar - scoped to the matched subject's class
+      // level group (basic vs advanced), never just "the newest calendar
+      // overall" - otherwise a Kidato V/VI subject could get auto-paired
+      // with the Awali-Kidato IV calendar (or vice versa).
       if (calendars.length > 0 && !selectedCalendar) {
-        const latestCalendar = calendars.reduce((a, b) => 
-          (b.year > (a?.year || 0) ? b : a)
+        const requiredGroup = getLevelGroupForClassLevel(
+          match?.className || prefillData.class_level
         );
-        
+        const candidateCalendars = calendars.filter(c => c.level_group === requiredGroup);
+        const latestCalendar = candidateCalendars.length > 0
+          ? candidateCalendars.reduce((a, b) => (b.year > (a?.year || 0) ? b : a))
+          : null;
+
         if (latestCalendar) {
           setSelectedCalendar(latestCalendar.id);
           console.log("Auto-selected calendar:", latestCalendar);
@@ -251,6 +275,32 @@ export default function SchemeOfWorkPage() {
       }
     }
   }, [prefillData, timetableSubjects, calendars, selectedCalendar]);
+
+  /* ===================== KEEP CALENDAR IN SYNC WITH SUBJECT'S CLASS LEVEL =====================
+     Whenever the selected subject changes (by the teacher manually picking
+     one, not just via prefill above), make sure selectedCalendar still
+     matches that subject's class-level group. If it doesn't - either
+     nothing was picked yet, or the previous subject was a different group -
+     auto-pick the latest calendar for the *new* group instead of leaving a
+     stale/mismatched calendar selected. */
+  useEffect(() => {
+    if (!selectedSubjectInfo || calendars.length === 0) return;
+
+    const requiredGroup = getLevelGroupForClassLevel(selectedSubjectInfo.className);
+    const currentCalendar = calendars.find(c => c.id === selectedCalendar);
+
+    if (currentCalendar && currentCalendar.level_group === requiredGroup) {
+      return; // already correct - leave the teacher's choice alone
+    }
+
+    const candidateCalendars = calendars.filter(c => c.level_group === requiredGroup);
+    const latestCalendar = candidateCalendars.length > 0
+      ? candidateCalendars.reduce((a, b) => (b.year > (a?.year || 0) ? b : a))
+      : null;
+
+    setSelectedCalendar(latestCalendar ? latestCalendar.id : "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedSubjectInfo, calendars]);
 
   /* ===================== API ERROR HANDLER ===================== */
   const handleApiError = useCallback((err) => {
@@ -526,7 +576,7 @@ export default function SchemeOfWorkPage() {
           <SchemeSelection
             schemeData={{
               timetableSubjects,
-              calendars,
+              calendars: filteredCalendars,
               selectedSubject,
               setSelectedSubject,
               selectedCalendar,

@@ -10,6 +10,33 @@ SCHOOL_TYPE_PREFIX = {
     "sekondari": "Secondary School",
 }
 
+# English school names are suffixed, not prefixed - "Mzingi Primary
+# School", never "Primary School Mzingi" - unlike Kiswahili's "Shule ya
+# Msingi Mzingi". See get_school_display_name() in institution_helpers.py.
+SCHOOL_TYPE_ORDER = "suffix"
+
+# -----------------------------
+# CLASS LEVEL DISPLAY NAMES (ClassLevel.name, as stored in Kiswahili, ->
+# its English equivalent for English-medium subjects/documents). See
+# get_class_level_display_name() in institution_helpers.py. Keep in sync
+# with syllabus/csv/class_level.csv and AnnualCalendar.ADVANCED_CLASS_LEVEL_NAMES.
+# -----------------------------
+CLASS_LEVEL_NAMES = {
+    "Awali": "Pre-Primary",
+    "DRS I": "Standard I",
+    "DRS II": "Standard II",
+    "DRS III": "Standard III",
+    "DRS IV": "Standard IV",
+    "DRS V": "Standard V",
+    "DRS VI": "Standard VI",
+    "Kidato I": "Form I",
+    "Kidato II": "Form II",
+    "Kidato III": "Form III",
+    "Kidato IV": "Form IV",
+    "Kidato V": "Form V",
+    "Kidato VI": "Form VI",
+}
+
 # -----------------------------
 # LESSON PLAN LABELS
 # -----------------------------

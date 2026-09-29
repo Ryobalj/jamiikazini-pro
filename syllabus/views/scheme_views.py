@@ -26,7 +26,7 @@ from syllabus.permissions import CanDownloadPDF, IsAdminOrClientTeacher
 from syllabus.services.subscription_service import consume_free_download, DownloadCategory
 from syllabus.services.competence_tree_service import CompetenceTreeService
 from syllabus.services.calendar_service import CalendarService
-from syllabus.services.institution_helpers import get_school_display_name
+from syllabus.services.institution_helpers import get_school_display_name, get_class_level_display_name
 from syllabus.i18n import sw as sw_labels, en as en_labels
 from datetime import datetime
 
@@ -76,6 +76,32 @@ class BaseSchemeService:
         if not exists:
             raise ValidationError({
                 "subject_version_id": "Somo hili halipo kwenye ratiba yako. Tafadhali liongeze kwenye ratiba yako kwanza."
+            })
+
+    @staticmethod
+    def verify_calendar_matches_class_level(subject_version: SubjectVersion, annual_calendar: AnnualCalendar) -> None:
+        """Kidato V/VI (A-Level) use a different Ministry calendar than
+        Awali-Kidato IV (see AnnualCalendar.level_group). Without this check,
+        annual_calendar_id was accepted unscoped, so a Kidato V/VI scheme
+        could silently be built against the basic-education calendar (or
+        vice versa), producing wrong term/break dates and periods_needed
+        totals. Admins bypass (they may be fixing up data across groups)."""
+        if getattr(subject_version.class_level, "name", None) is None:
+            return
+        expected_level_group = AnnualCalendar.level_group_for_class_level(
+            subject_version.class_level.name
+        )
+        if annual_calendar.level_group != expected_level_group:
+            expected_label = dict(AnnualCalendar.LEVEL_GROUP_CHOICES).get(
+                expected_level_group, expected_level_group
+            )
+            actual_label = annual_calendar.get_level_group_display()
+            raise ValidationError({
+                "annual_calendar_id": (
+                    f"Kalenda hii ni ya '{actual_label}' lakini darasa "
+                    f"({subject_version.class_level.name}) linahitaji kalenda ya "
+                    f"'{expected_label}'. Tafadhali chagua kalenda sahihi."
+                )
             })
 
     @staticmethod
@@ -140,10 +166,15 @@ class BaseSchemeService:
         except:
             pass
         
-        # Get class level display name
-        class_level_name = subject_version.class_level.name
-        if hasattr(subject_version.class_level, 'display_name'):
-            class_level_name = subject_version.class_level.display_name
+        # Get class level display name - Kiswahili class levels are shown
+        # in English for English-medium subjects (e.g. "Kidato V" ->
+        # "Form V"), and left as-is for Kiswahili-medium ones. NOTE: this
+        # is display-only - "class_level" below stays the raw, untranslated
+        # name because SchemeTimelineBuilder keys its national-exam-class
+        # gating (NATIONAL_EXAM_CLASS_LEVELS) off that exact string.
+        class_level_name = get_class_level_display_name(
+            subject_version.class_level.name, language
+        )
         
         # Get syllabus year
         syllabus_year = ""
@@ -429,7 +460,9 @@ class SchemeCreateAPIView(generics.CreateAPIView):
                     {"detail": f"Annual calendar with ID {calendar_id} not found."},
                     status=status.HTTP_404_NOT_FOUND
                 )
-            
+
+            BaseSchemeService.verify_calendar_matches_class_level(subject_version, annual_calendar)
+
             # Extract other parameters
             balance_weekly = data.get("balance_weekly", True)
             language = data.get("language")
@@ -640,7 +673,9 @@ class SchemePreviewAPIView(generics.CreateAPIView):
                     {"detail": f"Annual calendar not found."},
                     status=status.HTTP_404_NOT_FOUND
                 )
-            
+
+            BaseSchemeService.verify_calendar_matches_class_level(subject_version, annual_calendar)
+
             # Build scheme
             scheme = BaseSchemeService.build_scheme(
                 subject_version=subject_version,
@@ -907,6 +942,7 @@ class SchemeDebugAPIView(APIView):
                         "id": str(annual_calendar.id),
                         "institute": annual_calendar.institute,
                         "year": annual_calendar.year,
+                        "level_group": annual_calendar.level_group,
                         "status": annual_calendar.status,
                         "total_learning_days": annual_calendar.total_learning_days
                     }
