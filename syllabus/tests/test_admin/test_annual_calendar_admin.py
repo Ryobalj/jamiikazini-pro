@@ -20,7 +20,7 @@ class TestAnnualCalendarAdmin:
         site = AdminSite()
         admin_instance = AnnualCalendarAdmin(AnnualCalendar, site)
         expected_fields = (
-            "id", "institute", "year", "total_learning_days", "status",
+            "id", "institute", "year", "level_group", "total_learning_days", "status",
             "term_start_date", "midterm_break_start_date", "midterm_start_date",
             "term_break_start_date", "annual_startdate", "midannual_break_start_date",
             "midannual_start_date", "annual_break_start_date",
@@ -30,7 +30,7 @@ class TestAnnualCalendarAdmin:
     def test_list_filter_fields(self):
         site = AdminSite()
         admin_instance = AnnualCalendarAdmin(AnnualCalendar, site)
-        assert admin_instance.list_filter == ("status", "year", "institute")
+        assert admin_instance.list_filter == ("status", "year", "level_group", "institute")
 
     def test_search_fields(self):
         site = AdminSite()

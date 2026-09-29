@@ -10,6 +10,7 @@ class AnnualCalendarAdmin(admin.ModelAdmin):
         "id",
         "institute",
         "year",
+        "level_group",
         "total_learning_days",
         "status",
         "term_start_date",
@@ -22,7 +23,7 @@ class AnnualCalendarAdmin(admin.ModelAdmin):
         "annual_break_start_date",
     )
 
-    list_filter = ("status", "year", "institute")
+    list_filter = ("status", "year", "level_group", "institute")
     search_fields = ("institute",)
     readonly_fields = ("id", "created_at", "updated_at")
     ordering = ("year", "institute")
@@ -32,6 +33,7 @@ class AnnualCalendarAdmin(admin.ModelAdmin):
             "fields": (
                 "institute",
                 "year",
+                "level_group",
                 "total_learning_days",
                 "status",
             )

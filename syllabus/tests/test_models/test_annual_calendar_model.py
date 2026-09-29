@@ -34,7 +34,11 @@ class TestAnnualCalendarModel:
         )
         assert ac.pk is not None
         assert ac.status is True
-        assert str(ac) == f"Shule ya Msingi Mzingi ({date.today().year})"
+        assert ac.level_group == AnnualCalendar.LEVEL_GROUP_BASIC
+        assert str(ac) == (
+            f"Shule ya Msingi Mzingi ({date.today().year}, "
+            f"Awali - Kidato IV (Msingi/O-Level))"
+        )
 
     def test_year_choices_contains_current_previous_next(self):
         choices = [y[0] for y in AnnualCalendar.year_choices()]
@@ -145,3 +149,45 @@ class TestAnnualCalendarModel:
         )
         results = list(AnnualCalendar.objects.all())
         assert results == [ac2, ac1]  # ordered by year, then institute
+
+    def test_level_group_for_class_level_resolves_advanced_vs_basic(self):
+        assert AnnualCalendar.level_group_for_class_level("Kidato V") == AnnualCalendar.LEVEL_GROUP_ADVANCED
+        assert AnnualCalendar.level_group_for_class_level("Kidato VI") == AnnualCalendar.LEVEL_GROUP_ADVANCED
+        assert AnnualCalendar.level_group_for_class_level("Kidato IV") == AnnualCalendar.LEVEL_GROUP_BASIC
+        assert AnnualCalendar.level_group_for_class_level("DRS III") == AnnualCalendar.LEVEL_GROUP_BASIC
+        assert AnnualCalendar.level_group_for_class_level("Awali") == AnnualCalendar.LEVEL_GROUP_BASIC
+
+    def test_basic_and_advanced_calendar_coexist_for_same_institute_year(self):
+        # Same institute + year is no longer enough to collide - a Kidato
+        # V/VI (advanced) calendar and an Awali-Kidato IV (basic) one for
+        # the same institute/year must both be allowed to exist together.
+        common_kwargs = dict(
+            institute="Shule ya Sekondari Mzingi",
+            year=date.today().year,
+            total_learning_days=194,
+            term_start_month="January",
+            term_start_week=1,
+            term_start_date=date.today(),
+            midterm_break_start_month="February",
+            midterm_break_start_week=2,
+            midterm_break_start_date=date.today(),
+            term_break_start_month="March",
+            term_break_start_week=3,
+            term_break_start_date=date.today(),
+            midannual_start_month="April",
+            midannual_start_week=4,
+            midannual_start_date=date.today(),
+            midannual_break_start_month="May",
+            midannual_break_start_week=1,
+            midannual_break_start_date=date.today(),
+            annual_break_start_month="December",
+            annual_break_start_week=4,
+            annual_break_start_date=date.today(),
+        )
+        basic = AnnualCalendar.objects.create(level_group=AnnualCalendar.LEVEL_GROUP_BASIC, **common_kwargs)
+        advanced = AnnualCalendar.objects.create(level_group=AnnualCalendar.LEVEL_GROUP_ADVANCED, **common_kwargs)
+
+        assert basic.pk is not None
+        assert advanced.pk is not None
+        assert basic.pk != advanced.pk
+

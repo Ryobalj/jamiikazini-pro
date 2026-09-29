@@ -86,16 +86,24 @@ class AnnualCalendarSerializer(serializers.ModelSerializer):
         def val(k):
             return self._resolved(attrs, k)
 
-        # 1) Uniqueness: year + institute
+        # 1) Uniqueness: year + institute + level_group
         year = val("year")
         institute = val("institute")
+        level_group = val("level_group") or AnnualCalendar.LEVEL_GROUP_BASIC
         if year and institute:
-            qs = AnnualCalendar.objects.filter(year=year, institute__iexact=institute)
+            qs = AnnualCalendar.objects.filter(
+                year=year, institute__iexact=institute, level_group=level_group
+            )
             if instance:
                 qs = qs.exclude(pk=instance.pk)
             if qs.exists():
+                level_group_label = dict(AnnualCalendar.LEVEL_GROUP_CHOICES).get(
+                    level_group, level_group
+                )
                 raise serializers.ValidationError({
-                    "institute": "Kalenda ya mwaka huu tayari ipo kwa taasisi hii."
+                    "institute": (
+                        f"Kalenda ya mwaka huu ({level_group_label}) tayari ipo kwa taasisi hii."
+                    )
                 })
 
         # 2) Date fields list
@@ -112,11 +120,28 @@ class AnnualCalendarSerializer(serializers.ModelSerializer):
 
         # 3) Ensure provided dates belong to selected year
         # Kagua tu tarehe zilizoletwa kwenye request hii (attrs), si za instance -
-        # vinginevyo PATCH ya field nyingine yoyote inakwama kwa default dates za instance
+        # vinginevyo PATCH ya field nyingine yoyote inakwama kwa default dates za instance.
+        # Muhula II fields (annual_startdate na kuendelea) huruhusiwa kuwa mwaka
+        # unaofuata (year + 1) pia - kalenda ya Kidato V-VI (advanced) huanza
+        # Julai na Muhula II wake huingia mwezi Januari wa mwaka unaofuata,
+        # tofauti na kalenda ya basic ambayo miezi yake yote iko mwaka mmoja.
+        second_term_fields = {
+            "annual_startdate",
+            "midannual_break_start_date",
+            "midannual_start_date",
+            "annual_break_start_date",
+        }
         if year is not None:
             for df in date_fields:
                 d = attrs.get(df)
-                if d and getattr(d, "year", None) != year:
+                if not d:
+                    continue
+                allowed_years = (year, year + 1) if df in second_term_fields else (year,)
+                if getattr(d, "year", None) not in allowed_years:
+                    if df in second_term_fields:
+                        raise serializers.ValidationError({
+                            df: f"{df} lazima iwe mwaka {year} au {year + 1}."
+                        })
                     raise serializers.ValidationError({
                         df: f"{df} lazima iwe mwaka {year}."
                     })

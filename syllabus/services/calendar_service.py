@@ -188,7 +188,16 @@ class CalendarService:
                 # (e.g. 6 Jan) otherwise.
                 next_year_calendar = (
                     AnnualCalendar.objects
-                    .filter(institute=self.calendar.institute, year=self.year + 1)
+                    .filter(
+                        institute=self.calendar.institute,
+                        year=self.year + 1,
+                        # Match the same level_group - otherwise, once both a
+                        # 'basic' and an 'advanced' calendar exist for the
+                        # same institute/year+1, this could pick the wrong
+                        # one's term_start_date as the fallback annual-break
+                        # end date.
+                        level_group=self.calendar.level_group,
+                    )
                     .first()
                 )
                 if next_year_calendar and next_year_calendar.term_start_date:
@@ -440,11 +449,34 @@ class CalendarService:
             else:
                 return "terminal"
 
+    # "Robo Muhula" (quarter-term) is the Awali-Kidato IV calendar's own
+    # wording for its within-muhula break - it comes from that calendar's
+    # Ministry circular and doesn't apply to Kidato V-VI. The advanced
+    # calendar's own Ministry circular (Waraka wa Elimu, "Kalenda ya Mihula
+    # ya Masomo kwa Kidato cha Tano na Sita") calls that same kind of break
+    # "Likizo Fupi" instead - so the label has to follow level_group, not
+    # just holiday_type, or an advanced-level scheme would show basic-level
+    # Ministry wording that was never issued for it.
+    _ADVANCED_HOLIDAY_LABELS = {
+        "midterm": "LIKIZO FUPI - MUHULA I",
+        "midannual": "LIKIZO FUPI - MUHULA II",
+    }
+    _ADVANCED_EXAM_LABELS = {
+        "midterm": "MITIHANI YA MUHULA I",
+        "midannual": "MITIHANI YA MUHULA II",
+    }
+
     def _get_holiday_label(self, holiday_type: str) -> str:
         """Get holiday label based on type. "midterm"/"midannual" are the
         structurally equivalent mid-term breaks of Muhula I and Muhula II
         respectively, labelled "I"/"II" for consistency (matches the
         "Muhula wa I & II" convention) instead of unrelated terms."""
+        if (
+            self.calendar.level_group == AnnualCalendar.LEVEL_GROUP_ADVANCED
+            and holiday_type in self._ADVANCED_HOLIDAY_LABELS
+        ):
+            return self._ADVANCED_HOLIDAY_LABELS[holiday_type]
+
         labels = {
             "midterm": "LIKIZO YA ROBO MUHULA I",
             "midannual": "LIKIZO YA ROBO MUHULA II",
@@ -455,6 +487,12 @@ class CalendarService:
 
     def _get_exam_label(self, holiday_type: str) -> str:
         """Get exam label based on holiday type."""
+        if (
+            self.calendar.level_group == AnnualCalendar.LEVEL_GROUP_ADVANCED
+            and holiday_type in self._ADVANCED_EXAM_LABELS
+        ):
+            return self._ADVANCED_EXAM_LABELS[holiday_type]
+
         labels = {
             "midterm": "MITIHANI YA ROBO MUHULA I",
             "midannual": "MITIHANI YA ROBO MUHULA II",

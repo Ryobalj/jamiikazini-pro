@@ -33,6 +33,16 @@ class AnnualCalendarViewSet(viewsets.ModelViewSet):
         Optionally filter by year or institute from query params:
         ?year=2025&institute=Mzingi
 
+        Also filterable by education group, so a teacher's Kidato V/VI
+        scheme-builder only ever lists the 'advanced' calendar (and a
+        basic-education one only ever lists 'basic') instead of every
+        calendar for every class level being mixed into one dropdown:
+        - ?level_group=advanced / ?level_group=basic - direct filter.
+        - ?class_level=<ClassLevel name, e.g. "Kidato V"> - convenience
+          filter that resolves to the matching level_group via
+          AnnualCalendar.level_group_for_class_level(), so the frontend
+          doesn't need to know the level_group naming itself.
+
         List results only ever show active (status=True) calendars -
         teachers use this list to pick which calendar to build a Scheme
         of Work against, and a calendar an admin marked inactive (e.g.
@@ -48,6 +58,8 @@ class AnnualCalendarViewSet(viewsets.ModelViewSet):
 
         year = self.request.query_params.get("year")
         institute = self.request.query_params.get("institute")
+        level_group = self.request.query_params.get("level_group")
+        class_level = self.request.query_params.get("class_level")
 
         if year:
             try:
@@ -58,5 +70,12 @@ class AnnualCalendarViewSet(viewsets.ModelViewSet):
 
         if institute:
             qs = qs.filter(institute__icontains=institute)
+
+        if level_group:
+            qs = qs.filter(level_group=level_group)
+        elif class_level:
+            qs = qs.filter(
+                level_group=AnnualCalendar.level_group_for_class_level(class_level)
+            )
 
         return qs

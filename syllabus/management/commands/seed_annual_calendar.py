@@ -22,9 +22,17 @@ class Command(BaseCommand):
                     except:
                         return None
 
+                # level_group distinguishes the Awali-Kidato IV calendar
+                # ('basic') from the Kidato V-VI one ('advanced') - see
+                # AnnualCalendar.LEVEL_GROUP_CHOICES. Older CSV exports
+                # without this column default to 'basic' so they keep
+                # seeding the same single calendar as before.
+                level_group = (row.get('level_group') or AnnualCalendar.LEVEL_GROUP_BASIC).strip()
+
                 calendar, created = AnnualCalendar.objects.update_or_create(
                     institute=row['institute'],
                     year=int(row['year']),
+                    level_group=level_group,
                     defaults={
                         "total_learning_days": int(row['total_learning_days']),
                         "term_start_month": row['term_start_month'],
