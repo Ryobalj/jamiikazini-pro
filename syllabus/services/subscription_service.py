@@ -1,6 +1,8 @@
 # syllabus/services/subscription_service.py
 
 import logging
+from decimal import Decimal
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
@@ -11,6 +13,30 @@ from jamiiwallet.models.transaction import Transaction
 from jamiiwallet.services.transaction_engine import TransactionEngine
 
 logger = logging.getLogger(__name__)
+
+# Launch/testing-period pricing for the syllabus subscription: a reduced
+# introductory rate for the 2026 calendar year while the JamiiShule
+# teaching tools are new, stepping up to the standard rate from 2027
+# onward. Keyed by calendar year (not by when a subscription was
+# created) so the rate that applies is always the one for *today's*
+# year - a subscription started in 2026 still pays the 2027 rate once
+# the calendar turns over, with no manual migration needed. To add a
+# further future change, just add another {year: price} entry here.
+SUBSCRIPTION_PRICE_BY_YEAR = {
+    2026: Decimal("1000"),
+}
+SUBSCRIPTION_DEFAULT_PRICE = Decimal("5000")
+
+
+def get_current_monthly_fee(as_of=None) -> Decimal:
+    """The syllabus subscription price that applies right now (or as of
+    a given date), based on calendar year. See SUBSCRIPTION_PRICE_BY_YEAR
+    above - this is the single source of truth for the price, used both
+    when a subscription is created/displayed and at the moment it's
+    actually charged, so the two can never drift apart."""
+    year = (as_of or timezone.localdate()).year
+    return SUBSCRIPTION_PRICE_BY_YEAR.get(year, SUBSCRIPTION_DEFAULT_PRICE)
+
 
 class DownloadCategory:
     """
@@ -42,7 +68,18 @@ FREE_DOWNLOAD_LIMITS = {
 
 
 def get_or_create_subscription(workstation) -> TeacherSubscription:
-    subscription, _ = TeacherSubscription.objects.get_or_create(workstation=workstation)
+    subscription, _ = TeacherSubscription.objects.get_or_create(
+        workstation=workstation,
+        defaults={"monthly_fee": get_current_monthly_fee()},
+    )
+    # Keep the displayed fee in step with the current year's rate even
+    # for an existing row - so a teacher checking their subscription
+    # status in 2027 sees 5000 (not a stale 1000 from when the row was
+    # first created in 2026), before they've even paid anything.
+    current_fee = get_current_monthly_fee()
+    if subscription.monthly_fee != current_fee:
+        subscription.monthly_fee = current_fee
+        subscription.save(update_fields=["monthly_fee"])
     return subscription
 
 
@@ -103,7 +140,15 @@ def charge_subscription(subscription: TeacherSubscription, amount_override=None)
         base_idempotency_key += "-admintest"
     idempotency_key = base_idempotency_key
 
-    charge_amount = amount_override if amount_override is not None else subscription.monthly_fee
+    # The real money that moves is always today's rate from
+    # get_current_monthly_fee(), never whatever happens to be sitting in
+    # subscription.monthly_fee - that field is kept in sync as a display
+    # convenience (see get_or_create_subscription), but the actual debit
+    # must never depend on remembering to have refreshed it first. This
+    # is what makes the 2026-to-2027 price step apply automatically to
+    # the nightly renewal task too, not just to a teacher re-opening the
+    # status page.
+    charge_amount = amount_override if amount_override is not None else get_current_monthly_fee()
     metadata = {
         "purpose": "syllabus_subscription",
         "subscription_id": str(subscription.id),
@@ -132,7 +177,11 @@ def charge_subscription(subscription: TeacherSubscription, amount_override=None)
         # (it requires PENDING), so never call it on an already-terminal txn.
         subscription.last_charge_status = TeacherSubscription.ChargeStatus.SUCCESS
         subscription.last_failure_reason = ""
-        subscription.save(update_fields=["last_charge_attempt_at", "last_charge_status", "last_failure_reason"])
+        update_fields = ["last_charge_attempt_at", "last_charge_status", "last_failure_reason"]
+        if amount_override is None and subscription.monthly_fee != charge_amount:
+            subscription.monthly_fee = charge_amount
+            update_fields.append("monthly_fee")
+        subscription.save(update_fields=update_fields)
         return True
 
     # A previous attempt this cycle may have failed (e.g. insufficient
@@ -168,7 +217,11 @@ def charge_subscription(subscription: TeacherSubscription, amount_override=None)
         # initiate() call above and here.
         subscription.last_charge_status = TeacherSubscription.ChargeStatus.SUCCESS
         subscription.last_failure_reason = ""
-        subscription.save(update_fields=["last_charge_attempt_at", "last_charge_status", "last_failure_reason"])
+        update_fields = ["last_charge_attempt_at", "last_charge_status", "last_failure_reason"]
+        if amount_override is None and subscription.monthly_fee != charge_amount:
+            subscription.monthly_fee = charge_amount
+            update_fields.append("monthly_fee")
+        subscription.save(update_fields=update_fields)
         return True
 
     try:
@@ -186,10 +239,14 @@ def charge_subscription(subscription: TeacherSubscription, amount_override=None)
     subscription.extend_period(days=30)
     subscription.last_charge_status = TeacherSubscription.ChargeStatus.SUCCESS
     subscription.last_failure_reason = ""
-    subscription.save(update_fields=[
+    update_fields = [
         "last_charge_attempt_at", "last_charge_status", "last_failure_reason",
         "is_active", "current_period_end",
-    ])
+    ]
+    if amount_override is None and subscription.monthly_fee != charge_amount:
+        subscription.monthly_fee = charge_amount
+        update_fields.append("monthly_fee")
+    subscription.save(update_fields=update_fields)
     logger.info(f"Subscription charged successfully: {subscription.id}, new period_end={subscription.current_period_end}")
     return True
 

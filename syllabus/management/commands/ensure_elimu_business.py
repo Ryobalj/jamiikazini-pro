@@ -160,6 +160,10 @@ class Command(BaseCommand):
             if product.description != spec["description"]:
                 product.description = spec["description"]
                 update_fields.append("description")
+            current_fee = self._get_monthly_fee()
+            if product.price != current_fee:
+                product.price = current_fee
+                update_fields.append("price")
             if update_fields:
                 product.save(update_fields=update_fields)
 
@@ -218,5 +222,10 @@ class Command(BaseCommand):
 
     @staticmethod
     def _get_monthly_fee():
-        from syllabus.models.teacher_subscription import TeacherSubscription
-        return TeacherSubscription._meta.get_field("monthly_fee").default
+        # Reference price only (see TEACHING_SERVICES_PRODUCT above) -
+        # mirrors the real subscription price exactly, including the
+        # 2026 launch-period discount stepping up to the standard rate
+        # from 2027, so the storefront listing never shows a stale
+        # number next to what TeacherSubscription actually charges.
+        from syllabus.services.subscription_service import get_current_monthly_fee
+        return get_current_monthly_fee()
